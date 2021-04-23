@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="Gradle: me.denley.wearpreferenceactivity:wearpreferenceactivity:0.5.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f8990544e8ad91ac5eac8628c4354b9/jetified-wearpreferenceactivity-0.5.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/67e8bdddd0375f990d919c91d1afc756/jetified-wearpreferenceactivity-0.5.0/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f8990544e8ad91ac5eac8628c4354b9/jetified-wearpreferenceactivity-0.5.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f8990544e8ad91ac5eac8628c4354b9/jetified-wearpreferenceactivity-0.5.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f8990544e8ad91ac5eac8628c4354b9/jetified-wearpreferenceactivity-0.5.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/67e8bdddd0375f990d919c91d1afc756/jetified-wearpreferenceactivity-0.5.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/67e8bdddd0375f990d919c91d1afc756/jetified-wearpreferenceactivity-0.5.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/67e8bdddd0375f990d919c91d1afc756/jetified-wearpreferenceactivity-0.5.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.denley.wearpreferenceactivity/wearpreferenceactivity/0.5.0/25cf1b07890b18520407adf239c719a04837c46b/wearpreferenceactivity-0.5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.denley.wearpreferenceactivity/wearpreferenceactivity/0.5.0/82b08cd272a8d7cb38f889319a861e15f65d45bb/wearpreferenceactivity-0.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

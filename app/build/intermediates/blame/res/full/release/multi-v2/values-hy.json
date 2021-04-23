@@ -1,0 +1,181 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-hy\\values-hy.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\6a536c72f4a88cef8dc74a9eb3fb3a65\\jetified-play-services-base-17.3.0\\res\\values-hy\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "245,349,546,678,784,997,1131,1284,1422,1648,1754,1953,2087,2308,2500,2591,2684",
+                        "endColumns": "103,196,131,105,212,133,152,137,225,105,198,133,220,191,90,92,106",
+                        "endOffsets": "348,545,677,783,996,1130,1283,1421,1647,1753,1952,2086,2307,2499,2590,2683,2790"
+                    },
+                    "to": {
+                        "startLines": "106,107,108,109,110,111,112,113,115,116,117,118,119,120,121,122,123",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7721,7829,8026,8162,8272,8485,8623,8780,9132,9358,9468,9667,9805,10026,10222,10317,10414",
+                        "endColumns": "107,196,135,109,212,137,156,141,225,109,198,137,220,195,94,96,110",
+                        "endOffsets": "7824,8021,8157,8267,8480,8618,8775,8917,9353,9463,9662,9800,10021,10217,10312,10409,10520"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\101b64ec7c8c08cb0e428ff84568fbdc\\appcompat-1.2.0\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,213,313,423,512,618,735,817,897,988,1081,1176,1270,1370,1463,1558,1652,1743,1834,1917,2023,2129,2228,2338,2446,2547,2717,2814",
+                        "endColumns": "107,99,109,88,105,116,81,79,90,92,94,93,99,92,94,93,90,90,82,105,105,98,109,107,100,169,96,82",
+                        "endOffsets": "208,308,418,507,613,730,812,892,983,1076,1171,1265,1365,1458,1553,1647,1738,1829,1912,2018,2124,2223,2333,2441,2542,2712,2809,2892"
+                    },
+                    "to": {
+                        "startLines": "78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,148",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "4880,4988,5088,5198,5287,5393,5510,5592,5672,5763,5856,5951,6045,6145,6238,6333,6427,6518,6609,6692,6798,6904,7003,7113,7221,7322,7492,13267",
+                        "endColumns": "107,99,109,88,105,116,81,79,90,92,94,93,99,92,94,93,90,90,82,105,105,98,109,107,100,169,96,82",
+                        "endOffsets": "4983,5083,5193,5282,5388,5505,5587,5667,5758,5851,5946,6040,6140,6233,6328,6422,6513,6604,6687,6793,6899,6998,7108,7216,7317,7487,7584,13345"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\a9059b51eae2c26253663006bf7ac568\\core-1.3.2\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "149",
+                        "startColumns": "4",
+                        "startOffsets": "13350",
+                        "endColumns": "100",
+                        "endOffsets": "13446"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\ae0521608d57cec0c8724eba0a57bc4c\\jetified-firebase-messaging-20.3.0\\res\\values-hy\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "207",
+                        "endColumns": "101",
+                        "endOffsets": "308"
+                    },
+                    "to": {
+                        "startLines": "132",
+                        "startColumns": "4",
+                        "startOffsets": "11307",
+                        "endColumns": "105",
+                        "endOffsets": "11408"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\fdd8fd6c1c596832706325b714d42b77\\browser-1.2.0\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,159,262,373",
+                        "endColumns": "103,102,110,101",
+                        "endOffsets": "154,257,368,470"
+                    },
+                    "to": {
+                        "startLines": "126,129,130,131",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "10711,10991,11094,11205",
+                        "endColumns": "103,102,110,101",
+                        "endOffsets": "10810,11089,11200,11302"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\5575c2aaf02ff1292b63d3a11b0f2328\\jetified-android.joda-2.10.6\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,78,79,80",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,351,602,856,1111,1361,1619,1880,2141,2383,2629,2883,3122,3365,3613,3869,4111,4362,4617,4880,5008,5141",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,78,79,80",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,127,132,150",
+                        "endOffsets": "346,597,851,1106,1356,1614,1875,2136,2378,2624,2878,3117,3360,3608,3864,4106,4357,4612,4875,5003,5136,5287"
+                    },
+                    "to": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,141,142,143",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,351,602,856,1111,1361,1619,1880,2141,2383,2629,2883,3122,3365,3613,3869,4111,4362,4617,12415,12543,12676",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,141,142,143",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,127,132,150",
+                        "endOffsets": "346,597,851,1106,1356,1614,1875,2136,2378,2624,2878,3117,3360,3608,3864,4106,4357,4612,4875,12538,12671,12822"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\e6cb9a4d1f8d697d141fd6ff2eec6e81\\navigation-ui-2.3.2\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,161",
+                        "endColumns": "105,116",
+                        "endOffsets": "156,273"
+                    },
+                    "to": {
+                        "startLines": "144,145",
+                        "startColumns": "4,4",
+                        "startOffsets": "12827,12933",
+                        "endColumns": "105,116",
+                        "endOffsets": "12928,13045"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3721dbbb91cfb05cd1098867340b162b\\jetified-play-services-basement-17.3.0\\res\\values-hy\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "209",
+                        "endOffsets": "456"
+                    },
+                    "to": {
+                        "startLines": "114",
+                        "startColumns": "4",
+                        "startOffsets": "8922",
+                        "endColumns": "209",
+                        "endOffsets": "9127"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3561dc70e849b312d1b56d0217e3bf1d\\biometric-1.0.1\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,187,301,389,504,630,753,884,1003,1165,1268",
+                        "endColumns": "131,113,87,114,125,122,130,118,161,102,122",
+                        "endOffsets": "182,296,384,499,625,748,879,998,1160,1263,1386"
+                    },
+                    "to": {
+                        "startLines": "105,124,127,133,134,135,136,137,138,139,140",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7589,10525,10815,11413,11528,11654,11777,11908,12027,12189,12292",
+                        "endColumns": "131,113,87,114,125,122,130,118,161,102,122",
+                        "endOffsets": "7716,10634,10898,11523,11649,11772,11903,12022,12184,12287,12410"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\f9ce495c7baa3763c689e3abd70f7a2d\\preference-1.1.1\\res\\values-hy\\values-hy.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "105,177,265,345,482,651,735",
+                        "endColumns": "71,87,79,136,168,83,80",
+                        "endOffsets": "172,260,340,477,646,730,811"
+                    },
+                    "to": {
+                        "startLines": "125,128,146,147,150,151,152",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "10639,10903,13050,13130,13451,13620,13704",
+                        "endColumns": "71,87,79,136,168,83,80",
+                        "endOffsets": "10706,10986,13125,13262,13615,13699,13780"
+                    }
+                }
+            ]
+        }
+    ]
+}

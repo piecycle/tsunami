@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.DavidProdinger:weekdays-selector:1.1.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fa8d7442abb2e7068ac6ca6e7d0ef7e7/jetified-weekdays-selector-1.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fa8d7442abb2e7068ac6ca6e7d0ef7e7/jetified-weekdays-selector-1.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fa8d7442abb2e7068ac6ca6e7d0ef7e7/jetified-weekdays-selector-1.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c49bd150c91f3b95b2c136fccd865154/jetified-weekdays-selector-1.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c49bd150c91f3b95b2c136fccd865154/jetified-weekdays-selector-1.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c49bd150c91f3b95b2c136fccd865154/jetified-weekdays-selector-1.1.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

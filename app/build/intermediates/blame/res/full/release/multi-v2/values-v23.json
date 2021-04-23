@@ -1,0 +1,95 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-v23\\values-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\698784ac83f8ee4789848ea5ecf2bea3\\material-1.2.1\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,6",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,320",
+                        "endLines": "5,9",
+                        "endColumns": "10,10",
+                        "endOffsets": "315,588"
+                    },
+                    "to": {
+                        "startLines": "64,68",
+                        "startColumns": "4,4",
+                        "startOffsets": "4371,4636",
+                        "endLines": "67,71",
+                        "endColumns": "10,10",
+                        "endOffsets": "4631,4904"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\f506e13646c54cbb26931b480bda7737\\work-runtime-2.4.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,121",
+                        "endColumns": "65,62",
+                        "endOffsets": "116,179"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\101b64ec7c8c08cb0e428ff84568fbdc\\appcompat-1.2.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,190,325,400,487,1371,2267,2386,2513,2735,2959,3074,3181,3294",
+                        "endLines": "2,3,4,5,19,33,34,35,38,42,43,44,45,49",
+                        "endColumns": "134,134,74,86,12,12,118,126,12,12,114,106,112,12",
+                        "endOffsets": "185,320,395,482,1366,2262,2381,2508,2730,2954,3069,3176,3289,3519"
+                    },
+                    "to": {
+                        "startLines": "6,7,8,9,10,24,38,39,40,43,47,48,49,50",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "302,437,572,647,734,1618,2514,2633,2760,2982,3206,3321,3428,3541",
+                        "endLines": "6,7,8,9,23,37,38,39,42,46,47,48,49,53",
+                        "endColumns": "134,134,74,86,12,12,118,126,12,12,114,106,112,12",
+                        "endOffsets": "432,567,642,729,1613,2509,2628,2755,2977,3201,3316,3423,3536,3766"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\682425c411fe329e189053cf4ec0dff2\\jetified-library-0.0.1\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,115,173",
+                        "endLines": "2,3,10",
+                        "endColumns": "59,57,12",
+                        "endOffsets": "110,168,618"
+                    },
+                    "to": {
+                        "startLines": "4,5,57",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "184,244,3921",
+                        "endLines": "4,5,63",
+                        "endColumns": "59,57,12",
+                        "endOffsets": "239,297,4366"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\87a35fd2e62093a75615f6b0465a7b6d\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "200"
+                    },
+                    "to": {
+                        "startLines": "54",
+                        "startColumns": "4",
+                        "startOffsets": "3771",
+                        "endLines": "56",
+                        "endColumns": "12",
+                        "endOffsets": "3916"
+                    }
+                }
+            ]
+        }
+    ]
+}

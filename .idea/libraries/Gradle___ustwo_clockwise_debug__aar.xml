@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: :ustwo-clockwise-debug:@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cfb9fe2326dc0d1433bc591f2e8c5419/jetified-ustwo-clockwise-debug/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cfb9fe2326dc0d1433bc591f2e8c5419/jetified-ustwo-clockwise-debug/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cfb9fe2326dc0d1433bc591f2e8c5419/jetified-ustwo-clockwise-debug/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/60f74c46d84453eb4949d226b247ed36/jetified-ustwo-clockwise-debug/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/60f74c46d84453eb4949d226b247ed36/jetified-ustwo-clockwise-debug/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/60f74c46d84453eb4949d226b247ed36/jetified-ustwo-clockwise-debug/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

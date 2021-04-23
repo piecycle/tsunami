@@ -1,0 +1,4 @@
+#Fri Apr 23 00:11:36 CEST 2021
+base.0=C\:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\dex\\fullRelease\\mergeDexFullRelease\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

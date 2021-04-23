@@ -1,0 +1,1142 @@
+[
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_close.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\close.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_tidepool.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_tidepool.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_age_insulin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_age_insulin.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_cgm_insert.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_cgm_insert.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_calibration.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_calibration.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-mdpi_ic_pumpcontrol.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-mdpi\\ic_pumpcontrol.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_smscommunicator_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\smscommunicator_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_android_wear_micro_apk.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\generated\\res\\microapk\\full\\release\\xml\\android_wear_micro_apk.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxxhdpi_ic_yellowowl.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_yellowowl.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_filepaths.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\filepaths.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\raw_urgentalarm.mp3.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\raw\\urgentalarm.mp3"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_absorption_aaps.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_absorption_aaps.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_actions_cancelextbolus.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_actions_cancelextbolus.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_configbuilder_single_category.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\configbuilder_single_category.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_survey.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_survey.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_careportal_stats_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\careportal_stats_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_fragment_landscape.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_fragment_landscape.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_insight_alert.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_insight_alert.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_dialog_choose_trigger.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_choose_trigger.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_wear_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\wear_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_bgcheck.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_bgcheck.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_objectives_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\objectives_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_action_orange_48dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_action_orange_48dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_age_sensor.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_age_sensor.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_objectives_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\objectives_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_import_summary_details.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\import_summary_details.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_disconnected.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_disconnected.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_stats.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_stats.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_dialog_edit_trigger.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_edit_trigger.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_as.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_as.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_nightscout_profile.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_nightscout_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_care.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_care.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\raw_modern_alarm.mp3.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\raw\\modern_alarm.mp3"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_stats.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_stats.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_clone_48.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_clone_48.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_quickwizardlist_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_quickwizardlist_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_pause_circle_outline_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_pause_circle_outline_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_automation.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_automation.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_food_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\food_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_pump_battery.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_pump_battery.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_remove.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_remove.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_nsclient_bg.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_nsclient_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_nightscout_syncs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_nightscout_syncs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_wizardinfo.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_wizardinfo.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_pump_canula.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_pump_canula.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_profileswitch.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_profileswitch.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_import_summary_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\import_summary_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_target_activity.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_target_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_notifications.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_notifications.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_action_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_action_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_timelistedit_element.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\timelistedit_element.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_stop_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_stop_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_careportal_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_careportal_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_profileswitch_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_profileswitch_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_extendedbolus_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_extendedbolus_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_combo.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_combo.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_fill.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_fill.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_carbs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_carbs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_single_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_single_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_wear.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_wear.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_note.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_note.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_watch.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_watch.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_objectives_exam_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\objectives_exam_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_insulinoreffreepeak.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_insulinoreffreepeak.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_alerts.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_alerts.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_anim_carbs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\anim_carbs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_bolus_carbs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_bolus_carbs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_local_insight_status_delimitter.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\local_insight_status_delimitter.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_arrow_drop_down_white_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_arrow_drop_down_white_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_superbolus.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_superbolus.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_statuslights_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_statuslights_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_absorption_oref1.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_absorption_oref1.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-hdpi_ic_yellowowl.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-hdpi\\ic_yellowowl.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_basal_no_tbr.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_basal_no_tbr.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_resume.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_resume.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_loop.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_loop.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_clone.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_clone.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_notif_icon.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\notif_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_reconnect.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_reconnect.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_warning.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_warning.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_ict.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_ict.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_actions_startextbolus.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_actions_startextbolus.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxhdpi_ic_pumpcontrol.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_pumpcontrol.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_profileswitch_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_profileswitch_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_tempbasals_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_tempbasals_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_profileviewer_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\profileviewer_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_local_profile.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_local_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_food.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_food.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_basal_tbr_low.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_basal_tbr_low.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_tempbasals_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_tempbasals_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_splash_icon.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\splash_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_disabled.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_disabled.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_general.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_general.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_maintenance.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_maintenance.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_logsetting.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_logsetting.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_chevron_left_black_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_chevron_left_black_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_paused.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_paused.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_bluetooth_device.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\bluetooth_device.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_overview.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_overview.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_lgs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_lgs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_bgsourcedexcom.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_bgsourcedexcom.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_calibration.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_calibration.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_reorder_gray_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_reorder_gray_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxhdpi_ic_yellowowl.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_yellowowl.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_pump.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_pump.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cogs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cogs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_tidepool_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\tidepool_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_insight_pairing_information.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_insight_pairing_information.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_insight_local_pumpcontrol.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_insight_local_pumpcontrol.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_datetime.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\datetime.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_event_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_event_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_replay_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_replay_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_launch_screen.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\launch_screen.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_notif_nsclient.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_notif_nsclient.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_refresh.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_refresh.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_dice.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_dice.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_chevron_right_black_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_chevron_right_black_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_maintenance_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\maintenance_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_historybrowse.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_historybrowse.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_combo_128.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_combo_128.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cancelbasal.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cancelbasal.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_visibility.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_visibility.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_auto_delta.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_auto_delta.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_generic_icon.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_generic_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_buttons_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_buttons_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_nsclientinternal_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\nsclientinternal_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_graduation.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_graduation.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_dialog_event.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_x_swap_vert.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_x_swap_vert.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_age_canula.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_age_canula.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_open_humans_login.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_open_humans_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_temptarget.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_temptarget.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxxhdpi_ic_pumpcontrol.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_pumpcontrol.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_quickwizardlist_activity.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_quickwizardlist_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_reminder.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_reminder.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_local_insight_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\local_insight_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_eversense.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_eversense.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_temptarget_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_temptarget_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_local_reset.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_local_reset.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_network_wifi.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_network_wifi.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_configbuilder_single_plugin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\configbuilder_single_plugin.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_actions_starttempbasal.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_actions_starttempbasal.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_careportal_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_careportal_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_insight_128.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_insight_128.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_smscommunicator_otp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_smscommunicator_otp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_temptarget_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_temptarget_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_target_cancel.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_target_cancel.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\raw_android_wear_micro_apk.apk.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\generated\\res\\microapk\\full\\release\\raw\\android_wear_micro_apk.apk"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_trigger_green_48dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_trigger_green_48dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xhdpi_ic_pumpcontrol.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xhdpi\\ic_pumpcontrol.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_access_alarm_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_access_alarm_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_nsclientinternal.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_nsclientinternal.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_announcement.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_announcement.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_arrow_drop_up_white_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_arrow_drop_up_white_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_virtual_pump.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_virtual_pump.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_bolus.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_bolus.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_action.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_closed_white.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_closed_white.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_header_error.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_header_error.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_quickwizard.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_quickwizard.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_keyboard_capslock.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_keyboard_capslock.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_maintenance.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_maintenance.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_okcancel.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\okcancel.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_target_manual.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_target_manual.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_glimp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_glimp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_basal_start.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_basal_start.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_location_on.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_location_on.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_icon_insulin_carbs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\icon_insulin_carbs.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_trash_outline.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_trash_outline.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_actions_profileswitch.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_actions_profileswitch.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_automotive_app_desc.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\automotive_app_desc.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_editquickwizard_dialog.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_editquickwizard_dialog.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_openapsama_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\openapsama_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_localprofile_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\localprofile_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_logsettings_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\logsettings_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_local_activate.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_local_activate.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_virtualpump_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\virtualpump_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_xdrip.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_xdrip.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_graphs_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_graphs_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_last_page_black_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_last_page_black_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_loop_pumpstatus_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_loop_pumpstatus_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_info_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_info_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_fragment_nsclient.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_fragment_nsclient.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_header_import.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_header_import.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_nsprofile_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\nsprofile_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_notif_pumpcontrol.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_notif_pumpcontrol.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_bgsource_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\bgsource_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_settings.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_food_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\food_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_age_battery.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_age_battery.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_calculator.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_calculator.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_combopump_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\combopump_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_actions_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\actions_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\menu_menu_main.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\menu\\menu_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_profilehelper.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_profilehelper.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_extendedbolus.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_extendedbolus.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_border_automation_unit.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\border_automation_unit.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_temptarget_flat.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_temptarget_flat.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_smscommunicator.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_smscommunicator.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_open.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_open.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_swap_vert_black_48dp_green.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_swap_vert_black_48dp_green.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_bolus_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_bolus_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_bgsource.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_bgsource.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_insight.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_insight.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_loop_closed.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_loop_closed.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_treatments.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_treatments.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_tempbasal.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_tempbasal.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_configbuilder_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\configbuilder_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_openhumans.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_openhumans.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_header_log.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_header_log.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_openapssmb.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_openapssmb.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_careportal_stats_fragment_lowres.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\careportal_stats_fragment_lowres.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_exercise.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_exercise.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_automation.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_automation.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_insight_local_full.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_insight_local_full.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\menu_menu_profilehelper.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\menu\\menu_profilehelper.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_treatment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_treatment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-mdpi_ic_yellowowl.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-mdpi\\ic_yellowowl.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_home.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_xdripstatus.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_xdripstatus.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_wizard.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_wizard.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\menu_menu_single_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\menu\\menu_single_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_basal_tbr_high.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_basal_tbr_high.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_sms.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_sms.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_actions_fragment_lowres.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\actions_fragment_lowres.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_add.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_add.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_timelistedit_element_vertical.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\timelistedit_element_vertical.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_safety.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_safety.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_target_hypo.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_target_hypo.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_add_black_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_add_black_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_poctech.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_poctech.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_openapsama.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_openapsama.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_notif_aaps.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_notif_aaps.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_loop.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_loop.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_number_picker_layout_vertical.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\number_picker_layout_vertical.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_loop_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\loop_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_bolus_carbs_red.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_bolus_carbs_red.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_keyboard_tab.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_keyboard_tab.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_open_humans.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\open_humans.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_header_export.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_header_export.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_dialog_choose_action.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_choose_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_target_eatingsoon.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_target_eatingsoon.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cp_question.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_cp_question.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_overview_notification_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_notification_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_automation_dialog_action.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_preferences.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_preferences.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_exit_to_app.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_exit_to_app.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_alert_two_messages.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_alert_two_messages.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_extendedbolus_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_extendedbolus_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_notes.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\notes.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_temptarget_high.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_temptarget_high.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_insulin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_insulin.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_insight_pairing.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_insight_pairing.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_treatments_bolus_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_bolus_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_insulin_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\insulin_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_play_circle_outline_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_play_circle_outline_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_arrow_forward_white_24dp.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_arrow_forward_white_24dp.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_temptarget_low.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_temptarget_low.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-hdpi_ic_pumpcontrol.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-hdpi\\ic_pumpcontrol.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_setupwizard.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_setupwizard.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_open_humans_white.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\open_humans_white.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_local_insight_status_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\local_insight_status_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_alert_import_summary.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_alert_import_summary.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_virtualpump.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_virtualpump.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\raw_alarm.mp3.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\raw\\alarm.mp3"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\mipmap-xhdpi_ic_yellowowl.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\mipmap-xhdpi\\ic_yellowowl.png"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_bgsource_fragment.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\bgsource_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_error.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_error.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\xml_pref_datachoices.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\xml\\pref_datachoices.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_generic_cgm.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\drawable\\ic_generic_cgm.xml"
+    },
+    {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_fragment_open_humans.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\fragment_open_humans.xml"
+    }
+]

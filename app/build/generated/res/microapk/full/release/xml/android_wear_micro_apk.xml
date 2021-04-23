@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wearableApp package="info.nightscout.androidaps">
+    <versionCode>2</versionCode>
+    <versionName>unspecified</versionName>
+    <rawPathResId>android_wear_micro_apk</rawPathResId>
+</wearableApp>

@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-v27\\values-v27.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\682425c411fe329e189053cf4ec0dff2\\jetified-library-0.0.1\\res\\values-v27\\values-v27.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,115",
+                        "endLines": "2,10",
+                        "endColumns": "59,12",
+                        "endOffsets": "110,626"
+                    }
+                }
+            ]
+        }
+    ]
+}

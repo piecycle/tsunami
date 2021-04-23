@@ -1,0 +1,1183 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="info.nightscout.androidaps"
+4    android:versionCode="1500"
+5    android:versionName="2.8.2-UAM_tsunami_0.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+8-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+11-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:6:5-79
+11-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:6:22-76
+12    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+12-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:7:5-81
+12-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:7:22-78
+13    <uses-permission android:name="android.permission.BLUETOOTH" />
+13-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:8:5-68
+13-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:8:22-65
+14    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+14-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:9:5-74
+14-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:9:22-71
+15    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+15-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:10:5-78
+15-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:10:22-75
+16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+16-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:11:5-81
+16-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:11:22-78
+17    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+17-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:12:5-80
+17-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:12:22-77
+18    <uses-permission android:name="android.permission.WAKE_LOCK" />
+18-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:13:5-68
+18-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:13:22-65
+19    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+19-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:14:5-70
+19-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:14:22-67
+20    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+20-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:15:5-70
+20-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:15:22-67
+21    <uses-permission android:name="android.permission.SEND_SMS" />
+21-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:16:5-67
+21-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:16:22-64
+22    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+22-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:17:5-75
+22-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:17:22-72
+23    <uses-permission android:name="android.permission.SEND_MMS" />
+23-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:18:5-67
+23-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:18:22-64
+24    <uses-permission android:name="android.permission.VIBRATE" />
+24-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:19:5-66
+24-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:19:22-63
+25    <uses-permission android:name="android.permission.INTERNET" />
+25-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:20:5-67
+25-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:20:22-64
+26    <uses-permission android:name="com.google.android.permission.PROVIDE_BACKGROUND" />
+26-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:21:5-88
+26-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:21:22-85
+27    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+27-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:22:5-77
+27-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:22:22-74
+28    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+28-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:6:5-79
+28-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:6:22-76
+29    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+29-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:24:5-81
+29-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:24:22-78
+30    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+30-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:25:5-79
+30-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:25:22-76
+31    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+31-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:26:5-76
+31-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:26:22-73
+32    <uses-permission android:name="com.dexcom.cgm.EXTERNAL_PERMISSION" />
+32-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:27:5-74
+32-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:27:22-71
+33    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+33-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:28:5-81
+33-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:28:22-78
+34
+35    <uses-permission-sdk-23 android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+35-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:30:5-102
+35-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:30:29-99
+36
+37    <!-- To receive data from xdrip. -->
+38    <uses-permission android:name="com.eveningoutpost.dexdrip.permissions.RECEIVE_BG_ESTIMATE" />
+38-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:33:5-98
+38-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:33:22-95
+39    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+39-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:24:5-72
+39-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:24:22-69
+40    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+40-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:25:5-74
+40-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:25:22-71
+41
+42    <queries>
+42-->[com.google.androidbrowserhelper:androidbrowserhelper:2.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\2e2623b30d2ff4f04f745b218706b1c2\jetified-androidbrowserhelper-2.0.1\AndroidManifest.xml:26:5-34:15
+43        <intent>
+43-->[com.google.androidbrowserhelper:androidbrowserhelper:2.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\2e2623b30d2ff4f04f745b218706b1c2\jetified-androidbrowserhelper-2.0.1\AndroidManifest.xml:27:9-33:18
+44            <action android:name="android.intent.action.VIEW" />
+44-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:17-69
+44-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:25-66
+45
+46            <category android:name="android.intent.category.BROWSABLE" />
+46-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:275:17-78
+46-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:275:27-75
+47
+48            <data android:scheme="https" />
+48-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+48-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+49        </intent>
+50    </queries> <!-- Required by older versions of Google Play services to create IID tokens -->
+51    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+51-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:26:5-82
+51-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:26:22-79
+52    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+52-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:26:5-110
+52-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:26:22-107
+53
+54    <application
+55        android:name="info.nightscout.androidaps.MainApp"
+55-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:36:9-32
+56        android:allowBackup="true"
+56-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:37:9-35
+57        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+57-->[androidx.core:core:1.3.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\a9059b51eae2c26253663006bf7ac568\core-1.3.2\AndroidManifest.xml:24:18-86
+58        android:backupAgent="info.nightscout.androidaps.utils.SPBackupAgent"
+58-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:44:9-51
+59        android:extractNativeLibs="false"
+60        android:fullBackupOnly="false"
+60-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:43:9-39
+61        android:icon="@mipmap/ic_launcher"
+61-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:38:9-34
+62        android:label="@string/app_name"
+62-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:39:9-41
+63        android:restoreAnyVersion="true"
+63-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:45:9-41
+64        android:roundIcon="@mipmap/ic_launcher_round"
+64-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:40:9-44
+65        android:supportsRtl="true"
+65-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:41:9-35
+66        android:theme="@style/AppTheme.Launcher" >
+66-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:42:9-49
+67        <meta-data
+67-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:47:9-49:82
+68            android:name="com.google.android.backup.api_key"
+68-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:48:13-61
+69            android:value="AEdPqrEAAAAI3JiApyMrbP2QFzZ2fYfCPsgjkRp53Dm2S1-zPQ" />
+69-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:49:13-79
+70        <meta-data
+70-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:51:9-53:59
+71            android:name="com.google.android.gms.car.application"
+71-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:52:13-66
+72            android:resource="@xml/automotive_app_desc" />
+72-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:53:13-56
+73
+74        <activity android:name="info.nightscout.androidaps.MainActivity" >
+74-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:55:9-61:20
+74-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:55:19-47
+75            <intent-filter>
+75-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:56:13-60:29
+76                <action android:name="android.intent.action.VIEW" />
+76-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:17-69
+76-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:25-66
+77                <action android:name="android.intent.action.MAIN" />
+77-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:58:17-69
+77-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:58:25-66
+78
+79                <category android:name="android.intent.category.LAUNCHER" />
+79-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:59:17-77
+79-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:59:27-74
+80            </intent-filter>
+81        </activity>
+82        <activity android:name="info.nightscout.androidaps.activities.PreferencesActivity" />
+82-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:62:9-68
+82-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:62:19-65
+83        <activity android:name="info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity" >
+83-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:63:9-69:20
+83-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:63:19-94
+84            <intent-filter>
+84-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:64:13-68:29
+85                <action android:name="info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity" />
+85-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:65:17-129
+85-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:65:25-126
+86
+87                <category android:name="android.intent.category.DEFAULT" />
+87-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:17-76
+87-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:27-73
+88            </intent-filter>
+89        </activity>
+90        <activity android:name="info.nightscout.androidaps.plugins.general.maintenance.activities.PrefImportListActivity" />
+90-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:70:9-99
+90-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:70:19-96
+91        <activity android:name="info.nightscout.androidaps.historyBrowser.HistoryBrowseActivity" />
+91-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:71:9-74
+91-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:71:19-71
+92        <activity android:name="info.nightscout.androidaps.activities.SurveyActivity" />
+92-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:72:9-63
+92-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:72:19-60
+93        <activity
+93-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:73:9-74:60
+94            android:name="info.nightscout.androidaps.activities.ProfileHelperActivity"
+94-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:73:19-67
+95            android:theme="@style/ProfileHelperAppTheme" />
+95-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:74:13-57
+96        <activity android:name="info.nightscout.androidaps.activities.StatsActivity" />
+96-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:75:9-62
+96-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:75:19-59
+97        <activity
+97-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:76:9-79:45
+98            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+98-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:77:13-85
+99            android:excludeFromRecents="true"
+99-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:26:13-46
+100            android:exported="true"
+100-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:27:13-36
+101            android:launchMode="standard"
+101-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:79:13-42
+102            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+102-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:29:13-102
+103            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+103-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:30:13-72
+104
+105        <!-- Receive new BG readings from other local apps -->
+106        <receiver
+106-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:82:9-100:20
+107            android:name="info.nightscout.androidaps.receivers.DataReceiver"
+107-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:83:17-55
+108            android:enabled="true"
+108-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:84:17-39
+109            android:exported="true" >
+109-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:85:17-40
+110            <intent-filter>
+110-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:86:13-99:29
+111
+112                <!-- Receiver from xDrip -->
+113                <action android:name="com.eveningoutpost.dexdrip.BgEstimate" />
+113-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:88:17-79
+113-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:88:25-77
+114                <!-- Receiver from 640g uploader -->
+115                <action android:name="com.eveningoutpost.dexdrip.NS_EMULATOR" />
+115-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:90:17-80
+115-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:90:25-78
+116                <!-- Receiver from glimp -->
+117                <action android:name="it.ct.glicemia.ACTION_GLUCOSE_MEASURED" />
+117-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:92:17-80
+117-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:92:25-78
+118                <!-- Receiver from Dexcom -->
+119                <action android:name="com.dexcom.cgm.EXTERNAL_BROADCAST" />
+119-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:94:17-75
+119-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:94:25-73
+120                <!-- Receiver from Poctech -->
+121                <action android:name="com.china.poctech.data" />
+121-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:96:17-64
+121-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:96:25-62
+122                <!-- Receiver from Tomato -->
+123                <action android:name="com.fanqies.tomatofn.BgEstimate" />
+123-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:98:17-73
+123-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:98:25-71
+124            </intent-filter>
+125        </receiver>
+126
+127        <!-- Receive new SMS messages -->
+128        <receiver
+128-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:103:9-111:20
+129            android:name="info.nightscout.androidaps.receivers.SmsReceiver"
+129-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:104:17-54
+130            android:enabled="true"
+130-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:105:17-39
+131            android:exported="true"
+131-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:106:17-40
+132            android:permission="android.permission.BROADCAST_SMS" >
+132-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:107:17-70
+133            <intent-filter>
+133-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:108:13-110:29
+134                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+134-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:109:17-81
+134-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:109:25-79
+135            </intent-filter>
+136        </receiver>
+137
+138        <!-- Receiver keepalive, scheduled every 30 min -->
+139        <receiver android:name="info.nightscout.androidaps.receivers.KeepAliveReceiver" />
+139-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:114:9-65
+139-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:114:19-62
+140
+141        <!-- Receive ignore 5m, 15m, 30m requests for carb notifications -->
+142        <receiver android:name="info.nightscout.androidaps.plugins.aps.loop.CarbSuggestionReceiver" />
+142-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:117:9-86
+142-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:117:19-74
+143
+144        <!-- Auto start -->
+145        <receiver
+145-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:120:9-127:20
+146            android:name="info.nightscout.androidaps.receivers.AutoStartReceiver"
+146-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:121:13-56
+147            android:enabled="true"
+147-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:122:13-35
+148            android:exported="true" >
+148-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:123:13-36
+149            <intent-filter>
+149-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:124:13-126:29
+150                <action android:name="android.intent.action.BOOT_COMPLETED" />
+150-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:125:17-79
+150-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:125:25-76
+151            </intent-filter>
+152        </receiver>
+153
+154        <provider
+155            android:name="androidx.core.content.FileProvider"
+155-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:130:13-62
+156            android:authorities="info.nightscout.androidaps.fileprovider"
+156-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:131:13-64
+157            android:exported="false"
+157-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:132:13-37
+158            android:grantUriPermissions="true" >
+158-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:133:13-47
+159            <meta-data
+159-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:134:13-136:53
+160                android:name="android.support.FILE_PROVIDER_PATHS"
+160-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:135:17-67
+161                android:resource="@xml/filepaths" />
+161-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:136:17-50
+162        </provider>
+163
+164        <!-- Service processing incomming data -->
+165        <service
+165-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:140:9-142:40
+166            android:name="info.nightscout.androidaps.services.DataService"
+166-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:141:13-49
+167            android:exported="false" />
+167-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:142:13-37
+168        <service
+168-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:143:9-145:40
+169            android:name="info.nightscout.androidaps.services.LocationService"
+169-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:144:13-53
+170            android:exported="false" />
+170-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:145:13-37
+171        <service
+171-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:146:9-208:19
+172            android:name="info.nightscout.androidaps.plugins.general.wear.wearintegration.WatchUpdaterService"
+172-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:147:13-85
+173            android:exported="true" >
+173-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:148:13-36
+174            <intent-filter>
+174-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:149:13-207:29
+175
+176                <!-- <action android:name="com.google.android.gms.wearable.BIND_LISTENER" /> -->
+177                <!-- listeners receive events that match the action and data filters -->
+178                <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" />
+178-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:152:17-93
+178-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:152:25-90
+179                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+179-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:153:17-87
+179-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:153:25-84
+180
+181                <data
+181-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+182                    android:host="*"
+182-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+183                    android:pathPrefix="/nightscout_watch_data"
+183-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+184                    android:scheme="wear" />
+184-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+185                <data
+185-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+186                    android:host="*"
+186-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+187                    android:pathPrefix="/nightscout_watch_data_resend"
+187-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+188                    android:scheme="wear" />
+188-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+189                <data
+189-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+190                    android:host="*"
+190-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+191                    android:pathPrefix="/nightscout_watch_cancel_bolus"
+191-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+192                    android:scheme="wear" />
+192-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+193                <data
+193-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+194                    android:host="*"
+194-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+195                    android:pathPrefix="/nightscout_watch_confirmactionstring"
+195-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+196                    android:scheme="wear" />
+196-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+197                <data
+197-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+198                    android:host="*"
+198-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+199                    android:pathPrefix="/nightscout_watch_initiateactionstring"
+199-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+200                    android:scheme="wear" />
+200-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+201                <data
+201-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+202                    android:host="*"
+202-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+203                    android:pathPrefix="/openwearsettings"
+203-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+204                    android:scheme="wear" />
+204-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+205                <data
+205-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+206                    android:host="*"
+206-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+207                    android:pathPrefix="/sendstatustowear"
+207-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+208                    android:scheme="wear" />
+208-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+209                <data
+209-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+210                    android:host="*"
+210-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+211                    android:pathPrefix="/sendpreferencestowear"
+211-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+212                    android:scheme="wear" />
+212-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+213                <data
+213-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+214                    android:host="*"
+214-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+215                    android:pathPrefix="/nightscout_watch_basal"
+215-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+216                    android:scheme="wear" />
+216-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+217                <data
+217-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+218                    android:host="*"
+218-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+219                    android:pathPrefix="/nightscout_watch_bolusprogress"
+219-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+220                    android:scheme="wear" />
+220-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+221                <data
+221-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+222                    android:host="*"
+222-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+223                    android:pathPrefix="/nightscout_watch_actionconfirmationrequest"
+223-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+224                    android:scheme="wear" />
+224-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+225                <data
+225-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+226                    android:host="*"
+226-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+227                    android:pathPrefix="/nightscout_watch_changeconfirmationrequest"
+227-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+228                    android:scheme="wear" />
+228-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+229                <data
+229-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+230                    android:host="*"
+230-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+231                    android:pathPrefix="/nightscout_watch_cancelnotificationrequest"
+231-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+232                    android:scheme="wear" />
+232-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+233            </intent-filter>
+234        </service>
+235        <service
+235-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:209:9-212:39
+236            android:name="info.nightscout.androidaps.plugins.general.nsclient.services.NSClientService"
+236-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:210:13-78
+237            android:enabled="true"
+237-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:211:13-35
+238            android:exported="true" />
+238-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:212:13-36
+239        <service
+239-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:213:9-216:39
+240            android:name="info.nightscout.androidaps.services.AlarmSoundService"
+240-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:214:13-55
+241            android:enabled="true"
+241-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:215:13-35
+242            android:exported="true" />
+242-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:216:13-36
+243        <service
+243-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:217:9-219:40
+244            android:name="info.nightscout.androidaps.plugins.general.overview.notifications.DismissNotificationService"
+244-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:218:13-94
+245            android:exported="false" />
+245-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:219:13-37
+246        <service android:name="info.nightscout.androidaps.plugins.general.persistentNotification.DummyService" />
+246-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:221:9-88
+246-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:221:18-85
+247        <service android:name="info.nightscout.androidaps.plugins.pump.insight.connection_service.InsightConnectionService" />
+247-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:222:9-101
+247-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:222:18-98
+248        <service android:name="info.nightscout.androidaps.plugins.pump.insight.InsightAlertService" />
+248-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:223:9-77
+248-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:223:18-74
+249
+250        <meta-data
+250-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:225:9-227:72
+251            android:name="io.fabric.ApiKey"
+251-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:226:13-44
+252            android:value="59d462666c664c57b29e1d79ea123e01f8057cfa" />
+252-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:227:13-69
+253
+254        <activity
+254-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:229:9-233:59
+255            android:name="info.nightscout.androidaps.setupwizard.SetupWizardActivity"
+255-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:230:13-60
+256            android:configChanges="orientation|keyboardHidden|screenSize"
+256-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:231:13-74
+257            android:label="@string/title_activity_setup_wizard"
+257-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:232:13-64
+258            android:theme="@style/AppTheme.NoActionBar" />
+258-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:233:13-56
+259        <activity
+259-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:235:9-237:47
+260            android:name="info.nightscout.androidaps.activities.SingleFragmentActivity"
+260-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:236:13-62
+261            android:theme="@style/AppTheme" />
+261-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:237:13-44
+262        <activity android:name="info.nightscout.androidaps.plugins.general.maintenance.activities.LogSettingActivity" />
+262-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:238:9-95
+262-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:238:19-92
+263        <activity
+263-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:239:9-242:47
+264            android:name="info.nightscout.androidaps.plugins.pump.insight.activities.InsightPairingActivity"
+264-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:240:13-83
+265            android:label="@string/insight_pairing"
+265-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:241:13-52
+266            android:theme="@style/AppTheme" />
+266-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:242:13-44
+267        <activity
+267-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:243:9-248:57
+268            android:name="info.nightscout.androidaps.plugins.pump.insight.activities.InsightAlertActivity"
+268-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:244:13-81
+269            android:excludeFromRecents="true"
+269-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:246:13-46
+270            android:label="@string/pump_alert"
+270-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:245:13-47
+271            android:launchMode="singleInstance"
+271-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:247:13-48
+272            android:theme="@style/InsightAlertDialog" />
+272-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:248:13-54
+273        <activity
+273-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:249:9-252:47
+274            android:name="info.nightscout.androidaps.plugins.pump.insight.activities.InsightPairingInformationActivity"
+274-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:250:13-94
+275            android:label="@string/pairing_information"
+275-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:251:13-56
+276            android:theme="@style/AppTheme" />
+276-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:252:13-44
+277        <activity android:name="info.nightscout.androidaps.activities.RequestDexcomPermissionActivity" />
+277-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:253:9-80
+277-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:253:19-77
+278        <activity android:name="info.nightscout.androidaps.plugins.general.smsCommunicator.activities.SmsCommunicatorOtpActivity" >
+278-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:254:9-260:20
+278-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:254:19-104
+279            <intent-filter>
+279-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:255:13-259:29
+280                <action android:name="info.nightscout.androidaps.plugins.general.smsCommunicator.activities.SmsCommunicatorOtpActivity" />
+280-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:256:17-139
+280-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:256:25-136
+281
+282                <category android:name="android.intent.category.DEFAULT" />
+282-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:17-76
+282-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:27-73
+283            </intent-filter>
+284        </activity>
+285
+286        <!-- Medtronic service and activities -->
+287        <service
+287-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:263:9-266:39
+288            android:name="info.nightscout.androidaps.plugins.pump.medtronic.service.RileyLinkMedtronicService"
+288-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:264:13-85
+289            android:enabled="true"
+289-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:265:13-35
+290            android:exported="true" />
+290-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:266:13-36
+291
+292        <activity android:name="info.nightscout.androidaps.plugins.pump.medtronic.dialog.MedtronicHistoryActivity" />
+292-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:268:9-92
+292-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:268:19-89
+293        <activity
+293-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:269:9-281:20
+294            android:name="info.nightscout.androidaps.plugins.general.openhumans.OpenHumansLoginActivity"
+294-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:269:19-85
+295            android:launchMode="singleTop" >
+295-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:270:13-43
+296            <intent-filter>
+296-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:271:13-280:29
+297                <action android:name="android.intent.action.VIEW" />
+297-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:17-69
+297-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:25-66
+298
+299                <category android:name="android.intent.category.DEFAULT" />
+299-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:17-76
+299-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:27-73
+300                <category android:name="android.intent.category.BROWSABLE" />
+300-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:275:17-78
+300-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:275:27-75
+301
+302                <data
+302-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+303                    android:host="setup-openhumans"
+303-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+304                    android:scheme="androidaps" />
+304-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+305            </intent-filter>
+306        </activity>
+307
+308        <uses-library
+308-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:283:9-87
+309            android:name="org.apache.http.legacy"
+309-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:283:23-60
+310            android:required="false" />
+310-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:283:61-85
+311
+312        <activity android:name="info.nightscout.androidaps.danars.activities.BLEScanActivity" >
+312-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:15:9-21:20
+312-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:15:19-94
+313            <intent-filter>
+313-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:16:13-20:29
+314                <action android:name="info.nightscout.androidaps.plugins.PumpDanaRS.activities.BLEScanActivity" />
+314-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:17:17-115
+314-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:17:25-112
+315
+316                <category android:name="android.intent.category.DEFAULT" />
+316-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:17-76
+316-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:27-73
+317            </intent-filter>
+318        </activity>
+319        <activity
+319-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-24:47
+320            android:name="info.nightscout.androidaps.danars.activities.PairingHelperActivity"
+320-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-94
+321            android:launchMode="singleTask" />
+321-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-44
+322        <activity
+322-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:25:9-27:47
+323            android:name="info.nightscout.androidaps.danars.activities.EnterPinActivity"
+323-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:26:13-89
+324            android:launchMode="singleTask" />
+324-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:27:13-44
+325
+326        <service
+326-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:29:9-32:40
+327            android:name="info.nightscout.androidaps.danars.services.DanaRSService"
+327-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:30:13-84
+328            android:enabled="true"
+328-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:31:13-35
+329            android:exported="false" />
+329-->[:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:32:13-37
+330        <service
+330-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:14:9-17:40
+331            android:name="info.nightscout.androidaps.danar.services.DanaRExecutionService"
+331-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:15:13-91
+332            android:enabled="true"
+332-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:16:13-35
+333            android:exported="false" />
+333-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:17:13-37
+334        <service
+334-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-21:40
+335            android:name="info.nightscout.androidaps.danaRKorean.services.DanaRKoreanExecutionService"
+335-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:19:13-103
+336            android:enabled="true"
+336-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:20:13-35
+337            android:exported="false" />
+337-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:21:13-37
+338        <service
+338-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-25:40
+339            android:name="info.nightscout.androidaps.danaRv2.services.DanaRv2ExecutionService"
+339-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-95
+340            android:enabled="true"
+340-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-35
+341            android:exported="false" />
+341-->[:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:25:13-37
+342
+343        <activity android:name="info.nightscout.androidaps.dana.activities.DanaHistoryActivity" />
+343-->[:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-99
+343-->[:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:12:19-96
+344        <activity android:name="info.nightscout.androidaps.dana.activities.DanaUserOptionsActivity" />
+344-->[:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:13:9-103
+344-->[:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:13:19-100
+345
+346        <service
+346-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
+347            android:name="info.nightscout.androidaps.plugins.pump.omnipod.rileylink.service.RileyLinkOmnipodService"
+347-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:13:13-117
+348            android:enabled="true"
+348-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:14:13-35
+349            android:exported="true" />
+349-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:15:13-36
+350
+351        <activity android:name="info.nightscout.androidaps.plugins.pump.omnipod.ui.PodManagementActivity" />
+351-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-109
+351-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:17:19-106
+352        <activity android:name="info.nightscout.androidaps.plugins.pump.omnipod.ui.PodHistoryActivity" />
+352-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-106
+352-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-103
+353        <activity android:name="info.nightscout.androidaps.plugins.pump.omnipod.ui.wizard.activation.PodActivationWizardActivity" />
+353-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-133
+353-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:19:19-130
+354        <activity android:name="info.nightscout.androidaps.plugins.pump.omnipod.ui.wizard.deactivation.PodDeactivationWizardActivity" />
+354-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:20:9-137
+354-->[:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:20:19-134
+355        <activity android:name="info.nightscout.androidaps.plugins.pump.common.dialog.RileyLinkBLEConfigActivity" >
+355-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-24:20
+355-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-114
+356            <intent-filter>
+356-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:19:13-23:29
+357                <action android:name="info.nightscout.androidaps.plugins.PumpCommon.dialog.RileyLinkBLEConfigActivity" />
+357-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:20:17-122
+357-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:20:25-119
+358
+359                <category android:name="android.intent.category.DEFAULT" />
+359-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:17-76
+359-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:27-73
+360            </intent-filter>
+361        </activity>
+362        <activity
+362-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:25:9-28:62
+363            android:name="info.nightscout.androidaps.plugins.pump.common.hw.rileylink.dialog.RileyLinkStatusActivity"
+363-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:26:13-118
+364            android:label="@string/title_activity_rileylink_settings"
+364-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:27:13-70
+365            android:theme="@style/Theme.AppCompat.NoTitle" />
+365-->[:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:28:13-59
+366        <activity android:name="info.nightscout.androidaps.activities.TDDStatsActivity" />
+366-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-91
+366-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-88
+367        <activity
+367-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:66
+368            android:name="info.nightscout.androidaps.activities.BolusProgressHelperActivity"
+368-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:20:13-93
+369            android:theme="@style/Theme.AppCompat.Translucent" />
+369-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:21:13-63
+370        <activity
+370-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-24:66
+371            android:name="info.nightscout.androidaps.activities.ErrorHelperActivity"
+371-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-85
+372            android:theme="@style/Theme.AppCompat.Translucent" />
+372-->[:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-63
+373        <activity
+373-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:28:9-31:67
+374            android:name="androidx.biometric.DeviceCredentialHandlerActivity"
+374-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:29:13-78
+375            android:exported="true"
+375-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:30:13-36
+376            android:theme="@style/DeviceCredentialHandlerTheme" />
+376-->[androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:31:13-64
+377        <activity
+377-->[dev.doubledot.doki:library:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\682425c411fe329e189053cf4ec0dff2\jetified-library-0.0.1\AndroidManifest.xml:14:9-16:72
+378            android:name="dev.doubledot.doki.ui.DokiActivity"
+378-->[dev.doubledot.doki:library:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\682425c411fe329e189053cf4ec0dff2\jetified-library-0.0.1\AndroidManifest.xml:15:13-62
+379            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+379-->[dev.doubledot.doki:library:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\682425c411fe329e189053cf4ec0dff2\jetified-library-0.0.1\AndroidManifest.xml:16:13-69
+380
+381        <service
+381-->[com.google.firebase:firebase-crashlytics-ktx:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e0a710a396749bfdeb0604b482b88477\jetified-firebase-crashlytics-ktx-17.2.2\AndroidManifest.xml:24:9-30:19
+382            android:name="com.google.firebase.components.ComponentDiscoveryService"
+382-->[com.google.firebase:firebase-crashlytics-ktx:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e0a710a396749bfdeb0604b482b88477\jetified-firebase-crashlytics-ktx-17.2.2\AndroidManifest.xml:25:13-84
+383            android:directBootAware="true"
+383-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:35:13-43
+384            android:exported="false" >
+384-->[com.google.firebase:firebase-crashlytics-ktx:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e0a710a396749bfdeb0604b482b88477\jetified-firebase-crashlytics-ktx-17.2.2\AndroidManifest.xml:26:13-37
+385            <meta-data
+385-->[com.google.firebase:firebase-crashlytics-ktx:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e0a710a396749bfdeb0604b482b88477\jetified-firebase-crashlytics-ktx-17.2.2\AndroidManifest.xml:27:13-29:85
+386                android:name="com.google.firebase.components:com.google.firebase.crashlytics.ktx.FirebaseCrashlyticsKtxRegistrar"
+386-->[com.google.firebase:firebase-crashlytics-ktx:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e0a710a396749bfdeb0604b482b88477\jetified-firebase-crashlytics-ktx-17.2.2\AndroidManifest.xml:28:17-130
+387                android:value="com.google.firebase.components.ComponentRegistrar" />
+387-->[com.google.firebase:firebase-crashlytics-ktx:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e0a710a396749bfdeb0604b482b88477\jetified-firebase-crashlytics-ktx-17.2.2\AndroidManifest.xml:29:17-82
+388            <meta-data
+388-->[com.google.firebase:firebase-database-ktx:19.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\0a3a3a9366f9cbf9a05bc3bba24d14a4\jetified-firebase-database-ktx-19.5.0\AndroidManifest.xml:15:13-17:85
+389                android:name="com.google.firebase.components:com.google.firebase.database.ktx.FirebaseDatabaseKtxRegistrar"
+389-->[com.google.firebase:firebase-database-ktx:19.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\0a3a3a9366f9cbf9a05bc3bba24d14a4\jetified-firebase-database-ktx-19.5.0\AndroidManifest.xml:16:17-124
+390                android:value="com.google.firebase.components.ComponentRegistrar" />
+390-->[com.google.firebase:firebase-database-ktx:19.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\0a3a3a9366f9cbf9a05bc3bba24d14a4\jetified-firebase-database-ktx-19.5.0\AndroidManifest.xml:17:17-82
+391            <meta-data
+391-->[com.google.firebase:firebase-messaging-ktx:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\b920079796fd266b8e5b6416d012e7e9\jetified-firebase-messaging-ktx-20.3.0\AndroidManifest.xml:29:13-31:85
+392                android:name="com.google.firebase.components:com.google.firebase.messaging.ktx.FirebaseMessagingKtxRegistrar"
+392-->[com.google.firebase:firebase-messaging-ktx:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\b920079796fd266b8e5b6416d012e7e9\jetified-firebase-messaging-ktx-20.3.0\AndroidManifest.xml:30:17-126
+393                android:value="com.google.firebase.components.ComponentRegistrar" />
+393-->[com.google.firebase:firebase-messaging-ktx:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\b920079796fd266b8e5b6416d012e7e9\jetified-firebase-messaging-ktx-20.3.0\AndroidManifest.xml:31:17-82
+394            <meta-data
+394-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:39:13-41:85
+395                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+395-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:40:17-119
+396                android:value="com.google.firebase.components.ComponentRegistrar" />
+396-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:41:17-82
+397            <meta-data
+397-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:32:13-34:85
+398                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+398-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:33:17-96
+399                android:value="com.google.firebase.components.ComponentRegistrar" />
+399-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:34:17-82
+400            <meta-data
+400-->[com.google.firebase:firebase-analytics-ktx:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\4b8a2bd5b3d3a632f34ffd7b74e9a51a\jetified-firebase-analytics-ktx-17.6.0\AndroidManifest.xml:11:13-13:85
+401                android:name="com.google.firebase.components:com.google.firebase.analytics.ktx.FirebaseAnalyticsKtxRegistrar"
+401-->[com.google.firebase:firebase-analytics-ktx:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\4b8a2bd5b3d3a632f34ffd7b74e9a51a\jetified-firebase-analytics-ktx-17.6.0\AndroidManifest.xml:12:17-126
+402                android:value="com.google.firebase.components.ComponentRegistrar" />
+402-->[com.google.firebase:firebase-analytics-ktx:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\4b8a2bd5b3d3a632f34ffd7b74e9a51a\jetified-firebase-analytics-ktx-17.6.0\AndroidManifest.xml:13:17-82
+403            <meta-data
+403-->[com.google.android.gms:play-services-measurement-api:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f4a1b3691b137ae1ba7815c662b88867\jetified-play-services-measurement-api-17.6.0\AndroidManifest.xml:30:13-32:85
+404                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+404-->[com.google.android.gms:play-services-measurement-api:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f4a1b3691b137ae1ba7815c662b88867\jetified-play-services-measurement-api-17.6.0\AndroidManifest.xml:31:17-139
+405                android:value="com.google.firebase.components.ComponentRegistrar" />
+405-->[com.google.android.gms:play-services-measurement-api:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f4a1b3691b137ae1ba7815c662b88867\jetified-play-services-measurement-api-17.6.0\AndroidManifest.xml:32:17-82
+406            <meta-data
+406-->[com.google.firebase:firebase-auth-ktx:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8b379805c319671f0bd7cbbefd2bc516\jetified-firebase-auth-ktx-19.4.0\AndroidManifest.xml:11:13-13:85
+407                android:name="com.google.firebase.components:com.google.firebase.auth.ktx.FirebaseAuthKtxRegistrar"
+407-->[com.google.firebase:firebase-auth-ktx:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8b379805c319671f0bd7cbbefd2bc516\jetified-firebase-auth-ktx-19.4.0\AndroidManifest.xml:12:17-116
+408                android:value="com.google.firebase.components.ComponentRegistrar" />
+408-->[com.google.firebase:firebase-auth-ktx:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8b379805c319671f0bd7cbbefd2bc516\jetified-firebase-auth-ktx-19.4.0\AndroidManifest.xml:13:17-82
+409            <meta-data
+409-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:36:13-38:85
+410                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+410-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:37:17-109
+411                android:value="com.google.firebase.components.ComponentRegistrar" />
+411-->[com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:38:17-82
+412            <meta-data
+412-->[com.google.firebase:firebase-database:19.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e2c657b40c7d074af794271334098a6e\jetified-firebase-database-19.5.0\AndroidManifest.xml:32:13-34:85
+413                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+413-->[com.google.firebase:firebase-database:19.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e2c657b40c7d074af794271334098a6e\jetified-firebase-database-19.5.0\AndroidManifest.xml:33:17-109
+414                android:value="com.google.firebase.components.ComponentRegistrar" />
+414-->[com.google.firebase:firebase-database:19.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e2c657b40c7d074af794271334098a6e\jetified-firebase-database-19.5.0\AndroidManifest.xml:34:17-82
+415            <meta-data
+415-->[com.google.firebase:firebase-common-ktx:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\17793e99bcf3a76612a406137854d92e\jetified-firebase-common-ktx-19.3.1\AndroidManifest.xml:15:13-17:85
+416                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar"
+416-->[com.google.firebase:firebase-common-ktx:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\17793e99bcf3a76612a406137854d92e\jetified-firebase-common-ktx-19.3.1\AndroidManifest.xml:16:17-113
+417                android:value="com.google.firebase.components.ComponentRegistrar" />
+417-->[com.google.firebase:firebase-common-ktx:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\17793e99bcf3a76612a406137854d92e\jetified-firebase-common-ktx-19.3.1\AndroidManifest.xml:17:17-82
+418            <meta-data
+418-->[com.google.firebase:firebase-crashlytics:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f0679a539a502b51b9ef9f96c4281cf5\jetified-firebase-crashlytics-17.2.2\AndroidManifest.xml:16:13-18:85
+419                android:name="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar"
+419-->[com.google.firebase:firebase-crashlytics:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f0679a539a502b51b9ef9f96c4281cf5\jetified-firebase-crashlytics-17.2.2\AndroidManifest.xml:17:17-115
+420                android:value="com.google.firebase.components.ComponentRegistrar" />
+420-->[com.google.firebase:firebase-crashlytics:17.2.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f0679a539a502b51b9ef9f96c4281cf5\jetified-firebase-crashlytics-17.2.2\AndroidManifest.xml:18:17-82
+421            <meta-data
+421-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\5fd0350b531618cfced9f77cb70377bc\jetified-firebase-datatransport-17.0.3\AndroidManifest.xml:28:13-30:85
+422                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+422-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\5fd0350b531618cfced9f77cb70377bc\jetified-firebase-datatransport-17.0.3\AndroidManifest.xml:29:17-115
+423                android:value="com.google.firebase.components.ComponentRegistrar" />
+423-->[com.google.firebase:firebase-datatransport:17.0.3] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\5fd0350b531618cfced9f77cb70377bc\jetified-firebase-datatransport-17.0.3\AndroidManifest.xml:30:17-82
+424            <meta-data
+424-->[com.google.firebase:firebase-installations:16.3.3] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\1d470c794a827d612be5ecdb6804fbdf\jetified-firebase-installations-16.3.3\AndroidManifest.xml:17:13-19:85
+425                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+425-->[com.google.firebase:firebase-installations:16.3.3] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\1d470c794a827d612be5ecdb6804fbdf\jetified-firebase-installations-16.3.3\AndroidManifest.xml:18:17-127
+426                android:value="com.google.firebase.components.ComponentRegistrar" />
+426-->[com.google.firebase:firebase-installations:16.3.3] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\1d470c794a827d612be5ecdb6804fbdf\jetified-firebase-installations-16.3.3\AndroidManifest.xml:19:17-82
+427        </service>
+428
+429        <provider
+429-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:31:9-37:35
+430            android:name="androidx.work.impl.WorkManagerInitializer"
+430-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:32:13-69
+431            android:authorities="info.nightscout.androidaps.workmanager-init"
+431-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:33:13-68
+432            android:directBootAware="false"
+432-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:34:13-44
+433            android:exported="false"
+433-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:35:13-37
+434            android:multiprocess="true" />
+434-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:36:13-40
+435
+436        <service
+436-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:39:9-44:35
+437            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+437-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:40:13-88
+438            android:directBootAware="false"
+438-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:41:13-44
+439            android:enabled="@bool/enable_system_alarm_service_default"
+439-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:42:13-72
+440            android:exported="false" />
+440-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:43:13-37
+441        <service
+441-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:45:9-51:35
+442            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+442-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:46:13-84
+443            android:directBootAware="false"
+443-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:47:13-44
+444            android:enabled="@bool/enable_system_job_service_default"
+444-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:48:13-70
+445            android:exported="true"
+445-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:49:13-36
+446            android:permission="android.permission.BIND_JOB_SERVICE" />
+446-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:50:13-69
+447        <service
+447-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:52:9-57:35
+448            android:name="androidx.work.impl.foreground.SystemForegroundService"
+448-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:53:13-81
+449            android:directBootAware="false"
+449-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:54:13-44
+450            android:enabled="@bool/enable_system_foreground_service_default"
+450-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:55:13-77
+451            android:exported="false" />
+451-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:56:13-37
+452
+453        <receiver
+453-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:59:9-64:35
+454            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+454-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:60:13-88
+455            android:directBootAware="false"
+455-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:61:13-44
+456            android:enabled="true"
+456-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:62:13-35
+457            android:exported="false" />
+457-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:63:13-37
+458        <receiver
+458-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:65:9-75:20
+459            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+459-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:66:13-106
+460            android:directBootAware="false"
+460-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:67:13-44
+461            android:enabled="false"
+461-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:68:13-36
+462            android:exported="false" >
+462-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:69:13-37
+463            <intent-filter>
+463-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:71:13-74:29
+464                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+464-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:72:17-87
+464-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:72:25-84
+465                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+465-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:73:17-90
+465-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:73:25-87
+466            </intent-filter>
+467        </receiver>
+468        <receiver
+468-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:76:9-86:20
+469            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+469-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:77:13-104
+470            android:directBootAware="false"
+470-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:78:13-44
+471            android:enabled="false"
+471-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:79:13-36
+472            android:exported="false" >
+472-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:80:13-37
+473            <intent-filter>
+473-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:82:13-85:29
+474                <action android:name="android.intent.action.BATTERY_OKAY" />
+474-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:83:17-77
+474-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:83:25-74
+475                <action android:name="android.intent.action.BATTERY_LOW" />
+475-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:84:17-76
+475-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:84:25-73
+476            </intent-filter>
+477        </receiver>
+478        <receiver
+478-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:87:9-97:20
+479            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+479-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:88:13-104
+480            android:directBootAware="false"
+480-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:89:13-44
+481            android:enabled="false"
+481-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:90:13-36
+482            android:exported="false" >
+482-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:91:13-37
+483            <intent-filter>
+483-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:93:13-96:29
+484                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+484-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:94:17-83
+484-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:94:25-80
+485                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+485-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:95:17-82
+485-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:95:25-79
+486            </intent-filter>
+487        </receiver>
+488        <receiver
+488-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:98:9-107:20
+489            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+489-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:99:13-103
+490            android:directBootAware="false"
+490-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:100:13-44
+491            android:enabled="false"
+491-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:101:13-36
+492            android:exported="false" >
+492-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:102:13-37
+493            <intent-filter>
+493-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:104:13-106:29
+494                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+494-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:105:17-79
+494-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:105:25-76
+495            </intent-filter>
+496        </receiver>
+497        <receiver
+497-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:108:9-119:20
+498            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+498-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:109:13-88
+499            android:directBootAware="false"
+499-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:110:13-44
+500            android:enabled="false"
+500-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:111:13-36
+501            android:exported="false" >
+501-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:112:13-37
+502            <intent-filter>
+502-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:114:13-118:29
+503                <action android:name="android.intent.action.BOOT_COMPLETED" />
+503-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:125:17-79
+503-->C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:125:25-76
+504                <action android:name="android.intent.action.TIME_SET" />
+504-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:116:17-73
+504-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:116:25-70
+505                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+505-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:117:17-81
+505-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:117:25-78
+506            </intent-filter>
+507        </receiver>
+508        <receiver
+508-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:120:9-129:20
+509            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+509-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:121:13-99
+510            android:directBootAware="false"
+510-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:122:13-44
+511            android:enabled="@bool/enable_system_alarm_service_default"
+511-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:123:13-72
+512            android:exported="false" >
+512-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:124:13-37
+513            <intent-filter>
+513-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:126:13-128:29
+514                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+514-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:127:17-98
+514-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:127:25-95
+515            </intent-filter>
+516        </receiver>
+517        <receiver
+517-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:130:9-140:20
+518            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+518-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:131:13-78
+519            android:directBootAware="false"
+519-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:132:13-44
+520            android:enabled="true"
+520-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:133:13-35
+521            android:exported="true"
+521-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:134:13-36
+522            android:permission="android.permission.DUMP" >
+522-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:135:13-57
+523            <intent-filter>
+523-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:137:13-139:29
+524                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+524-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:138:17-88
+524-->[androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:138:25-85
+525            </intent-filter>
+526        </receiver>
+527        <!--
+528             FirebaseMessagingService performs security checks at runtime,
+529             but set to not exported to explicitly avoid allowing another app to call it.
+530        -->
+531        <service
+531-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:28:9-35:19
+532            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+532-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:29:13-82
+533            android:directBootAware="true"
+533-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:30:13-43
+534            android:exported="false" >
+534-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:31:13-37
+535            <intent-filter android:priority="-500" >
+535-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:32:13-34:29
+535-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:32:28-51
+536                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+536-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:33:17-78
+536-->[com.google.firebase:firebase-messaging:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ae0521608d57cec0c8724eba0a57bc4c\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:33:25-75
+537            </intent-filter>
+538        </service>
+539
+540        <receiver
+540-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:37:9-44:20
+541            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+541-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:38:13-78
+542            android:exported="true"
+542-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:39:13-36
+543            android:permission="com.google.android.c2dm.permission.SEND" >
+543-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:40:13-73
+544            <intent-filter>
+544-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:41:13-43:29
+545                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+545-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:42:17-81
+545-->[com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:42:25-78
+546            </intent-filter>
+547        </receiver>
+548        <receiver
+548-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:29:9-33:20
+549            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+549-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:30:13-85
+550            android:enabled="true"
+550-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:31:13-35
+551            android:exported="false" >
+551-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:32:13-37
+552        </receiver>
+553
+554        <service
+554-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:35:9-38:40
+555            android:name="com.google.android.gms.measurement.AppMeasurementService"
+555-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:36:13-84
+556            android:enabled="true"
+556-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:37:13-35
+557            android:exported="false" />
+557-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:38:13-37
+558        <service
+558-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:39:9-43:72
+559            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+559-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:40:13-87
+560            android:enabled="true"
+560-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:41:13-35
+561            android:exported="false"
+561-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:42:13-37
+562            android:permission="android.permission.BIND_JOB_SERVICE" />
+562-->[com.google.android.gms:play-services-measurement:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\9a1cda71a80c97af9ba4a93839fcafeb\jetified-play-services-measurement-17.6.0\AndroidManifest.xml:43:13-69
+563
+564        <activity
+564-->[com.google.android.gms:play-services-base:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\6a536c72f4a88cef8dc74a9eb3fb3a65\jetified-play-services-base-17.3.0\AndroidManifest.xml:23:9-26:75
+565            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+565-->[com.google.android.gms:play-services-base:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\6a536c72f4a88cef8dc74a9eb3fb3a65\jetified-play-services-base-17.3.0\AndroidManifest.xml:24:13-79
+566            android:exported="false"
+566-->[com.google.android.gms:play-services-base:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\6a536c72f4a88cef8dc74a9eb3fb3a65\jetified-play-services-base-17.3.0\AndroidManifest.xml:25:13-37
+567            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+567-->[com.google.android.gms:play-services-base:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\6a536c72f4a88cef8dc74a9eb3fb3a65\jetified-play-services-base-17.3.0\AndroidManifest.xml:26:13-72
+568
+569        <provider
+569-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:26:9-31:39
+570            android:name="com.google.firebase.provider.FirebaseInitProvider"
+570-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:27:13-77
+571            android:authorities="info.nightscout.androidaps.firebaseinitprovider"
+571-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:28:13-72
+572            android:directBootAware="true"
+572-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:29:13-43
+573            android:exported="false"
+573-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:30:13-37
+574            android:initOrder="100" />
+574-->[com.google.firebase:firebase-common:19.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8ed705ee67073f9f8aef635e19ffb44b\jetified-firebase-common-19.3.1\AndroidManifest.xml:31:13-36
+575
+576        <meta-data
+576-->[com.google.android.gms:play-services-basement:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3721dbbb91cfb05cd1098867340b162b\jetified-play-services-basement-17.3.0\AndroidManifest.xml:23:9-25:69
+577            android:name="com.google.android.gms.version"
+577-->[com.google.android.gms:play-services-basement:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3721dbbb91cfb05cd1098867340b162b\jetified-play-services-basement-17.3.0\AndroidManifest.xml:24:13-58
+578            android:value="@integer/google_play_services_version" />
+578-->[com.google.android.gms:play-services-basement:17.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3721dbbb91cfb05cd1098867340b162b\jetified-play-services-basement-17.3.0\AndroidManifest.xml:25:13-66
+579
+580        <service
+580-->[androidx.room:room-runtime:2.2.5] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7b7d635593480ddb25d2144ee671c858\room-runtime-2.2.5\AndroidManifest.xml:25:9-28:40
+581            android:name="androidx.room.MultiInstanceInvalidationService"
+581-->[androidx.room:room-runtime:2.2.5] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7b7d635593480ddb25d2144ee671c858\room-runtime-2.2.5\AndroidManifest.xml:26:13-74
+582            android:directBootAware="true"
+582-->[androidx.room:room-runtime:2.2.5] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7b7d635593480ddb25d2144ee671c858\room-runtime-2.2.5\AndroidManifest.xml:27:13-43
+583            android:exported="false" />
+583-->[androidx.room:room-runtime:2.2.5] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7b7d635593480ddb25d2144ee671c858\room-runtime-2.2.5\AndroidManifest.xml:28:13-37
+584        <service
+584-->[com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\176c318222e4d7746ebbd2f514aa596f\jetified-transport-backend-cct-2.3.1\AndroidManifest.xml:29:9-35:19
+585            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+585-->[com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\176c318222e4d7746ebbd2f514aa596f\jetified-transport-backend-cct-2.3.1\AndroidManifest.xml:30:13-103
+586            android:exported="false" >
+586-->[com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\176c318222e4d7746ebbd2f514aa596f\jetified-transport-backend-cct-2.3.1\AndroidManifest.xml:31:13-37
+587            <meta-data
+587-->[com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\176c318222e4d7746ebbd2f514aa596f\jetified-transport-backend-cct-2.3.1\AndroidManifest.xml:32:13-34:39
+588                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+588-->[com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\176c318222e4d7746ebbd2f514aa596f\jetified-transport-backend-cct-2.3.1\AndroidManifest.xml:33:17-94
+589                android:value="cct" />
+589-->[com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\176c318222e4d7746ebbd2f514aa596f\jetified-transport-backend-cct-2.3.1\AndroidManifest.xml:34:17-36
+590        </service>
+591        <service
+591-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:26:9-30:19
+592            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+592-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:27:13-117
+593            android:exported="false"
+593-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:28:13-37
+594            android:permission="android.permission.BIND_JOB_SERVICE" >
+594-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:29:13-69
+595        </service>
+596
+597        <receiver
+597-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:32:9-34:40
+598            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+598-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:33:13-132
+599            android:exported="false" />
+599-->[com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:34:13-37
+600
+601        <meta-data
+601-->[Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:6:9-7:69
+602            android:name="com.google.android.wearable.beta.app"
+602-->[Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:6:20-71
+603            android:resource="@xml/android_wear_micro_apk" />
+603-->[Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:7:20-66
+604    </application>
+605
+606</manifest>

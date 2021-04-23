@@ -1,0 +1,39 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-v23\\values-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\13c03636735b9d261ceefd7ec28c8e0d\\jetified-wearable-2.4.0\\res\\values-v23\\values.xml",
+                    "from": {
+                        "startLines": "4,8,12,20,23",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "211,373,537,938,1079",
+                        "endLines": "7,11,19,22,24",
+                        "endColumns": "8,8,8,8,8",
+                        "endOffsets": "372,536,937,1078,1178"
+                    },
+                    "to": {
+                        "startLines": "50,54,58,66,69",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "3524,3690,3858,4263,4408",
+                        "endLines": "53,57,65,68,70",
+                        "endColumns": "8,8,8,8,8",
+                        "endOffsets": "3685,3853,4258,4403,4507"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\101b64ec7c8c08cb0e428ff84568fbdc\\appcompat-1.2.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,190,325,400,487,1371,2267,2386,2513,2735,2959,3074,3181,3294",
+                        "endLines": "2,3,4,5,19,33,34,35,38,42,43,44,45,49",
+                        "endColumns": "134,134,74,86,12,12,118,126,12,12,114,106,112,12",
+                        "endOffsets": "185,320,395,482,1366,2262,2381,2508,2730,2954,3069,3176,3289,3519"
+                    }
+                }
+            ]
+        }
+    ]
+}

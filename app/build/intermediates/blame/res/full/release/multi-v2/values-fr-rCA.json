@@ -1,0 +1,181 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-fr-rCA\\values-fr-rCA.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\ae0521608d57cec0c8724eba0a57bc4c\\jetified-firebase-messaging-20.3.0\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "211",
+                        "endColumns": "100",
+                        "endOffsets": "311"
+                    },
+                    "to": {
+                        "startLines": "132",
+                        "startColumns": "4",
+                        "startOffsets": "11594",
+                        "endColumns": "104",
+                        "endOffsets": "11694"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\101b64ec7c8c08cb0e428ff84568fbdc\\appcompat-1.2.0\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,216,323,433,520,626,756,841,921,1012,1105,1203,1298,1398,1491,1584,1679,1770,1861,1947,2057,2168,2271,2382,2490,2597,2756,2855",
+                        "endColumns": "110,106,109,86,105,129,84,79,90,92,97,94,99,92,92,94,90,90,85,109,110,102,110,107,106,158,98,86",
+                        "endOffsets": "211,318,428,515,621,751,836,916,1007,1100,1198,1293,1393,1486,1579,1674,1765,1856,1942,2052,2163,2266,2377,2485,2592,2751,2850,2937"
+                    },
+                    "to": {
+                        "startLines": "78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,148",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "5021,5132,5239,5349,5436,5542,5672,5757,5837,5928,6021,6119,6214,6314,6407,6500,6595,6686,6777,6863,6973,7084,7187,7298,7406,7513,7672,13689",
+                        "endColumns": "110,106,109,86,105,129,84,79,90,92,97,94,99,92,92,94,90,90,85,109,110,102,110,107,106,158,98,86",
+                        "endOffsets": "5127,5234,5344,5431,5537,5667,5752,5832,5923,6016,6114,6209,6309,6402,6495,6590,6681,6772,6858,6968,7079,7182,7293,7401,7508,7667,7766,13771"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\f9ce495c7baa3763c689e3abd70f7a2d\\preference-1.1.1\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "105,175,260,336,479,648,734",
+                        "endColumns": "69,84,75,142,168,85,79",
+                        "endOffsets": "170,255,331,474,643,729,809"
+                    },
+                    "to": {
+                        "startLines": "125,128,146,147,150,151,152",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "10915,11184,13470,13546,13877,14046,14132",
+                        "endColumns": "69,84,75,142,168,85,79",
+                        "endOffsets": "10980,11264,13541,13684,14041,14127,14207"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3721dbbb91cfb05cd1098867340b162b\\jetified-play-services-basement-17.3.0\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "251",
+                        "endColumns": "219",
+                        "endOffsets": "470"
+                    },
+                    "to": {
+                        "startLines": "114",
+                        "startColumns": "4",
+                        "startOffsets": "9117",
+                        "endColumns": "219",
+                        "endOffsets": "9332"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\5575c2aaf02ff1292b63d3a11b0f2328\\jetified-android.joda-2.10.6\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,78,79,80",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,359,621,886,1154,1409,1673,1940,2213,2460,2710,2963,3210,3464,3723,3984,4231,4491,4755,5021,5149,5276",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,78,79,80",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,127,126,150",
+                        "endOffsets": "354,616,881,1149,1404,1668,1935,2208,2455,2705,2958,3205,3459,3718,3979,4226,4486,4750,5016,5144,5271,5422"
+                    },
+                    "to": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,141,142,143",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,359,621,886,1154,1409,1673,1940,2213,2460,2710,2963,3210,3464,3723,3984,4231,4491,4755,12825,12953,13080",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,141,142,143",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,127,126,150",
+                        "endOffsets": "354,616,881,1149,1404,1668,1935,2208,2455,2705,2958,3205,3459,3718,3979,4226,4486,4750,5016,12948,13075,13226"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3561dc70e849b312d1b56d0217e3bf1d\\biometric-1.0.1\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,180,298,390,511,674,828,962,1093,1273,1376",
+                        "endColumns": "124,117,91,120,162,153,133,130,179,102,139",
+                        "endOffsets": "175,293,385,506,669,823,957,1088,1268,1371,1511"
+                    },
+                    "to": {
+                        "startLines": "105,124,127,133,134,135,136,137,138,139,140",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7771,10797,11092,11699,11820,11983,12137,12271,12402,12582,12685",
+                        "endColumns": "124,117,91,120,162,153,133,130,179,102,139",
+                        "endOffsets": "7891,10910,11179,11815,11978,12132,12266,12397,12577,12680,12820"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\fdd8fd6c1c596832706325b714d42b77\\browser-1.2.0\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,162,264,383",
+                        "endColumns": "106,101,118,103",
+                        "endOffsets": "157,259,378,482"
+                    },
+                    "to": {
+                        "startLines": "126,129,130,131",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "10985,11269,11371,11490",
+                        "endColumns": "106,101,118,103",
+                        "endOffsets": "11087,11366,11485,11589"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\a9059b51eae2c26253663006bf7ac568\\core-1.3.2\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "149",
+                        "startColumns": "4",
+                        "startOffsets": "13776",
+                        "endColumns": "100",
+                        "endOffsets": "13872"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\6a536c72f4a88cef8dc74a9eb3fb3a65\\jetified-play-services-base-17.3.0\\res\\values-fr-rCA\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "249,353,565,693,800,1030,1161,1308,1446,1700,1810,2026,2160,2379,2584,2683,2773",
+                        "endColumns": "103,211,127,106,229,130,146,137,253,109,215,133,218,204,98,89,108",
+                        "endOffsets": "352,564,692,799,1029,1160,1307,1445,1699,1809,2025,2159,2378,2583,2682,2772,2881"
+                    },
+                    "to": {
+                        "startLines": "106,107,108,109,110,111,112,113,115,116,117,118,119,120,121,122,123",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7896,8004,8216,8348,8459,8689,8824,8975,9337,9591,9705,9921,10059,10278,10487,10590,10684",
+                        "endColumns": "107,211,131,110,229,134,150,141,253,113,215,137,218,208,102,93,112",
+                        "endOffsets": "7999,8211,8343,8454,8684,8819,8970,9112,9586,9700,9916,10054,10273,10482,10585,10679,10792"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\e6cb9a4d1f8d697d141fd6ff2eec6e81\\navigation-ui-2.3.2\\res\\values-fr-rCA\\values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,168",
+                        "endColumns": "112,125",
+                        "endOffsets": "163,289"
+                    },
+                    "to": {
+                        "startLines": "144,145",
+                        "startColumns": "4,4",
+                        "startOffsets": "13231,13344",
+                        "endColumns": "112,125",
+                        "endOffsets": "13339,13465"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,181 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-zh-rHK\\values-zh-rHK.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3721dbbb91cfb05cd1098867340b162b\\jetified-play-services-basement-17.3.0\\res\\values-zh-rHK\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "251",
+                        "endColumns": "166",
+                        "endOffsets": "417"
+                    },
+                    "to": {
+                        "startLines": "114",
+                        "startColumns": "4",
+                        "startOffsets": "8406",
+                        "endColumns": "166",
+                        "endOffsets": "8568"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\101b64ec7c8c08cb0e428ff84568fbdc\\appcompat-1.2.0\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,200,293,393,475,572,680,757,832,924,1018,1109,1205,1300,1394,1490,1582,1674,1766,1844,1940,2035,2130,2227,2323,2421,2572,2666",
+                        "endColumns": "94,92,99,81,96,107,76,74,91,93,90,95,94,93,95,91,91,91,77,95,94,94,96,95,97,150,93,78",
+                        "endOffsets": "195,288,388,470,567,675,752,827,919,1013,1104,1200,1295,1389,1485,1577,1669,1761,1839,1935,2030,2125,2222,2318,2416,2567,2661,2740"
+                    },
+                    "to": {
+                        "startLines": "78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,148",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "4715,4810,4903,5003,5085,5182,5290,5367,5442,5534,5628,5719,5815,5910,6004,6100,6192,6284,6376,6454,6550,6645,6740,6837,6933,7031,7182,12078",
+                        "endColumns": "94,92,99,81,96,107,76,74,91,93,90,95,94,93,95,91,91,91,77,95,94,94,96,95,97,150,93,78",
+                        "endOffsets": "4805,4898,4998,5080,5177,5285,5362,5437,5529,5623,5714,5810,5905,5999,6095,6187,6279,6371,6449,6545,6640,6735,6832,6928,7026,7177,7271,12152"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\e6cb9a4d1f8d697d141fd6ff2eec6e81\\navigation-ui-2.3.2\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,154",
+                        "endColumns": "98,99",
+                        "endOffsets": "149,249"
+                    },
+                    "to": {
+                        "startLines": "144,145",
+                        "startColumns": "4,4",
+                        "startOffsets": "11691,11790",
+                        "endColumns": "98,99",
+                        "endOffsets": "11785,11885"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\ae0521608d57cec0c8724eba0a57bc4c\\jetified-firebase-messaging-20.3.0\\res\\values-zh-rHK\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "211",
+                        "endColumns": "96",
+                        "endOffsets": "307"
+                    },
+                    "to": {
+                        "startLines": "132",
+                        "startColumns": "4",
+                        "startOffsets": "10393",
+                        "endColumns": "100",
+                        "endOffsets": "10489"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\6a536c72f4a88cef8dc74a9eb3fb3a65\\jetified-play-services-base-17.3.0\\res\\values-zh-rHK\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "249,348,508,621,721,887,1001,1129,1247,1416,1515,1675,1788,1954,2088,2169,2252",
+                        "endColumns": "98,159,112,99,165,113,127,117,168,98,159,112,165,133,80,82,96",
+                        "endOffsets": "347,507,620,720,886,1000,1128,1246,1415,1514,1674,1787,1953,2087,2168,2251,2348"
+                    },
+                    "to": {
+                        "startLines": "106,107,108,109,110,111,112,113,115,116,117,118,119,120,121,122,123",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7384,7487,7647,7764,7868,8034,8152,8284,8573,8742,8845,9005,9122,9288,9426,9511,9598",
+                        "endColumns": "102,159,116,103,165,117,131,121,168,102,159,116,165,137,84,86,100",
+                        "endOffsets": "7482,7642,7759,7863,8029,8147,8279,8401,8737,8840,9000,9117,9283,9421,9506,9593,9694"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\5575c2aaf02ff1292b63d3a11b0f2328\\jetified-android.joda-2.10.6\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,78,79,80",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,347,594,842,1089,1332,1580,1829,2077,2317,2559,2799,3034,3273,3515,3755,3990,4231,4474,4715,4842,4969",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,78,79,80",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,126,126,150",
+                        "endOffsets": "342,589,837,1084,1327,1575,1824,2072,2312,2554,2794,3029,3268,3510,3750,3985,4226,4469,4710,4837,4964,5115"
+                    },
+                    "to": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,141,142,143",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,347,594,842,1089,1332,1580,1829,2077,2317,2559,2799,3034,3273,3515,3755,3990,4231,4474,11286,11413,11540",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,141,142,143",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,126,126,150",
+                        "endOffsets": "342,589,837,1084,1327,1575,1824,2072,2312,2554,2794,3029,3268,3510,3750,3985,4226,4469,4710,11408,11535,11686"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\fdd8fd6c1c596832706325b714d42b77\\browser-1.2.0\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,138,230,331",
+                        "endColumns": "82,91,100,91",
+                        "endOffsets": "133,225,326,418"
+                    },
+                    "to": {
+                        "startLines": "126,129,130,131",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "9863,10108,10200,10301",
+                        "endColumns": "82,91,100,91",
+                        "endOffsets": "9941,10195,10296,10388"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\a9059b51eae2c26253663006bf7ac568\\core-1.3.2\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "149",
+                        "startColumns": "4",
+                        "startOffsets": "12157",
+                        "endColumns": "100",
+                        "endOffsets": "12253"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\f9ce495c7baa3763c689e3abd70f7a2d\\preference-1.1.1\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "105,171,252,321,440,608,687",
+                        "endColumns": "65,80,68,118,167,78,75",
+                        "endOffsets": "166,247,316,435,603,682,758"
+                    },
+                    "to": {
+                        "startLines": "125,128,146,147,150,151,152",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "9797,10027,11890,11959,12258,12426,12505",
+                        "endColumns": "65,80,68,118,167,78,75",
+                        "endOffsets": "9858,10103,11954,12073,12421,12500,12576"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3561dc70e849b312d1b56d0217e3bf1d\\biometric-1.0.1\\res\\values-zh-rHK\\values-zh-rHK.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,163,261,342,441,544,646,744,846,948,1038",
+                        "endColumns": "107,97,80,98,102,101,97,101,101,89,95",
+                        "endOffsets": "158,256,337,436,539,641,739,841,943,1033,1129"
+                    },
+                    "to": {
+                        "startLines": "105,124,127,133,134,135,136,137,138,139,140",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7276,9699,9946,10494,10593,10696,10798,10896,10998,11100,11190",
+                        "endColumns": "107,97,80,98,102,101,97,101,101,89,95",
+                        "endOffsets": "7379,9792,10022,10588,10691,10793,10891,10993,11095,11185,11281"
+                    }
+                }
+            ]
+        }
+    ]
+}

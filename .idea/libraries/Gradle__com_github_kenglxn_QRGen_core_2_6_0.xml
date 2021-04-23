@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.kenglxn.QRGen:core:2.6.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kenglxn.QRGen/core/2.6.0/c7d01630bfb5450ca17ceb897846dc2fa36ca198/core-2.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kenglxn.QRGen/core/2.6.0/43d622e3fbee40263cd8a53f7c786fb19af884e5/core-2.6.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.kenglxn.QRGen/core/2.6.0/259e46b5fd00b4a22920cc5288bd904e0b83a446/core-2.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

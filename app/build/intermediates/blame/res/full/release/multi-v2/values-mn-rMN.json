@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-mn-rMN\\values-mn-rMN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\5575c2aaf02ff1292b63d3a11b0f2328\\jetified-android.joda-2.10.6\\res\\values-mn-rMN\\values-mn-rMN.xml",
+                    "from": {
+                        "startLines": "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58,62,66,70,74,78,79,80",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,362,627,891,1152,1409,1673,1936,2202,2444,2692,2942,3192,3449,3711,3975,4224,4481,4742,5005,5130,5255",
+                        "endLines": "5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,78,79,80",
+                        "endColumns": "14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,124,124,150",
+                        "endOffsets": "357,622,886,1147,1404,1668,1931,2197,2439,2687,2937,3187,3444,3706,3970,4219,4476,4737,5000,5125,5250,5401"
+                    }
+                }
+            ]
+        }
+    ]
+}
