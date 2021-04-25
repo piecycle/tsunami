@@ -9,11 +9,11 @@ public final class BuildConfig {
   public static final String BUILD_TYPE = "release";
   public static final String FLAVOR = "full";
   public static final int VERSION_CODE = 1500;
-  public static final String VERSION_NAME = "2.8.2-UAM_tsunami_0.1";
+  public static final String VERSION_NAME = "2.8.2-UAM_tsunami_0.4";
   // Fields from default config.
-  public static final String BUILDVERSION = "4729181b-2021.04.23-00:11";
+  public static final String BUILDVERSION = "5be98f2c-2021.04.25-20:24";
   public static final String COMMITTED = "false";
-  public static final String HEAD = "4729181b";
-  public static final String REMOTE = "https://gitlab.com/MTR93600/aaps-uam-dcurve-autoisf-standardui";
-  public static final String VERSION = "2.8.2-UAM_tsunami_0.1";
+  public static final String HEAD = "5be98f2c";
+  public static final String REMOTE = "https://gitlab.com/piecycle/aaps_uam_tsunami";
+  public static final String VERSION = "2.8.2-UAM_tsunami_0.4";
 }

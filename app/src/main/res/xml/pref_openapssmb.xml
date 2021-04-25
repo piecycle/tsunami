@@ -135,22 +135,31 @@
             validate:floatminNumber="0"
             validate:testType="floatNumericRange" />-->
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="4"
-            android:dialogMessage="@string/UAM_ISF1_summary"
+            android:defaultValue="0.2"
+            android:dialogMessage="@string/scale_max_summary"
             android:inputType="numberDecimal"
-            android:key="@string/key_UAM_ISF1"
-            android:title="@string/UAM_ISF1_title"
-            validate:floatmaxNumber="6"
+            android:key="@string/key_scale_max"
+            android:title="@string/scale_max_title"
+            validate:floatmaxNumber="1"
+            validate:floatminNumber="0.1"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="4"
+            android:dialogMessage="@string/scale_50_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_scale_50"
+            android:title="@string/scale_50_title"
+            validate:floatmaxNumber="50"
             validate:floatminNumber="1"
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="20"
-            android:dialogMessage="@string/UAM_ISF2_summary"
+            android:defaultValue="1.5"
+            android:dialogMessage="@string/W2_modifier_summary"
             android:inputType="numberDecimal"
-            android:key="@string/key_UAM_ISF2"
-            android:title="@string/UAM_ISF2_title"
-            validate:floatmaxNumber="50"
-            validate:floatminNumber="5"
+            android:key="@string/key_W2_modifier"
+            android:title="@string/W2_modifier_title"
+            validate:floatmaxNumber="3"
+            validate:floatminNumber="1"
             validate:testType="floatNumericRange" />
         <!--MP: bolus cap during TT START-->
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference

@@ -346,41 +346,51 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
 // 3 = autoISF
 autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //MP: Keep autoISF running in the bg so it can analyse the development of the glucose curve
   //  if (profile.temptargetSet && target_bg >= 80 && target_bg <= 85 && profile.temptarget_duration >= 29 && iob_data.iob < 6) { //MT: change isf for a normal meal who will rise slowly
-    if (profile.temptargetSet && target_bg >= 80 && target_bg <= 85 && profile.temptarget_duration >= 29 && iob_data.iob < 6 && glucose_status.delta >= 0 && bg >= 80) { //MT: change isf for a normal meal who will rise slowly
-           // sens = (profile.sens / (glucose_status.delta / 3.5)); //MP: Empirical model, v1 Apr17_midnight
-            sens = profile.sens / (((profile.UAM_ISF1 * glucose_status.delta) / (profile.UAM_ISF2 + glucose_status.delta))+1); //MP: Model based on Michaelis-Menten kinetic, self limiting at higher values.
+    if (profile.temptargetSet && target_bg >= 80 && target_bg <= 85 && profile.temptarget_duration >= 29 && iob_data.iob < 0.8 * max_iob && glucose_status.delta >= 0 && bg >= 80) { //MT: change isf for a normal meal who will rise slowly
+            //sens = (profile.sens / (glucose_status.delta / 3.5)); //MP: Empirical model, v1 Apr17_midnight
+            //sens = profile.sens / (((profile.scale_max * glucose_status.delta) / ((profile.scale_50/(bg/target_bg) + glucose_status.delta))+1); //MP: Model based on Michaelis-Menten kinetic, self limiting at higher values. OUTDATED, parameters don't represent their meaning
+            sens = profile.sens - (((profile.sens - (profile.sens * profile.scale_max)) * glucose_status.delta) / ((profile.scale_50/(bg/target_bg)) + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg.
             sens = round(sens, 1);
             scale_ISF_ID = 0
-            console.log("W1 1: Scale ISF from "+profile_sens+" to "+sens);
-    }else if (iob_data.iob > 2 && now >= MealTimeStart && now <= MealTimeEnd && glucose_status.delta >= 0 && bg >= 80){ //MP: Second wave assist outside UAM Mode, active only during user-defined hours
-     //sens = (profile.sens / (glucose_status.delta / 4)); //MP: Empirical model, v1 Apr17_midnight
-     sens = profile.sens / (((0.5 * profile.UAM_ISF1 * glucose_status.delta) / (0.5 * profile.UAM_ISF2 + glucose_status.delta))+1); //MP: Model based on Michaelis-Menten kinetic, self limiting at higher values.
-     sens = round (sens,1);
-     scale_ISF_ID = 1
-     console.log("W2: Scale ISF from "+profile_sens+" to "+sens);
+            console.log("Scale_ISF_ID: "+scale_ISF_ID);
+            console.log("Scale_50 adjusted from "+profile.scale_50+" to "+profile.scale_50/(bg/target_bg)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
+            console.log("W1: Scale ISF from "+profile_sens+" to "+sens);
+    }else if (iob_data.iob > 1 && now >= MealTimeStart && now <= MealTimeEnd && glucose_status.delta >= 4 && bg >= 100){ //MP: Second wave assist outside UAM Mode, active only during user-defined hours
+            //sens = (profile.sens / (glucose_status.delta / 4)); //MP: Empirical model, v1 Apr17_midnight
+            //sens = profile.sens / (((profile.scale_max * glucose_status.delta) / ((profile.scale_50/(bg/target_bg) + glucose_status.delta))+1); //MP: Model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg.
+            sens = profile.sens - (((profile.sens - (profile.sens * profile.scale_max)) * glucose_status.delta) / (((profile.scale_50 * profile.W2_modifier)/(bg/target_bg)) + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg. scale_50 is weakened.
+            sens = round (sens,1);
+            scale_ISF_ID = 1
+            console.log("Scale_ISF_ID: "+scale_ISF_ID);
+            console.log("Scale_50 adjusted from "+profile.scale_50+" to "+profile.scale_50/(bg/target_bg)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+bg+" = "+round(profile.W2_modifier/(bg/target_bg), 2)+";");
+            console.log("W2: Scale ISF from "+profile_sens+" to "+sens);
    //###################### MP: Code below for dinner only 2nd wave assist
    // }else if (iob_data.iob > 2 && now >= 19 && now < MealTimeEnd && glucose_status.delta >= 0 && bg >= 80){ //MP: Outdated, for dinner-only 2nd wave assist
-   //  sens = profile.sens / (((0.5 * profile.UAM_ISF1 * glucose_status.delta) / (0.5 * profile.UAM_ISF2 + glucose_status.delta))+1); //MP: Model based on Michaelis-Menten kinetic, self limiting at higher values.
+   //  sens = profile.sens / (((0.5 * profile.scale_max * glucose_status.delta) / (0.5 * profile.UAM_ISF2 + glucose_status.delta))+1); //MP: Model based on Michaelis-Menten kinetic, self limiting at higher values.
    //  sens = (profile.sens / (glucose_status.delta / 4)); //MP: Empirical model, v1 Apr17_midnight
    //  sens = (sens - glucose_status.delta)/profile.UAM_ISF1;
    //  sens = round (sens,1);
    //  console.log("W2: Scale ISF from "+profile_sens+" to "+sens);
    //###################### MP: Code above for dinner only 2nd wave assist
     }else if (bg <=120 && glucose_status.delta < -(5)) {
-     sens = profile.sens * 2;
-     sens = round (sens,1);
-     scale_ISF_ID = 2
-     console.log("Reduce ISF from "+profile_sens+" to "+sens);
-    }else if (!profile.temptargetSet && target_bg > 85 || target_bg < 80 && glucose_status.delta >= 0 && bg >= 80) {//MP: Use autoISF only outside UAM mode, outside TT, outside 2nd wave assist and only if glucose is rising and at least 80 mg/dl
-        if (bg >= 150 && glucose_status.delta >= 4 && insulinReq >= round( 3 * profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1) && UAM_boluscap * 0.75 > round( 3 * profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1) && now >= MealTimeStart && now <= MealTimeEnd) {
-            scale_ISF_ID = 3.1 //MP: Allows use of UAM_boluscap (weakened or original, as defined below) if an array of safety conditions is met
-            sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
-            console.log("autoISF_BC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
-        }else {
-            sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
-            scale_ISF_ID = 3
-            console.log("autoISF_MC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
-        }
+            sens = profile.sens * 2;
+            sens = round (sens,1);
+            scale_ISF_ID = 2
+            console.log("Scale_ISF_ID: "+scale_ISF_ID);
+            console.log("Reduce ISF from "+profile_sens+" to "+sens);
+    //}else if (!profile.temptargetSet && target_bg > 85 || target_bg < 80 && bg >= 80) {//MP: Use autoISF only outside UAM mode, outside TT, outside 2nd wave assist and only if glucose is rising and at least 80 mg/dl
+    }else if (bg >= 80) {//MP: Use autoISF only outside UAM mode, outside TT, outside 2nd wave assist and only if glucose is rising and at least 80 mg/dl
+            if (bg >= 150 && glucose_status.delta >= 4 && insulinReq >= round( 3 * profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1) && UAM_boluscap * 0.75 > round( 3 * profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1) && now >= MealTimeStart && now <= MealTimeEnd) {
+                    scale_ISF_ID = 3.1 //MP: Allows use of UAM_boluscap (weakened or original, as defined below) if an array of safety conditions is met
+                    sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
+                    console.log("Scale_ISF_ID: "+scale_ISF_ID);
+                    console.log("autoISF_BC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
+            }else {
+                    sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
+                    scale_ISF_ID = 3
+                    console.log("Scale_ISF_ID: "+scale_ISF_ID);
+                    console.log("autoISF_MC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
+            }
     }
 //############################# MP
 //### ISF SCALING CODE END ### MP
@@ -1171,7 +1181,7 @@ autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sens
            //         console.error("profile.maxUAMSMBBasalMinutes:",profile.maxUAMSMBBasalMinutes,"profile.current_basal:",profile.current_basal);
            //         maxBolus = round( profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1);
              //MP: UAM_boluscap limiter: Use UAM minutes outside TT (default lines: above)
-                if (profile.maxUAMSMBBasalMinutes && scale_ISF_ID != 0 || 1) {
+                if (profile.maxUAMSMBBasalMinutes && scale_ISF_ID !== 0 && scale_ISF_ID !== 1) {
                     if (scale_ISF_ID == 3.1) { //MP: Cap maxbolus for autoISF at modified UAM_boluscap
                         console.error("autoISF_BC: maxbolus capped at ",0.75 * UAM_boluscap," U.");
                         maxBolus = 0.75 * profile.UAM_boluscap;
@@ -1180,7 +1190,7 @@ autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sens
                     maxBolus = round( profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1);
                     }
              //MP: UAM_boluscap limiter: USE UAM_boluscap within TT
-                } else if (scale_ISF_ID == 0 || 1) {
+                } else if (scale_ISF_ID == 0 || scale_ISF_ID == 1) {
                     console.error("profile.UAM_boluscap:",profile.UAM_boluscap);
                     maxBolus = profile.UAM_boluscap;
                 } else {
@@ -1194,14 +1204,14 @@ autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sens
             // bolus 1/2 the insulinReq, up to maxBolus, rounding down to nearest bolus increment
             var roundSMBTo = 1 / profile.bolus_increment;
             var insulinReqPCT = profile.UAM_InsulinReq;
-
-            if (iob_data.iob > 3 && eventualBG > 130 && eventualBG < 180 && now >= MealTimeStart && now <= MealTimeEnd){
-            insulinReqPCT = 1;
-            }
-            if (eventualBG > 180 && now >= MealTimeStart && now <= MealTimeEnd) {
-            insulinReqPCT = 1.3;
-            }
-
+//MP commented out below for v0.4
+           // if (iob_data.iob > 3 && eventualBG > 130 && eventualBG < 180 && now >= MealTimeStart && now <= MealTimeEnd){
+           // insulinReqPCT = 1;
+           // }
+           // if (eventualBG > 180 && now >= MealTimeStart && now <= MealTimeEnd) {
+           // insulinReqPCT = 1.3;
+           // }
+//MP commented out above for v0.4
             var microBolus = Math.floor(Math.min(insulinReq * insulinReqPCT,maxBolus)*roundSMBTo)/roundSMBTo;
             // calculate a long enough zero temp to eventually correct back up to target
             var smbTarget = target_bg;

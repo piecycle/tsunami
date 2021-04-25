@@ -1,21 +1,21 @@
 -- Merging decision tree log ---
 application
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:35:5-285:19
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:35:5-285:19
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-33:19
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-33:19
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-26:19
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-26:19
-MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-14:19
-MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-14:19
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-22:19
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-22:19
-MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-21:19
-MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-21:19
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-29:19
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-29:19
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-25:19
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-25:19
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:35:5-285:19
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:35:5-285:19
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-33:19
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-33:19
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-26:19
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-26:19
+MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-14:19
+MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-14:19
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-22:19
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-22:19
+MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-21:19
+MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-21:19
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-29:19
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-29:19
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-25:19
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:17:5-25:19
 MERGED from [androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:27:5-32:19
 MERGED from [androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:27:5-32:19
 MERGED from [dev.doubledot.doki:library:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\682425c411fe329e189053cf4ec0dff2\jetified-library-0.0.1\AndroidManifest.xml:13:5-17:19
@@ -104,55 +104,55 @@ MERGED from [com.scottyab:rootbeer-lib:0.0.8] C:\Users\pinne\.gradle\caches\tran
 MERGED from [com.scottyab:rootbeer-lib:0.0.8] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7ca1d16847747079c6fd60cabfac992c\jetified-rootbeer-lib-0.0.8\AndroidManifest.xml:11:5-20
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\df6ae6cb0b20cf4393edeabd12bb5be0\jetified-com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:12:5-20
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\df6ae6cb0b20cf4393edeabd12bb5be0\jetified-com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:12:5-20
-MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:5:5-8:18
-MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:5:5-8:18
+MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:5:5-8:18
+MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:5:5-8:18
 	android:backupAgent
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:44:9-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:44:9-51
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.3.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\a9059b51eae2c26253663006bf7ac568\core-1.3.2\AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:41:9-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:41:9-35
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:39:9-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:39:9-41
 	android:roundIcon
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:40:9-44
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:40:9-44
 	android:restoreAnyVersion
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:45:9-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:45:9-41
 	android:allowBackup
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:37:9-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:37:9-35
 	android:icon
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:38:9-34
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:38:9-34
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:42:9-49
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:42:9-49
 	android:fullBackupOnly
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:43:9-39
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:43:9-39
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:36:9-32
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:36:9-32
 provider#androidx.core.content.FileProvider
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:129:9-137:20
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:129:9-137:20
 	android:grantUriPermissions
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:133:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:133:13-47
 	android:authorities
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:131:13-64
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:131:13-64
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:132:13-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:132:13-37
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:130:13-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:130:13-62
 manifest
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-35:12
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-28:12
-MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-16:12
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-24:12
-MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-23:12
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-31:12
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-27:12
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-35:12
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-28:12
+MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-16:12
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-24:12
+MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-23:12
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-31:12
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:2:1-27:12
 MERGED from [androidx.databinding:viewbinding:4.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ba8421807e459950d8b64d04a7f61dd6\jetified-viewbinding-4.0.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.preference:preference-ktx:1.1.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8e84760443855538052a058f61276e7e\jetified-preference-ktx-1.1.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-fragment-ktx:2.3.2] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\58c74e80a3752a214c74dfe66f7cf874\navigation-fragment-ktx-2.3.2\AndroidManifest.xml:17:1-24:12
@@ -281,74 +281,74 @@ MERGED from [com.scottyab:rootbeer-lib:0.0.8] C:\Users\pinne\.gradle\caches\tran
 MERGED from [androidx.annotation:annotation-experimental:1.0.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\df94ae78097a9c7d3b60857a9c776bb7\jetified-annotation-experimental-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.dagger:dagger-lint-aar:2.30.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\89f79378cce3b97d091975fc628c1594\jetified-dagger-lint-aar-2.30.1\AndroidManifest.xml:16:1-19:12
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\df6ae6cb0b20cf4393edeabd12bb5be0\jetified-com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:2:1-14:12
-MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:2:1-9:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
+MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
 	package
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:4:5-41
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:4:5-41
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
 	xmlns:tools
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:3:5-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:1-287:12
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:1-287:12
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:6:5-79
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-79
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-79
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-79
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-79
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:6:5-79
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-79
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-79
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-79
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-79
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:6:22-76
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:6:22-76
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:7:5-81
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:7:5-81
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:27:5-81
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:27:5-81
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:7:22-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:7:22-78
 uses-permission#android.permission.BLUETOOTH
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:8:5-68
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-68
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-68
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:8:5-68
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-68
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-68
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-68
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:8:22-65
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:8:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:9:5-74
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:9:5-74
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-74
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:9:22-71
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:9:22-71
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:10:5-78
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:10:5-78
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:10:22-75
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:10:22-75
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:11:5-81
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:11:5-81
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:11:22-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:11:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:12:5-80
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:12:5-80
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:12:22-77
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:12:22-77
 uses-permission#android.permission.WAKE_LOCK
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:13:5-68
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:13:5-68
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:25:5-68
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:25:5-68
 MERGED from [com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:24:5-68
@@ -364,33 +364,33 @@ MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] C:\Use
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\5b59d296bc5beb1bf11298e0b1cc433f\jetified-play-services-measurement-sdk-api-17.6.0\AndroidManifest.xml:25:5-68
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.6.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\5b59d296bc5beb1bf11298e0b1cc433f\jetified-play-services-measurement-sdk-api-17.6.0\AndroidManifest.xml:25:5-68
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:13:22-65
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:13:22-65
 uses-permission#android.permission.RECEIVE_SMS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:14:5-70
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:14:5-70
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:14:22-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:14:22-67
 uses-permission#android.permission.RECEIVE_MMS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:15:5-70
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:15:5-70
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:15:22-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:15:22-67
 uses-permission#android.permission.SEND_SMS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:16:5-67
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:16:5-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:16:22-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:16:22-64
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:17:5-75
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:17:5-75
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:17:22-72
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:17:22-72
 uses-permission#android.permission.SEND_MMS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:18:5-67
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:18:5-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:18:22-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:18:22-64
 uses-permission#android.permission.VIBRATE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:19:5-66
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:19:5-66
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:19:22-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:19:22-63
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:20:5-67
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:20:5-67
 MERGED from [dev.doubledot.doki:library:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\682425c411fe329e189053cf4ec0dff2\jetified-library-0.0.1\AndroidManifest.xml:11:5-67
 MERGED from [dev.doubledot.doki:library:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\682425c411fe329e189053cf4ec0dff2\jetified-library-0.0.1\AndroidManifest.xml:11:5-67
 MERGED from [com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:23:5-67
@@ -416,31 +416,31 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Us
 MERGED from [dev.doubledot.doki:api:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e81588e5d6136ac6d8a6606b579721a7\jetified-api-0.0.1\AndroidManifest.xml:11:5-67
 MERGED from [dev.doubledot.doki:api:0.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\e81588e5d6136ac6d8a6606b579721a7\jetified-api-0.0.1\AndroidManifest.xml:11:5-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:20:22-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:20:22-64
 uses-permission#com.google.android.permission.PROVIDE_BACKGROUND
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:21:5-88
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:21:5-88
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:21:22-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:21:22-85
 uses-permission#android.permission.FOREGROUND_SERVICE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:22:5-77
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-77
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-77
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:22:5-77
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-77
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:13:5-77
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:28:5-77
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:28:5-77
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:22:22-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:22:22-74
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:24:5-81
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-81
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-81
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-81
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-81
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:24:5-81
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-81
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:15:5-81
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-81
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:14:5-81
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:24:22-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:24:22-78
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:25:5-79
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-79
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-79
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:25:5-79
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-79
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:11:5-79
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:26:5-79
 MERGED from [androidx.work:work-runtime:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\f506e13646c54cbb26931b480bda7737\work-runtime-2.4.0\AndroidManifest.xml:26:5-79
 MERGED from [com.google.firebase:firebase-iid:20.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\15991820ba41999dc5960ce57da754ce\jetified-firebase-iid-20.3.0\AndroidManifest.xml:22:5-79
@@ -464,47 +464,47 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.1] C:\Us
 MERGED from [com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:22:5-79
 MERGED from [com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:25:22-76
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:25:22-76
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:26:5-76
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-76
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-76
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:26:5-76
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-76
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:12:5-76
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:26:22-73
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:26:22-73
 uses-permission#com.dexcom.cgm.EXTERNAL_PERMISSION
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:27:5-74
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:27:5-74
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:27:22-71
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:27:22-71
 uses-permission#android.permission.USE_FULL_SCREEN_INTENT
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:28:5-81
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:28:5-81
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:28:22-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:28:22-78
 uses-permission-sdk-23#android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:30:5-102
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:30:5-102
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:30:29-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:30:29-99
 uses-permission#com.eveningoutpost.dexdrip.permissions.RECEIVE_BG_ESTIMATE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:33:5-98
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:33:5-98
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:33:22-95
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:33:22-95
 uses-sdk
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
-MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
+MERGED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.databinding:viewbinding:4.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ba8421807e459950d8b64d04a7f61dd6\jetified-viewbinding-4.0.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.databinding:viewbinding:4.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\ba8421807e459950d8b64d04a7f61dd6\jetified-viewbinding-4.0.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.preference:preference-ktx:1.1.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\8e84760443855538052a058f61276e7e\jetified-preference-ktx-1.1.1\AndroidManifest.xml:20:5-22:41
@@ -761,96 +761,96 @@ MERGED from [com.google.dagger:dagger-lint-aar:2.30.1] C:\Users\pinne\.gradle\ca
 MERGED from [com.google.dagger:dagger-lint-aar:2.30.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\89f79378cce3b97d091975fc628c1594\jetified-dagger-lint-aar-2.30.1\AndroidManifest.xml:18:3-42
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\df6ae6cb0b20cf4393edeabd12bb5be0\jetified-com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:8:5-10:41
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\df6ae6cb0b20cf4393edeabd12bb5be0\jetified-com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:8:5-10:41
-MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:4:5-73
-MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:4:5-73
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:4:5-73
+MERGED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:4:5-73
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml
 meta-data#com.google.android.backup.api_key
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:47:9-49:82
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:47:9-49:82
 	android:value
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:49:13-79
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:49:13-79
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:48:13-61
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:48:13-61
 meta-data#com.google.android.gms.car.application
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:51:9-53:59
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:51:9-53:59
 	android:resource
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:53:13-56
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:53:13-56
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:52:13-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:52:13-66
 activity#info.nightscout.androidaps.MainActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:55:9-61:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:55:9-61:20
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:55:19-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:55:19-47
 intent-filter#action:name:android.intent.action.MAIN+action:name:android.intent.action.VIEW+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:56:13-60:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:56:13-60:29
 action#android.intent.action.VIEW
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:17-69
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:57:17-69
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:57:25-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:57:25-66
 action#android.intent.action.MAIN
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:58:17-69
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:58:17-69
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:58:25-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:58:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:59:17-77
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:59:17-77
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:59:27-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:59:27-74
 activity#info.nightscout.androidaps.activities.PreferencesActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:62:9-68
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:62:9-68
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:62:19-65
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:62:19-65
 activity#info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:63:9-69:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:63:9-69:20
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:63:19-94
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:63:19-94
 intent-filter#action:name:info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity+category:name:android.intent.category.DEFAULT
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:64:13-68:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:64:13-68:29
 action#info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:65:17-129
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:65:17-129
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:65:25-126
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:65:25-126
 category#android.intent.category.DEFAULT
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:17-76
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:67:17-76
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:67:27-73
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:67:27-73
 activity#info.nightscout.androidaps.plugins.general.maintenance.activities.PrefImportListActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:70:9-99
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:70:9-99
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:70:19-96
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:70:19-96
 activity#info.nightscout.androidaps.historyBrowser.HistoryBrowseActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:71:9-74
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:71:9-74
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:71:19-71
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:71:19-71
 activity#info.nightscout.androidaps.activities.SurveyActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:72:9-63
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:72:9-63
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:72:19-60
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:72:19-60
 activity#info.nightscout.androidaps.activities.ProfileHelperActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:73:9-74:60
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:73:9-74:60
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:74:13-57
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:74:13-57
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:73:19-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:73:19-67
 activity#info.nightscout.androidaps.activities.StatsActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:75:9-62
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:75:9-62
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:75:19-59
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:75:19-59
 activity#com.google.firebase.auth.internal.FederatedSignInActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:76:9-79:45
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:76:9-79:45
 MERGED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:24:9-31:50
 MERGED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:24:9-31:50
 	android:excludeFromRecents
 		ADDED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:26:13-46
 	android:launchMode
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:79:13-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:79:13-42
 		REJECTED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:28:13-44
 	android:exported
 		ADDED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:27:13-36
@@ -859,381 +859,381 @@ MERGED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\ca
 	android:theme
 		ADDED from [com.google.firebase:firebase-auth:19.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\7edc3471b31ab923ca96b24e2c7c5044\jetified-firebase-auth-19.4.0\AndroidManifest.xml:30:13-72
 	tools:replace
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:78:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:78:13-47
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:77:13-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:77:13-85
 receiver#info.nightscout.androidaps.receivers.DataReceiver
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:82:9-100:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:82:9-100:20
 	android:enabled
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:84:17-39
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:84:17-39
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:85:17-40
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:85:17-40
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:83:17-55
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:83:17-55
 intent-filter#action:name:com.china.poctech.data+action:name:com.dexcom.cgm.EXTERNAL_BROADCAST+action:name:com.eveningoutpost.dexdrip.BgEstimate+action:name:com.eveningoutpost.dexdrip.NS_EMULATOR+action:name:com.fanqies.tomatofn.BgEstimate+action:name:it.ct.glicemia.ACTION_GLUCOSE_MEASURED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:86:13-99:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:86:13-99:29
 action#com.eveningoutpost.dexdrip.BgEstimate
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:88:17-79
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:88:17-79
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:88:25-77
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:88:25-77
 action#com.eveningoutpost.dexdrip.NS_EMULATOR
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:90:17-80
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:90:17-80
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:90:25-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:90:25-78
 action#it.ct.glicemia.ACTION_GLUCOSE_MEASURED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:92:17-80
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:92:17-80
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:92:25-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:92:25-78
 action#com.dexcom.cgm.EXTERNAL_BROADCAST
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:94:17-75
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:94:17-75
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:94:25-73
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:94:25-73
 action#com.china.poctech.data
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:96:17-64
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:96:17-64
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:96:25-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:96:25-62
 action#com.fanqies.tomatofn.BgEstimate
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:98:17-73
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:98:17-73
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:98:25-71
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:98:25-71
 receiver#info.nightscout.androidaps.receivers.SmsReceiver
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:103:9-111:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:103:9-111:20
 	android:enabled
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:105:17-39
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:105:17-39
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:106:17-40
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:106:17-40
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:107:17-70
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:107:17-70
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:104:17-54
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:104:17-54
 intent-filter#action:name:android.provider.Telephony.SMS_RECEIVED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:108:13-110:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:108:13-110:29
 action#android.provider.Telephony.SMS_RECEIVED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:109:17-81
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:109:17-81
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:109:25-79
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:109:25-79
 receiver#info.nightscout.androidaps.receivers.KeepAliveReceiver
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:114:9-65
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:114:9-65
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:114:19-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:114:19-62
 receiver#info.nightscout.androidaps.plugins.aps.loop.CarbSuggestionReceiver
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:117:9-86
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:117:9-86
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:117:19-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:117:19-74
 receiver#info.nightscout.androidaps.receivers.AutoStartReceiver
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:120:9-127:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:120:9-127:20
 	android:enabled
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:122:13-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:122:13-35
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:123:13-36
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:123:13-36
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:121:13-56
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:121:13-56
 intent-filter#action:name:android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:124:13-126:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:124:13-126:29
 action#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:125:17-79
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:125:17-79
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:125:25-76
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:125:25-76
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:134:13-136:53
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:134:13-136:53
 	android:resource
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:136:17-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:136:17-50
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:135:17-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:135:17-67
 service#info.nightscout.androidaps.services.DataService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:140:9-142:40
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:140:9-142:40
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:142:13-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:142:13-37
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:141:13-49
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:141:13-49
 service#info.nightscout.androidaps.services.LocationService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:143:9-145:40
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:143:9-145:40
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:145:13-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:145:13-37
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:144:13-53
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:144:13-53
 service#info.nightscout.androidaps.plugins.general.wear.wearintegration.WatchUpdaterService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:146:9-208:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:146:9-208:19
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:148:13-36
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:148:13-36
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:147:13-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:147:13-85
 intent-filter#action:name:com.google.android.gms.wearable.CAPABILITY_CHANGED+action:name:com.google.android.gms.wearable.DATA_CHANGED+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:pathPrefix:/nightscout_watch_actionconfirmationrequest+data:pathPrefix:/nightscout_watch_basal+data:pathPrefix:/nightscout_watch_bolusprogress+data:pathPrefix:/nightscout_watch_cancel_bolus+data:pathPrefix:/nightscout_watch_cancelnotificationrequest+data:pathPrefix:/nightscout_watch_changeconfirmationrequest+data:pathPrefix:/nightscout_watch_confirmactionstring+data:pathPrefix:/nightscout_watch_data+data:pathPrefix:/nightscout_watch_data_resend+data:pathPrefix:/nightscout_watch_initiateactionstring+data:pathPrefix:/openwearsettings+data:pathPrefix:/sendpreferencestowear+data:pathPrefix:/sendstatustowear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:149:13-207:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:149:13-207:29
 action#com.google.android.gms.wearable.CAPABILITY_CHANGED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:152:17-93
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:152:17-93
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:152:25-90
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:152:25-90
 action#com.google.android.gms.wearable.DATA_CHANGED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:153:17-87
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:153:17-87
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:153:25-84
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:153:25-84
 data
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:155:17-158:45
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:155:17-158:45
 	android:host
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:156:21-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:156:21-37
 	android:scheme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:158:21-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:158:21-42
 	android:pathPrefix
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:157:21-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:157:21-64
 service#info.nightscout.androidaps.plugins.general.nsclient.services.NSClientService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:209:9-212:39
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:209:9-212:39
 	android:enabled
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:211:13-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:211:13-35
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:212:13-36
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:212:13-36
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:210:13-78
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:210:13-78
 service#info.nightscout.androidaps.services.AlarmSoundService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:213:9-216:39
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:213:9-216:39
 	android:enabled
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:215:13-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:215:13-35
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:216:13-36
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:216:13-36
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:214:13-55
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:214:13-55
 service#info.nightscout.androidaps.plugins.general.overview.notifications.DismissNotificationService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:217:9-219:40
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:217:9-219:40
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:219:13-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:219:13-37
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:218:13-94
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:218:13-94
 service#info.nightscout.androidaps.plugins.general.persistentNotification.DummyService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:221:9-88
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:221:9-88
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:221:18-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:221:18-85
 service#info.nightscout.androidaps.plugins.pump.insight.connection_service.InsightConnectionService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:222:9-101
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:222:9-101
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:222:18-98
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:222:18-98
 service#info.nightscout.androidaps.plugins.pump.insight.InsightAlertService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:223:9-77
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:223:9-77
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:223:18-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:223:18-74
 meta-data#io.fabric.ApiKey
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:225:9-227:72
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:225:9-227:72
 	android:value
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:227:13-69
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:227:13-69
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:226:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:226:13-44
 activity#info.nightscout.androidaps.setupwizard.SetupWizardActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:229:9-233:59
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:229:9-233:59
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:232:13-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:232:13-64
 	android:configChanges
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:231:13-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:231:13-74
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:233:13-56
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:233:13-56
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:230:13-60
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:230:13-60
 activity#info.nightscout.androidaps.activities.SingleFragmentActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:235:9-237:47
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:235:9-237:47
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:237:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:237:13-44
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:236:13-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:236:13-62
 activity#info.nightscout.androidaps.plugins.general.maintenance.activities.LogSettingActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:238:9-95
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:238:9-95
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:238:19-92
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:238:19-92
 activity#info.nightscout.androidaps.plugins.pump.insight.activities.InsightPairingActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:239:9-242:47
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:239:9-242:47
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:241:13-52
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:241:13-52
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:242:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:242:13-44
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:240:13-83
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:240:13-83
 activity#info.nightscout.androidaps.plugins.pump.insight.activities.InsightAlertActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:243:9-248:57
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:243:9-248:57
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:245:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:245:13-47
 	android:excludeFromRecents
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:246:13-46
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:246:13-46
 	android:launchMode
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:247:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:247:13-48
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:248:13-54
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:248:13-54
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:244:13-81
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:244:13-81
 activity#info.nightscout.androidaps.plugins.pump.insight.activities.InsightPairingInformationActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:249:9-252:47
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:249:9-252:47
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:251:13-56
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:251:13-56
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:252:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:252:13-44
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:250:13-94
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:250:13-94
 activity#info.nightscout.androidaps.activities.RequestDexcomPermissionActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:253:9-80
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:253:9-80
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:253:19-77
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:253:19-77
 activity#info.nightscout.androidaps.plugins.general.smsCommunicator.activities.SmsCommunicatorOtpActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:254:9-260:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:254:9-260:20
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:254:19-104
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:254:19-104
 intent-filter#action:name:info.nightscout.androidaps.plugins.general.smsCommunicator.activities.SmsCommunicatorOtpActivity+category:name:android.intent.category.DEFAULT
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:255:13-259:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:255:13-259:29
 action#info.nightscout.androidaps.plugins.general.smsCommunicator.activities.SmsCommunicatorOtpActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:256:17-139
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:256:17-139
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:256:25-136
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:256:25-136
 service#info.nightscout.androidaps.plugins.pump.medtronic.service.RileyLinkMedtronicService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:263:9-266:39
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:263:9-266:39
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
 	android:enabled
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:265:13-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:265:13-35
 	android:exported
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:266:13-36
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:266:13-36
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:264:13-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:264:13-85
 activity#info.nightscout.androidaps.plugins.pump.medtronic.dialog.MedtronicHistoryActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:268:9-92
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-118
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-118
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:268:9-92
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-118
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-118
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:268:19-89
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:268:19-89
 activity#info.nightscout.androidaps.plugins.general.openhumans.OpenHumansLoginActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:269:9-281:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:269:9-281:20
 	android:launchMode
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:270:13-43
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:270:13-43
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:269:19-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:269:19-85
 intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:setup-openhumans+data:scheme:androidaps
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:271:13-280:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:271:13-280:29
 category#android.intent.category.BROWSABLE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:275:17-78
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:275:17-78
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:275:27-75
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:275:27-75
 uses-library#org.apache.http.legacy
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:283:9-87
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:40
-MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_1_6_1\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:40
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:283:9-87
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:40
+MERGED from [:medtronic] C:\Users\pinne\StudioProjects\UAM_tsunami\medtronic\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:40
 	android:required
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:283:61-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:283:61-85
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\app\src\main\AndroidManifest.xml:283:23-60
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\app\src\main\AndroidManifest.xml:283:23-60
 activity#info.nightscout.androidaps.danars.activities.BLEScanActivity
-ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:15:9-21:20
+ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:15:9-21:20
 	android:name
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:15:19-94
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:15:19-94
 intent-filter#action:name:info.nightscout.androidaps.plugins.PumpDanaRS.activities.BLEScanActivity+category:name:android.intent.category.DEFAULT
-ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:16:13-20:29
+ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:16:13-20:29
 action#info.nightscout.androidaps.plugins.PumpDanaRS.activities.BLEScanActivity
-ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:17:17-115
+ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:17:17-115
 	android:name
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:17:25-112
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:17:25-112
 activity#info.nightscout.androidaps.danars.activities.PairingHelperActivity
-ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-24:47
+ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-24:47
 	android:launchMode
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-44
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-44
 	android:name
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-94
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-94
 activity#info.nightscout.androidaps.danars.activities.EnterPinActivity
-ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:25:9-27:47
+ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:25:9-27:47
 	android:launchMode
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:27:13-44
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:27:13-44
 	android:name
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:26:13-89
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:26:13-89
 service#info.nightscout.androidaps.danars.services.DanaRSService
-ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:29:9-32:40
+ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:29:9-32:40
 	android:enabled
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:31:13-35
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:31:13-35
 	android:exported
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:32:13-37
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:32:13-37
 	android:name
-		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_1_6_1\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:30:13-84
+		ADDED from [:danars] C:\Users\pinne\StudioProjects\UAM_tsunami\danars\build\intermediates\library_manifest\release\AndroidManifest.xml:30:13-84
 service#info.nightscout.androidaps.danar.services.DanaRExecutionService
-ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:14:9-17:40
+ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:14:9-17:40
 	android:enabled
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:16:13-35
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:16:13-35
 	android:exported
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:17:13-37
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:17:13-37
 	android:name
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:15:13-91
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:15:13-91
 service#info.nightscout.androidaps.danaRKorean.services.DanaRKoreanExecutionService
-ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-21:40
+ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-21:40
 	android:enabled
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:20:13-35
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:20:13-35
 	android:exported
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:21:13-37
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:21:13-37
 	android:name
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:19:13-103
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:19:13-103
 service#info.nightscout.androidaps.danaRv2.services.DanaRv2ExecutionService
-ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-25:40
+ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-25:40
 	android:enabled
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-35
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-35
 	android:exported
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:25:13-37
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:25:13-37
 	android:name
-		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_1_6_1\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-95
+		ADDED from [:danar] C:\Users\pinne\StudioProjects\UAM_tsunami\danar\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-95
 activity#info.nightscout.androidaps.dana.activities.DanaHistoryActivity
-ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-99
+ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-99
 	android:name
-		ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:12:19-96
+		ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:12:19-96
 activity#info.nightscout.androidaps.dana.activities.DanaUserOptionsActivity
-ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:13:9-103
+ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:13:9-103
 	android:name
-		ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_1_6_1\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:13:19-100
+		ADDED from [:dana] C:\Users\pinne\StudioProjects\UAM_tsunami\dana\build\intermediates\library_manifest\release\AndroidManifest.xml:13:19-100
 service#info.nightscout.androidaps.plugins.pump.omnipod.rileylink.service.RileyLinkOmnipodService
-ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
+ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:12:9-15:39
 	android:enabled
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:14:13-35
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:14:13-35
 	android:exported
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:15:13-36
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:15:13-36
 	android:name
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:13:13-117
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:13:13-117
 activity#info.nightscout.androidaps.plugins.pump.omnipod.ui.PodManagementActivity
-ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-109
+ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:17:9-109
 	android:name
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:17:19-106
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:17:19-106
 activity#info.nightscout.androidaps.plugins.pump.omnipod.ui.PodHistoryActivity
-ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-106
+ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-106
 	android:name
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-103
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-103
 activity#info.nightscout.androidaps.plugins.pump.omnipod.ui.wizard.activation.PodActivationWizardActivity
-ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-133
+ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-133
 	android:name
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:19:19-130
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:19:19-130
 activity#info.nightscout.androidaps.plugins.pump.omnipod.ui.wizard.deactivation.PodDeactivationWizardActivity
-ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:20:9-137
+ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:20:9-137
 	android:name
-		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_1_6_1\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:20:19-134
+		ADDED from [:omnipod] C:\Users\pinne\StudioProjects\UAM_tsunami\omnipod\build\intermediates\library_manifest\release\AndroidManifest.xml:20:19-134
 activity#info.nightscout.androidaps.plugins.pump.common.dialog.RileyLinkBLEConfigActivity
-ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-24:20
+ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-24:20
 	android:name
-		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-114
+		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-114
 intent-filter#action:name:info.nightscout.androidaps.plugins.PumpCommon.dialog.RileyLinkBLEConfigActivity+category:name:android.intent.category.DEFAULT
-ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:19:13-23:29
+ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:19:13-23:29
 action#info.nightscout.androidaps.plugins.PumpCommon.dialog.RileyLinkBLEConfigActivity
-ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:20:17-122
+ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:20:17-122
 	android:name
-		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:20:25-119
+		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:20:25-119
 activity#info.nightscout.androidaps.plugins.pump.common.hw.rileylink.dialog.RileyLinkStatusActivity
-ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:25:9-28:62
+ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:25:9-28:62
 	android:label
-		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:27:13-70
+		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:27:13-70
 	android:theme
-		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:28:13-59
+		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:28:13-59
 	android:name
-		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_1_6_1\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:26:13-118
+		ADDED from [:rileylink] C:\Users\pinne\StudioProjects\UAM_tsunami\rileylink\build\intermediates\library_manifest\release\AndroidManifest.xml:26:13-118
 activity#info.nightscout.androidaps.activities.TDDStatsActivity
-ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-91
+ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:18:9-91
 	android:name
-		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-88
+		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:18:19-88
 activity#info.nightscout.androidaps.activities.BolusProgressHelperActivity
-ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:66
+ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:19:9-21:66
 	android:theme
-		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:21:13-63
+		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:21:13-63
 	android:name
-		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:20:13-93
+		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:20:13-93
 activity#info.nightscout.androidaps.activities.ErrorHelperActivity
-ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-24:66
+ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:22:9-24:66
 	android:theme
-		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-63
+		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:24:13-63
 	android:name
-		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_1_6_1\core\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-85
+		ADDED from [:core] C:\Users\pinne\StudioProjects\UAM_tsunami\core\build\intermediates\library_manifest\release\AndroidManifest.xml:23:13-85
 uses-permission#android.permission.USE_BIOMETRIC
 ADDED from [androidx.biometric:biometric:1.0.1] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\3561dc70e849b312d1b56d0217e3bf1d\biometric-1.0.1\AndroidManifest.xml:24:5-72
 	android:name
@@ -1721,8 +1721,8 @@ ADDED from [com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\p
 	android:name
 		ADDED from [com.google.android.datatransport:transport-runtime:2.2.4] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\69a15e1aa03f3e23a75cabda411cef1b\jetified-transport-runtime-2.2.4\AndroidManifest.xml:33:13-132
 meta-data#com.google.android.wearable.beta.app
-ADDED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:6:9-7:69
+ADDED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:6:9-7:69
 	android:resource
-		ADDED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:7:20-66
+		ADDED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:7:20-66
 	android:name
-		ADDED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_1_6_1\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:6:20-71
+		ADDED from [Wear App sub-manifest] C:\Users\pinne\StudioProjects\UAM_tsunami\app\build\generated\manifests\microapk\full\release\AndroidManifest.xml:6:20-71

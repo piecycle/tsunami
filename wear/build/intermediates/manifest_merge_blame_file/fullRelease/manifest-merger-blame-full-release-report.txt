@@ -6,1042 +6,1042 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="23"
-8-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+8-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="28" />
-9-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+9-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 10
 11    <uses-feature android:name="android.hardware.type.watch" />
-11-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:5:5-64
-11-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:5:19-61
+11-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:5:5-64
+11-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:5:19-61
 12
 13    <uses-permission android:name="com.google.android.permission.PROVIDE_BACKGROUND" />
-13-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:7:5-88
-13-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:7:22-85
+13-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:7:5-88
+13-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:7:22-85
 14    <uses-permission android:name="android.permission.WAKE_LOCK" />
-14-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:8:5-68
-14-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:8:22-65
+14-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:8:5-68
+14-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:8:22-65
 15    <uses-permission android:name="android.permission.VIBRATE" />
-15-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:9:5-66
-15-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:9:22-63
+15-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:9:5-66
+15-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:9:22-63
 16
 17    <application
-17-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:12:5-551:19
+17-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:12:5-551:19
 18        android:name="info.nightscout.androidaps.Aaps"
-18-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:13:9-29
+18-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:13:9-29
 19        android:allowBackup="true"
-19-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:14:9-35
+19-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:14:9-35
 20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 20-->[androidx.core:core:1.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\1b11216289e37ba69c4a8a4b85be2d3c\core-1.3.0\AndroidManifest.xml:24:18-86
 21        android:extractNativeLibs="false"
 22        android:icon="@drawable/ic_icon"
-22-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:15:9-41
+22-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:15:9-41
 23        android:label="@string/app_name"
-23-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:16:9-41
+23-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:16:9-41
 24        android:theme="@android:style/Theme.DeviceDefault" >
-24-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:17:9-59
+24-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:17:9-59
 25        <meta-data
-25-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:18:9-20:69
+25-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:18:9-20:69
 26            android:name="com.google.android.gms.version"
-26-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:19:13-58
+26-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:19:13-58
 27            android:value="@integer/google_play_services_version" />
-27-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:20:13-66
+27-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:20:13-66
 28
 29        <service
-29-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:22:9-41:19
+29-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:22:9-41:19
 30            android:name="info.nightscout.androidaps.watchfaces.BIGChart"
-30-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:23:13-48
+30-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:23:13-48
 31            android:allowEmbedded="true"
-31-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:24:13-41
+31-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:24:13-41
 32            android:label="@string/label_xdrip_big_chart"
-32-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:25:13-58
+32-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:25:13-58
 33            android:permission="android.permission.BIND_WALLPAPER" >
-33-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:26:13-67
+33-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:26:13-67
 34            <meta-data
-34-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+34-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 35                android:name="android.service.wallpaper"
-35-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+35-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 36                android:resource="@xml/watch_face" />
-36-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+36-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 37            <meta-data
-37-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+37-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 38                android:name="com.google.android.wearable.watchface.preview"
-38-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+38-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 39                android:resource="@drawable/watchface_bigchart" />
-39-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+39-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 40            <meta-data
-40-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+40-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 41                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-41-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+41-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 42                android:value="watch_face_configuration_bigchart" />
-42-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+42-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 43
 44            <intent-filter>
-44-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+44-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 45                <action android:name="android.service.wallpaper.WallpaperService" />
-45-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-45-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+45-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+45-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 46
 47                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-47-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-47-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+47-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+47-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 48            </intent-filter>
 49        </service>
 50        <service
-50-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:43:9-62:19
+50-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:43:9-62:19
 51            android:name="info.nightscout.androidaps.watchfaces.NOChart"
-51-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:44:13-47
+51-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:44:13-47
 52            android:allowEmbedded="true"
-52-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:45:13-41
+52-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:45:13-41
 53            android:label="@string/label_xdrip_no_chart"
-53-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:46:13-57
+53-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:46:13-57
 54            android:permission="android.permission.BIND_WALLPAPER" >
-54-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:47:13-67
+54-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:47:13-67
 55            <meta-data
-55-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+55-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 56                android:name="android.service.wallpaper"
-56-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+56-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 57                android:resource="@xml/watch_face" />
-57-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+57-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 58            <meta-data
-58-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+58-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 59                android:name="com.google.android.wearable.watchface.preview"
-59-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+59-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 60                android:resource="@drawable/watchface_nochart" />
-60-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+60-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 61            <meta-data
-61-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+61-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 62                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-62-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+62-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 63                android:value="watch_face_configuration_nochart" />
-63-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+63-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 64
 65            <intent-filter>
-65-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+65-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 66                <action android:name="android.service.wallpaper.WallpaperService" />
-66-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-66-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+66-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+66-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 67
 68                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-68-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-68-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+68-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+68-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 69            </intent-filter>
 70        </service>
 71        <service
-71-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:64:9-83:19
+71-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:64:9-83:19
 72            android:name="info.nightscout.androidaps.watchfaces.Home"
-72-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:65:13-44
+72-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:65:13-44
 73            android:allowEmbedded="true"
-73-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:66:13-41
+73-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:66:13-41
 74            android:label="@string/label_xdrip"
-74-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:67:13-48
+74-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:67:13-48
 75            android:permission="android.permission.BIND_WALLPAPER" >
-75-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:68:13-67
+75-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:68:13-67
 76            <meta-data
-76-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+76-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 77                android:name="android.service.wallpaper"
-77-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+77-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 78                android:resource="@xml/watch_face" />
-78-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+78-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 79            <meta-data
-79-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+79-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 80                android:name="com.google.android.wearable.watchface.preview"
-80-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+80-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 81                android:resource="@drawable/watchface_graph" />
-81-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+81-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 82            <meta-data
-82-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+82-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 83                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-83-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+83-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 84                android:value="watch_face_configuration_home" />
-84-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+84-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 85
 86            <intent-filter>
-86-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+86-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 87                <action android:name="android.service.wallpaper.WallpaperService" />
-87-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-87-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+87-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+87-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 88
 89                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-89-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-89-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+89-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+89-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 90            </intent-filter>
 91        </service>
 92        <service
-92-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:85:9-104:19
+92-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:85:9-104:19
 93            android:name="info.nightscout.androidaps.watchfaces.Home2"
-93-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:86:13-45
+93-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:86:13-45
 94            android:allowEmbedded="true"
-94-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:87:13-41
+94-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:87:13-41
 95            android:label="@string/label_xdrip_v2"
-95-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:88:13-51
+95-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:88:13-51
 96            android:permission="android.permission.BIND_WALLPAPER" >
-96-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:89:13-67
+96-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:89:13-67
 97            <meta-data
-97-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+97-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 98                android:name="android.service.wallpaper"
-98-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+98-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 99                android:resource="@xml/watch_face" />
-99-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+99-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 100            <meta-data
-100-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+100-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 101                android:name="com.google.android.wearable.watchface.preview"
-101-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+101-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 102                android:resource="@drawable/watchface_graph_2" />
-102-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+102-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 103            <meta-data
-103-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+103-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 104                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-104-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+104-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 105                android:value="watch_face_configuration_home2" />
-105-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+105-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 106
 107            <intent-filter>
-107-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+107-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 108                <action android:name="android.service.wallpaper.WallpaperService" />
-108-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-108-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+108-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+108-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 109
 110                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-110-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-110-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+110-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+110-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 111            </intent-filter>
 112        </service>
 113        <service
-113-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:106:9-125:19
+113-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:106:9-125:19
 114            android:name="info.nightscout.androidaps.watchfaces.Cockpit"
-114-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:107:13-47
+114-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:107:13-47
 115            android:allowEmbedded="true"
-115-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:108:13-41
+115-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:108:13-41
 116            android:label="@string/label_xdrip_cockpit"
-116-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:109:13-56
+116-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:109:13-56
 117            android:permission="android.permission.BIND_WALLPAPER" >
-117-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:110:13-67
+117-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:110:13-67
 118            <meta-data
-118-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+118-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 119                android:name="android.service.wallpaper"
-119-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+119-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 120                android:resource="@xml/watch_face" />
-120-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+120-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 121            <meta-data
-121-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+121-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 122                android:name="com.google.android.wearable.watchface.preview"
-122-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+122-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 123                android:resource="@drawable/watchface_cockpit" />
-123-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+123-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 124            <meta-data
-124-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+124-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 125                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-125-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+125-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 126                android:value="watch_face_configuration_cockpit" />
-126-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+126-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 127
 128            <intent-filter>
-128-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+128-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 129                <action android:name="android.service.wallpaper.WallpaperService" />
-129-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-129-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+129-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+129-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 130
 131                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-131-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-131-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+131-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+131-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 132            </intent-filter>
 133        </service>
 134        <service
-134-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:127:9-146:19
+134-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:127:9-146:19
 135            android:name="info.nightscout.androidaps.watchfaces.Steampunk"
-135-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:128:13-49
+135-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:128:13-49
 136            android:allowEmbedded="true"
-136-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:129:13-41
+136-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:129:13-41
 137            android:label="@string/label_xdrip_steampunk"
-137-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:130:13-58
+137-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:130:13-58
 138            android:permission="android.permission.BIND_WALLPAPER" >
-138-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:131:13-67
+138-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:131:13-67
 139            <meta-data
-139-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+139-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 140                android:name="android.service.wallpaper"
-140-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+140-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 141                android:resource="@xml/watch_face" />
-141-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+141-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 142            <meta-data
-142-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+142-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 143                android:name="com.google.android.wearable.watchface.preview"
-143-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+143-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 144                android:resource="@drawable/watchface_steampunk" />
-144-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+144-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 145            <meta-data
-145-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+145-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 146                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-146-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+146-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 147                android:value="watch_face_configuration_steampunk" />
-147-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+147-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 148
 149            <intent-filter>
-149-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+149-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 150                <action android:name="android.service.wallpaper.WallpaperService" />
-150-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-150-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+150-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+150-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 151
 152                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-152-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-152-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+152-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+152-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 153            </intent-filter>
 154        </service>
 155        <service
-155-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:148:9-167:19
+155-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:148:9-167:19
 156            android:name="info.nightscout.androidaps.watchfaces.LargeHome"
-156-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:149:13-49
+156-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:149:13-49
 157            android:allowEmbedded="true"
-157-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:150:13-41
+157-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:150:13-41
 158            android:label="@string/label_xdrip_large"
-158-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:151:13-54
+158-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:151:13-54
 159            android:permission="android.permission.BIND_WALLPAPER" >
-159-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:152:13-67
+159-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:152:13-67
 160            <meta-data
-160-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+160-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 161                android:name="android.service.wallpaper"
-161-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+161-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 162                android:resource="@xml/watch_face" />
-162-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+162-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 163            <meta-data
-163-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+163-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 164                android:name="com.google.android.wearable.watchface.preview"
-164-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+164-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 165                android:resource="@drawable/watchface_dark" />
-165-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+165-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 166            <meta-data
-166-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+166-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 167                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-167-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+167-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 168                android:value="watch_face_configuration_largehome" />
-168-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+168-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 169
 170            <intent-filter>
-170-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+170-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 171                <action android:name="android.service.wallpaper.WallpaperService" />
-171-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-171-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+171-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+171-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 172
 173                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-173-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-173-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+173-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+173-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 174            </intent-filter>
 175        </service>
 176        <service
-176-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:168:9-187:19
+176-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:168:9-187:19
 177            android:name="info.nightscout.androidaps.watchfaces.CircleWatchface"
-177-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:169:13-55
+177-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:169:13-55
 178            android:allowEmbedded="true"
-178-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:170:13-41
+178-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:170:13-41
 179            android:label="@string/label_xdrip_circle"
-179-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:171:13-55
+179-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:171:13-55
 180            android:permission="android.permission.BIND_WALLPAPER" >
-180-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:172:13-67
+180-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:172:13-67
 181            <meta-data
-181-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+181-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 182                android:name="android.service.wallpaper"
-182-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+182-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 183                android:resource="@xml/watch_face" />
-183-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+183-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 184            <meta-data
-184-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+184-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 185                android:name="com.google.android.wearable.watchface.preview"
-185-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+185-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 186                android:resource="@drawable/watchface_circle" />
-186-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+186-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 187            <meta-data
-187-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+187-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 188                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-188-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+188-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 189                android:value="watch_face_configuration_circle" />
-189-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+189-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 190
 191            <intent-filter>
-191-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+191-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 192                <action android:name="android.service.wallpaper.WallpaperService" />
-192-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-192-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+192-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+192-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 193
 194                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-194-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-194-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+194-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+194-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 195            </intent-filter>
 196        </service>
 197        <service
-197-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:189:9-208:19
+197-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:189:9-208:19
 198            android:name="info.nightscout.androidaps.watchfaces.DigitalStyle"
-198-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:190:13-52
+198-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:190:13-52
 199            android:allowEmbedded="true"
-199-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:191:13-41
+199-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:191:13-41
 200            android:label="@string/label_digitalstyle"
-200-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:192:13-55
+200-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:192:13-55
 201            android:permission="android.permission.BIND_WALLPAPER" >
-201-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:193:13-67
+201-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:193:13-67
 202            <meta-data
-202-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+202-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 203                android:name="android.service.wallpaper"
-203-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+203-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 204                android:resource="@xml/watch_face" />
-204-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+204-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 205            <meta-data
-205-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+205-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 206                android:name="com.google.android.wearable.watchface.preview"
-206-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+206-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 207                android:resource="@drawable/watchface_digitalstyle" />
-207-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+207-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 208            <meta-data
-208-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+208-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 209                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
-209-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+209-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 210                android:value="watch_face_configuration_digitalstyle" />
-210-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+210-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 211
 212            <intent-filter>
-212-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+212-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 213                <action android:name="android.service.wallpaper.WallpaperService" />
-213-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
-213-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+213-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
+213-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 214
 215                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-215-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
-215-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+215-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
+215-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 216            </intent-filter>
 217        </service>
 218        <service android:name="info.nightscout.androidaps.data.ListenerService" >
-218-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:210:9-270:19
-218-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:210:18-54
+218-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:210:9-270:19
+218-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:210:18-54
 219            <intent-filter>
-219-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:211:13-269:29
+219-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:211:13-269:29
 220
 221                <!-- <action android:name="com.google.android.gms.wearable.BIND_LISTENER" /> -->
 222                <!-- listeners receive events that match the action and data filters -->
 223                <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" />
-223-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:214:17-93
-223-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:214:25-90
+223-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:214:17-93
+223-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:214:25-90
 224                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
-224-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:215:17-87
-224-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:215:25-84
+224-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:215:17-87
+224-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:215:25-84
 225
 226                <data
-226-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+226-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 227                    android:host="*"
-227-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+227-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 228                    android:pathPrefix="/nightscout_watch_data"
-228-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+228-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 229                    android:scheme="wear" />
-229-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+229-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 230                <data
-230-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+230-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 231                    android:host="*"
-231-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+231-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 232                    android:pathPrefix="/nightscout_watch_data_resend"
-232-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+232-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 233                    android:scheme="wear" />
-233-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+233-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 234                <data
-234-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+234-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 235                    android:host="*"
-235-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+235-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 236                    android:pathPrefix="/nightscout_watch_cancel_bolus"
-236-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+236-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 237                    android:scheme="wear" />
-237-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+237-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 238                <data
-238-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+238-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 239                    android:host="*"
-239-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+239-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 240                    android:pathPrefix="/nightscout_watch_confirmactionstring"
-240-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+240-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 241                    android:scheme="wear" />
-241-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+241-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 242                <data
-242-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+242-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 243                    android:host="*"
-243-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+243-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 244                    android:pathPrefix="/nightscout_watch_initiateactionstring"
-244-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+244-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 245                    android:scheme="wear" />
-245-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+245-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 246                <data
-246-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+246-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 247                    android:host="*"
-247-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+247-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 248                    android:pathPrefix="/openwearsettings"
-248-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+248-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 249                    android:scheme="wear" />
-249-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+249-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 250                <data
-250-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+250-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 251                    android:host="*"
-251-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+251-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 252                    android:pathPrefix="/sendstatustowear"
-252-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+252-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 253                    android:scheme="wear" />
-253-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+253-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 254                <data
-254-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+254-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 255                    android:host="*"
-255-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+255-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 256                    android:pathPrefix="/sendpreferencestowear"
-256-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+256-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 257                    android:scheme="wear" />
-257-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+257-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 258                <data
-258-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+258-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 259                    android:host="*"
-259-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+259-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 260                    android:pathPrefix="/nightscout_watch_basal"
-260-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+260-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 261                    android:scheme="wear" />
-261-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+261-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 262                <data
-262-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+262-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 263                    android:host="*"
-263-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+263-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 264                    android:pathPrefix="/nightscout_watch_bolusprogress"
-264-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+264-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 265                    android:scheme="wear" />
-265-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+265-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 266                <data
-266-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+266-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 267                    android:host="*"
-267-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+267-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 268                    android:pathPrefix="/nightscout_watch_actionconfirmationrequest"
-268-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+268-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 269                    android:scheme="wear" />
-269-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+269-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 270                <data
-270-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+270-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 271                    android:host="*"
-271-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+271-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 272                    android:pathPrefix="/nightscout_watch_changeconfirmationrequest"
-272-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+272-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 273                    android:scheme="wear" />
-273-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+273-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 274                <data
-274-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+274-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 275                    android:host="*"
-275-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+275-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 276                    android:pathPrefix="/nightscout_watch_cancelnotificationrequest"
-276-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+276-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 277                    android:scheme="wear" />
-277-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+277-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 278            </intent-filter>
 279        </service>
 280        <service
-280-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:272:9-287:19
+280-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:272:9-287:19
 281            android:name="info.nightscout.androidaps.complications.LongStatusComplication"
-281-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:273:13-65
+281-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:273:13-65
 282            android:icon="@drawable/ic_aaps_full"
-282-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:274:13-50
+282-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:274:13-50
 283            android:label="Full Status"
-283-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:275:13-40
+283-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:275:13-40
 284            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-284-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:276:13-99
+284-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:276:13-99
 285            <intent-filter>
-285-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+285-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 286                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-286-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-286-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+286-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+286-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 287            </intent-filter>
 288
 289            <meta-data
-289-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+289-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 290                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-290-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+290-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 291                android:value="LONG_TEXT" />
-291-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+291-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 292            <meta-data
-292-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+292-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 293                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-293-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+293-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 294                android:value="300" />
-294-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+294-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 295        </service>
 296        <service
-296-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:289:9-304:19
+296-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:289:9-304:19
 297            android:name="info.nightscout.androidaps.complications.LongStatusFlippedComplication"
-297-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:290:13-72
+297-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:290:13-72
 298            android:icon="@drawable/ic_aaps_full"
-298-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:291:13-50
+298-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:291:13-50
 299            android:label="Full Status (flipped)"
-299-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:292:13-50
+299-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:292:13-50
 300            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-300-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:293:13-99
+300-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:293:13-99
 301            <intent-filter>
-301-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+301-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 302                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-302-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-302-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+302-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+302-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 303            </intent-filter>
 304
 305            <meta-data
-305-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+305-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 306                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-306-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+306-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 307                android:value="LONG_TEXT" />
-307-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+307-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 308            <meta-data
-308-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+308-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 309                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-309-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+309-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 310                android:value="300" />
-310-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+310-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 311        </service>
 312        <service
-312-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:306:9-321:19
+312-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:306:9-321:19
 313            android:name="info.nightscout.androidaps.complications.SgvComplication"
-313-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:307:13-58
+313-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:307:13-58
 314            android:icon="@drawable/ic_sgv"
-314-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:308:13-44
+314-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:308:13-44
 315            android:label="Blood Glucose"
-315-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:309:13-42
+315-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:309:13-42
 316            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-316-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:310:13-99
+316-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:310:13-99
 317            <intent-filter>
-317-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+317-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 318                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-318-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-318-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+318-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+318-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 319            </intent-filter>
 320
 321            <meta-data
-321-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+321-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 322                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-322-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+322-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 323                android:value="SHORT_TEXT" />
-323-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+323-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 324            <meta-data
-324-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+324-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 325                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-325-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+325-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 326                android:value="300" />
-326-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+326-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 327        </service>
 328        <service
-328-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:323:9-338:19
+328-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:323:9-338:19
 329            android:name="info.nightscout.androidaps.complications.BrCobIobComplication"
-329-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:324:13-63
+329-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:324:13-63
 330            android:icon="@drawable/ic_br_cob_iob"
-330-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:325:13-51
+330-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:325:13-51
 331            android:label="BR, CoB &amp; IoB"
-331-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:326:13-46
+331-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:326:13-46
 332            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-332-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:327:13-99
+332-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:327:13-99
 333            <intent-filter>
-333-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+333-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 334                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-334-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-334-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+334-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+334-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 335            </intent-filter>
 336
 337            <meta-data
-337-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+337-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 338                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-338-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+338-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 339                android:value="SHORT_TEXT" />
-339-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+339-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 340            <meta-data
-340-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+340-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 341                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-341-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+341-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 342                android:value="300" />
-342-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+342-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 343        </service>
 344        <service
-344-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:340:9-355:19
+344-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:340:9-355:19
 345            android:name="info.nightscout.androidaps.complications.CobIobComplication"
-345-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:341:13-61
+345-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:341:13-61
 346            android:icon="@drawable/ic_cob_iob"
-346-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:342:13-48
+346-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:342:13-48
 347            android:label="CoB &amp; IoB"
-347-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:343:13-42
+347-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:343:13-42
 348            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-348-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:344:13-99
+348-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:344:13-99
 349            <intent-filter>
-349-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+349-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 350                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-350-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-350-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+350-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+350-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 351            </intent-filter>
 352
 353            <meta-data
-353-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+353-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 354                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-354-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+354-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 355                android:value="SHORT_TEXT" />
-355-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+355-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 356            <meta-data
-356-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+356-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 357                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-357-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+357-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 358                android:value="300" />
-358-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+358-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 359        </service>
 360        <service
-360-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:357:9-372:19
+360-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:357:9-372:19
 361            android:name="info.nightscout.androidaps.complications.CobIconComplication"
-361-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:358:13-62
+361-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:358:13-62
 362            android:icon="@drawable/ic_carbs"
-362-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:359:13-46
+362-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:359:13-46
 363            android:label="CoB Icon"
-363-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:360:13-37
+363-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:360:13-37
 364            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-364-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:361:13-99
+364-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:361:13-99
 365            <intent-filter>
-365-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+365-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 366                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-366-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-366-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+366-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+366-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 367            </intent-filter>
 368
 369            <meta-data
-369-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+369-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 370                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-370-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+370-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 371                android:value="SHORT_TEXT" />
-371-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+371-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 372            <meta-data
-372-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+372-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 373                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-373-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+373-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 374                android:value="300" />
-374-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+374-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 375        </service>
 376        <service
-376-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:374:9-389:19
+376-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:374:9-389:19
 377            android:name="info.nightscout.androidaps.complications.CobDetailedComplication"
-377-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:375:13-66
+377-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:375:13-66
 378            android:icon="@drawable/ic_cob_detailed"
-378-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:376:13-53
+378-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:376:13-53
 379            android:label="CoB Detailed"
-379-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:377:13-41
+379-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:377:13-41
 380            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-380-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:378:13-99
+380-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:378:13-99
 381            <intent-filter>
-381-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+381-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 382                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-382-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-382-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+382-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+382-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 383            </intent-filter>
 384
 385            <meta-data
-385-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+385-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 386                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-386-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+386-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 387                android:value="SHORT_TEXT" />
-387-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+387-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 388            <meta-data
-388-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+388-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 389                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-389-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+389-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 390                android:value="300" />
-390-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+390-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 391        </service>
 392        <service
-392-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:391:9-406:19
+392-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:391:9-406:19
 393            android:name="info.nightscout.androidaps.complications.IobIconComplication"
-393-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:392:13-62
+393-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:392:13-62
 394            android:icon="@drawable/ic_ins"
-394-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:393:13-44
+394-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:393:13-44
 395            android:label="IoB Icon"
-395-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:394:13-37
+395-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:394:13-37
 396            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-396-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:395:13-99
+396-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:395:13-99
 397            <intent-filter>
-397-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+397-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 398                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-398-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-398-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+398-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+398-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 399            </intent-filter>
 400
 401            <meta-data
-401-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+401-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 402                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-402-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+402-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 403                android:value="SHORT_TEXT" />
-403-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+403-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 404            <meta-data
-404-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+404-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 405                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-405-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+405-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 406                android:value="300" />
-406-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+406-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 407        </service>
 408        <service
-408-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:408:9-423:19
+408-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:408:9-423:19
 409            android:name="info.nightscout.androidaps.complications.IobDetailedComplication"
-409-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:409:13-66
+409-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:409:13-66
 410            android:icon="@drawable/ic_iob_detailed"
-410-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:410:13-53
+410-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:410:13-53
 411            android:label="IoB Detailed"
-411-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:411:13-41
+411-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:411:13-41
 412            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-412-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:412:13-99
+412-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:412:13-99
 413            <intent-filter>
-413-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+413-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 414                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-414-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-414-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+414-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+414-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 415            </intent-filter>
 416
 417            <meta-data
-417-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+417-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 418                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-418-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+418-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 419                android:value="SHORT_TEXT" />
-419-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+419-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 420            <meta-data
-420-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+420-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 421                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-421-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+421-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 422                android:value="300" />
-422-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+422-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 423        </service>
 424        <service
-424-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:425:9-440:19
+424-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:425:9-440:19
 425            android:name="info.nightscout.androidaps.complications.UploaderBattery"
-425-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:426:13-58
+425-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:426:13-58
 426            android:icon="@drawable/ic_battery_charging_wireless_50"
-426-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:427:13-69
+426-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:427:13-69
 427            android:label="Uploader/Phone Battery"
-427-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:428:13-51
+427-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:428:13-51
 428            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-428-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:429:13-99
+428-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:429:13-99
 429            <intent-filter>
-429-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+429-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 430                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-430-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-430-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+430-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+430-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 431            </intent-filter>
 432
 433            <meta-data
-433-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+433-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 434                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-434-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+434-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 435                android:value="RANGED_VALUE,SHORT_TEXT,ICON" />
-435-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+435-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 436            <meta-data
-436-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+436-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 437                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-437-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+437-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 438                android:value="300" />
-438-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+438-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 439        </service>
 440        <service
-440-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:442:9-457:19
+440-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:442:9-457:19
 441            android:name="info.nightscout.androidaps.complications.WallpaperLightComplication"
-441-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:443:13-69
+441-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:443:13-69
 442            android:icon="@drawable/ic_aaps_light"
-442-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:444:13-51
+442-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:444:13-51
 443            android:label="Light Walpaper"
-443-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:445:13-43
+443-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:445:13-43
 444            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-444-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:446:13-99
+444-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:446:13-99
 445            <intent-filter>
-445-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+445-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 446                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-446-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-446-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+446-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+446-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 447            </intent-filter>
 448
 449            <meta-data
-449-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+449-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 450                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-450-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+450-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 451                android:value="LARGE_IMAGE" />
-451-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+451-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 452            <meta-data
-452-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+452-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 453                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-453-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+453-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 454                android:value="0" />
-454-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+454-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 455        </service>
 456        <service
-456-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:459:9-474:19
+456-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:459:9-474:19
 457            android:name="info.nightscout.androidaps.complications.WallpaperDarkComplication"
-457-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:460:13-68
+457-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:460:13-68
 458            android:icon="@drawable/ic_aaps_dark"
-458-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:461:13-50
+458-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:461:13-50
 459            android:label="Dark Walpaper"
-459-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:462:13-42
+459-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:462:13-42
 460            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-460-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:463:13-99
+460-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:463:13-99
 461            <intent-filter>
-461-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+461-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 462                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-462-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-462-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+462-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+462-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 463            </intent-filter>
 464
 465            <meta-data
-465-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+465-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 466                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-466-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+466-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 467                android:value="LARGE_IMAGE" />
-467-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+467-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 468            <meta-data
-468-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+468-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 469                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-469-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+469-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 470                android:value="0" />
-470-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+470-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 471        </service>
 472        <service
-472-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:476:9-491:19
+472-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:476:9-491:19
 473            android:name="info.nightscout.androidaps.complications.WallpaperGrayComplication"
-473-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:477:13-68
+473-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:477:13-68
 474            android:icon="@drawable/ic_aaps_gray"
-474-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:478:13-50
+474-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:478:13-50
 475            android:label="Gray Walpaper"
-475-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:479:13-42
+475-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:479:13-42
 476            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER" >
-476-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:480:13-99
+476-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:480:13-99
 477            <intent-filter>
-477-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+477-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 478                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
-478-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
-478-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+478-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
+478-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 479            </intent-filter>
 480
 481            <meta-data
-481-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+481-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 482                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-482-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+482-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 483                android:value="LARGE_IMAGE" />
-483-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+483-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 484            <meta-data
-484-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+484-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 485                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-485-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+485-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 486                android:value="0" />
-486-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+486-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 487        </service>
 488
 489        <receiver android:name="info.nightscout.androidaps.complications.ComplicationTapBroadcastReceiver" />
-489-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:493:9-84
-489-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:493:19-81
+489-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:493:9-84
+489-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:493:19-81
 490
 491        <activity
-491-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:495:9-502:20
+491-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:495:9-502:20
 492            android:name="info.nightscout.androidaps.interaction.menus.MainMenuActivity"
-492-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:496:13-63
+492-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:496:13-63
 493            android:label="@string/label_actions_activity" >
-493-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:497:13-59
+493-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:497:13-59
 494            <intent-filter>
-494-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:498:13-501:29
+494-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:498:13-501:29
 495                <action android:name="android.intent.action.MAIN" />
-495-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:499:17-69
-495-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:499:25-66
+495-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:499:17-69
+495-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:499:25-66
 496
 497                <category android:name="android.intent.category.LAUNCHER" />
-497-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:500:17-77
-497-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:500:27-74
+497-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:500:17-77
+497-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:500:27-74
 498            </intent-filter>
 499        </activity>
 500        <activity
-500-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:503:9-505:53
+500-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:503:9-505:53
 501            android:name="info.nightscout.androidaps.interaction.AAPSPreferences"
-501-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:504:13-56
+501-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:504:13-56
 502            android:label="@string/menu_settings" />
-502-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:505:13-50
+502-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:505:13-50
 503        <activity
-503-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:506:9-508:51
+503-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:506:9-508:51
 504            android:name="info.nightscout.androidaps.interaction.actions.WizardActivity"
-504-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:507:13-63
+504-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:507:13-63
 505            android:label="@string/menu_wizard" />
-505-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:508:13-48
+505-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:508:13-48
 506        <activity
-506-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:509:9-511:55
+506-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:509:9-511:55
 507            android:name="info.nightscout.androidaps.interaction.menus.FillMenuActivity"
-507-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:510:13-63
+507-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:510:13-63
 508            android:label="@string/menu_prime_fill" />
-508-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:511:13-52
+508-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:511:13-52
 509        <activity
-509-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:512:9-514:51
+509-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:512:9-514:51
 510            android:name="info.nightscout.androidaps.interaction.menus.StatusMenuActivity"
-510-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:513:13-65
+510-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:513:13-65
 511            android:label="@string/menu_status" />
-511-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:514:13-48
+511-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:514:13-48
 512        <activity
-512-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:515:9-517:52
+512-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:515:9-517:52
 513            android:name="info.nightscout.androidaps.interaction.actions.BolusActivity"
-513-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:516:13-62
+513-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:516:13-62
 514            android:label="@string/action_bolus" />
-514-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:517:13-49
+514-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:517:13-49
 515        <activity
-515-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:518:9-520:50
+515-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:518:9-520:50
 516            android:name="info.nightscout.androidaps.interaction.actions.CPPActivity"
-516-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:519:13-60
+516-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:519:13-60
 517            android:label="@string/status_cpp" />
-517-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:520:13-47
+517-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:520:13-47
 518        <activity
-518-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:521:9-524:51
+518-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:521:9-524:51
 519            android:name="info.nightscout.androidaps.interaction.actions.AcceptActivity"
-519-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:522:13-63
+519-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:522:13-63
 520            android:label="@string/action_confirm"
-520-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:523:13-51
+520-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:523:13-51
 521            android:launchMode="singleInstance" />
-521-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:524:13-48
+521-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:524:13-48
 522        <activity
-522-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:525:9-527:55
+522-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:525:9-527:55
 523            android:name="info.nightscout.androidaps.interaction.actions.FillActivity"
-523-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:526:13-61
+523-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:526:13-61
 524            android:label="@string/menu_prime_fill" />
-524-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:527:13-52
+524-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:527:13-52
 525        <activity
-525-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:528:9-530:52
+525-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:528:9-530:52
 526            android:name="info.nightscout.androidaps.interaction.actions.ECarbActivity"
-526-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:529:13-62
+526-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:529:13-62
 527            android:label="@string/action_carbs" />
-527-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:530:13-49
+527-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:530:13-49
 528        <activity
-528-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:531:9-533:50
+528-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:531:9-533:50
 529            android:name="info.nightscout.androidaps.interaction.actions.TempTargetActivity"
-529-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:532:13-67
+529-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:532:13-67
 530            android:label="@string/menu_tempt" />
-530-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:533:13-47
+530-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:533:13-47
 531        <activity android:name="info.nightscout.androidaps.interaction.ConfigurationActivity" >
-531-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:535:9-550:20
-531-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:535:19-68
+531-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:535:9-550:20
+531-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:535:19-68
 532            <intent-filter>
-532-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:536:13-549:29
+532-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:536:13-549:29
 533
 534                <!-- action-name must be equal with name of xml-ressource where the configuration is describe -->
 535                <action android:name="watch_face_configuration_bigchart" />
-535-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:538:17-76
-535-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:538:25-73
+535-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:538:17-76
+535-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:538:25-73
 536                <action android:name="watch_face_configuration_circle" />
-536-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:539:17-74
-536-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:539:25-71
+536-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:539:17-74
+536-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:539:25-71
 537                <action android:name="watch_face_configuration_cockpit" />
-537-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:540:17-75
-537-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:540:25-72
+537-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:540:17-75
+537-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:540:25-72
 538                <action android:name="watch_face_configuration_digitalstyle" />
-538-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:541:17-80
-538-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:541:25-77
+538-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:541:17-80
+538-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:541:25-77
 539                <action android:name="watch_face_configuration_home" />
-539-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:542:17-72
-539-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:542:25-69
+539-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:542:17-72
+539-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:542:25-69
 540                <action android:name="watch_face_configuration_home2" />
-540-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:543:17-73
-540-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:543:25-70
+540-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:543:17-73
+540-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:543:25-70
 541                <action android:name="watch_face_configuration_largehome" />
-541-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:544:17-77
-541-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:544:25-74
+541-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:544:17-77
+541-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:544:25-74
 542                <action android:name="watch_face_configuration_nochart" />
-542-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:545:17-75
-542-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:545:25-72
+542-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:545:17-75
+542-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:545:25-72
 543                <action android:name="watch_face_configuration_steampunk" />
-543-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:546:17-77
-543-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:546:25-74
+543-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:546:17-77
+543-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:546:25-74
 544
 545                <category android:name="com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION" />
-545-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:547:17-114
-545-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:547:27-111
+545-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:547:17-114
+545-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:547:27-111
 546                <category android:name="android.intent.category.DEFAULT" />
-546-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:548:17-76
-546-->C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:548:27-73
+546-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:548:17-76
+546-->C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:548:27-73
 547            </intent-filter>
 548        </activity>
 549        <activity

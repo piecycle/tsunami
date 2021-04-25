@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-de\\values-de.xml",
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-de\\values-de.xml",
             "map": [
                 {
                     "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\e6cb9a4d1f8d697d141fd6ff2eec6e81\\navigation-ui-2.3.2\\res\\values-de\\values-de.xml",

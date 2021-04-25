@@ -1,630 +1,630 @@
 [
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_loop_grey_25.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\loop_grey_25.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_steampunk.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_steampunk.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item_viktoria.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\action_editplusminus_item_viktoria.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_loop_green_25.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\loop_green_25.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_slab_light.ttf.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\font\\roboto_slab_light.ttf"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_circle.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\circle.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_bigchart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_bigchart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_dial_mgdl.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_dial_mgdl.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_digitalstyle.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_digitalstyle.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_home.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mgdl_10.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mgdl_10.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_grid_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\grid_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_steampunk.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_steampunk.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_none_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_none_round.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_ic_cancel.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xhdpi\\ic_cancel.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_unknown_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_unknown_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mgdl_5.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mgdl_5.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_ic_cancel.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xxhdpi\\ic_cancel.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mmol_03.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mmol_03.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item_quickrighty.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\action_editplusminus_item_quickrighty.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_30_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_30_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_digitalstyle.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_digitalstyle.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_cockpit.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_cockpit.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_action_add.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_action_add.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_list_item.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\list_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_50_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_50_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_70.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_70.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_send_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\action_send_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_home_large.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_home_large.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_alert_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_alert_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_home_large.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_home_large.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_cockpit.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_cockpit.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_nochart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_nochart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_90.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_90.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_40.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_40.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_nochart_small.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_nochart_small.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_br_cob_iob.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_br_cob_iob.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_minimal_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_minimal_round.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_carbs.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_carbs.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_20.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_20.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mmol_10.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mmol_10.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_cockpit.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_cockpit.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_10_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_10_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_graph.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_graph.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_settings_off.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xxhdpi\\settings_off.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_preferences.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\preferences.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_send_item.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\action_send_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_ic_confirm.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xhdpi\\ic_confirm.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_hour_hand.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_hour_hand.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_nochart_small.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_nochart_small.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_20_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_20_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_sgv.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_sgv.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_alert_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_alert_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_60_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_60_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_sgv.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_sgv.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_cockpit_outside_clouds_lowres.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\airplane_cockpit_outside_clouds_lowres.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_dial_mmol.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_dial_mmol.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_full_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_full_round.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item_quickrighty.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\action_editplusminus_item_quickrighty.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_home_2.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_home_2.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_cockpit.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_cockpit.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_home.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_home.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_loop_green_25.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\loop_green_25.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_modern_layout.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\modern_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_bigchart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_bigchart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_settings_on.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xhdpi\\settings_on.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_ic_cancel.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xxhdpi\\ic_cancel.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_minimal_rect.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_minimal_rect.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_ic_confirm.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xxhdpi\\ic_confirm.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_30.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_30.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_settings_off.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-mdpi\\settings_off.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mmol_10.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mmol_10.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_minute_hand.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_minute_hand.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_pointer.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_pointer.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_70_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_70_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_preferences.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\preferences.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_digitalstyle.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_digitalstyle.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_20.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_20.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_notif_icon.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\notif_icon.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_50.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_50.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_steampunk.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_steampunk.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_digitalstyle.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_digitalstyle.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_bigchart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_bigchart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_condensed_bold.ttf.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\font\\roboto_condensed_bold.ttf"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_loop_red_25.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\loop_red_25.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_none_rect.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_none_rect.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_ic_cancel.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-hdpi\\ic_cancel.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_graph_2.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_graph_2.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_digitalstyle.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_digitalstyle.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_home.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_home.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_home_large.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_home_large.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_none_round.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_none_round.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mgdl_20.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mgdl_20.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_circle.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_circle.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_home.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_settings_on.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xxhdpi\\settings_on.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_slab_light.ttf.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\font\\roboto_slab_light.ttf"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_steampunk.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_steampunk.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mgdl_5.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mgdl_5.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_cover_plate.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_cover_plate.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_shape_round.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_shape_round.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_home.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_home.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_sync_alert.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_sync_alert.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_60_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_60_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_cockpit.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\airplane_cockpit.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_home_large.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_home_large.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_led_grey_unlit.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\airplane_led_grey_unlit.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_nochart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_nochart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_20_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_20_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_graph.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_graph.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_bigchart.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_bigchart.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_ins.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_ins.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_nochart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_nochart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_circle.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\circle.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_minute_hand.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_minute_hand.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_bigchart.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_bigchart.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_ins_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_ins_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_40_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_40_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_list_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\list_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_digitalstyle.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_digitalstyle.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_ic_confirm.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xxhdpi\\ic_confirm.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\action_editplusminus_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_iob_detailed.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_iob_detailed.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_cockpit.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_cockpit.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mgdl_10.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mgdl_10.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_steampunk.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_steampunk.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_40_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_40_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_led_grey_unlit.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\airplane_led_grey_unlit.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_dark.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_aaps_dark.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_light.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_aaps_light.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mmol_05.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mmol_05.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_home_large.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_home_large.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_condensed_regular.ttf.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\font\\roboto_condensed_regular.ttf"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_confirm_text.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\action_confirm_text.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_settings_off.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xhdpi\\settings_off.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_nochart.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_nochart.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_10.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_10.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_light.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_aaps_light.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mmol_05.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mmol_05.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_90_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_90_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_sync_alert.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_sync_alert.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_nochart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_nochart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_gray.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_aaps_gray.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_home2.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_home2.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mgdl_20.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mgdl_20.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_condensed_light.ttf.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\font\\roboto_condensed_light.ttf"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_home_2.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_home_2.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_settings_off.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-mdpi\\settings_off.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_90.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_90.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\action_editplusminus_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_grid_layout.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\grid_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_hour_hand.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_hour_hand.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_nochart_small.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_nochart_small.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_settings_off.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xxhdpi\\settings_off.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_modern_layout.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\modern_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_alert.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_alert.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_led_yellow_lit.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\airplane_led_yellow_lit.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_40.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_40.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_outline.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_outline.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_circle.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_circle.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_dial_mgdl.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_dial_mgdl.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_70.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_70.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_home.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_home.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_digitalstyle.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_digitalstyle.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_alert_variant_outline.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_alert_variant_outline.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_full_rect.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_full_rect.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_minimal_round.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_minimal_round.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_loop_grey_25.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\loop_grey_25.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_90_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_90_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_home.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_30.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_30.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_largehome.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_largehome.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_alert.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_alert.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_gray.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_aaps_gray.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_full.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_aaps_full.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_10.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_10.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_ic_confirm.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xhdpi\\ic_confirm.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_condensed_regular.ttf.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\font\\roboto_condensed_regular.ttf"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_dark.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_dark.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_ic_confirm.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-hdpi\\ic_confirm.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item_quicklefty.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\action_editplusminus_item_quicklefty.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_digitalstyle.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_digitalstyle.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_action_minus.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_action_minus.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_ic_confirm.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-mdpi\\ic_confirm.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_digitalstyle.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_digitalstyle.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_none_rect.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_none_rect.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_steampunk.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_steampunk.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_bigchart_small.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_bigchart_small.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_ic_cancel.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-mdpi\\ic_cancel.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_condensed_bold.ttf.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\font\\roboto_condensed_bold.ttf"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_circle.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_circle.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_bigchart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_bigchart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\font_roboto_condensed_light.ttf.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\font\\roboto_condensed_light.ttf"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cob_iob.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_cob_iob.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_bigchart_small.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_bigchart_small.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_ic_cancel.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xhdpi\\ic_cancel.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_shape_rect.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_shape_rect.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_10_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_10_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_70_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_70_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_cockpit.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_cockpit.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_nochart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_nochart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_unknown.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_unknown.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_cockpit.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\airplane_cockpit.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_cover_plate.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_cover_plate.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_dark.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_aaps_dark.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_dark.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_dark.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_iob_detailed.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_iob_detailed.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_led_red_lit.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\airplane_led_red_lit.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_60.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_60.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_cockpit.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_cockpit.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_full_round.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_full_round.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_steampunk.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_steampunk.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_notif_icon.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\notif_icon.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_ins.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_ins.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_ins_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_ins_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_ic_cancel.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-mdpi\\ic_cancel.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_80_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_80_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_nochart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_nochart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_led_red_lit.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\airplane_led_red_lit.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_bigchart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_bigchart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_settings_on.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-mdpi\\settings_on.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_largehome.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_largehome.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_nslogo_background.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\nslogo_background.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_confirm_text.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\action_confirm_text.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_bigchart_small.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_bigchart_small.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_settings_on.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-mdpi\\settings_on.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_dial_mmol.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_dial_mmol.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_cockpit_outside_clouds.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\airplane_cockpit_outside_clouds.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_home_2.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_home_2.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_unknown_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_unknown_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_outline.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_outline.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout-v26_list_item.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout-v26\\list_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_shape_rect.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_shape_rect.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_icon.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_icon.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item_quicklefty.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\action_editplusminus_item_quicklefty.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_full_rect.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_full_rect.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cob_detailed.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_cob_detailed.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_cockpit_outside_clouds_lowres.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\airplane_cockpit_outside_clouds_lowres.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_80_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_80_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_bigchart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_bigchart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_action_minus.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_action_minus.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_nochart.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_nochart.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_action_editplusminus_item_viktoria.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\action_editplusminus_item_viktoria.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_digitalstyle.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_digitalstyle.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_redline.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\redline.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_80.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_80.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_nochart_small.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_nochart_small.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_settings_background.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\settings_background.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_home_large.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_home_large.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_settings_off.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-hdpi\\settings_off.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_cockpit.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_cockpit.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_loop_red_25.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\loop_red_25.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout-v26_list_item.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout-v26\\list_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_nochart_small.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_nochart_small.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_settings_off.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xhdpi\\settings_off.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_bigchart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_bigchart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xxhdpi_settings_on.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-xxhdpi\\settings_on.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cob_detailed.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_cob_detailed.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_alert_variant_outline.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_alert_variant_outline.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_bigchart_small.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_bigchart_small.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_bigchart_small.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\activity_bigchart_small.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_home_2.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_home_2.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_settings_background.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\settings_background.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_shape_round.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_shape_round.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_bigchart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_activity_bigchart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_cob_iob.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_cob_iob.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_settings_on.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-hdpi\\settings_on.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_bigchart_small.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_bigchart_small.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_gauge_mmol_03.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\steampunk_gauge_mmol_03.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_activity_home.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\rect_activity_home.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_80.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_80.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_settings_on.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-hdpi\\settings_on.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_50.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_50.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_home2.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\xml\\watch_face_configuration_home2.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_carbs.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_carbs.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-mdpi_ic_confirm.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-mdpi\\ic_confirm.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_icon.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_icon.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_nochart_small.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_nochart_small.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_actions_list_activity.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\actions_list_activity.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_settings_off.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable-hdpi\\settings_off.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_steampunk_pointer.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\steampunk_pointer.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_led_yellow_lit.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\airplane_led_yellow_lit.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_cockpit.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_cockpit.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_graph_2.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_graph_2.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-xhdpi_settings_on.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-xhdpi\\settings_on.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_redline.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\redline.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_airplane_cockpit_outside_clouds.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\airplane_cockpit_outside_clouds.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_cockpit.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\watchface_cockpit.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_ic_cancel.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-hdpi\\ic_cancel.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_watchface_circle.png.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\watchface_circle.png"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_digitalstyle_bg_minimal_rect.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\digitalstyle_bg_minimal_rect.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_br_cob_iob.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_br_cob_iob.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_nslogo_background.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\nslogo_background.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_30_burnin.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_30_burnin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_steampunk.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_steampunk.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_nochart.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_nochart.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_action_add.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_action_add.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_home_2.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\round_activity_home_2.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_round_activity_home_2.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\round_activity_home_2.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_60.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_60.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_unknown.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_unknown.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_actions_list_activity.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\actions_list_activity.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable-hdpi_ic_confirm.png.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable-hdpi\\ic_confirm.png"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_aaps_full.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\drawable\\ic_aaps_full.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_battery_charging_wireless_50_burnin.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\drawable\\ic_battery_charging_wireless_50_burnin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\xml_watch_face_configuration_steampunk.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\xml\\watch_face_configuration_steampunk.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_activity_nochart.xml.flat",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\layout\\activity_nochart.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\res\\merged\\full\\release\\layout_rect_steampunk.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\layout\\rect_steampunk.xml"
     }
 ]

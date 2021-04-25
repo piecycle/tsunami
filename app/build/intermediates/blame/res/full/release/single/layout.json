@@ -1,418 +1,418 @@
 [
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_survey.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_survey.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_editquickwizard_dialog.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_editquickwizard_dialog.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_insight_pairing_information.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_insight_pairing_information.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_insulin.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_insulin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_fragment_landscape.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_fragment_landscape.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_profileswitch_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_profileswitch_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\close.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\close.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_insight_pairing.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_insight_pairing.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_quickwizardlist_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_quickwizardlist_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_event.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_dialog_event.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_insight_pairing.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_insight_pairing.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_profilehelper.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_profilehelper.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_quickwizardlist_activity.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_quickwizardlist_activity.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_carbs.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_carbs.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\objectives_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\objectives_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_temptarget.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_temptarget.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_preferences.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_preferences.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_extendedbolus_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_extendedbolus_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_historybrowse.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_historybrowse.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\wear_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\wear_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\insulin_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\insulin_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_calibration.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_calibration.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_setupwizard.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_setupwizard.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_survey.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_survey.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_fill.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_fill.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_setupwizard.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_setupwizard.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_profileswitch.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_profileswitch.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\configbuilder_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\configbuilder_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\notes.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\notes.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\openapsama_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\openapsama_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_temptarget.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_temptarget.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_stats.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_stats.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_event.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_event.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\bluetooth_device.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\bluetooth_device.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\import_summary_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\import_summary_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\tidepool_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\tidepool_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\number_picker_layout_vertical.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\number_picker_layout_vertical.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_extendedbolus_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_extendedbolus_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_tempbasal.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_tempbasal.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_buttons_layout.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_buttons_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_open_humans_login.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_open_humans_login.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_quickwizardlist_activity.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_quickwizardlist_activity.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_profileswitch_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_profileswitch_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\objectives_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\objectives_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_choose_trigger.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_choose_trigger.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\import_summary_details.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\import_summary_details.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_profileswitch_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_profileswitch_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_profileswitch_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_profileswitch_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\bgsource_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\bgsource_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\localprofile_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\localprofile_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_careportal_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_careportal_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\configbuilder_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\configbuilder_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_smscommunicator_otp.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_smscommunicator_otp.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\nsclientinternal_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\nsclientinternal_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_graphs_layout.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_graphs_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\wear_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\wear_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_bolus_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_bolus_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\smscommunicator_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\smscommunicator_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_statuslights_layout.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_statuslights_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\openapsama_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\openapsama_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\food_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\food_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\bgsource_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\bgsource_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\number_picker_layout_vertical.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\number_picker_layout_vertical.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_insight_alert.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_insight_alert.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_care.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_care.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_alert_two_messages.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_alert_two_messages.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_historybrowse.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_historybrowse.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_loop_pumpstatus_layout.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_loop_pumpstatus_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_choose_action.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_dialog_choose_action.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_treatment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_treatment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_fragment_nsclient.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_fragment_nsclient.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_tempbasals_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_tempbasals_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_bolus_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_bolus_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\insulin_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\insulin_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\configbuilder_single_plugin.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\configbuilder_single_plugin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\objectives_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\objectives_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\localprofile_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\localprofile_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_event_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_event_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_notification_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_notification_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_loop_pumpstatus_layout.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_loop_pumpstatus_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_main.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_action_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_action_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\maintenance_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\maintenance_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_temptarget_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_temptarget_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_extendedbolus_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_extendedbolus_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\import_summary_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\import_summary_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_statuslights_layout.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_statuslights_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\loop_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\loop_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\tidepool_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\tidepool_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_single_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_single_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_careportal_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_careportal_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_bolus_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_bolus_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\food_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\food_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\actions_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\actions_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\actions_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\actions_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\bgsource_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\bgsource_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_tempbasals_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_tempbasals_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\close.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\close.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\virtualpump_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\virtualpump_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\timelistedit_element.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\timelistedit_element.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\objectives_exam_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\objectives_exam_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_careportal_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_careportal_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_action.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_dialog_action.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_wizard.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_wizard.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\combopump_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\combopump_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_alert_import_summary.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_alert_import_summary.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_extendedbolus.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_extendedbolus.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_temptarget_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_temptarget_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_insight_alert.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_insight_alert.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\timelistedit_element_vertical.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\timelistedit_element_vertical.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\okcancel.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\okcancel.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\profileviewer_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\profileviewer_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\logsettings_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\logsettings_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_calibration.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_calibration.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_preferences.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_preferences.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\bgsource_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\bgsource_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_event_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_event_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_carbs.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_carbs.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\datetime.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\datetime.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_smscommunicator_otp.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_smscommunicator_otp.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_info_layout.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_info_layout.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_info_layout.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_info_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_logsetting.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_logsetting.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\notes.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\notes.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_choose_action.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_choose_action.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\import_summary_details.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\import_summary_details.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\careportal_stats_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\careportal_stats_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_alert_import_summary.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_alert_import_summary.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\loop_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\loop_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_edit_trigger.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_dialog_edit_trigger.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\logsettings_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\logsettings_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_tempbasals_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_tempbasals_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_stats.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_stats.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\fragment_open_humans.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\fragment_open_humans.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\actions_fragment_lowres.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\actions_fragment_lowres.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\nsclientinternal_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\nsclientinternal_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_temptarget_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_temptarget_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_open_humans_login.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_open_humans_login.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_action_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_action_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\local_insight_status_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\local_insight_status_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\careportal_stats_fragment_lowres.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\careportal_stats_fragment_lowres.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_choose_trigger.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_dialog_choose_trigger.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_wizardinfo.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_wizardinfo.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_alert_two_messages.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_alert_two_messages.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\nsprofile_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\nsprofile_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\timelistedit_element.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\timelistedit_element.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\configbuilder_single_category.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\configbuilder_single_category.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\nsprofile_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\nsprofile_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_careportal_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_careportal_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\local_insight_status_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\local_insight_status_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\timelistedit_element_vertical.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\timelistedit_element_vertical.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_loop.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_loop.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\careportal_stats_fragment_lowres.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\careportal_stats_fragment_lowres.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\objectives_exam_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\objectives_exam_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_loop.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_loop.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_care.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_care.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\profileviewer_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\profileviewer_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_editquickwizard_dialog.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_editquickwizard_dialog.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_tempbasal.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_tempbasal.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\local_insight_status_delimitter.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\local_insight_status_delimitter.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_insight_pairing_information.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_insight_pairing_information.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_profilehelper.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_profilehelper.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_logsetting.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\activity_logsetting.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_graphs_layout.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_graphs_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_fill.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_fill.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_edit_trigger.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_edit_trigger.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_quickwizardlist_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_quickwizardlist_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_extendedbolus_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_extendedbolus_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\food_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\food_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\local_insight_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\local_insight_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\smscommunicator_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\smscommunicator_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_bolus_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_bolus_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_wizardinfo.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_wizardinfo.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_extendedbolus.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_extendedbolus.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_temptarget_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\treatments_temptarget_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_treatment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_treatment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\configbuilder_single_category.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\configbuilder_single_category.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\datetime.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\datetime.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_fragment_nsclient.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_fragment_nsclient.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_insulin.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\dialog_insulin.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\local_insight_status_delimitter.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\local_insight_status_delimitter.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\combopump_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\combopump_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_profileswitch.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_profileswitch.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\fragment_open_humans.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\fragment_open_humans.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\careportal_stats_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\careportal_stats_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\food_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\food_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_fragment_landscape.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_fragment_landscape.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\okcancel.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\okcancel.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\objectives_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\objectives_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\activity_single_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\activity_single_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\configbuilder_single_plugin.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\configbuilder_single_plugin.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\bluetooth_device.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\bluetooth_device.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\local_insight_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\local_insight_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_buttons_layout.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\overview_buttons_layout.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\actions_fragment_lowres.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\actions_fragment_lowres.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\virtualpump_fragment.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\virtualpump_fragment.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\maintenance_fragment.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\maintenance_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\automation_dialog_action.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\automation_dialog_action.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\overview_notification_item.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\overview_notification_item.xml"
     },
     {
-        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\treatments_tempbasals_item.xml",
-        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\src\\main\\res\\layout\\treatments_tempbasals_item.xml"
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_wizard.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_wizard.xml"
     }
 ]

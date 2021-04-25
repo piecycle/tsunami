@@ -15,57 +15,31 @@ dev: [![codecov](https://codecov.io/gh/MilosKozak/AndroidAPS/branch/dev/graph/ba
 
 ===================================================
 This version of AAPS was modified to work in full closed loop, exclusively UAM mode during the meal, no carbs entry, no bolus. 
-This is not for beginner user.
-Keep sugar in your pocket :)
+This is not for beginners.
+Keep sugar in your pocket. :)
 
-In the 2.8.2-UAM-1.6, you can run with a temp target (button are style there) or without temp target.
-Settings are simple :
-- Prebolus normal meal, is available in the settings, UAM_Pbolus1, that will send a prebolus when a temptarget is set, target lesser than 90 and duration more than 29 minutes, at 00 minute running.
-that means, with small meal button it can send a prebolus.
-- UAM_ISF1 is available in the settings. That will divide by the value the ISF if a temptarget is set between 80 and 85 value target and for more than 29 minutes. That means with the small meal button, isf will be divide by 3.
-- % of Insulin required is available in the settings too, by default the value is 0.65, means 65 % of the insulin required for one smb will be send. Since two weeks of test, i'm using it with 0.75 value.
-- In this version, the prediction curve is not dynamic, to avoid overdosing insulin when the prediction is shorter IOB Prediction is blind. The prediction is running on 3 hours.
-In the code :
-- To avoid during the temp target duration, a static ISF with a big rise, ISF will be divide by 3, less the value of the delat.
-- ISF will change faster :
-    - between 7am and 22pm, if rise is comming with delat > 10 and BG > 100, isf will change right away, isf - delta, without temp target set.
-    - between 11am and 15pm, if rise is comming with delta >18 and BG > 140, isf will change right away, (isf - delta)/2, without temp target set.
-    - Between 19pm and 22pm, if rise is comming with delta >18 and BG > 140, isf will change right away, (isf - delta)/2, without temp target set.
-    - if bg < 100 and delta < -5, isf in the profile * 2.
-- % of insulin required will change for 130% if eventualBG > 180. That will happen only if eventualBG exist and is greatter than 180. In my test, this allow one SMB during the rise around 2.30 value.
+AAPS 2.8.2-UAM_tsunami was based on 2.8.2-UAM-1.6.1 by Mathieu Tellier and modified from there. This code differs significantly from the original and requires different/new settings.
 
-Profile used during the test :
-- DIA : 7
-- IC : 5.5
-- ISF : 70
-- Basal : 1
-- Target :
-    - 00:00/12:00 110-110
-    - 12:00/24:00 99
+How it works:
+The code relies on a situation dependent scaling algorithm. Meals must be "announced" by setting a TT between 80-85 mg/dl, which also triggers a prebolus of user-defined size if TT duration is 30 min or longer.
+As long as the TT is running, ISF values as defined in your local profile will be scaled in dependence of current bg, target bg, delta and two scaling model parameters called scale_max & scale_50.
+The scaling curve is largely based on the Michaelis-Menten equation (MME) (see here: https://en.wikipedia.org/wiki/Michaelis%E2%80%93Menten_kinetics ). Briefly: Enzyme activity increases with the concentration of available substrates, until the activity is limited by the speed of the enzyme itself.
+In diabetes, the most relevant enzymatic functions are carbohydrate digestion, glucose uptake into the bloodstream and glucose uptake into cells (e.g. by insulin). All of these activities become faster the more carbs in the digestive tract or glucose in the bloodstream are available, but slow down once the activity maximum of the respective enzyme is reached. The scaling equation used here takes this principle into account and adjusts ISFs aggressively initially, but slows down the larger delta becomes. The idea is to reduce the risk of hypos by overdosing if delta values are high.
 
-Default settings i used :
-- Maximum ration autosens : 2
-- Minimum ration autosens : 0.3
-- Max Autoisf ratio : 3
-- autoisf hourly increment : 0.8
-- Max. minutes basal smb : 200
-- Max. minutes basal smb UAM : 200
+Features of this approach are:
 
-In my scenario test :
-- For a meal between 40 and 50 carbs, out of breakfast (lunch and dinner), i did nothing, the script manage it without hypoglycemia.
-- For a meal between 50 and 65 carbs, out of breakfast, if i didn't use a TT, the end of the rise will be around 180 instead of 160 with a TT.
-- For a meal, more than 80 carbs, i used a TT, first wave end at 150, second wave 2 hours later run at 180, and come back in the target range.
+- More intuitive setting of parameters as scaling parameters have a logical foundation / meaning
+- The aggressiveness of the scaling curve can be fine-tuned and adjusted to ones personal needs. By using two scaling parameters, the intial steepness (local aggressiveness) and maximum strength (global aggressiveness) of the curve can be adjusted separately.
+- The scaling equation works for all positive deltas - there is no risk of negative ISF values or unexpected behaviour
+- The scaling equation works for all positive base ISFs
+- The scaling equation follows a relative scaling approach. This means that if your insulin requirements change due to illness, physical inactivity etc., a profile switch may be all you have to do to get things going again. YDMV.
+- The curve is self-limiting - even in situations of extreme sensor failure, ISFs won't go below ISF/(scale_max + 1).
 
-Run your own scenario test, you can use the button or not, i recommand you to use button if the meal is a big one, specialy if you use a target > 90.
-========================================================================
-version 2.8.2-UAM-1.6.1
-move prebolus section in temptargetdialog, thanks to Andreas. Prebolus normal will come with small meal and the others button.
-ISF management change a litlle bit, more efficient in my test.
-variable available in this version :
-inisulinreq
-prebolus
-Meal factor start time
-Meal factor end time
-i added a line console.log about ISF change, but last section keep the real value everytime, or loop debug page.
+Before use, the following parameters need to be set in the OpenAPS SMB preferences (note that some variables used in MTs UAM-1.6.1 have slightly changed functions and consequences here):
 
-
+- Meal factor start time: Hour of the day from when on MME scaling OUTSIDE TTs may be used if certain conditions are met. The time limitation reduces the risk of overdosing through e.g. compression lows at night.
+- Meal factor end time: Hour of the day until (and including) when MME scaling OUTSIDE TTs may be used if certain conditions are met.
+- UAM PreBolus normal meal: Automatic prebolus delivered upon starting a TT between 80-85 mg/dl and a minimum duration of 30 min.
+- scale_max: Percentage of ISF which represents the minimum ISF value to scale towards. While your ISF represents the top end of the scaling range (0% scaling), the ISF resulting from scale_max represents the bottom end (100% scaling). Example: If your base ISF is 50 mg/dl/U and your scale_max is 0.2, the minimum ISF that will be scaled towards is 50 * 0.2 = 10 mg/dl/U. scale_max represents the global aggressiveness of the curve.
+- scale_50: Delta value at which 50% of the ISF defined by scale_max is reached. Example: If your base ISF is 50 mg/dl/U, your scale_max is 0.2 and your scale_50 is 4 mg/dl/5min, then your ISF at a delta of +4 mg/dl/5min will be: 50 - ((50 - (0.2 * 50))/2) = 30 mg/dl/U. Scale_50 represents the local aggressiveness or initial steepness of the curve. The smaller this value, the larger the change in ISF from small deltas will be. The larger this value, the less small fluctuations in delta will impact ISF scaling.
+- W2_modifier: Multiplier of scale_50 used during 2nd wave assist (outside TT). It weakens scale_50 to shift aggressiveness of the scaling curve towards larger deltas.

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-en-rAU\\values-en-rAU.xml",
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-en-rAU\\values-en-rAU.xml",
             "map": [
                 {
                     "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\5575c2aaf02ff1292b63d3a11b0f2328\\jetified-android.joda-2.10.6\\res\\values-en-rAU\\values-en-rAU.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-sq\\values-sq.xml",
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-sq\\values-sq.xml",
             "map": [
                 {
                     "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\3561dc70e849b312d1b56d0217e3bf1d\\biometric-1.0.1\\res\\values-sq\\values-sq.xml",

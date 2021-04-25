@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-bn\\values-bn.xml",
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-bn\\values-bn.xml",
             "map": [
                 {
                     "source": "C:\\Users\\pinne\\.gradle\\caches\\transforms-2\\files-2.1\\fc35aa6e98a87e609c702c12bf384cab\\jetified-play-services-basement-17.0.0\\res\\values-bn\\values.xml",

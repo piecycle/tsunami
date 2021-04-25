@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-da-rDK\\values-da-rDK.xml",
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-da-rDK\\values-da-rDK.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\core\\build\\intermediates\\packaged_res\\release\\values-da-rDK\\values-da-rDK.xml",
+                    "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\core\\build\\intermediates\\packaged_res\\release\\values-da-rDK\\values-da-rDK.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

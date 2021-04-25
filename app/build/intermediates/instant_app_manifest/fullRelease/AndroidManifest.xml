@@ -3,7 +3,7 @@
     package="info.nightscout.androidaps"
     android:targetSandboxVersion="2"
     android:versionCode="1500"
-    android:versionName="2.8.2-UAM_tsunami_0.1" >
+    android:versionName="2.8.2-UAM_tsunami_0.4" >
 
     <uses-sdk
         android:minSdkVersion="26"

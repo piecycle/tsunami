@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
 MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\101b64ec7c8c08cb0e428ff84568fbdc\appcompat-1.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.legacy:legacy-support-v13:1.0.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\a0bf34e7e22c04f2ef7f8e5957d95e2b\legacy-support-v13-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [me.denley.wearpreferenceactivity:wearpreferenceactivity:0.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\67e8bdddd0375f990d919c91d1afc756\jetified-wearpreferenceactivity-0.5.0\AndroidManifest.xml:2:1-18:12
@@ -49,41 +49,41 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\pinne\.gradle
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\483ff2d1765b53f791a6d6d0c60cdef8\lifecycle-livedata-core-2.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\b940c2827a9caabf6fb986aa3a169098\core-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\10579eae63c4cd1b1ceb05b53ec0bc06\constraintlayout-1.1.0\AndroidManifest.xml:2:1-11:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
 	package
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:3:5-41
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:3:5-41
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:1-552:12
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:1-552:12
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:2:11-69
 uses-feature#android.hardware.type.watch
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:5:5-64
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:5:5-64
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:5:19-61
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:5:19-61
 uses-permission#com.google.android.permission.PROVIDE_BACKGROUND
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:7:5-88
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:7:5-88
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:7:22-85
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:7:22-85
 uses-permission#android.permission.WAKE_LOCK
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:8:5-68
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:8:5-68
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:8:22-65
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:8:22-65
 uses-permission#android.permission.VIBRATE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:9:5-66
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:9:5-66
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:9:22-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:9:22-63
 application
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:12:5-551:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:12:5-551:19
 MERGED from [me.denley.wearpreferenceactivity:wearpreferenceactivity:0.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\67e8bdddd0375f990d919c91d1afc756\jetified-wearpreferenceactivity-0.5.0\AndroidManifest.xml:9:5-16:19
 MERGED from [me.denley.wearpreferenceactivity:wearpreferenceactivity:0.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\67e8bdddd0375f990d919c91d1afc756\jetified-wearpreferenceactivity-0.5.0\AndroidManifest.xml:9:5-16:19
 MERGED from [com.google.android.support:wearable:2.4.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\13c03636735b9d261ceefd7ec28c8e0d\jetified-wearable-2.4.0\AndroidManifest.xml:9:5-13:19
@@ -107,449 +107,449 @@ MERGED from [androidx.constraintlayout:constraintlayout:1.1.0] C:\Users\pinne\.g
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.3.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\1b11216289e37ba69c4a8a4b85be2d3c\core-1.3.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:16:9-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:16:9-41
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:15:9-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:15:9-41
 	android:allowBackup
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:14:9-35
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:14:9-35
 	android:theme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:17:9-59
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:17:9-59
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:13:9-29
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:13:9-29
 meta-data#com.google.android.gms.version
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:18:9-20:69
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:18:9-20:69
 MERGED from [:ustwo-clockwise-debug:] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\60f74c46d84453eb4949d226b247ed36\jetified-ustwo-clockwise-debug\AndroidManifest.xml:36:9-38:69
 MERGED from [:ustwo-clockwise-debug:] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\60f74c46d84453eb4949d226b247ed36\jetified-ustwo-clockwise-debug\AndroidManifest.xml:36:9-38:69
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\fc35aa6e98a87e609c702c12bf384cab\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\fc35aa6e98a87e609c702c12bf384cab\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
 	android:value
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:20:13-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:20:13-66
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:19:13-58
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:19:13-58
 service#info.nightscout.androidaps.watchfaces.BIGChart
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:22:9-41:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:22:9-41:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:25:13-58
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:25:13-58
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:26:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:26:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:23:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:23:13-48
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:24:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:24:13-41
 meta-data#android.service.wallpaper
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:27:13-29:54
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:27:13-29:54
 	android:resource
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:29:17-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:29:17-51
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:28:17-57
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:28:17-57
 meta-data#com.google.android.wearable.watchface.preview
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:30:13-32:67
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:30:13-32:67
 	android:resource
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:32:17-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:32:17-64
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:31:17-77
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:31:17-77
 meta-data#com.google.android.wearable.watchface.wearableConfigurationAction
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:33:13-35:69
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:33:13-35:69
 	android:value
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:35:17-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:35:17-66
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:34:17-97
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:34:17-97
 intent-filter#action:name:android.service.wallpaper.WallpaperService+category:name:com.google.android.wearable.watchface.category.WATCH_FACE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:37:13-40:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:37:13-40:29
 action#android.service.wallpaper.WallpaperService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:17-85
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:17-85
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:38:25-82
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:38:25-82
 category#com.google.android.wearable.watchface.category.WATCH_FACE
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:17-102
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:17-102
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:39:27-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:39:27-99
 service#info.nightscout.androidaps.watchfaces.NOChart
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:43:9-62:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:43:9-62:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:46:13-57
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:46:13-57
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:47:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:47:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:44:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:44:13-47
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:45:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:45:13-41
 service#info.nightscout.androidaps.watchfaces.Home
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:64:9-83:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:64:9-83:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:67:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:67:13-48
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:68:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:68:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:65:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:65:13-44
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:66:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:66:13-41
 service#info.nightscout.androidaps.watchfaces.Home2
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:85:9-104:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:85:9-104:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:88:13-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:88:13-51
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:89:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:89:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:86:13-45
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:86:13-45
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:87:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:87:13-41
 service#info.nightscout.androidaps.watchfaces.Cockpit
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:106:9-125:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:106:9-125:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:109:13-56
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:109:13-56
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:110:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:110:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:107:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:107:13-47
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:108:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:108:13-41
 service#info.nightscout.androidaps.watchfaces.Steampunk
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:127:9-146:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:127:9-146:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:130:13-58
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:130:13-58
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:131:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:131:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:128:13-49
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:128:13-49
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:129:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:129:13-41
 service#info.nightscout.androidaps.watchfaces.LargeHome
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:148:9-167:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:148:9-167:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:151:13-54
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:151:13-54
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:152:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:152:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:149:13-49
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:149:13-49
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:150:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:150:13-41
 service#info.nightscout.androidaps.watchfaces.CircleWatchface
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:168:9-187:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:168:9-187:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:171:13-55
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:171:13-55
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:172:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:172:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:169:13-55
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:169:13-55
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:170:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:170:13-41
 service#info.nightscout.androidaps.watchfaces.DigitalStyle
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:189:9-208:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:189:9-208:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:192:13-55
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:192:13-55
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:193:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:193:13-67
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:190:13-52
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:190:13-52
 	android:allowEmbedded
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:191:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:191:13-41
 service#info.nightscout.androidaps.data.ListenerService
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:210:9-270:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:210:9-270:19
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:210:18-54
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:210:18-54
 intent-filter#action:name:com.google.android.gms.wearable.CAPABILITY_CHANGED+action:name:com.google.android.gms.wearable.DATA_CHANGED+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:host:*+data:pathPrefix:/nightscout_watch_actionconfirmationrequest+data:pathPrefix:/nightscout_watch_basal+data:pathPrefix:/nightscout_watch_bolusprogress+data:pathPrefix:/nightscout_watch_cancel_bolus+data:pathPrefix:/nightscout_watch_cancelnotificationrequest+data:pathPrefix:/nightscout_watch_changeconfirmationrequest+data:pathPrefix:/nightscout_watch_confirmactionstring+data:pathPrefix:/nightscout_watch_data+data:pathPrefix:/nightscout_watch_data_resend+data:pathPrefix:/nightscout_watch_initiateactionstring+data:pathPrefix:/openwearsettings+data:pathPrefix:/sendpreferencestowear+data:pathPrefix:/sendstatustowear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear+data:scheme:wear
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:211:13-269:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:211:13-269:29
 action#com.google.android.gms.wearable.CAPABILITY_CHANGED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:214:17-93
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:214:17-93
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:214:25-90
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:214:25-90
 action#com.google.android.gms.wearable.DATA_CHANGED
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:215:17-87
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:215:17-87
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:215:25-84
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:215:25-84
 data
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:217:17-220:45
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:217:17-220:45
 	android:host
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:218:21-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:218:21-37
 	android:scheme
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:220:21-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:220:21-42
 	android:pathPrefix
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:219:21-64
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:219:21-64
 service#info.nightscout.androidaps.complications.LongStatusComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:272:9-287:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:272:9-287:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:275:13-40
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:275:13-40
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:276:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:276:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:274:13-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:274:13-50
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:273:13-65
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:273:13-65
 intent-filter#action:name:android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:277:13-279:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:277:13-279:29
 action#android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:17-116
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:17-116
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:278:25-113
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:278:25-113
 meta-data#android.support.wearable.complications.SUPPORTED_TYPES
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:281:13-283:45
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:281:13-283:45
 	android:value
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:283:17-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:283:17-42
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:282:17-86
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:282:17-86
 meta-data#android.support.wearable.complications.UPDATE_PERIOD_SECONDS
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:284:13-286:39
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:284:13-286:39
 	android:value
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:286:17-36
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:286:17-36
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:285:17-92
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:285:17-92
 service#info.nightscout.androidaps.complications.LongStatusFlippedComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:289:9-304:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:289:9-304:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:292:13-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:292:13-50
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:293:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:293:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:291:13-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:291:13-50
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:290:13-72
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:290:13-72
 service#info.nightscout.androidaps.complications.SgvComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:306:9-321:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:306:9-321:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:309:13-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:309:13-42
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:310:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:310:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:308:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:308:13-44
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:307:13-58
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:307:13-58
 service#info.nightscout.androidaps.complications.BrCobIobComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:323:9-338:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:323:9-338:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:326:13-46
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:326:13-46
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:327:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:327:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:325:13-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:325:13-51
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:324:13-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:324:13-63
 service#info.nightscout.androidaps.complications.CobIobComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:340:9-355:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:340:9-355:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:343:13-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:343:13-42
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:344:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:344:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:342:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:342:13-48
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:341:13-61
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:341:13-61
 service#info.nightscout.androidaps.complications.CobIconComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:357:9-372:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:357:9-372:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:360:13-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:360:13-37
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:361:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:361:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:359:13-46
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:359:13-46
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:358:13-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:358:13-62
 service#info.nightscout.androidaps.complications.CobDetailedComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:374:9-389:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:374:9-389:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:377:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:377:13-41
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:378:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:378:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:376:13-53
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:376:13-53
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:375:13-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:375:13-66
 service#info.nightscout.androidaps.complications.IobIconComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:391:9-406:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:391:9-406:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:394:13-37
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:394:13-37
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:395:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:395:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:393:13-44
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:393:13-44
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:392:13-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:392:13-62
 service#info.nightscout.androidaps.complications.IobDetailedComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:408:9-423:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:408:9-423:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:411:13-41
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:411:13-41
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:412:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:412:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:410:13-53
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:410:13-53
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:409:13-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:409:13-66
 service#info.nightscout.androidaps.complications.UploaderBattery
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:425:9-440:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:425:9-440:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:428:13-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:428:13-51
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:429:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:429:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:427:13-69
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:427:13-69
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:426:13-58
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:426:13-58
 service#info.nightscout.androidaps.complications.WallpaperLightComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:442:9-457:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:442:9-457:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:445:13-43
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:445:13-43
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:446:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:446:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:444:13-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:444:13-51
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:443:13-69
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:443:13-69
 service#info.nightscout.androidaps.complications.WallpaperDarkComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:459:9-474:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:459:9-474:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:462:13-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:462:13-42
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:463:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:463:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:461:13-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:461:13-50
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:460:13-68
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:460:13-68
 service#info.nightscout.androidaps.complications.WallpaperGrayComplication
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:476:9-491:19
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:476:9-491:19
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:479:13-42
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:479:13-42
 	android:permission
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:480:13-99
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:480:13-99
 	android:icon
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:478:13-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:478:13-50
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:477:13-68
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:477:13-68
 receiver#info.nightscout.androidaps.complications.ComplicationTapBroadcastReceiver
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:493:9-84
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:493:9-84
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:493:19-81
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:493:19-81
 activity#info.nightscout.androidaps.interaction.menus.MainMenuActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:495:9-502:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:495:9-502:20
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:497:13-59
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:497:13-59
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:496:13-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:496:13-63
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:498:13-501:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:498:13-501:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:499:17-69
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:499:17-69
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:499:25-66
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:499:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:500:17-77
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:500:17-77
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:500:27-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:500:27-74
 activity#info.nightscout.androidaps.interaction.AAPSPreferences
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:503:9-505:53
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:503:9-505:53
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:505:13-50
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:505:13-50
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:504:13-56
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:504:13-56
 activity#info.nightscout.androidaps.interaction.actions.WizardActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:506:9-508:51
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:506:9-508:51
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:508:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:508:13-48
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:507:13-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:507:13-63
 activity#info.nightscout.androidaps.interaction.menus.FillMenuActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:509:9-511:55
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:509:9-511:55
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:511:13-52
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:511:13-52
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:510:13-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:510:13-63
 activity#info.nightscout.androidaps.interaction.menus.StatusMenuActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:512:9-514:51
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:512:9-514:51
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:514:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:514:13-48
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:513:13-65
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:513:13-65
 activity#info.nightscout.androidaps.interaction.actions.BolusActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:515:9-517:52
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:515:9-517:52
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:517:13-49
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:517:13-49
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:516:13-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:516:13-62
 activity#info.nightscout.androidaps.interaction.actions.CPPActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:518:9-520:50
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:518:9-520:50
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:520:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:520:13-47
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:519:13-60
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:519:13-60
 activity#info.nightscout.androidaps.interaction.actions.AcceptActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:521:9-524:51
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:521:9-524:51
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:523:13-51
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:523:13-51
 	android:launchMode
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:524:13-48
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:524:13-48
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:522:13-63
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:522:13-63
 activity#info.nightscout.androidaps.interaction.actions.FillActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:525:9-527:55
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:525:9-527:55
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:527:13-52
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:527:13-52
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:526:13-61
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:526:13-61
 activity#info.nightscout.androidaps.interaction.actions.ECarbActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:528:9-530:52
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:528:9-530:52
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:530:13-49
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:530:13-49
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:529:13-62
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:529:13-62
 activity#info.nightscout.androidaps.interaction.actions.TempTargetActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:531:9-533:50
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:531:9-533:50
 	android:label
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:533:13-47
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:533:13-47
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:532:13-67
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:532:13-67
 activity#info.nightscout.androidaps.interaction.ConfigurationActivity
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:535:9-550:20
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:535:9-550:20
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:535:19-68
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:535:19-68
 intent-filter#action:name:watch_face_configuration_bigchart+action:name:watch_face_configuration_circle+action:name:watch_face_configuration_cockpit+action:name:watch_face_configuration_digitalstyle+action:name:watch_face_configuration_home+action:name:watch_face_configuration_home2+action:name:watch_face_configuration_largehome+action:name:watch_face_configuration_nochart+action:name:watch_face_configuration_steampunk+category:name:android.intent.category.DEFAULT+category:name:com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:536:13-549:29
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:536:13-549:29
 action#watch_face_configuration_bigchart
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:538:17-76
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:538:17-76
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:538:25-73
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:538:25-73
 action#watch_face_configuration_circle
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:539:17-74
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:539:17-74
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:539:25-71
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:539:25-71
 action#watch_face_configuration_cockpit
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:540:17-75
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:540:17-75
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:540:25-72
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:540:25-72
 action#watch_face_configuration_digitalstyle
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:541:17-80
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:541:17-80
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:541:25-77
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:541:25-77
 action#watch_face_configuration_home
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:542:17-72
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:542:17-72
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:542:25-69
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:542:25-69
 action#watch_face_configuration_home2
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:543:17-73
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:543:17-73
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:543:25-70
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:543:25-70
 action#watch_face_configuration_largehome
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:544:17-77
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:544:17-77
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:544:25-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:544:25-74
 action#watch_face_configuration_nochart
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:545:17-75
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:545:17-75
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:545:25-72
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:545:25-72
 action#watch_face_configuration_steampunk
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:546:17-77
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:546:17-77
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:546:25-74
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:546:25-74
 category#com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:547:17-114
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:547:17-114
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:547:27-111
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:547:27-111
 category#android.intent.category.DEFAULT
-ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:548:17-76
+ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:548:17-76
 	android:name
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml:548:27-73
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml:548:27-73
 uses-sdk
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\101b64ec7c8c08cb0e428ff84568fbdc\appcompat-1.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\101b64ec7c8c08cb0e428ff84568fbdc\appcompat-1.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.legacy:legacy-support-v13:1.0.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\a0bf34e7e22c04f2ef7f8e5957d95e2b\legacy-support-v13-1.0.0\AndroidManifest.xml:20:5-44
@@ -640,16 +640,16 @@ MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\pinne\.gradle\cache
 MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\b940c2827a9caabf6fb986aa3a169098\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\10579eae63c4cd1b1ceb05b53ec0bc06\constraintlayout-1.1.0\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\10579eae63c4cd1b1ceb05b53ec0bc06\constraintlayout-1.1.0\AndroidManifest.xml:5:5-7:41
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\pinne\StudioProjects\UAM_1_6_1\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		ADDED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\pinne\StudioProjects\UAM_tsunami\wear\src\main\AndroidManifest.xml
 activity#preference.ListChooserActivity
 ADDED from [me.denley.wearpreferenceactivity:wearpreferenceactivity:0.5.0] C:\Users\pinne\.gradle\caches\transforms-2\files-2.1\67e8bdddd0375f990d919c91d1afc756\jetified-wearpreferenceactivity-0.5.0\AndroidManifest.xml:10:9-12:66
 	android:theme

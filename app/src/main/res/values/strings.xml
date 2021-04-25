@@ -833,12 +833,15 @@
     <string name="key_openapsama_boost_end" translatable="false">UAM Boost end time</string>
     <string name="openapsama_boost_end_summary">Default value: 22\nThis is the end time for the period in which boost is active.</string>
     <string name="openapsama_boost_end_title">UAM Boost end time</string>-->
-    <string name="key_UAM_ISF1" translatable="false">UAM_ISF1</string>
-    <string name="UAM_ISF1_title">scale_max</string>
-    <string name="UAM_ISF1_summary">maximum scaling factor minus 1</string>
-    <string name="key_UAM_ISF2" translatable="false">UAM_ISF2</string>
-    <string name="UAM_ISF2_title">scale_50</string>
-    <string name="UAM_ISF2_summary">delta at which 50% of scale_max is reached</string>
+    <string name="key_scale_max" translatable="false">scale_max</string>
+    <string name="scale_max_title">scale_max</string>
+    <string name="scale_max_summary">minimum percentage of base ISF to scale towards</string>
+    <string name="key_scale_50" translatable="false">scale_50</string>
+    <string name="scale_50_title">scale_50</string>
+    <string name="scale_50_summary">delta at which 50% of scale_max is reached</string>
+    <string name="key_W2_modifier" translatable="false">W2_modifier</string>
+    <string name="W2_modifier_title">W2_modifier</string>
+    <string name="W2_modifier_summary">Multiplier of scale_50 during 2nd wave assist (outside manually activated UAM mode). It shifts aggressiveness towards larger deltas to reduce the risk of overdosing.</string>
     <!-- MP: UAMboluscap start -->
     <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
     <string name="UAM_UAM_boluscap_title">UAM bolus cap (U)</string>

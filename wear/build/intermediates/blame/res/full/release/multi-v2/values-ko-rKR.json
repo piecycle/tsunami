@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-ko-rKR\\values-ko-rKR.xml",
+            "outputFile": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\incremental\\mergeFullReleaseResources\\merged.dir\\values-ko-rKR\\values-ko-rKR.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\pinne\\StudioProjects\\UAM_1_6_1\\wear\\src\\main\\res\\values-ko-rKR\\strings.xml",
+                    "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\src\\main\\res\\values-ko-rKR\\strings.xml",
                     "from": {
                         "startLines": "87,76,85,72,79,84,75,80,74,77,81,82,83,78,73,86,93,92,94,2,3,13,14,12,15,4,6,8,10,5,7,11,9,64,70,65,71,69,68,66,67,62,63,17,16,36,37,38,39,40,54,50,51,35,59,32,42,46,49,33,41,53,47,34,48,45,56,44,43,52,31,24,27,29,22,20,23,30,21,28,25,26,57,60,19,61,18,55,58,90,89,88,91",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
