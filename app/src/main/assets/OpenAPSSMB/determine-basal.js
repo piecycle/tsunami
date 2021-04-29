@@ -353,7 +353,7 @@ autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sens
             sens = round(sens, 1);
             scale_ISF_ID = 0
             console.log("Scale_ISF_ID: "+scale_ISF_ID);
-            console.log("Scale_50 adjusted from "+profile.scale_50+" to "+profile.scale_50/(bg/target_bg)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
+            console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(bg/target_bg), 2)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
             console.log("W1: Scale ISF from "+profile_sens+" to "+sens);
     }else if (iob_data.iob > 1 && now >= MealTimeStart && now <= MealTimeEnd && glucose_status.delta >= 4 && bg >= 100){ //MP: Second wave assist outside UAM Mode, active only during user-defined hours
             //sens = (profile.sens / (glucose_status.delta / 4)); //MP: Empirical model, v1 Apr17_midnight
@@ -362,7 +362,7 @@ autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sens
             sens = round (sens,1);
             scale_ISF_ID = 1
             console.log("Scale_ISF_ID: "+scale_ISF_ID);
-            console.log("Scale_50 adjusted from "+profile.scale_50+" to "+profile.scale_50/(bg/target_bg)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+bg+" = "+round(profile.W2_modifier/(bg/target_bg), 2)+";");
+            console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round ((profile.scale_50 * profile.W2_modifier)/(bg/target_bg),2)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+bg+" = "+round(profile.W2_modifier/(bg/target_bg), 2)+";");
             console.log("W2: Scale ISF from "+profile_sens+" to "+sens);
    //###################### MP: Code below for dinner only 2nd wave assist
    // }else if (iob_data.iob > 2 && now >= 19 && now < MealTimeEnd && glucose_status.delta >= 0 && bg >= 80){ //MP: Outdated, for dinner-only 2nd wave assist
@@ -571,7 +571,7 @@ autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sens
     // autotuned CR is still in effect even when basals and ISF are being adjusted by TT or autosens
     // this avoids overdosing insulin for large meals when low temp targets are active
     csf = sens / profile.carb_ratio;
-    console.error("profile.sens:",profile.sens,"sens:",sens,"CSF:",csf);
+    console.error("profile.sens:",profile.sens,"sens:",sens,"CSF:",round (csf, 2));
 
     var maxCarbAbsorptionRate = 30; // g/h; maximum rate to assume carbs will absorb if no CI observed
     // limit Carb Impact to maxCarbAbsorptionRate * csf in mg/dL per 5m
