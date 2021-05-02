@@ -7,7 +7,7 @@ public abstract interface TidepoolApiService {
     
     @org.jetbrains.annotations.NotNull()
     @retrofit2.http.POST(value = "/auth/login")
-    @retrofit2.http.Headers(value = {"User-Agent: AAPS- 2.8.2-UAM_tsunami_0.4", "X-Tidepool-Client-Name: info.nightscout.androidapsinfo.nightscout.androidaps", "X-Tidepool-Client-Version: 0.1.0"})
+    @retrofit2.http.Headers(value = {"User-Agent: AAPS- 2.8.2-UAM_tsunami_0.5", "X-Tidepool-Client-Name: info.nightscout.androidapsinfo.nightscout.androidaps", "X-Tidepool-Client-Version: 0.1.0"})
     public abstract retrofit2.Call<info.nightscout.androidaps.plugins.general.tidepool.messages.AuthReplyMessage> getLogin(@org.jetbrains.annotations.NotNull()
     @retrofit2.http.Header(value = "Authorization")
     java.lang.String secret);

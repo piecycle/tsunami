@@ -11,5 +11,5 @@ public final class BuildConfig {
   public static final int VERSION_CODE = 2;
   public static final String VERSION_NAME = "unspecified";
   // Fields from default config.
-  public static final String BUILDVERSION = "5be98f2c-2021.04.25";
+  public static final String BUILDVERSION = "260bd775-2021.05.02";
 }

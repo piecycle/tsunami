@@ -44,7 +44,7 @@ public final class OpenDatasetRequestMessage extends info.nightscout.androidaps.
     private java.lang.String timezone;
     @org.jetbrains.annotations.NotNull()
     @com.google.gson.annotations.Expose()
-    private java.lang.String version = "2.8.2-UAM_tsunami_0.4";
+    private java.lang.String version = "2.8.2-UAM_tsunami_0.5";
     @org.jetbrains.annotations.NotNull()
     private final java.lang.String serialNumber = null;
     

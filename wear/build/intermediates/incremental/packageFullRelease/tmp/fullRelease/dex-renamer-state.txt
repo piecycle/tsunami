@@ -1,4 +1,4 @@
-#Sun Apr 25 20:20:28 CEST 2021
+#Sun May 02 15:08:49 CEST 2021
 base.0=C\:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\wear\\build\\intermediates\\dex\\fullRelease\\mergeDexFullRelease\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

@@ -11,7 +11,7 @@
         "type": "MAIN",
         "splits": [],
         "versionCode": 1500,
-        "versionName": "2.8.2-UAM_tsunami_0.4",
+        "versionName": "2.8.2-UAM_tsunami_0.5",
         "outputFile": "app-full-release.apk",
         "fullName": "fullRelease",
         "baseName": "full-release",

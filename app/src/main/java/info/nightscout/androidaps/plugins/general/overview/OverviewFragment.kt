@@ -190,6 +190,9 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         overview_calibrationbutton?.setOnClickListener(this)
         overview_cgmbutton?.setOnClickListener(this)
         overview_insulinbutton?.setOnClickListener(this)
+        //MP button test below
+        overview_UAMbutton?.setOnClickListener(this)
+        //MP button test above
         overview_carbsbutton?.setOnClickListener(this)
         overview_quickwizardbutton?.setOnClickListener(this)
         overview_quickwizardbutton?.setOnLongClickListener(this)
@@ -284,6 +287,9 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 R.id.overview_treatmentbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) TreatmentDialog().show(childFragmentManager, "Overview") })
                 R.id.overview_wizardbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) WizardDialog().show(childFragmentManager, "Overview") })
                 R.id.overview_insulinbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") })
+                //MP button test below - causes crash
+                R.id.overview_UAMbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) UAMDialog().show(childFragmentManager, "Overview") })
+                //MP button test above
                 R.id.overview_quickwizardbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) onClickQuickWizard() })
                 R.id.overview_carbsbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) CarbsDialog().show(childFragmentManager, "Overview") })
                 R.id.overview_temptarget -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) TempTargetDialog().show(childFragmentManager, "Overview") })
@@ -465,6 +471,9 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         overview_treatmentbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_treatment_button, false)).toVisibility()
         overview_wizardbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_wizard_button, true)).toVisibility()
         overview_insulinbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
+        //MP button test below
+        overview_UAMbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_UAM_button, true)).toVisibility()
+        //MP button test above
 
         // **** Calibration & CGM buttons ****
         val xDripIsBgSource = xdripPlugin.isEnabled(PluginType.BGSOURCE)

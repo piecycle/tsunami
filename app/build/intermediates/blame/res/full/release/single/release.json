@@ -300,6 +300,10 @@
         "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\automation_action_item.xml"
     },
     {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\res\\merged\\full\\release\\layout_dialog_uam.xml.flat",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_uam.xml"
+    },
+    {
         "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\res\\merged\\full\\release\\drawable_ic_watch.xml.flat",
         "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\drawable\\ic_watch.xml"
     },

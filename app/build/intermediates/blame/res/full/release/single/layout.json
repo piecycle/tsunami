@@ -128,6 +128,10 @@
         "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\number_picker_layout_vertical.xml"
     },
     {
+        "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_uam.xml",
+        "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_uam.xml"
+    },
+    {
         "merged": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\build\\intermediates\\incremental\\mergeFullReleaseResources\\stripped.dir\\layout\\dialog_care.xml",
         "source": "C:\\Users\\pinne\\StudioProjects\\UAM_tsunami\\app\\src\\main\\res\\layout\\dialog_care.xml"
     },

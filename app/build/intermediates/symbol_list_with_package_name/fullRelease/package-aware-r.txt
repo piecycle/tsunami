@@ -3062,6 +3062,7 @@ id openapsma_scriptdebugdata
 id operating_mode
 id other
 id outline
+id overview_UAMbutton
 id overview_accepttempbutton
 id overview_activeprofile
 id overview_apsmode
@@ -3695,6 +3696,7 @@ layout dialog_profileviewer
 layout dialog_tempbasal
 layout dialog_temptarget
 layout dialog_treatment
+layout dialog_uam
 layout dialog_wizard
 layout dialog_wizardinfo
 layout doki_layout_header
@@ -4405,6 +4407,7 @@ string UAM_PBolus1_summary
 string UAM_PBolus1_title
 string UAM_UAM_boluscap_title
 string UAM_boluscap_summary
+string UAM_increment_button_message
 string W2_modifier_summary
 string W2_modifier_title
 string abc_action_bar_home_description
@@ -5195,6 +5198,7 @@ string fingerprint_error_user_canceled
 string fingerprint_not_recognized
 string finishing_open_humans_setup
 string firebase_database_url
+string firstUAMincrement
 string firstcarbsincrement
 string firstinsulinincrement
 string food
@@ -5364,6 +5368,9 @@ string key_ObjectivespumpStatusIsAvailableInNS
 string key_UAM_InsulinReq
 string key_UAM_PBolus1
 string key_UAM_boluscap
+string key_UAM_button_increment_1
+string key_UAM_button_increment_2
+string key_UAM_button_increment_3
 string key_W2_modifier
 string key_absorption_cutoff
 string key_absorption_maxtime
@@ -5547,6 +5554,7 @@ string key_settings_password
 string key_settings_protection
 string key_setupwizard_processed
 string key_short_tabtitles
+string key_show_UAM_button
 string key_show_calibration_button
 string key_show_carbs_button
 string key_show_cgm_button
@@ -6327,6 +6335,7 @@ string or
 string other_medication_label
 string other_medication_text
 string overview
+string overview_UAM_label
 string overview_bolusprogress_delivered
 string overview_bolusprogress_stoped
 string overview_buttons_selection
@@ -6401,6 +6410,7 @@ string please_choose_an_action_type
 string please_wait
 string poctech
 string positiveonly
+string prebolus
 string preconditions
 string prediction_shortname
 string prefdecrypt_issue_missing_file_hash
@@ -6654,6 +6664,7 @@ string scale_max_summary
 string scale_max_title
 string search_menu_title
 string searching_for_devices
+string secondUAMincrement
 string secondcarbsincrement
 string secondinsulinincrement
 string selected_profile
@@ -6838,6 +6849,7 @@ string start_activity_tt
 string start_eating_soon_tt
 string start_hypo_tt
 string start_pump
+string start_uam
 string started
 string startingbolus
 string startobjective
@@ -6920,6 +6932,7 @@ string temptargetshort
 string terms_of_use
 string the_following_data_will_be_uploaded_to_your_open_humans_account
 string there_was_an_error
+string thirdUAMincrement
 string thirdcarbsincrement
 string thirdinsulinincrement
 string this_may_take_a_while
@@ -6988,6 +7001,7 @@ string troubleshooting_yourendo
 string tube_changed
 string twelvehexanumber
 string twohours
+string uam_mode
 string uamdisabledinpreferences
 string uamdisabledoref1notselected
 string uamsmbmaxminutes

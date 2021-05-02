@@ -46,6 +46,9 @@ public final class OverviewButtonsLayoutBinding implements ViewBinding {
   public final SingleClickButton overviewTreatmentbutton;
 
   @NonNull
+  public final SingleClickButton overviewUAMbutton;
+
+  @NonNull
   public final SingleClickButton overviewWizardbutton;
 
   private OverviewButtonsLayoutBinding(@NonNull LinearLayout rootView,
@@ -56,6 +59,7 @@ public final class OverviewButtonsLayoutBinding implements ViewBinding {
       @NonNull SingleClickButton overviewInsulinbutton,
       @NonNull SingleClickButton overviewQuickwizardbutton,
       @NonNull SingleClickButton overviewTreatmentbutton,
+      @NonNull SingleClickButton overviewUAMbutton,
       @NonNull SingleClickButton overviewWizardbutton) {
     this.rootView = rootView;
     this.overviewAccepttempbutton = overviewAccepttempbutton;
@@ -67,6 +71,7 @@ public final class OverviewButtonsLayoutBinding implements ViewBinding {
     this.overviewInsulinbutton = overviewInsulinbutton;
     this.overviewQuickwizardbutton = overviewQuickwizardbutton;
     this.overviewTreatmentbutton = overviewTreatmentbutton;
+    this.overviewUAMbutton = overviewUAMbutton;
     this.overviewWizardbutton = overviewWizardbutton;
   }
 
@@ -147,6 +152,12 @@ public final class OverviewButtonsLayoutBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.overview_UAMbutton;
+      SingleClickButton overviewUAMbutton = rootView.findViewById(id);
+      if (overviewUAMbutton == null) {
+        break missingId;
+      }
+
       id = R.id.overview_wizardbutton;
       SingleClickButton overviewWizardbutton = rootView.findViewById(id);
       if (overviewWizardbutton == null) {
@@ -156,7 +167,7 @@ public final class OverviewButtonsLayoutBinding implements ViewBinding {
       return new OverviewButtonsLayoutBinding((LinearLayout) rootView, overviewAccepttempbutton,
           overviewButtons, overviewButtonsLayout, overviewCalibrationbutton, overviewCarbsbutton,
           overviewCgmbutton, overviewInsulinbutton, overviewQuickwizardbutton,
-          overviewTreatmentbutton, overviewWizardbutton);
+          overviewTreatmentbutton, overviewUAMbutton, overviewWizardbutton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
