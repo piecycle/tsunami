@@ -1453,5 +1453,6 @@
     <string name="key_Mealfactor_end" translatable="false">Meal factor end time</string>
     <string name="Mealfactor_end_summary">Default value: 23\nThis is the end time for the period in which Meal factor is disable.</string>
     <string name="Mealfactor_end_title">Meal factor end time</string>
+    <string name="disable_Libre_smb_restrictions">Filtering active for Libre, Go SMB!</string>
 
 </resources>
