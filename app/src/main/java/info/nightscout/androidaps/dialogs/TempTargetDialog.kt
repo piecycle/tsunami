@@ -155,7 +155,7 @@ class TempTargetDialog : DialogFragmentWithDate() {
 
             R.id.eating_soon_small -> {
                 binding.temptarget.value = 85.0
-                binding.duration.value = 30.0
+                binding.duration.value = 40.0
                 binding.reason.setSelection(reasonList.indexOf(resourceHelper.gs(R.string.eatingsoon_small)))
             }
 
@@ -197,6 +197,12 @@ class TempTargetDialog : DialogFragmentWithDate() {
         val unitResId = if (profileFunction.getUnits() == Constants.MGDL) R.string.mgdl else R.string.mmol
         val target = binding.temptarget.value
         val duration = binding.duration.value.toInt()
+        var activeTT = false
+        //ADO check if activeTT exists
+        if (activePlugin.activeTreatments.tempTargetFromHistory != null) {
+            activeTT = true
+        }
+
         if (target != 0.0 && duration != 0) {
             actions.add(resourceHelper.gs(R.string.reason) + ": " + reason)
             actions.add(resourceHelper.gs(R.string.target_label) + ": " + Profile.toCurrentUnitsString(profileFunction, target) + " " + resourceHelper.gs(unitResId))
@@ -238,7 +244,7 @@ class TempTargetDialog : DialogFragmentWithDate() {
                     treatmentsPlugin.addToHistoryTempTarget(tempTarget)
                     //ADO UAM PreBolus
 
-                    if (Profile.toMgdl(target, profileFunction.getUnits()) < 90) {
+                    if (Profile.toMgdl(target, profileFunction.getUnits()) < 90 && sp.getDouble("UAM_PBolus1",2.0) > 0 && !activeTT) {
 
                         val detailedBolusInfo = DetailedBolusInfo()
 
@@ -256,10 +262,10 @@ class TempTargetDialog : DialogFragmentWithDate() {
 
 
 
-                        if (duration >= 29 && duration < 180) {
+                        if (duration >= 39 && duration <= 181) {
 
                             detailedBolusInfo.insulin = sp.getDouble("UAM_PBolus1", 2.0)
-
+                            //if (detailedBolusInfo.insulin > 0) {
                             commandQueue.bolus(detailedBolusInfo, object : Callback() {
 
                                 override fun run() {
@@ -276,7 +282,7 @@ class TempTargetDialog : DialogFragmentWithDate() {
                                 }
 
                             })
-
+                            //}
                         }
 
                     }
