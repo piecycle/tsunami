@@ -303,8 +303,9 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("UAM_PBolus1", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1,"2")));
 //        mProfile.put("UAM_PBolus2",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2,"1")));
         mProfile.put("UAM_InsulinReq",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_InsulinReq,"0.65")));
-        mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"4")));
-        mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"20")));
+        mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"1")));
+        mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"0.3")));
+        mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
         mProfile.put("W2_modifier",SafeParse.stringToDouble(sp.getString(R.string.key_W2_modifier,"1.5")));
 //MP: UAM_boluscap start
         mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));

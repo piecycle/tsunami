@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/aaps_uam_tsunami_MT.iml" filepath="$PROJECT_DIR$/.idea/modules/aaps_uam_tsunami_MT.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/aaps_uam_tsunami_MT.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/aaps_uam_tsunami_MT.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/aaps_uam_tsunami_MT.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/aaps_uam_tsunami_MT.core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dana/aaps_uam_tsunami_MT.dana.iml" filepath="$PROJECT_DIR$/.idea/modules/dana/aaps_uam_tsunami_MT.dana.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danar/aaps_uam_tsunami_MT.danar.iml" filepath="$PROJECT_DIR$/.idea/modules/danar/aaps_uam_tsunami_MT.danar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danars/aaps_uam_tsunami_MT.danars.iml" filepath="$PROJECT_DIR$/.idea/modules/danars/aaps_uam_tsunami_MT.danars.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/medtronic/aaps_uam_tsunami_MT.medtronic.iml" filepath="$PROJECT_DIR$/.idea/modules/medtronic/aaps_uam_tsunami_MT.medtronic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/omnipod/aaps_uam_tsunami_MT.omnipod.iml" filepath="$PROJECT_DIR$/.idea/modules/omnipod/aaps_uam_tsunami_MT.omnipod.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rileylink/aaps_uam_tsunami_MT.rileylink.iml" filepath="$PROJECT_DIR$/.idea/modules/rileylink/aaps_uam_tsunami_MT.rileylink.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wear/aaps_uam_tsunami_MT.wear.iml" filepath="$PROJECT_DIR$/.idea/modules/wear/aaps_uam_tsunami_MT.wear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UAM_tsunami.iml" filepath="$PROJECT_DIR$/.idea/modules/UAM_tsunami.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/UAM_tsunami.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/UAM_tsunami.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/UAM_tsunami.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/UAM_tsunami.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dana/UAM_tsunami.dana.iml" filepath="$PROJECT_DIR$/.idea/modules/dana/UAM_tsunami.dana.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danar/UAM_tsunami.danar.iml" filepath="$PROJECT_DIR$/.idea/modules/danar/UAM_tsunami.danar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/danars/UAM_tsunami.danars.iml" filepath="$PROJECT_DIR$/.idea/modules/danars/UAM_tsunami.danars.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/medtronic/UAM_tsunami.medtronic.iml" filepath="$PROJECT_DIR$/.idea/modules/medtronic/UAM_tsunami.medtronic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/omnipod/UAM_tsunami.omnipod.iml" filepath="$PROJECT_DIR$/.idea/modules/omnipod/UAM_tsunami.omnipod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rileylink/UAM_tsunami.rileylink.iml" filepath="$PROJECT_DIR$/.idea/modules/rileylink/UAM_tsunami.rileylink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wear/UAM_tsunami.wear.iml" filepath="$PROJECT_DIR$/.idea/modules/wear/UAM_tsunami.wear.iml" />
     </modules>
   </component>
 </project>

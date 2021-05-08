@@ -851,6 +851,9 @@
     <string name="key_openapsama_boost_end" translatable="false">UAM Boost end time</string>
     <string name="openapsama_boost_end_summary">Default value: 22\nThis is the end time for the period in which boost is active.</string>
     <string name="openapsama_boost_end_title">UAM Boost end time</string>-->
+    <string name="key_scale_min" translatable="false">scale_min</string>
+    <string name="scale_min_title">scale_min</string>
+    <string name="scale_min_summary">Percentage of profile ISF to use as base ISF for first wave UAM. Default of 1 means no offset is used (profile ISF = base ISF). scale_min describes the base aggressiveness.</string>
     <string name="key_scale_max" translatable="false">scale_max</string>
     <string name="scale_max_title">scale_max</string>
     <string name="scale_max_summary">minimum percentage of base ISF to scale towards</string>
