@@ -26,6 +26,24 @@
             validate:floatmaxNumber="25.0"
             validate:floatminNumber="0"
             validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="160"
+            android:dialogMessage="@string/UAM_eventualBG_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_UAM_eventualBG"
+            android:title="@string/UAM_eventualBG_title"
+            validate:floatmaxNumber="200"
+            validate:floatminNumber="130"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="4.5"
+            android:dialogMessage="@string/UAM_IOB_SCALE_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_UAM_IOB_SCALE"
+            android:title="@string/UAM_IOB_SCALE_title"
+            validate:floatmaxNumber="10"
+            validate:floatminNumber="1"
+            validate:testType="floatNumericRange" />
         <!--        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference-->
         <!--            android:defaultValue="2.0"-->
         <!--            android:dialogMessage="@string/openapsama_boost_bolus_summary"-->

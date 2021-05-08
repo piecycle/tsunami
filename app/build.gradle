@@ -120,7 +120,7 @@ android {
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1500
-        version "2.8.2-UAM_tsunami_0.5"
+        version "2.8.2-UAM_tsunami_0.5_MT"
         buildConfigField "String", "VERSION", '"' + version + '"'
         buildConfigField "String", "BUILDVERSION", '"' + generateGitBuild() + '-' + generateDate() + '"'
         buildConfigField "String", "REMOTE", '"' + generateGitRemote() + '"'
@@ -157,6 +157,7 @@ android {
             ext.enableCrashlytics = false
         }
     }
+
     productFlavors {
         flavorDimensions "standard"
         full {

@@ -1453,6 +1453,11 @@
     <string name="key_Mealfactor_end" translatable="false">Meal factor end time</string>
     <string name="Mealfactor_end_summary">Default value: 23\nThis is the end time for the period in which Meal factor is disable.</string>
     <string name="Mealfactor_end_title">Meal factor end time</string>
+    <string name="key_UAM_eventualBG" translatable="false">Value of eventualBG to authorize more than 100% insulin required</string>
+    <string name="UAM_eventualBG_summary">Value of eventualBG to authorize more than 100% insulin required</string>
+    <string name="UAM_eventualBG_title">Value of eventualBG to authorize more than 100% insulin required</string>
+    <string name="key_UAM_IOB_SCALE" translatable="false">UAM_IOB_SCALE</string>
+    <string name="UAM_IOB_SCALE_summary">factor value multiplier basal to determine the IOB value to start divide ISF value. exemple will be UAM_IOB_SCALE*basal give the value to start scale ISF or change target for an aggressive one.</string>
+    <string name="UAM_IOB_SCALE_title">Determine IOB value to start Divide ISF</string>
     <string name="disable_Libre_smb_restrictions">Filtering active for Libre, Go SMB!</string>
-
 </resources>
