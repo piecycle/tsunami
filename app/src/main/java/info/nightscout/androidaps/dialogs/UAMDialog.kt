@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.common.base.Joiner
+//MP inject test below
+//import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.Config
 import info.nightscout.androidaps.Constants
 import info.nightscout.androidaps.R
@@ -24,8 +26,9 @@ import info.nightscout.androidaps.interfaces.CommandQueueProvider
 import info.nightscout.androidaps.interfaces.Constraint
 import info.nightscout.androidaps.interfaces.ProfileFunction
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
+import info.nightscout.androidaps.plugins.treatments.CarbsGenerator
 //MP button test start
-//import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus
 //import info.nightscout.androidaps.plugins.aps.openAPSSMB.DetermineBasalAdapterSMBJS
 //import dagger.android.HasAndroidInjector
 //MP button test end
@@ -56,6 +59,9 @@ class UAMDialog : DialogFragmentWithDate() {
     @Inject lateinit var activePlugin: ActivePluginProvider
     @Inject lateinit var ctx: Context
     @Inject lateinit var config: Config
+    //MP inject test below
+   // @Inject lateinit var injector: HasAndroidInjector
+
 //    @Inject lateinit var glucoseStatus: GlucoseStatus
 
     //MP test
@@ -235,6 +241,8 @@ class UAMDialog : DialogFragmentWithDate() {
         } else
             activity?.let { activity ->
                 OKDialog.show(activity, resourceHelper.gs(R.string.uam_mode), resourceHelper.gs(R.string.start_uam))
+                //MP inject test below
+               // GlucoseStatus(injector).glucoseStatusData?.glucose
             }
         return true
     }
