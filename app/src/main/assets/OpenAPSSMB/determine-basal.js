@@ -151,7 +151,93 @@ function autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_d
 }
 // auto ISF === END
 
+// data smoothing === START
+function bgsmoothing(glucose_status) {
+
+    var bg_5minago = glucose_status.bg_5minago;
+    var bg_0minago = glucose_status.glucose;
+    var smooth_a = 0.4;
+    var smooth_b = 1.0;
+    var smoothedbg_5minago;
+    var smoothedbg_0minago;
+    var smoothedtrend_5minago;
+    var smoothedtrend_0minago;
+    var startuphelper;
+/*
+        console.error("Data smoothing debug START:");
+        console.error("glucose_status.glucose: "+glucose_status.glucose);
+        console.error("bg_5minago: "+bg_5minago);
+        console.error("bg_0minago: "+bg_0minago);
+        console.error("smooth_a: "+smooth_a);
+        console.error("smooth_b: "+smooth_b);
+        console.error("smoothedbg_5minago: "+smoothedbg_5minago);
+        console.error("smoothedbg_0minago: "+smoothedbg_0minago);
+        console.error("smoothedtrend_5minago: "+smoothedtrend_5minago);
+        console.error("smoothedtrend_0minago: "+smoothedtrend_0minago);
+        console.error("startuphelper: "+startuphelper);
+*/
+    console.log("Data smoothing debug START:");
+    console.log("glucose_status.glucose: "+glucose_status.glucose);
+    console.log("bg_5minago: "+bg_5minago);
+    console.log("bg_0minago: "+bg_0minago);
+    console.log("smooth_a: "+smooth_a);
+    console.log("smooth_b: "+smooth_b);
+    console.log("smoothedbg_5minago: "+smoothedbg_5minago);
+    console.log("smoothedbg_0minago: "+smoothedbg_0minago);
+    console.log("smoothedtrend_5minago: "+smoothedtrend_5minago);
+    console.log("smoothedtrend_0minago: "+smoothedtrend_0minago);
+    console.log("startuphelper: "+startuphelper);
+
+    bg_5minago = glucose_status.bg_5minago;
+    bg_0minago = glucose_status.glucose;
+
+    //second order exponential smoothing START
+    if (bg_5minago < 1 && bg_0minago != null) {
+        smoothedbg_0minago = bg_0minago;
+    } else if (bg_5minago > 0 && bg_0minago != null) {
+        if (smoothedtrend_5minago == null || smoothedtrend_5minago === undefined && smoothedtrend_0minago == null || smoothedtrend_0minago === undefined) { //startup conditions
+            smoothedbg_5minago = bg_5minago;
+            startuphelper = true;
+        } else if (smoothedtrend_5minago != null && startuphelper == true) { //first run after startup
+            smoothedtrend_5minago = glucose_status.delta;
+            smoothedbg_0minago = smooth_a * bg_0minago + (1 - smooth_a) * (smoothedbg_5minago + smoothedtrend_5minago);
+            smoothedtrend_0minago = smooth_b * (smoothedbg_0minago - smoothedbg_5minago) + (1 - smooth_b) * smoothedtrend_5minago;
+            startuphelper = false;
+            return smoothedbg_0minago;
+        } else if (smoothedtrend_5minago != null && startuphelper == false) { //runs after initialisation
+            smoothedtrend_5minago = smoothedtrend_0minago;
+            smoothedbg_5minago = smoothedbg_0minago;
+            smoothedbg_0minago = smooth_a * bg_0minago + (1 - smooth_a) * (smoothedbg_5minago + smoothedtrend_5minago);
+            smoothedtrend_0minago = smooth_b * (smoothedbg_0minago - smoothedbg_5minago) + (1 - smooth_b) * smoothedtrend_5minago;
+            return smoothedbg_0minago;
+        }
+    } else if (bg_5minago > 0 && bg_0minago == null) { //reset if no bg data available
+        smoothedtrend_5minago == null;
+        smoothedtrend_0minago == null;
+        startuphelper == null;
+    }
+    console.log("Data smoothing debug END:");
+    console.log("glucose_status.glucose: "+glucose_status.glucose);
+    console.log("bg_5minago: "+bg_5minago);
+    console.log("bg_0minago: "+bg_0minago);
+    console.log("smooth_a: "+smooth_a);
+    console.log("smooth_b: "+smooth_b);
+    console.log("smoothedbg_5minago: "+smoothedbg_5minago);
+    console.log("smoothedbg_0minago: "+smoothedbg_0minago);
+    console.log("smoothedtrend_5minago: "+smoothedtrend_5minago);
+    console.log("smoothedtrend_0minago: "+smoothedtrend_0minago);
+    console.log("startuphelper: "+startuphelper);
+
+    return true;
+}
+// data smoothing === END
+//var funtest;
+//funtest = bgsmoothing(glucose_status);
+
 var determine_basal = function determine_basal(glucose_status, currenttemp, iob_data, profile, autosens_data, meal_data, tempBasalFunctions, microBolusAllowed, reservoir_data, currentTime, isSaveCgmSource) {
+    //MP data smoothing test start
+    bgsmoothing(glucose_status);
+    //MP data smoothing test end
     var rT = {}; //short for requestedTemp
 
     var deliverAt = new Date();

@@ -37,6 +37,9 @@ public class GlucoseStatus {
     public double autoISF_duration = 0d;
     public double autoISF_average = 0d;
     // autoISF === END
+    // MP data smoothing START
+    public double bg_5minago = 0d;
+    // MP data smoothing END
     public String log() {
         return "Glucose: " + DecimalFormatter.to0Decimal(glucose) + " mg/dl " +
                 "Noise: " + DecimalFormatter.to0Decimal(noise) + " " +
@@ -62,6 +65,9 @@ public class GlucoseStatus {
         this.autoISF_duration = Round.roundTo(this.autoISF_duration, 0.1);
         this.autoISF_average = Round.roundTo(this.autoISF_average, 0.1);
         // autoISF === END
+        // MP data smoothing start
+        this.bg_5minago = Round.roundTo(this.bg_5minago, 0.1);
+        // MP data smoothing end
         return this;
     }
 
@@ -98,6 +104,9 @@ public class GlucoseStatus {
             }
 
             BgReading now = data.get(0);
+            // MP data smoothing start
+            BgReading before = data.get(1);
+            // MP data smoothing end
             long now_date = now.date;
             double change;
 
@@ -115,6 +124,9 @@ public class GlucoseStatus {
                 status.autoISF_duration = 0d;
                 status.autoISF_average = now.value;
                 // autoISF === END
+                // data smoothing start - get bg from previous reading
+                status.bg_5minago = 0d; //MP If the database contains only one reading, then the bg 5 min ago is zero
+                // data smoothing end
                 aapsLogger.debug(LTag.GLUCOSE, "sizeRecords==1");
                 return status.round();
             }
@@ -209,6 +221,9 @@ public class GlucoseStatus {
             status.autoISF_average = oldavg;
             status.autoISF_duration = minutesdur;
             // autoISF === END
+            // MP data smoothing start
+            status.bg_5minago = before.value; //MP If the database contains more than one reading, return the value from 5 min ago
+            // MP data smoothing end
             aapsLogger.debug(LTag.GLUCOSE, status.log());
             return status.round();
         }

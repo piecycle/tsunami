@@ -365,6 +365,9 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("autoISF_duration", glucoseStatus.autoISF_duration);
         mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average);
         // autoISF === END
+        // MP data smoothing START
+        mGlucoseStatus.put("bg_5minago", glucoseStatus.bg_5minago);
+        // MP data smoothing END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);
         mMealData.put("boluses", mealData.boluses);
