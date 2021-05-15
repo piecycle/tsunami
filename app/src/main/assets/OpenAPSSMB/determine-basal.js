@@ -151,6 +151,7 @@ function autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_d
 }
 // auto ISF === END
 
+/*
 // data smoothing === START
 function bgsmoothing(glucose_status) {
 
@@ -163,19 +164,7 @@ function bgsmoothing(glucose_status) {
     var smoothedtrend_5minago;
     var smoothedtrend_0minago;
     var startuphelper;
-/*
-        console.error("Data smoothing debug START:");
-        console.error("glucose_status.glucose: "+glucose_status.glucose);
-        console.error("bg_5minago: "+bg_5minago);
-        console.error("bg_0minago: "+bg_0minago);
-        console.error("smooth_a: "+smooth_a);
-        console.error("smooth_b: "+smooth_b);
-        console.error("smoothedbg_5minago: "+smoothedbg_5minago);
-        console.error("smoothedbg_0minago: "+smoothedbg_0minago);
-        console.error("smoothedtrend_5minago: "+smoothedtrend_5minago);
-        console.error("smoothedtrend_0minago: "+smoothedtrend_0minago);
-        console.error("startuphelper: "+startuphelper);
-*/
+
     console.log("Data smoothing debug START:");
     console.log("glucose_status.glucose: "+glucose_status.glucose);
     console.log("bg_5minago: "+bg_5minago);
@@ -233,10 +222,10 @@ function bgsmoothing(glucose_status) {
 // data smoothing === END
 //var funtest;
 //funtest = bgsmoothing(glucose_status);
-
+*/
 var determine_basal = function determine_basal(glucose_status, currenttemp, iob_data, profile, autosens_data, meal_data, tempBasalFunctions, microBolusAllowed, reservoir_data, currentTime, isSaveCgmSource) {
     //MP data smoothing test start
-    bgsmoothing(glucose_status);
+    //bgsmoothing(glucose_status);
     //MP data smoothing test end
     var rT = {}; //short for requestedTemp
 

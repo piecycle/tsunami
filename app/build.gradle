@@ -120,7 +120,7 @@ android {
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1500
-        version "2.8.2-UAM_tsunami_0.6_early_RC"
+        version "2.8.2-UAM_tsunami_0.6.1"
         buildConfigField "String", "VERSION", '"' + version + '"'
         buildConfigField "String", "BUILDVERSION", '"' + generateGitBuild() + '-' + generateDate() + '"'
         buildConfigField "String", "REMOTE", '"' + generateGitRemote() + '"'
@@ -164,7 +164,7 @@ android {
                         // on below line we are setting a name to our apk
                     output->
                         // on below line we are specifying our app name.
-                        project.ext { appName = 'AIMI' }
+                        project.ext { appName = 'tsunami' }
                         // on below line we are adding the formatted date to our apk file name.
                         def formattedDate = new Date().format('YYMMdd')
                         // on below line we are creating a new name for our apk.
@@ -172,7 +172,7 @@ android {
                         // on below line we are replacing our previous name with our app name.
                         newName = newName.replace("app-", "$project.ext.appName-")
                         // on below line we are replacing -release with our formatted date and ID.
-                        newName = newName.replace("-release", "-release-" + formattedDate + "-Tsunami-06-DEV")
+                        newName = newName.replace("-release", "-release-" + formattedDate + "-v0.6.1")
                         // at last we are setting our apk name to it.
                         output.outputFileName  = newName
                         //MT : here you have to change the path by your way : windows (c:\.....) macos (just replace the xxx by you username and the folder name UAM)

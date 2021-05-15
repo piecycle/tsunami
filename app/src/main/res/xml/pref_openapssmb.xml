@@ -292,7 +292,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/uamsmbmaxminutes_summary"
-            validate:maxNumber="900"
+            validate:maxNumber="200"
             validate:minNumber="15"
             validate:testType="numericRange" />
 

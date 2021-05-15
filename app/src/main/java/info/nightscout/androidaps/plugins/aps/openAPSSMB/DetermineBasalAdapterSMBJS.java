@@ -367,6 +367,19 @@ public class DetermineBasalAdapterSMBJS {
         // autoISF === END
         // MP data smoothing START
         mGlucoseStatus.put("bg_5minago", glucoseStatus.bg_5minago);
+        mGlucoseStatus.put("o1_weight", glucoseStatus.o1_weight);
+        mGlucoseStatus.put("o1_a", glucoseStatus.o1_a);
+        mGlucoseStatus.put("o2_a", glucoseStatus.o2_a);
+        mGlucoseStatus.put("o2_b", glucoseStatus.o2_b);
+        mGlucoseStatus.put("o1_smoothedbg_5m", glucoseStatus.o1_smoothedbg_5m);
+        mGlucoseStatus.put("o1_smoothedbg_now", glucoseStatus.o1_smoothedbg_now);
+        mGlucoseStatus.put("o2_smoothedbg_5m", glucoseStatus.o2_smoothedbg_5m);
+        mGlucoseStatus.put("o2_smoothedbg_now", glucoseStatus.o2_smoothedbg_now);
+        mGlucoseStatus.put("o2_smoothedtrend_5m", glucoseStatus.o2_smoothedtrend_5m);
+        mGlucoseStatus.put("o2_smoothedtrend_now", glucoseStatus.o2_smoothedtrend_now);
+        mGlucoseStatus.put("bg_supersmooth_5m", glucoseStatus.bg_supersmooth_5m);
+        mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
+        mGlucoseStatus.put("delta_supersmooth", glucoseStatus.delta_supersmooth);
         // MP data smoothing END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);
