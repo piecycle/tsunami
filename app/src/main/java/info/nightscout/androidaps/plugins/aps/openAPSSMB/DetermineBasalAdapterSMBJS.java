@@ -302,11 +302,12 @@ public class DetermineBasalAdapterSMBJS {
         //MT : Prebolus UAM
         mProfile.put("UAM_PBolus1", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1,"2")));
 //        mProfile.put("UAM_PBolus2",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2,"1")));
-        mProfile.put("UAM_InsulinReq",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_InsulinReq,"0.65")));
-        mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"1")));
-        mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"0.3")));
+        mProfile.put("UAM_InsulinReq",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_InsulinReq,"65")));
+        mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
+        mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
         mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
         mProfile.put("W2_modifier",SafeParse.stringToDouble(sp.getString(R.string.key_W2_modifier,"1.5")));
+        mProfile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false));
 //MP: UAM_boluscap start
         mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
 //        mProfile.put("boost_bolus",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_bolus, "2.0")));
@@ -316,7 +317,7 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("Mealfactor_start",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_start, "11.0")));
         mProfile.put("Mealfactor_end",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_end, "23.0")));
         mProfile.put("UAM_eventualBG",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_eventualBG,"160")));
-        mProfile.put("UAM_IOB_SCALE",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_IOB_SCALE,"4.5")));
+        mProfile.put("W2_IOB_threshold",SafeParse.stringToDouble(sp.getString(R.string.key_w2_iob_threshold,"10")));
         if (profileFunction.getUnits().equals(Constants.MMOL)) {
             mProfile.put("out_units", "mmol/L");
         }
@@ -350,6 +351,9 @@ public class DetermineBasalAdapterSMBJS {
 
         mGlucoseStatus = new JSONObject();
         mGlucoseStatus.put("glucose", glucoseStatus.glucose);
+        // MP data smoothing START
+        mGlucoseStatus.put("glucose_5m", glucoseStatus.bg_5minago);
+        // MP data smoothing end
         mGlucoseStatus.put("noise", glucoseStatus.noise);
 
         if (sp.getBoolean(R.string.key_always_use_shortavg, false)) {
@@ -366,17 +370,16 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average);
         // autoISF === END
         // MP data smoothing START
-        mGlucoseStatus.put("bg_5minago", glucoseStatus.bg_5minago);
         mGlucoseStatus.put("o1_weight", glucoseStatus.o1_weight);
         mGlucoseStatus.put("o1_a", glucoseStatus.o1_a);
         mGlucoseStatus.put("o2_a", glucoseStatus.o2_a);
         mGlucoseStatus.put("o2_b", glucoseStatus.o2_b);
-        mGlucoseStatus.put("o1_smoothedbg_5m", glucoseStatus.o1_smoothedbg_5m);
-        mGlucoseStatus.put("o1_smoothedbg_now", glucoseStatus.o1_smoothedbg_now);
-        mGlucoseStatus.put("o2_smoothedbg_5m", glucoseStatus.o2_smoothedbg_5m);
-        mGlucoseStatus.put("o2_smoothedbg_now", glucoseStatus.o2_smoothedbg_now);
-        mGlucoseStatus.put("o2_smoothedtrend_5m", glucoseStatus.o2_smoothedtrend_5m);
-        mGlucoseStatus.put("o2_smoothedtrend_now", glucoseStatus.o2_smoothedtrend_now);
+        mGlucoseStatus.put("o1/bg_5m", glucoseStatus.o1_smoothedbg_5m);
+        mGlucoseStatus.put("o1/bg_now", glucoseStatus.o1_smoothedbg_now);
+        mGlucoseStatus.put("o2/bg_5m", glucoseStatus.o2_smoothedbg_5m);
+        mGlucoseStatus.put("o2/bg_now", glucoseStatus.o2_smoothedbg_now);
+        mGlucoseStatus.put("o2/trend_5m", glucoseStatus.o2_smoothedtrend_5m);
+        mGlucoseStatus.put("o2/trend_now", glucoseStatus.o2_smoothedtrend_now);
         mGlucoseStatus.put("bg_supersmooth_5m", glucoseStatus.bg_supersmooth_5m);
         mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
         mGlucoseStatus.put("delta_supersmooth", glucoseStatus.delta_supersmooth);
