@@ -265,7 +265,7 @@ class TempTargetDialog : DialogFragmentWithDate() {
                         if (duration >= 39 && duration <= 181) {
 
                             detailedBolusInfo.insulin = sp.getDouble("UAM_PBolus1", 2.0)
-                            //if (detailedBolusInfo.insulin > 0) {
+                            if (detailedBolusInfo.insulin > 0) {
                             commandQueue.bolus(detailedBolusInfo, object : Callback() {
 
                                 override fun run() {
