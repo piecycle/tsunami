@@ -317,7 +317,7 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("Mealfactor_start",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_start, "11.0")));
         mProfile.put("Mealfactor_end",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_end, "23.0")));
         mProfile.put("UAM_eventualBG",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_eventualBG,"160")));
-        mProfile.put("W2_IOB_threshold",SafeParse.stringToDouble(sp.getString(R.string.key_w2_iob_threshold,"10")));
+        mProfile.put("w2_iob_threshold",SafeParse.stringToDouble(sp.getString(R.string.key_w2_iob_threshold,"10")));
         if (profileFunction.getUnits().equals(Constants.MMOL)) {
             mProfile.put("out_units", "mmol/L");
         }

@@ -1462,7 +1462,7 @@
     <string name="key_UAM_eventualBG" translatable="false">eventualBG above which >100% insulin required is authorised</string>
     <string name="UAM_eventualBG_summary">eventualBG above which >100% of the calculated insulin required will be delivered. This UAM mode feature aims to halt a glucose climb early and requires good quality sensor data for safe use.</string>
     <string name="UAM_eventualBG_title">ev.BG threshold for delivery of >100% insulinReq.</string>
-    <string name="key_w2_iob_threshold" translatable="false">W2_IOB_threshold</string>
+    <string name="key_w2_iob_threshold" translatable="false">w2_iob_threshold</string>
     <string name="w2_iob_threshold_summary">Minimum percentage of maxIOB above which W2 assist is enabled. Below this threshold IOB, W2 assist will be disabled. Example: If this value is 10 and maxIOB is 8, your current IOB must be at least (8 * 10/100 =) 0.8 U for W2 assist to be active. This parameter is a safety feature assuming that postprandial glucose spikes (e.g. due to fat) occur before all insulin from the last meal decayed. If you set this value to 0, W2 assist will be decoupled from current IOB. Only do this if you are confident your sensor is not noisy, you enabled data smoothing and your scaling parameters and profile allow for safe use of W2 assist.</string>
     <string name="w2_iob_threshold_title">W2 IOB threshold [%]</string>
 </resources>
