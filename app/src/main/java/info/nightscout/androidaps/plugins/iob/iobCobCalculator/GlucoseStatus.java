@@ -52,7 +52,8 @@ public class GlucoseStatus {
     public double o2_smoothedtrend_now = 0d;
     public double bg_supersmooth_now = 0d;
     public double bg_supersmooth_5m = 0d;
-    public double delta_supersmooth = 0d;
+    public double delta_supersmooth_now = 0d;
+    public double delta_supersmooth_5m = 0d;
     // MP data smoothing END
 
     public String log() {
@@ -90,7 +91,8 @@ public class GlucoseStatus {
         this.o2_smoothedtrend_now = Round.roundTo(this.o2_smoothedtrend_now, 0.1);
         this.bg_supersmooth_now = Round.roundTo(this.bg_supersmooth_now, 0.1);
         this.bg_supersmooth_5m = Round.roundTo(this.bg_supersmooth_5m, 0.1);
-        this.delta_supersmooth = Round.roundTo(this.delta_supersmooth, 0.1);
+        this.delta_supersmooth_now = Round.roundTo(this.delta_supersmooth_now, 0.1);
+        this.delta_supersmooth_5m = Round.roundTo(this.delta_supersmooth_5m, 0.1);
         // MP data smoothing end
         return this;
     }
@@ -164,9 +166,10 @@ public class GlucoseStatus {
                 status.o2_smoothedbg_now = now.value;
                 status.o2_smoothedtrend_5m = 0d;
                 status.o2_smoothedtrend_now = 0d;
-                status.bg_supersmooth_now = now.value; //MP Smoothing parameters remain unchanged
-                status.bg_supersmooth_5m = now.value; //MP Smoothing parameters remain unchanged
-                status.delta_supersmooth = 0d; //MP Smoothing parameters remain unchanged
+                status.bg_supersmooth_now = now.value;
+                status.bg_supersmooth_5m = now.value;
+                status.delta_supersmooth_now = 0d;
+                status.delta_supersmooth_5m = 0d;
                 o1_smoothbg.add(0, now.value); //MP if database contains only one reading, add current reading to array for use as starting point
                 o2_smoothbg.add(0, now.value); //MP if database contains only one reading, add current reading to array for use as starting point
                 o2_smoothdelta.add(0, 0d); //MP initialise array with trend of 0
@@ -330,7 +333,8 @@ public class GlucoseStatus {
             status.o2_smoothedtrend_now = o2_smoothdelta.get(0);
             status.bg_supersmooth_now = o1_weight*o1_smoothbg.get(0) + (1-o1_weight)*o2_smoothbg.get(0);
             status.bg_supersmooth_5m = o1_weight*o1_smoothbg.get(1) + (1-o1_weight)*o2_smoothbg.get(1);
-            status.delta_supersmooth = status.bg_supersmooth_now - status.bg_supersmooth_5m;
+            status.delta_supersmooth_now = status.bg_supersmooth_now - status.bg_supersmooth_5m;
+            status.delta_supersmooth_5m = status.bg_supersmooth_5m - (o1_weight*o1_smoothbg.get(2) + (1-o1_weight)*o2_smoothbg.get(2)); //MP supersmooth delta from 5m ago
 //############################### MP
 //### DATA SMOOTHING CORE END ### MP
 //############################### MP

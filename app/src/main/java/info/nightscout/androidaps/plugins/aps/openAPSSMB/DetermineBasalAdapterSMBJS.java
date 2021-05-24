@@ -308,6 +308,7 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
         mProfile.put("W2_modifier",SafeParse.stringToDouble(sp.getString(R.string.key_W2_modifier,"1.5")));
         mProfile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false));
+        mProfile.put("deceleration_scaling", sp.getBoolean(R.string.key_deceleration_scaling, false));
 //MP: UAM_boluscap start
         mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
 //        mProfile.put("boost_bolus",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_bolus, "2.0")));
@@ -318,6 +319,7 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("Mealfactor_end",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_end, "23.0")));
         mProfile.put("UAM_eventualBG",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_eventualBG,"160")));
         mProfile.put("w2_iob_threshold",SafeParse.stringToDouble(sp.getString(R.string.key_w2_iob_threshold,"10")));
+        mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
         if (profileFunction.getUnits().equals(Constants.MMOL)) {
             mProfile.put("out_units", "mmol/L");
         }
@@ -382,7 +384,8 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("o2/trend_now", glucoseStatus.o2_smoothedtrend_now);
         mGlucoseStatus.put("bg_supersmooth_5m", glucoseStatus.bg_supersmooth_5m);
         mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
-        mGlucoseStatus.put("delta_supersmooth", glucoseStatus.delta_supersmooth);
+        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now);
+        mGlucoseStatus.put("delta_supersmooth_5m", glucoseStatus.delta_supersmooth_5m);
         // MP data smoothing END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);

@@ -866,6 +866,9 @@
     <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
     <string name="enable_datasmoothing">Enable data smoothing</string>
     <string name="enable_datasmoothing_summary">Smooth incoming sensor data for wave 2 UAM assist (useful for noisy sensors or aggressive W2 settings)</string>
+    <string name="key_deceleration_scaling" translatable="false">deceleration_scaling</string>
+    <string name="deceleration_scaling_title">Enable deceleration scaling</string>
+    <string name="deceleration_scaling_summary">Dynamically raise scale_max if a glucose rise during W1 and W2 modes is decelerating and expected to peak soon. Lowers aggressiveness before glucose is expected to drop for more safety.</string>
     <!-- MP: UAMboluscap start -->
     <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
     <string name="UAM_UAM_boluscap_title">UAM bolus cap [U]</string>
@@ -1465,4 +1468,7 @@
     <string name="key_w2_iob_threshold" translatable="false">w2_iob_threshold</string>
     <string name="w2_iob_threshold_summary">Minimum percentage of maxIOB above which W2 assist is enabled. Below this threshold IOB, W2 assist will be disabled. Example: If this value is 10 and maxIOB is 8, your current IOB must be at least (8 * 10/100 =) 0.8 U for W2 assist to be active. This parameter is a safety feature assuming that postprandial glucose spikes (e.g. due to fat) occur before all insulin from the last meal decayed. If you set this value to 0, W2 assist will be decoupled from current IOB. Only do this if you are confident your sensor is not noisy, you enabled data smoothing and your scaling parameters and profile allow for safe use of W2 assist.</string>
     <string name="w2_iob_threshold_title">W2 IOB threshold [%]</string>
+    <string name="key_adjtarget" translatable="false">adjtarget</string>
+    <string name="adjtarget_summary">Factor for dynamic target adjustment by which target bg will be multiplied (in case of predicted low) or divided (in case of predicted high).</string>
+    <string name="adjtarget_title">Dynamic target adjustment factor</string>
 </resources>
