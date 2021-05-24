@@ -18,7 +18,7 @@ This version of AAPS was modified to work in full closed loop, exclusively UAM m
 This is not for beginners.
 Keep sugar in your pocket. :)
 
-This README is valid for AAPS_2.8.2_UAM_tsunami_v0.6.1
+This README is valid for AAPS_2.8.2_UAM_tsunami_v0.7
 
 AAPS 2.8.2-UAM_tsunami was based on 2.8.2-UAM-1.6.1 by Mathieu Tellier and modified from there. This code differs significantly from the original and requires different/new settings.
 
