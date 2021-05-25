@@ -27,6 +27,16 @@
             validate:floatminNumber="0"
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="65"
+            android:dialogMessage="@string/UAM_InsulinReq_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_UAM_InsulinReq"
+            android:title="@string/UAM_InsulinReq_title"
+            validate:floatmaxNumber="100"
+            validate:floatminNumber="50"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+
             android:defaultValue="160"
             android:dialogMessage="@string/UAM_eventualBG_summary"
             android:inputType="numberDecimal"
@@ -36,12 +46,48 @@
             validate:floatminNumber="130"
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="0.1"
-            android:dialogMessage="@string/UAM_IOB_SCALE_summary"
+            android:defaultValue="100"
+            android:dialogMessage="@string/scale_min_summary"
             android:inputType="numberDecimal"
-            android:key="@string/key_UAM_IOB_SCALE"
-            android:title="@string/UAM_IOB_SCALE_title"
-            validate:floatmaxNumber="1"
+            android:key="@string/key_scale_min"
+            android:title="@string/scale_min_title"
+            validate:floatmaxNumber="100"
+            validate:floatminNumber="70"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="4"
+            android:dialogMessage="@string/scale_50_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_scale_50"
+            android:title="@string/scale_50_title"
+            validate:floatmaxNumber="15"
+            validate:floatminNumber="1"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="30"
+            android:dialogMessage="@string/scale_max_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_scale_max"
+            android:title="@string/scale_max_title"
+            validate:floatmaxNumber="70"
+            validate:floatminNumber="10"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="1.5"
+            android:dialogMessage="@string/W2_modifier_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_W2_modifier"
+            android:title="@string/W2_modifier_title"
+            validate:floatmaxNumber="3"
+            validate:floatminNumber="1"
+            validate:testType="floatNumericRange" />
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="10"
+            android:dialogMessage="@string/w2_iob_threshold_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_w2_iob_threshold"
+            android:title="@string/w2_iob_threshold_title"
+            validate:floatmaxNumber="100"
             validate:floatminNumber="0"
             validate:testType="floatNumericRange" />
         <!--        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference-->
@@ -124,16 +170,6 @@
         <!--            validate:floatmaxNumber="3"-->
         <!--            validate:floatminNumber="1"-->
         <!--            validate:testType="floatNumericRange" />-->
-
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="0.65"
-            android:dialogMessage="@string/UAM_InsulinReq_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_UAM_InsulinReq"
-            android:title="@string/UAM_InsulinReq_title"
-            validate:floatmaxNumber="1"
-            validate:floatminNumber="0.5"
-            validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="2"
             android:dialogMessage="@string/UAM_PBolus1_summary"
@@ -152,42 +188,6 @@
             validate:floatmaxNumber="5"
             validate:floatminNumber="0"
             validate:testType="floatNumericRange" />-->
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="1"
-            android:dialogMessage="@string/scale_min_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_scale_min"
-            android:title="@string/scale_min_title"
-            validate:floatmaxNumber="1"
-            validate:floatminNumber="0.7"
-            validate:testType="floatNumericRange" />
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="0.3"
-            android:dialogMessage="@string/scale_max_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_scale_max"
-            android:title="@string/scale_max_title"
-            validate:floatmaxNumber="0.7"
-            validate:floatminNumber="0.1"
-            validate:testType="floatNumericRange" />
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="4"
-            android:dialogMessage="@string/scale_50_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_scale_50"
-            android:title="@string/scale_50_title"
-            validate:floatmaxNumber="15"
-            validate:floatminNumber="1"
-            validate:testType="floatNumericRange" />
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="1.5"
-            android:dialogMessage="@string/W2_modifier_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_W2_modifier"
-            android:title="@string/W2_modifier_title"
-            validate:floatmaxNumber="3"
-            validate:floatminNumber="1"
-            validate:testType="floatNumericRange" />
         <!--MP: bolus cap during TT START-->
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="1"
@@ -208,7 +208,20 @@
             android:defaultValue="false"
             android:key="openapsama_useautoisf"
             android:title="@string/openapsama_useautoisf" />
-
+<!-- MP data smoothing start -->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_enable_datasmoothing"
+            android:summary="@string/enable_datasmoothing_summary"
+            android:title="@string/enable_datasmoothing" />
+<!-- MP data smoothing end -->
+ <!-- MP deceleration scaling -->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_deceleration_scaling"
+            android:summary="@string/deceleration_scaling_summary"
+            android:title="@string/deceleration_scaling_title" />
+ <!-- MP deceleration scaling -->
         <!--        <SwitchPreference-->
         <!--            android:defaultValue="false"-->
         <!--            android:dependency="@string/key_use_smb"-->
@@ -292,7 +305,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/uamsmbmaxminutes_summary"
-            validate:maxNumber="900"
+            validate:maxNumber="200"
             validate:minNumber="15"
             validate:testType="numericRange" />
 
@@ -329,6 +342,16 @@
             android:key="@string/key_low_temptarget_lowers_sensitivity"
             android:summary="@string/low_temptarget_lowers_sensitivity_summary"
             android:title="@string/low_temptarget_lowers_sensitivity_title" />
+
+        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
+            android:defaultValue="1.2"
+            android:dialogMessage="@string/adjtarget_summary"
+            android:inputType="numberDecimal"
+            android:key="@string/key_adjtarget"
+            android:title="@string/adjtarget_title"
+            validate:floatmaxNumber="1.3"
+            validate:floatminNumber="1.0"
+            validate:testType="floatNumericRange" />
 
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="1"

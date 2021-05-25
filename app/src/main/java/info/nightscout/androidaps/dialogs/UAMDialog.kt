@@ -170,9 +170,8 @@ class UAMDialog : DialogFragmentWithDate() {
         val unitLabel = if (units == Constants.MMOL) resourceHelper.gs(R.string.mmol) else resourceHelper.gs(R.string.mgdl)
         val recordOnlyChecked = binding.recordOnly.isChecked
         val eatingSoonChecked = binding.startEatingSoonTt.isChecked
-        //MP button test start
-        //val fromdialog = true
-        //MP button test end
+
+
         if (insulinAfterConstraints > 0) {
             actions.add(resourceHelper.gs(R.string.bolus) + ": " + DecimalFormatter.toPumpSupportedBolus(insulinAfterConstraints, activePlugin.activePump, resourceHelper).formatColor(resourceHelper, R.color.bolus))
             if (recordOnlyChecked)

@@ -852,28 +852,36 @@
     <string name="openapsama_boost_end_summary">Default value: 22\nThis is the end time for the period in which boost is active.</string>
     <string name="openapsama_boost_end_title">UAM Boost end time</string>-->
     <string name="key_scale_min" translatable="false">scale_min</string>
-    <string name="scale_min_title">scale_min</string>
-    <string name="scale_min_summary">Percentage of profile ISF to use as base ISF for first wave UAM. Default of 1 means no offset is used (profile ISF = base ISF). scale_min describes the base aggressiveness.</string>
+
+    <string name="scale_min_title">scale_min [%]</string>
+    <string name="scale_min_summary">Percentage of profile ISF to use as base ISF for first wave UAM. Default of 100% means no offset is used (profile ISF = base ISF). scale_min describes the base aggressiveness.</string>
+
     <string name="key_scale_max" translatable="false">scale_max</string>
-    <string name="scale_max_title">scale_max</string>
-    <string name="scale_max_summary">minimum percentage of base ISF to scale towards</string>
+    <string name="scale_max_title">scale_max [%]</string>
+    <string name="scale_max_summary">Minimum percentage of base ISF to scale towards. Example: Scale_max of 50% means that the lowest possible ISF reachable by the scaling algorithm is 50% of your current base ISF. scale_max describes the global aggressiveness.</string>
     <string name="key_scale_50" translatable="false">scale_50</string>
     <string name="scale_50_title">scale_50</string>
-    <string name="scale_50_summary">delta at which 50% of scale_max is reached</string>
+    <string name="scale_50_summary">Delta at which 50% of minimal ISF (defined by scale_max) is reached. scale_50 describes the local or initial aggressiveness.</string>
     <string name="key_W2_modifier" translatable="false">W2_modifier</string>
-    <string name="W2_modifier_title">W2_modifier</string>
-    <string name="W2_modifier_summary">Multiplier of scale_50 during 2nd wave assist (outside manually activated UAM mode). It shifts aggressiveness towards larger deltas to reduce the risk of overdosing.</string>
+    <string name="W2_modifier_title">W2 modifier of scale_50</string>
+    <string name="W2_modifier_summary">Multiplier of scale_50 during 2nd wave assist (outside manually activated UAM mode). It shifts aggressiveness towards larger deltas to reduce the risk of overdosing. Example: If scale_50 = 4 and W2_modifier is 1.5, the scale_50 parameters used by W2 assist is 4 * 1.5 = 6.</string>
+    <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
+    <string name="enable_datasmoothing">Enable data smoothing</string>
+    <string name="enable_datasmoothing_summary">Smooth incoming sensor data for wave 2 UAM assist (useful for noisy sensors or aggressive W2 settings)</string>
+    <string name="key_deceleration_scaling" translatable="false">deceleration_scaling</string>
+    <string name="deceleration_scaling_title">Enable deceleration scaling</string>
+    <string name="deceleration_scaling_summary">Dynamically raise scale_max if a glucose rise during W1 and W2 modes is decelerating and expected to peak soon. Lowers aggressiveness before glucose is expected to drop for more safety.</string>
     <!-- MP: UAMboluscap start -->
     <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
-    <string name="UAM_UAM_boluscap_title">UAM bolus cap (U)</string>
-    <string name="UAM_boluscap_summary">max SMB size if UAM mode is active</string>
+    <string name="UAM_UAM_boluscap_title">UAM bolus cap [U]</string>
+    <string name="UAM_boluscap_summary">max SMB size deliverable by UAM meal assists (W1 and W2 assists).</string>
     <!-- MP: UAMboluscap end -->
     <string name="key_UAM_InsulinReq" translatable="false">UAM_InsulinReq</string>
-    <string name="UAM_InsulinReq_title">UAM % InsulinReq out of the meal time</string>
-    <string name="UAM_InsulinReq_summary">this variable is the multiplicater of the inqulin required for one smb</string>
+    <string name="UAM_InsulinReq_title">insulinReq delivery percentage [%]</string>
+    <string name="UAM_InsulinReq_summary">Reduces the calculated required SMB size to the specified percentage. Example: If calculated insulin required is 1 U and fraction size is 50%, 0.5 U will be delivered.</string>
     <string name="key_UAM_PBolus1" translatable="false">UAM_PBolus1</string>
-    <string name="UAM_PBolus1_title">UAM PreBolus normal meal</string>
-    <string name="UAM_PBolus1_summary">This bolus will run when TT duration is between 60 and 120 minutes for a TT lesser than 90 value </string>
+    <string name="UAM_PBolus1_title">UAM prebolus [U]</string>
+    <string name="UAM_PBolus1_summary">Automatic prebolus if setting a TT of less than 90 mg/dl with a duration between 60 and 120 minutes.</string>
     <!--    <string name="key_UAM_PBolus2" translatable="false">UAM_PBolus2</string>-->
     <!--    <string name="UAM_PBolus2_title">UAM PreBolus Long meal</string>-->
     <!--    <string name="UAM_PBolus2_summary">This bolus will run when TT duration is greater than 120 minutes for a TT lesser than 90 value </string>-->
@@ -1450,17 +1458,21 @@
     <string name="eatingsoon_small">Small meal</string>
     <string name="eatingsoon_medium">Medium meal PBolus1</string>
     <string name="eatingsoon_large">Large meal PBolus2</string>
-    <string name="key_Mealfactor_start" translatable="false">Meal factor start time</string>
-    <string name="Mealfactor_start_summary">Default value: 11\nThis is the start time for the period in which Meal factor is active.</string>
-    <string name="Mealfactor_start_title">Meal factor start time</string>
-    <string name="key_Mealfactor_end" translatable="false">Meal factor end time</string>
-    <string name="Mealfactor_end_summary">Default value: 23\nThis is the end time for the period in which Meal factor is disable.</string>
-    <string name="Mealfactor_end_title">Meal factor end time</string>
-    <string name="key_UAM_eventualBG" translatable="false">Value of eventualBG to authorize more than 100% insulin required</string>
-    <string name="UAM_eventualBG_summary">Value of eventualBG to authorize more than 100% insulin required</string>
-    <string name="UAM_eventualBG_title">Value of eventualBG to authorize more than 100% insulin required</string>
-    <string name="key_UAM_IOB_SCALE" translatable="false">UAM_IOB_SCALE</string>
-    <string name="UAM_IOB_SCALE_summary">factor value multiplier basal to determine the IOB value to start divide ISF value. exemple will be UAM_IOB_SCALE*basal give the value to start scale ISF or change target for an aggressive one.</string>
-    <string name="UAM_IOB_SCALE_title">Determine IOB value to start Divide ISF</string>
     <string name="disable_Libre_smb_restrictions">Filtering active for Libre, Go SMB!</string>
+    <string name="key_Mealfactor_start" translatable="false">W2 assist start time</string>
+    <string name="Mealfactor_start_summary">Hour of the day from when on W2 assist will be enabled.</string>
+    <string name="Mealfactor_start_title">W2 assist start time [h]</string>
+    <string name="key_Mealfactor_end" translatable="false">W2 assist end time</string>
+    <string name="Mealfactor_end_summary">Hour of the day until (and including) which W2 assist is enabled.</string>
+    <string name="Mealfactor_end_title">W2 assist end time [h]</string>
+    <string name="key_UAM_eventualBG" translatable="false">eventualBG above which >100% insulin required is authorised</string>
+    <string name="UAM_eventualBG_summary">eventualBG above which >100% of the calculated insulin required will be delivered. This UAM mode feature aims to halt a glucose climb early and requires good quality sensor data for safe use.</string>
+    <string name="UAM_eventualBG_title">ev.BG threshold for delivery of >100% insulinReq.</string>
+    <string name="key_w2_iob_threshold" translatable="false">w2_iob_threshold</string>
+    <string name="w2_iob_threshold_summary">Minimum percentage of maxIOB above which W2 assist is enabled. Below this threshold IOB, W2 assist will be disabled. Example: If this value is 10 and maxIOB is 8, your current IOB must be at least (8 * 10/100 =) 0.8 U for W2 assist to be active. This parameter is a safety feature assuming that postprandial glucose spikes (e.g. due to fat) occur before all insulin from the last meal decayed. If you set this value to 0, W2 assist will be decoupled from current IOB. Only do this if you are confident your sensor is not noisy, you enabled data smoothing and your scaling parameters and profile allow for safe use of W2 assist.</string>
+    <string name="w2_iob_threshold_title">W2 IOB threshold [%]</string>
+    <string name="key_adjtarget" translatable="false">adjtarget</string>
+    <string name="adjtarget_summary">Factor for dynamic target adjustment by which target bg will be multiplied (in case of predicted low) or divided (in case of predicted high).</string>
+    <string name="adjtarget_title">Dynamic target adjustment factor</string>
+
 </resources>
