@@ -81,6 +81,8 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../medtronic/build/generated/source/kaptKotlin/debugAndroidTest" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../medtronic/build/generated/source/kaptKotlin/debugUnitTest" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../medtronic/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../medtronic/build/generated/source/kaptKotlin/debugAndroidTest" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../medtronic/build/generated/source/kaptKotlin/debugUnitTest" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/../../../medtronic/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../medtronic/build" />
     </content>

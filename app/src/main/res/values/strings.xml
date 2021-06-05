@@ -866,6 +866,9 @@
     <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
     <string name="enable_datasmoothing">Enable data smoothing</string>
     <string name="enable_datasmoothing_summary">Smooth incoming sensor data for wave 2 UAM assist (useful for noisy sensors or aggressive W2 settings)</string>
+    <string name="key_enable_w_zero" translatable="false">enable_w_zero</string>
+    <string name="enable_w_zero_title">Enable W-zero</string>
+    <string name="enable_w_zero_summary">Automatically detect and handle meals. Does not trigger or replace preboluses!</string>
     <string name="key_deceleration_scaling" translatable="false">deceleration_scaling</string>
     <string name="deceleration_scaling_title">Enable deceleration scaling</string>
     <string name="deceleration_scaling_summary">Dynamically raise scale_max if a glucose rise during W1 and W2 modes is decelerating and expected to peak soon. Lowers aggressiveness before glucose is expected to drop for more safety.</string>

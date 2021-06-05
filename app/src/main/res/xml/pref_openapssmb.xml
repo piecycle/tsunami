@@ -214,6 +214,14 @@
             android:summary="@string/enable_datasmoothing_summary"
             android:title="@string/enable_datasmoothing" />
 <!-- MP data smoothing end -->
+<!-- MP w-zero start -->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="@string/key_enable_datasmoothing"
+            android:key="@string/key_enable_w_zero"
+            android:summary="@string/enable_w_zero_summary"
+            android:title="@string/enable_w_zero_title" />
+<!-- MP w-zero end -->
  <!-- MP deceleration scaling -->
         <SwitchPreference
             android:defaultValue="false"

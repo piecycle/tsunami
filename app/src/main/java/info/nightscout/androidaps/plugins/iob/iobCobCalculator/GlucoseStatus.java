@@ -52,8 +52,15 @@ public class GlucoseStatus {
     public double o2_smoothedtrend_now = 0d;
     public double bg_supersmooth_now = 0d;
     public double bg_supersmooth_5m = 0d;
+    public double bg_supersmooth_10m = 0d;
+    public double bg_supersmooth_15m = 0d;
+    public double bg_supersmooth_20m = 0d;
+    public double bg_supersmooth_25m = 0d;
     public double delta_supersmooth_now = 0d;
     public double delta_supersmooth_5m = 0d;
+    public double delta_supersmooth_10m = 0d;
+    public double delta_supersmooth_15m = 0d;
+    public double delta_supersmooth_20m = 0d;
     // MP data smoothing END
 
     public String log() {
@@ -91,8 +98,15 @@ public class GlucoseStatus {
         this.o2_smoothedtrend_now = Round.roundTo(this.o2_smoothedtrend_now, 0.1);
         this.bg_supersmooth_now = Round.roundTo(this.bg_supersmooth_now, 0.1);
         this.bg_supersmooth_5m = Round.roundTo(this.bg_supersmooth_5m, 0.1);
+        this.bg_supersmooth_10m = Round.roundTo(this.bg_supersmooth_10m, 0.1);
+        this.bg_supersmooth_15m = Round.roundTo(this.bg_supersmooth_15m, 0.1);
+        this.bg_supersmooth_20m = Round.roundTo(this.bg_supersmooth_20m, 0.1);
+        this.bg_supersmooth_25m = Round.roundTo(this.bg_supersmooth_25m, 0.1);
         this.delta_supersmooth_now = Round.roundTo(this.delta_supersmooth_now, 0.1);
         this.delta_supersmooth_5m = Round.roundTo(this.delta_supersmooth_5m, 0.1);
+        this.delta_supersmooth_10m = Round.roundTo(this.delta_supersmooth_10m, 0.1);
+        this.delta_supersmooth_15m = Round.roundTo(this.delta_supersmooth_15m, 0.1);
+        this.delta_supersmooth_20m = Round.roundTo(this.delta_supersmooth_20m, 0.1);
         // MP data smoothing end
         return this;
     }
@@ -116,6 +130,8 @@ public class GlucoseStatus {
             ArrayList<Double> o1_smoothbg = new ArrayList<>(); //MP array for 1st order Smoothed Blood Glucose
             ArrayList<Double> o2_smoothbg = new ArrayList<>(); //MP array for 2nd order Smoothed Blood Glucose
             ArrayList<Double> o2_smoothdelta = new ArrayList<>(); //MP array for 2nd order Smoothed delta
+            ArrayList<Double> ssmooth_bg = new ArrayList<>(); //MP array for weighted averaged, super smoothed Blood Glucose
+            ArrayList<Double> ssmooth_delta = new ArrayList<>(); //MP array for deltas of supersmoothed Blood Glucose
             //MP data smoothing end
             if (data == null) {
                 aapsLogger.debug(LTag.GLUCOSE, "data=null");
@@ -168,8 +184,15 @@ public class GlucoseStatus {
                 status.o2_smoothedtrend_now = 0d;
                 status.bg_supersmooth_now = now.value;
                 status.bg_supersmooth_5m = now.value;
+                status.bg_supersmooth_10m = 0d;
+                status.bg_supersmooth_15m = 0d;
+                status.bg_supersmooth_20m = 0d;
+                status.bg_supersmooth_25m = 0d;
                 status.delta_supersmooth_now = 0d;
                 status.delta_supersmooth_5m = 0d;
+                status.delta_supersmooth_10m = 0d;
+                status.delta_supersmooth_15m = 0d;
+                status.delta_supersmooth_20m = 0d;
                 o1_smoothbg.add(0, now.value); //MP if database contains only one reading, add current reading to array for use as starting point
                 o2_smoothbg.add(0, now.value); //MP if database contains only one reading, add current reading to array for use as starting point
                 o2_smoothdelta.add(0, 0d); //MP initialise array with trend of 0
@@ -319,7 +342,17 @@ public class GlucoseStatus {
                     o2_smoothdelta.add(0, o2_b * (o2_smoothbg.get(0) - o2_smoothbg.get(1)) + (1 - o2_b) * o2_smoothdelta.get(0)); //MP build array of 1st order smoothed bgs
                 }
             }
-            //MP report smoothing variables in glucose status
+            // CALCULATE SUPERSMOOTHED GLUCOSE & DELTAS
+            ssmooth_bg.clear(); // MP reset supersmoothed bg array
+            ssmooth_delta.clear(); // MP reset supersmoothed delta array
+
+            for (int i = 0; i < o2_smoothbg.size(); i++) { //MP calculated supersmoothed bg of all o1/o2 smoothed data available; o2 & o1 smoothbg array sizes are equal in size, so only one is used as a condition here
+                ssmooth_bg.add(o1_weight*o1_smoothbg.get(i) + (1-o1_weight)*o2_smoothbg.get(i)); //MP build array of supersmoothed bgs
+            }
+            for (int i = 0; i < ssmooth_bg.size() - 1; i++) {
+                ssmooth_delta.add(ssmooth_bg.get(i) - ssmooth_bg.get(i+1)); //MP build array of supersmoothed bg deltas
+            }
+                //MP report smoothing variables in glucose status
             status.bg_5minago = before.value; //MP If the database contains more than one reading, return the value from 5 min ago
             status.o1_weight = o1_weight;
             status.o1_a = o1_a;
@@ -331,10 +364,20 @@ public class GlucoseStatus {
             status.o2_smoothedbg_now = o2_smoothbg.get(0);
             status.o2_smoothedtrend_5m = o2_smoothdelta.get(1);
             status.o2_smoothedtrend_now = o2_smoothdelta.get(0);
-            status.bg_supersmooth_now = o1_weight*o1_smoothbg.get(0) + (1-o1_weight)*o2_smoothbg.get(0);
-            status.bg_supersmooth_5m = o1_weight*o1_smoothbg.get(1) + (1-o1_weight)*o2_smoothbg.get(1);
-            status.delta_supersmooth_now = status.bg_supersmooth_now - status.bg_supersmooth_5m;
-            status.delta_supersmooth_5m = status.bg_supersmooth_5m - (o1_weight*o1_smoothbg.get(2) + (1-o1_weight)*o2_smoothbg.get(2)); //MP supersmooth delta from 5m ago
+//            status.bg_supersmooth_now = o1_weight*o1_smoothbg.get(0) + (1-o1_weight)*o2_smoothbg.get(0);
+//            status.bg_supersmooth_5m = o1_weight*o1_smoothbg.get(1) + (1-o1_weight)*o2_smoothbg.get(1);
+            status.bg_supersmooth_now = ssmooth_bg.get(0);
+            status.bg_supersmooth_5m = ssmooth_bg.get(1);
+            status.bg_supersmooth_10m = ssmooth_bg.get(2);
+            status.bg_supersmooth_15m = ssmooth_bg.get(3);
+            status.bg_supersmooth_20m = ssmooth_bg.get(4);
+            status.bg_supersmooth_25m = ssmooth_bg.get(5);
+            status.delta_supersmooth_now = ssmooth_delta.get(0);
+            status.delta_supersmooth_5m = ssmooth_delta.get(1);; //MP supersmooth delta from 5m ago
+            status.delta_supersmooth_10m = ssmooth_delta.get(2);; //MP supersmooth delta from 10m ago
+            status.delta_supersmooth_15m = ssmooth_delta.get(3);; //MP supersmooth delta from 15m ago
+            status.delta_supersmooth_20m = ssmooth_delta.get(4);; //MP supersmooth delta from 20m ago
+            // TODO: add a failsafe if glucose arrays don't contain enough entries to calculate all the required smoothed deltas for w-zero
 //############################### MP
 //### DATA SMOOTHING CORE END ### MP
 //############################### MP

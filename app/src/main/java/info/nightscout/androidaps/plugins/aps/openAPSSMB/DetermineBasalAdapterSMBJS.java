@@ -308,6 +308,9 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
         mProfile.put("W2_modifier",SafeParse.stringToDouble(sp.getString(R.string.key_W2_modifier,"1.5")));
         mProfile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false));
+        //MP: Make w-zero dependent on datasmoothing
+        boolean datasmoothingenabled = sp.getBoolean(R.string.key_enable_datasmoothing, false);
+        mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
         mProfile.put("deceleration_scaling", sp.getBoolean(R.string.key_deceleration_scaling, false));
 //MP: UAM_boluscap start
         mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
@@ -382,10 +385,17 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("o2/bg_now", glucoseStatus.o2_smoothedbg_now);
         mGlucoseStatus.put("o2/trend_5m", glucoseStatus.o2_smoothedtrend_5m);
         mGlucoseStatus.put("o2/trend_now", glucoseStatus.o2_smoothedtrend_now);
+        mGlucoseStatus.put("bg_supersmooth_25m", glucoseStatus.bg_supersmooth_25m);
+        mGlucoseStatus.put("bg_supersmooth_20m", glucoseStatus.bg_supersmooth_20m);
+        mGlucoseStatus.put("bg_supersmooth_15m", glucoseStatus.bg_supersmooth_15m);
+        mGlucoseStatus.put("bg_supersmooth_10m", glucoseStatus.bg_supersmooth_10m);
         mGlucoseStatus.put("bg_supersmooth_5m", glucoseStatus.bg_supersmooth_5m);
         mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
-        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now);
+        mGlucoseStatus.put("delta_supersmooth_20m", glucoseStatus.delta_supersmooth_20m);
+        mGlucoseStatus.put("delta_supersmooth_15m", glucoseStatus.delta_supersmooth_15m);
+        mGlucoseStatus.put("delta_supersmooth_10m", glucoseStatus.delta_supersmooth_10m);
         mGlucoseStatus.put("delta_supersmooth_5m", glucoseStatus.delta_supersmooth_5m);
+        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now);
         // MP data smoothing END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);

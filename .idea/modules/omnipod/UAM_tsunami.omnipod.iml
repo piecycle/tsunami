@@ -80,6 +80,8 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../omnipod/build/generated/source/kaptKotlin/debugAndroidTest" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../omnipod/build/generated/source/kaptKotlin/debugUnitTest" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../omnipod/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../omnipod/build/generated/source/kaptKotlin/debugAndroidTest" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../omnipod/build/generated/source/kaptKotlin/debugUnitTest" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/../../../omnipod/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../omnipod/build" />
     </content>
