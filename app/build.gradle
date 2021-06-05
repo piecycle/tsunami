@@ -120,7 +120,7 @@ android {
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1500
-        version "2.8.2"
+        version "2.8.2-UAM_tsunami_0.8"
         buildConfigField "String", "VERSION", '"' + version + '"'
         buildConfigField "String", "BUILDVERSION", '"' + generateGitBuild() + '-' + generateDate() + '"'
         buildConfigField "String", "REMOTE", '"' + generateGitRemote() + '"'
@@ -156,7 +156,31 @@ android {
             System.setProperty("disableFirebase", "true")
             ext.enableCrashlytics = false
         }
+        applicationVariants.all{
+                // this method is use to rename your all apk weather
+                // it may be signed or unsigned(debug apk)
+            variant ->
+                variant.outputs.each{
+                        // on below line we are setting a name to our apk
+                    output->
+                        // on below line we are specifying our app name.
+                        project.ext { appName = 'tsunami' }
+                        // on below line we are adding the formatted date to our apk file name.
+                        def formattedDate = new Date().format('YYMMdd')
+                        // on below line we are creating a new name for our apk.
+                        def newName = output.outputFile.name
+                        // on below line we are replacing our previous name with our app name.
+                        newName = newName.replace("app-", "$project.ext.appName-")
+                        // on below line we are replacing -release with our formatted date and ID.
+                        newName = newName.replace("-release", "-release-v0.8_" + formattedDate)
+                        // at last we are setting our apk name to it.
+                        output.outputFileName  = newName
+                        //MT : here you have to change the path by your way : windows (c:\.....) macos (just replace the xxx by you username and the folder name UAM)
+                        //variant.getPackageApplication().outputDirectory = new File("/Users/xxxxxx/Google Drive/Mon Drive/UAM/* Build Tsunami 05 *")
+                }
+        }
     }
+
     productFlavors {
         flavorDimensions "standard"
         full {
@@ -321,6 +345,6 @@ if (isMaster() && !gitAvailable()) {
     throw new GradleException('GIT system is not available. On Windows try to run Android Studio as an Administrator. Check if GIT is installed and Studio have permissions to use it')
 }
 if (isMaster() && !allCommitted()) {
-    throw new GradleException('There are uncommitted changes. Clone sources again as described in wiki and do not allow gradle update')
+//    throw new GradleException('There are uncommitted changes. Clone sources again as described in wiki and do not allow gradle update')
 }
 

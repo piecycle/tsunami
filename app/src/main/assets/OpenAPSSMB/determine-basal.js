@@ -110,6 +110,47 @@ function enable_smb(
     return false;
 }
 
+// auto ISF === START
+function autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio)
+{   // #### mod 7e: added switch fr autoISF ON/OFF
+    if ( !profile.use_autoisf ) {
+        console.error("autoISF disabled in Preferences");
+        return sens;
+    }
+    // #### mod 7:  dynamic ISF strengthening based on duration and width of 5% BG band
+    // #### mod 7b: misuse autosens_min to get the scale factor
+    // #### mod 7d: use standalone variables for autopISF
+    var dura05 = glucose_status.autoISF_duration;           // mod 7d
+    var avg05  = glucose_status.autoISF_average;            // mod 7d
+    //r weightISF = (1 - profile.autosens_min)*2;           // mod 7b: use 0.6 to get factor 0.8; use 1 to get factor 0, i.e. OFF
+    var weightISF = profile.autoisf_hourlychange;           // mod 7d: specify factor directly; use factor 0 to shut autoISF OFF
+    if (meal_data.mealCOB==0 && dura05>=0) {
+        if (avg05 > target_bg) {
+            // # fight the resistance at high levels
+            var maxISFReduction = profile.autoisf_max;      // mod 7d
+            var dura05_weight = dura05 / 10;
+            var avg05_weight = weightISF / target_bg;       // mod gz7b: provide access from AAPS
+            var levelISF = 1 + dura05_weight*avg05_weight*(avg05-target_bg);
+            var liftISF = Math.max(Math.min(maxISFReduction, levelISF), sensitivityRatio);  // corrected logic on 30.Jan.2021
+            /*console.error("autoISF reports", sens, "did not do it for", dura05,"m; go more aggressive by", round(levelISF,2));
+            if (maxISFReduction < levelISF) {
+                console.error("autoISF reduction", round(levelISF,2), "limited by autoisf_max", maxISFReduction);
+            }*/
+            sens = round(sens / liftISF, 1);
+        } else {
+            //MT : make the ISF lesser aggressive  when it's necessary
+            //sens = round (profile.sens * 2,1);
+            console.error("autoISF by-passed; avg. glucose", avg05, "below target", target_bg);
+        }
+    } /*else if (meal_data.mealCOB>0) {
+        console.error("autoISF by-passed; mealCOB of "+round(meal_data.mealCOB,1));
+    } */else {
+        console.error("autoISF by-passed; BG is only "+dura05+"m at level "+avg05);
+    }
+    return sens;
+}
+// auto ISF === END
+
 var determine_basal = function determine_basal(glucose_status, currenttemp, iob_data, profile, autosens_data, meal_data, tempBasalFunctions, microBolusAllowed, reservoir_data, currentTime, isSaveCgmSource) {
     var rT = {}; //short for requestedTemp
 
@@ -146,9 +187,9 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     } else if ( bg > 60 && glucose_status.delta == 0 && glucose_status.short_avgdelta > -1 && glucose_status.short_avgdelta < 1 && glucose_status.long_avgdelta > -1 && glucose_status.long_avgdelta < 1 && !isSaveCgmSource) {
         if ( glucose_status.last_cal && glucose_status.last_cal < 3 ) {
             rT.reason = "CGM was just calibrated";
-        } else {
+        }/* else {
             rT.reason = "Error: CGM data is unchanged for the past ~45m";
-        }
+        }*/
     }
     //cherry pick from oref upstream dev cb8e94990301277fb1016c778b4e9efa55a6edbc
     if (bg <= 10 || bg === 38 || noise >= 3 || minAgo > 12 || minAgo < -5 || ( bg > 60 && glucose_status.delta == 0 && glucose_status.short_avgdelta > -1 && glucose_status.short_avgdelta < 1 && glucose_status.long_avgdelta > -1 && glucose_status.long_avgdelta < 1 ) && !isSaveCgmSource ) {
@@ -228,7 +269,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     }
 
     // adjust min, max, and target BG for sensitivity, such that 50% increase in ISF raises target from 100 to 120
-    if (profile.temptargetSet) {
+    /*if (profile.temptargetSet) {
         //console.log("Temp Target set, not adjusting with autosens; ");
     } else if (typeof autosens_data !== 'undefined' && autosens_data) {
         if ( profile.sensitivity_raises_target && autosens_data.ratio < 1 || profile.resistance_lowers_target && autosens_data.ratio > 1 ) {
@@ -245,7 +286,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             }
             target_bg = new_target_bg;
         }
-    }
+    }*/
 
     if (typeof iob_data === 'undefined' ) {
         rT.error ='Error: iob_data undefined. ';
@@ -275,6 +316,8 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var minAvgDelta = Math.min(glucose_status.short_avgdelta, glucose_status.long_avgdelta);
     var maxDelta = Math.max(glucose_status.delta, glucose_status.short_avgdelta, glucose_status.long_avgdelta);
 
+    var MealTimeStart = profile.Mealfactor_start;
+    var MealTimeEnd = profile.Mealfactor_end;
     var profile_sens = round(profile.sens,1)
     var sens = profile.sens;
     if (typeof autosens_data !== 'undefined' && autosens_data) {
@@ -287,7 +330,265 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         }
         //console.log(" (autosens ratio "+sensitivityRatio+")");
     }
-    console.error("; CR:",profile.carb_ratio);
+    console.error("CR:",profile.carb_ratio);
+    //MT : TWTT
+
+var iob_scale = (profile.w2_iob_threshold/100) * max_iob;
+var HypoPredBG = round( bg - (iob_data.iob * sens) ) + round( 60 / 5 * ( minDelta - round(( -iob_data.activity * sens * 5 ), 2)));
+var HyperPredBG = round( bg - (iob_data.iob * sens) ) + round( 60 / 5 * ( minDelta - round(( -iob_data.activity * sens * 5 ), 2)));
+
+//############################## MP
+//### ISF SCALING CODE START ### MP
+//############################## MP
+var now = new Date().getHours();
+var scale_ISF_ID; //MP: identifier variable. Each of the different ISF scaling codes below is assigned a number to simplify coupling other blocks of code to the type of ISF scaling applied
+var scale_min = profile.scale_min/100;
+var scale_max = profile.scale_max/100;
+var scale_max_mod; //modify scale_max
+//autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //MP: Keep autoISF running in the bg so it can analyse the development of the glucose curve
+//var scale_min_mod; //modify scale_min
+
+/*
+smooth_status = glucose_status;
+if (profile.enable_datasmoothing) {
+    smooth_status.glucose = glucose_status.bg_supersmooth_now;
+    smooth_status.delta = glucose_status.delta_supersmooth_now
+}
+*/
+//####################
+//### W-ZERO START ###
+//####################
+
+//sens equation for new w-zero start
+/*
+Desired features:
+
+- bg/target_bg determines SMB cap size, but doesn't increase aggressiveness. This also means that at smaller bgs below or slightly above target, bolus sizes should be small
+- if a rise has been going for a while, even if bg is only slightly above target, allow for larger SMB sizes, depending on how sure we are about a rise. Two positive deltas mean nothing, three mean more, four mean even more and at five, it is definitely a rise.
+- W2 modifier could be used as a break to realise point 2: The surer we are about a rise, the smaller it is. This means the code would dynamically transition from W2 aggressiveness towards W1 aggressiveness
+- scale_min is another modifier: If we're sure about a rise, opt it in to increase aggressiveness; but scale_min should be turned off if a rise isn't fast enough, or if curve is decelerating
+- Explore if curve fittings and R^2 values could be used to identify rises and model/data quality, to then decide if we can go aggressive or not
+*/
+//todo: Add dynamic hyper target adjustment; Make it so that target decreases dynamically if curve is accelerating (or other conditions are true, explore options)
+//W2 modifier to dynamically increase aggressiveness if necessary
+// Changes:
+// Removed bg/target_bg scale_50 modifier
+
+
+
+//sens = scale_min * profile.sens - (((scale_min * profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / (profile.scale_50 + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg.
+//sens equation for new w-zero end
+
+//todo: Replace w-zero code below; Check for acceleration (curve fitting?)
+
+if (profile.enable_w_zero) {//MP: W-zero mode must be turned on in the user settings
+    if (glucose_status.glucose >= 85 && //MP: sensor reported bg must be >=85
+    iob_data.iob < 0.8 * max_iob &&  //MP: IOB must be below 80% of max IOB
+    now >= MealTimeStart && now <= MealTimeEnd && //MP: W2 assist hours also apply to W1 within W-zero
+    glucose_status.delta_supersmooth_now >= 6 && //MP: Delta threshold 1
+    glucose_status.delta_supersmooth_5m >= 4 && //MP: Delta threshold 2
+    glucose_status.delta_supersmooth_10m >= 0 && //MP: Delta threshold 3
+    //MP: The below statements make sure that deltas have been going up for 15 m; 0.7 multiplier allows for small fluctuations;
+    glucose_status.delta_supersmooth_now >= 0.7 * glucose_status.delta_supersmooth_5m &&
+    glucose_status.delta_supersmooth_5m >= 0.7 * glucose_status.delta_supersmooth_10m &&
+    glucose_status.delta_supersmooth_10m >= 0.7 * glucose_status.delta_supersmooth_15m &&
+    //MP: Below statements double check that a rise is not due to a correction
+    //todo: combine check for delta with check for glucose at that time, as this is only relevant for bg below target
+    glucose_status.delta_supersmooth_15m >= -1 &&
+    glucose_status.delta_supersmooth_20m >= -1 &&
+    //glucose_status.delta_supersmooth_15m >= 0.7 * glucose_status.delta_supersmooth_20m &&
+    glucose_status.bg_supersmooth_now >= 85 && //MP: smoothed glucose must not have been below 85 or 75 within the last 25 min; This is to avoid triggering W1 after eating hypo carbs
+    glucose_status.bg_supersmooth_5m >= 85 &&
+    glucose_status.bg_supersmooth_10m >= 85 &&
+    glucose_status.bg_supersmooth_15m >= 85 &&
+    glucose_status.bg_supersmooth_20m >= 85 &&
+    glucose_status.bg_supersmooth_25m >= 85) {
+        scale_ISF_ID = 0;
+        console.log("Scale_ISF_ID: "+scale_ISF_ID);
+        console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(bg/target_bg), 2)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
+        if (profile.deceleration_scaling && glucose_status.delta_supersmooth_now < glucose_status.delta_supersmooth_5m) {
+                scale_max = (1 * scale_min - scale_max) * ((glucose_status.delta_supersmooth_5m - glucose_status.delta_supersmooth_now)/glucose_status.delta_supersmooth_5m) + scale_max;
+                console.log("W-zero/1: Curve deceleration detected. scale_max adjusted to "+round(scale_max * 100, 1)+"%;");
+                //scale_min_mod = (1 - scale_min) * ((glucose_status.delta_supersmooth_5m - glucose_status.delta_supersmooth_now)/glucose_status.delta_supersmooth_5m) + scale_min
+        }
+        sens = scale_min * profile.sens - (((scale_min * profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / ((profile.scale_50/(bg/target_bg)) + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg.
+        sens = round(sens, 1);
+        console.log("W-zero/1: Scale ISF from "+profile_sens+" to "+sens+";");
+    } else if (/*iob_data.iob > iob_scale &&*/ now >= MealTimeStart && now <= MealTimeEnd && glucose_status.delta_supersmooth_now >= 4 && bg >= 100) { //MP: Second wave assist outside UAM Mode, active only during user-defined hours
+            scale_ISF_ID = 1;
+            console.log("Scale_ISF_ID: "+scale_ISF_ID);
+            if (profile.deceleration_scaling && glucose_status.delta_supersmooth_now < glucose_status.delta_supersmooth_5m) {
+                scale_max = (1 - scale_max) * ((glucose_status.delta_supersmooth_5m - glucose_status.delta_supersmooth_now)/glucose_status.delta_supersmooth_5m) + scale_max;
+                console.log("W-zero/2: Curve deceleration detected. scale_max adjusted to "+round(scale_max * 100, 1)+"%;");
+            }
+            //if (profile.enable_datasmoothing) { //MP if data smoothing is enabled
+            console.log("Using smoothed bg ("+glucose_status.bg_supersmooth_now+") and delta ("+glucose_status.delta_supersmooth_now+").");
+            if (glucose_status.delta_supersmooth_now > 7) { //MP activate W1 mode if smoothed delta > 7
+                sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta_supersmooth_now) / ((profile.scale_50/(glucose_status.bg_supersmooth_now/target_bg)) + glucose_status.delta_supersmooth_now));
+                console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(glucose_status.bg_supersmooth_now/target_bg), 2)+"; scale factor: "+glucose_status.bg_supersmooth_now+"/"+target_bg+" = "+round((glucose_status.bg_supersmooth_now/target_bg), 2)+";");
+            } else { //MP use W2 mode if smoothed delta < 9
+                sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta_supersmooth_now) / (((profile.scale_50 * profile.W2_modifier)/(glucose_status.bg_supersmooth_now/target_bg)) + glucose_status.delta_supersmooth_now)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg. scale_50 is weakened.
+                console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round ((profile.scale_50 * profile.W2_modifier)/(glucose_status.bg_supersmooth_now/target_bg),2)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+glucose_status.bg_supersmooth_now+" = "+round(profile.W2_modifier/(glucose_status.bg_supersmooth_now/target_bg), 2)+";");
+            }
+            /*} else {
+                if (glucose_status.delta > 8) {
+                    sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / ((profile.scale_50/(bg/target_bg)) + glucose_status.delta));
+                    console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(bg/target_bg), 2)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
+                } else {
+                   sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / (((profile.scale_50 * profile.W2_modifier)/(bg/target_bg)) + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg. scale_50 is weakened.
+                    console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round ((profile.scale_50 * profile.W2_modifier)/(bg/target_bg),2)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+bg+" = "+round(profile.W2_modifier/(bg/target_bg), 2)+";");
+                }
+            }*/
+            sens = round (sens,1);
+            console.log("W-zero/2: Scale ISF from "+profile_sens+" to "+sens);
+    } else if (bg >= 80) {//MP: Use autoISF only outside UAM mode, outside TT, outside 2nd wave assist and only if glucose is rising and at least 80 mg/dl
+            if (bg >= 180 && glucose_status.delta >= 0 && insulinReq >= round( 3 * profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1) && profile.UAM_boluscap > round(profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,2) && now >= MealTimeStart && now <= MealTimeEnd) {
+                    scale_ISF_ID = 2.1; //MP: Allows use of UAM_boluscap (weakened or original, as defined below) if an array of safety conditions is met
+                    sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
+                    console.log("Scale_ISF_ID: "+scale_ISF_ID);
+                    console.log("autoISF_BC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
+            } else {
+                    sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
+                    scale_ISF_ID = 2;
+                    console.log("Scale_ISF_ID: "+scale_ISF_ID);
+                    console.log("autoISF_MC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
+            }
+    }
+}
+//####################
+//### W-ZERO END ###
+//####################
+
+
+//scale_ISF_ID codes:
+// 0 = UAM mode scaling
+// 1 = second wave scaling
+// 2 = autoISF
+if (!profile.enable_w_zero) {//MP: W-zero mode must be turned off in the user settings
+  //  if (profile.temptargetSet && target_bg >= 80 && target_bg <= 85 && profile.temptarget_duration >= 29 && iob_data.iob < 6) { //MT: change isf for a normal meal who will rise slowly
+    if (profile.temptargetSet && target_bg >= 80 && target_bg <= 85 && profile.temptarget_duration >= 29 && iob_data.iob < 0.8 * max_iob && glucose_status.delta >= 0 && bg >= 80) { //MT: change isf for a normal meal who will rise slowly
+        scale_ISF_ID = 0;
+        console.log("Scale_ISF_ID: "+scale_ISF_ID);
+        console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(bg/target_bg), 2)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
+        if (profile.deceleration_scaling && glucose_status.delta_supersmooth_now < glucose_status.delta_supersmooth_5m) {
+                scale_max = (1 * scale_min - scale_max) * ((glucose_status.delta_supersmooth_5m - glucose_status.delta_supersmooth_now)/glucose_status.delta_supersmooth_5m) + scale_max;
+                console.log("W1: Curve deceleration detected. scale_max adjusted to "+round(scale_max * 100, 1)+"%;");
+                //scale_min_mod = (1 - scale_min) * ((glucose_status.delta_supersmooth_5m - glucose_status.delta_supersmooth_now)/glucose_status.delta_supersmooth_5m) + scale_min
+        }
+        sens = scale_min * profile.sens - (((scale_min * profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / ((profile.scale_50/(bg/target_bg)) + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg.
+        sens = round(sens, 1);
+        console.log("W1: Scale ISF from "+profile_sens+" to "+sens+";");
+    } else if (iob_data.iob > iob_scale && now >= MealTimeStart && now <= MealTimeEnd && glucose_status.delta >= 4 && bg >= 100) { //MP: Second wave assist outside UAM Mode, active only during user-defined hours
+            scale_ISF_ID = 1;
+            console.log("Scale_ISF_ID: "+scale_ISF_ID);
+            if (profile.deceleration_scaling && glucose_status.delta_supersmooth_now < glucose_status.delta_supersmooth_5m) { //todo: Improve conditions (? fit polynom to calculate inflexion point ?)
+                scale_max = (1 - scale_max) * ((glucose_status.delta_supersmooth_5m - glucose_status.delta_supersmooth_now)/glucose_status.delta_supersmooth_5m) + scale_max;
+                console.log("W2: Curve deceleration detected. scale_max adjusted to "+round(scale_max * 100, 1)+"%;");
+            }
+            if (profile.enable_datasmoothing) { //MP if data smoothing is enabled
+                console.log("Using smoothed bg ("+glucose_status.bg_supersmooth_now+") and delta ("+glucose_status.delta_supersmooth_now+").");
+                if (glucose_status.delta_supersmooth_now > 7) { //MP activate W1 mode if smoothed delta > 7
+                    sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta_supersmooth_now) / ((profile.scale_50/(glucose_status.bg_supersmooth_now/target_bg)) + glucose_status.delta_supersmooth_now));
+                    console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(glucose_status.bg_supersmooth_now/target_bg), 2)+"; scale factor: "+glucose_status.bg_supersmooth_now+"/"+target_bg+" = "+round((glucose_status.bg_supersmooth_now/target_bg), 2)+";");
+                } else { //MP use W2 mode if smoothed delta < 9
+                    sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta_supersmooth_now) / (((profile.scale_50 * profile.W2_modifier)/(glucose_status.bg_supersmooth_now/target_bg)) + glucose_status.delta_supersmooth_now)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg. scale_50 is weakened.
+                    console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round ((profile.scale_50 * profile.W2_modifier)/(glucose_status.bg_supersmooth_now/target_bg),2)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+glucose_status.bg_supersmooth_now+" = "+round(profile.W2_modifier/(glucose_status.bg_supersmooth_now/target_bg), 2)+";");
+                }
+            } else {
+                if (glucose_status.delta > 8) {
+                    sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / ((profile.scale_50/(bg/target_bg)) + glucose_status.delta));
+                    console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round (profile.scale_50/(bg/target_bg), 2)+"; scale factor: "+bg+"/"+target_bg+" = "+round((bg/target_bg), 2)+";");
+                } else {
+                   sens = profile.sens - (((profile.sens - (profile.sens * scale_max)) * glucose_status.delta) / (((profile.scale_50 * profile.W2_modifier)/(bg/target_bg)) + glucose_status.delta)); //MP: Fixed model based on Michaelis-Menten kinetic, self limiting at higher values. v0.3: Curve steepness increases with increasing bg. scale_50 is weakened.
+                    console.log("Scale_50 adjusted from "+profile.scale_50+" to "+round ((profile.scale_50 * profile.W2_modifier)/(bg/target_bg),2)+"; scale factor: ("+target_bg+" * "+profile.W2_modifier+")/"+bg+" = "+round(profile.W2_modifier/(bg/target_bg), 2)+";");
+                }
+            }
+            sens = round (sens,1);
+            console.log("W2: Scale ISF from "+profile_sens+" to "+sens);
+    } else if (bg >= 80) {//MP: Use autoISF only outside UAM mode, outside TT, outside 2nd wave assist and only if glucose is rising and at least 80 mg/dl
+            if (bg >= 180 && glucose_status.delta >= 0 && insulinReq >= round( 3 * profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1) && profile.UAM_boluscap > round(profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,2) && now >= MealTimeStart && now <= MealTimeEnd) {
+                    scale_ISF_ID = 2.1; //MP: Allows use of UAM_boluscap (weakened or original, as defined below) if an array of safety conditions is met
+                    sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
+                    console.log("Scale_ISF_ID: "+scale_ISF_ID);
+                    console.log("autoISF_BC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
+            } else {
+                    sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
+                    scale_ISF_ID = 2;
+                    console.log("Scale_ISF_ID: "+scale_ISF_ID);
+                    console.log("autoISF_MC: ISF from "+profile_sens+" to "+sens); //MP: Added autoISF log entry
+            }
+    }
+}
+//############################ MP
+//### ISF SCALING CODE END ### MP
+//############################ MP
+
+ //================= MT =====================================
+//Target management
+//todo: reconsider necessity of hyper target
+//var HypoPredBG = round( bg - (iob_data.iob * sens) ) + round( 60 / 5 * ( minDelta - round(( -iob_data.activity * sens * 5 ), 2)));
+//var HyperPredBG = round( bg - (iob_data.iob * sens) ) + round( 60 / 5 * ( minDelta - round(( -iob_data.activity * sens * 5 ), 2)));
+//       console.log ("HypoPredBG = "+HypoPredBG+"; HyperPredBG ="+HyperPredBG+"; ");
+       if (!profile.temptargetSet && HypoPredBG <= 125 && profile.sensitivity_raises_target ){//&& glucose_status.delta <= 0
+            var hypo_target = round(target_bg * profile.adjtarget);
+            if (glucose_status.delta < 0){
+                hypo_target = hypo_target + 10;
+            }
+            hypo_target = Math.min ( 130, hypo_target);
+            if (target_bg === hypo_target){
+                console.log("target_bg unchanged: "+hypo_target+"; ");
+            } else {
+                console.log("HypoPredBG "+HypoPredBG+" < 120 mg/dl; target_bg from "+target_bg+" to "+hypo_target+";");
+            }
+            target_bg = hypo_target;
+            halfBasalTarget = 160;
+                          var c = halfBasalTarget - normalTarget;
+                          sensitivityRatio = c/(c+target_bg-normalTarget);
+                       // limit sensitivityRatio to profile.adjtarget (1.2x by default)
+                          sensitivityRatio = Math.min(sensitivityRatio, profile.adjtarget);
+                          sensitivityRatio = round(sensitivityRatio,2);
+                          console.log("Sensitivity ratio set to "+sensitivityRatio+" based on temp target of "+target_bg+"; ");
+                          basal = profile.current_basal * sensitivityRatio;
+                          basal = round_basal(basal, profile);
+                          if (basal !== profile_current_basal) {
+                               console.log("Adjusting basal from "+profile_current_basal+" to "+basal+"; ");
+                          } else {
+                               console.log("Basal unchanged: "+basal+"; ");
+                          }
+       } else if (!profile.temptargetSet && HyperPredBG >= profile.UAM_eventualBG && iob_data.iob >= iob_scale && profile.resistance_lowers_target) {
+            var hyper_target = round(target_bg / profile.adjtarget);// if target = 90 then hyper_target = 81 with autosens_min = 0.7
+            if (glucose_status.delta >0 && glucose_status.delta <= 5){
+                hyper_target = hyper_target + glucose_status.delta;
+            } else if (glucose_status.delta >= 10) {
+                hyper_target = hyper_target - glucose_status.delta;
+            }
+            hyper_target = Math.max (75,hyper_target);
+            if (target_bg === hyper_target){
+                console.log("target_bg unchanged: "+hyper_target+"; ");
+            } else {
+                console.log("HyperPredBG "+HyperPredBG+" > "+profile.UAM_eventualBG+"; target_bg from "+target_bg+" to "+hyper_target+";");
+            }
+
+            target_bg = hyper_target;
+            halfBasalTarget = 160;
+            var c = halfBasalTarget - normalTarget;
+            sensitivityRatio = c/(c+target_bg-normalTarget);
+            // limit sensitivityRatio to profile.adjtarget (1.2x by default)
+            sensitivityRatio = Math.min(sensitivityRatio, profile.autosens_max);
+            sensitivityRatio = round(sensitivityRatio,2);
+            console.log("Sensitivity ratio set to "+sensitivityRatio+" based on temp target of "+target_bg+"; ");
+            basal = profile.current_basal * sensitivityRatio;
+            basal = round_basal(basal, profile);
+            if (basal !== profile_current_basal) {
+                console.log("Adjusting basal from "+profile_current_basal+" to "+basal+"; ");
+            } else {
+                console.log("Basal unchanged: "+basal+"; ");
+            }
+       }
+//================= MT =====================================
+
+    //MP: autoISF activation (below) was moved into ISF scaling code above to prevent its activation during scaleISF function
+    //sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
 
     // compare currenttemp to iob_data.lastTemp and cancel temp if they don't match
     var lastTempAge;
@@ -461,7 +762,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     // autotuned CR is still in effect even when basals and ISF are being adjusted by TT or autosens
     // this avoids overdosing insulin for large meals when low temp targets are active
     csf = sens / profile.carb_ratio;
-    console.error("profile.sens:",profile.sens,"sens:",sens,"CSF:",csf);
+    console.error("profile.sens:",profile.sens,"sens:",sens,"CSF:",round (csf, 2));
 
     var maxCarbAbsorptionRate = 30; // g/h; maximum rate to assume carbs will absorb if no CI observed
     // limit Carb Impact to maxCarbAbsorptionRate * csf in mg/dL per 5m
@@ -613,9 +914,9 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
 
             // set minPredBGs starting when currently-dosed insulin activity will peak
             // look ahead 60m (regardless of insulin type) so as to be less aggressive on slower insulins
-            var insulinPeakTime = 60;
+            var insulinPeakTime = 40;
             // add 30m to allow for insulin delivery (SMBs or temps)
-            insulinPeakTime = 90;
+            //insulinPeakTime = 90;
             var insulinPeak5m = (insulinPeakTime/60)*12;
             //console.error(insulinPeakTime, insulinPeak5m, profile.insulinPeakTime, profile.curve);
 
@@ -855,9 +1156,9 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         //rT.reason += "minGuardBG "+minGuardBG+"<"+threshold+": SMB disabled; ";
         enableSMB = false;
     }
-    if ( maxDelta > 0.20 * bg ) {
-        console.error("maxDelta",convert_bg(maxDelta, profile),"> 20% of BG",convert_bg(bg, profile),"- disabling SMB");
-        rT.reason += "maxDelta "+convert_bg(maxDelta, profile)+" > 20% of BG "+convert_bg(bg, profile)+": SMB disabled; ";
+    if ( maxDelta > 0.30 * bg ) {
+        console.error("maxDelta",convert_bg(maxDelta, profile),"> 30% of BG",convert_bg(bg, profile),"- disabling SMB");
+        rT.reason += "maxDelta "+convert_bg(maxDelta, profile)+" > 30% of BG "+convert_bg(bg, profile)+": SMB disabled; ";
         enableSMB = false;
     }
 
@@ -881,7 +1182,14 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         rT.carbsReqWithin = minutesAboveThreshold;
         rT.reason += carbsReq + " add'l carbs req w/in " + minutesAboveThreshold + "m; ";
     }
-
+    //MT : prebolus
+//    if (microBolusAllowed && profile.temptargetSet && target_bg < 90 && profile.temptarget_duration >= 29 && profile.temptarget_minutesrunning == 0) {
+//         var UAM_PB1 = profile.UAM_PBolus1;
+//         //Send prebolus
+//         rT.units = UAM_PB1;//MT : prebolus 2U when TT duration >=29 at 0 minute
+//         rT.reason += "Prebolusing " + rT.units + "U. ";
+//         return rT;
+//    }
     // don't low glucose suspend if IOB is already super negative and BG is rising faster than predicted
     if (bg < threshold && iob_data.iob < -profile.current_basal*20/60 && minDelta > 0 && minDelta > expectedDelta) {
         rT.reason += "IOB "+iob_data.iob+" < " + round(-profile.current_basal*20/60,2);
@@ -1060,9 +1368,22 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             // if IOB covers more than COB, limit maxBolus to 30m of basal
             } else if ( iob_data.iob > mealInsulinReq && iob_data.iob > 0 ) {
                 console.error("IOB",iob_data.iob,"> COB",meal_data.mealCOB+"; mealInsulinReq =",mealInsulinReq);
-                if (profile.maxUAMSMBBasalMinutes) {
-                    console.error("profile.maxUAMSMBBasalMinutes:",profile.maxUAMSMBBasalMinutes,"profile.current_basal:",profile.current_basal);
-                    maxBolus = round( profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1);
+           //     if (profile.maxUAMSMBBasalMinutes) {
+           //         console.error("profile.maxUAMSMBBasalMinutes:",profile.maxUAMSMBBasalMinutes,"profile.current_basal:",profile.current_basal);
+           //         maxBolus = round( profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1);
+             //MP: UAM_boluscap limiter: Use UAM minutes outside TT (default lines: above)
+                if (profile.maxUAMSMBBasalMinutes && scale_ISF_ID !== 0 && scale_ISF_ID !== 1) {
+                    if (scale_ISF_ID == 2.1) { //MP: Cap maxbolus for autoISF at modified UAM_boluscap
+                        console.error("autoISF_BC: maxbolus capped at ",0.75 * profile.UAM_boluscap," U.");
+                        maxBolus = 0.75 * profile.UAM_boluscap;
+                    } else { //MP: Cap maxbolus for autoISF at UAM minutes limit
+                    console.error("autoISF_MC: maxbolus capped at ",round( basal * profile.maxUAMSMBBasalMinutes / 60 ,1)," U.");
+                    maxBolus = round( basal * profile.maxUAMSMBBasalMinutes / 60 ,1);
+                    }
+             //MP: UAM_boluscap limiter: USE UAM_boluscap within TT
+                } else if (scale_ISF_ID == 0 || scale_ISF_ID == 1) {
+                    console.error("profile.UAM_boluscap:",profile.UAM_boluscap);
+                    maxBolus = profile.UAM_boluscap;
                 } else {
                     console.error("profile.maxUAMSMBBasalMinutes undefined: defaulting to 30m");
                     maxBolus = round( profile.current_basal * 30 / 60 ,1);
@@ -1073,7 +1394,16 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             }
             // bolus 1/2 the insulinReq, up to maxBolus, rounding down to nearest bolus increment
             var roundSMBTo = 1 / profile.bolus_increment;
-            var microBolus = Math.floor(Math.min(insulinReq/2,maxBolus)*roundSMBTo)/roundSMBTo;
+            var insulinReqPCT = profile.UAM_InsulinReq/100;
+//MP commented out below for v0.4
+           // if (iob_data.iob > 3 && eventualBG > 130 && eventualBG < 180 && now >= MealTimeStart && now <= MealTimeEnd){
+           // insulinReqPCT = 1;
+           // }
+           // if (eventualBG > 180 && now >= MealTimeStart && now <= MealTimeEnd) {
+           // insulinReqPCT = 1.3;
+           // }
+//MP commented out above for v0.4
+            var microBolus = Math.floor(Math.min(insulinReq * insulinReqPCT,maxBolus)*roundSMBTo)/roundSMBTo;
             // calculate a long enough zero temp to eventually correct back up to target
             var smbTarget = target_bg;
             worstCaseInsulinReq = (smbTarget - (naive_eventualBG + minIOBPredBG)/2 ) / sens;
@@ -1090,13 +1420,27 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             // don't set an SMB zero temp longer than 60 minutes
             } else if (durationReq >= 30) {
                 durationReq = round(durationReq/30)*30;
-                durationReq = Math.min(60,Math.max(0,durationReq));
+                durationReq = Math.min(30,Math.max(0,durationReq));
             } else {
                 // if SMB durationReq is less than 30m, set a nonzero low temp
                 smbLowTempReq = round( basal * durationReq/30 ,2);
                 durationReq = 30;
             }
-            rT.reason += " insulinReq " + insulinReq;
+            //MP rT.reason for UAM mods start
+            rT.reason += " insulinReq: " + insulinReq + " U; InsulinReqPCT: " + insulinReqPCT*100 + "%; scale_ISF_ID: " + scale_ISF_ID + "; scale_min: " + scale_min + "; scale_max: " + scale_max + "; scale_50: " + profile.scale_50 + ";";
+            if (scale_ISF_ID == 0) {
+                rT.reason += " W1, scaling power: " + round((1 - ((sens - scale_max*profile_sens)/(profile_sens*scale_min - scale_max*profile_sens)))*100, 1) + "%";
+            } else if (scale_ISF_ID == 1) {
+                rT.reason += " W2, scaling power: " + round((1 - ((sens - scale_max*profile_sens)/(profile_sens - scale_max*profile_sens)))*100, 1) + "%";
+            } else if (scale_ISF_ID == 2) {
+                rT.reason += " autoISF_MC: ISF from "+profile_sens+" to "+sens;
+            } else if (scale_ISF_ID == 2.1) {
+                rT.reason += " autoISF_BC: ISF from "+profile_sens+" to "+sens;
+            }
+            if (profile.deceleration_scaling && glucose_status.delta_supersmooth_now < glucose_status.delta_supersmooth_5m && (scale_ISF_ID == 0 || scale_ISF_ID == 1)) {
+                rT.reason += "; Curve deceleration detected. scale_max adjusted to "+round(scale_max * 100, 1)+"%";
+            }
+            //MP rT.reason for UAM mods end
             if (microBolus >= maxBolus) {
                 rT.reason +=  "; maxBolus " + maxBolus;
             }

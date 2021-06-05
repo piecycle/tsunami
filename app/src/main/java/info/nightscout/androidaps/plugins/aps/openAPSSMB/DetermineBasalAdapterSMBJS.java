@@ -25,6 +25,7 @@ import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.data.IobTotal;
 import info.nightscout.androidaps.data.MealData;
 import info.nightscout.androidaps.data.Profile;
+import info.nightscout.androidaps.db.TempTarget;
 import info.nightscout.androidaps.db.TemporaryBasal;
 import info.nightscout.androidaps.interfaces.ActivePluginProvider;
 import info.nightscout.androidaps.interfaces.ProfileFunction;
@@ -250,13 +251,16 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("current_basal_safety_multiplier", sp.getDouble(R.string.key_openapsama_current_basal_safety_multiplier, 4d));
 
         //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, SMBDefaults.high_temptarget_raises_sensitivity));
-        mProfile.put("high_temptarget_raises_sensitivity", false);
+        mProfile.put("high_temptarget_raises_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_high_temptarget_raises_sensitivity),SMBDefaults.high_temptarget_raises_sensitivity));
+        //mProfile.put("high_temptarget_raises_sensitivity", false);
+        mProfile.put("low_temptarget_lowers_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_low_temptarget_lowers_sensitivity),SMBDefaults.low_temptarget_lowers_sensitivity));
         //mProfile.put("low_temptarget_lowers_sensitivity", SP.getBoolean(R.string.key_low_temptarget_lowers_sensitivity, SMBDefaults.low_temptarget_lowers_sensitivity));
-        mProfile.put("low_temptarget_lowers_sensitivity", false);
+        //mProfile.put("low_temptarget_lowers_sensitivity", false);
 
 
         mProfile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, SMBDefaults.sensitivity_raises_target));
         mProfile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, SMBDefaults.resistance_lowers_target));
+        //mProfile.put("use_UAMmeal" , sp.getBoolean(R.string.key_use_UAMmeal, SMBDefaults.use_UAMmeal));
         mProfile.put("adv_target_adjustments", SMBDefaults.adv_target_adjustments);
         mProfile.put("exercise_mode", SMBDefaults.exercise_mode);
         mProfile.put("half_basal_exercise_target", SMBDefaults.half_basal_exercise_target);
@@ -288,7 +292,37 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("current_basal", basalrate);
         mProfile.put("temptargetSet", tempTargetSet);
         mProfile.put("autosens_max", SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autosens_max, "1.2")));
-
+        // autoISF === START
+        // mod 7e: can I add use autoisf here?
+        mProfile.put("use_autoisf", sp.getBoolean(R.string.key_openapsama_useautoisf, false));
+        // mod 7d: can I add autosens_min here?
+        mProfile.put("autoisf_max",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autoisf_max, "1.2")));
+        mProfile.put("autoisf_hourlychange",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autoisf_hourlychange, "0.2")));
+        // autoISF === END
+        //MT : Prebolus UAM
+        mProfile.put("UAM_PBolus1", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1,"2")));
+//        mProfile.put("UAM_PBolus2",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2,"1")));
+        mProfile.put("UAM_InsulinReq",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_InsulinReq,"65")));
+        mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
+        mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
+        mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
+        mProfile.put("W2_modifier",SafeParse.stringToDouble(sp.getString(R.string.key_W2_modifier,"1.5")));
+        mProfile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false));
+        //MP: Make w-zero dependent on datasmoothing
+        boolean datasmoothingenabled = sp.getBoolean(R.string.key_enable_datasmoothing, false);
+        mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
+        mProfile.put("deceleration_scaling", sp.getBoolean(R.string.key_deceleration_scaling, false));
+//MP: UAM_boluscap start
+        mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
+//        mProfile.put("boost_bolus",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_bolus, "2.0")));
+//        mProfile.put("high_divisor",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_high_divisor, "2.0")));
+//        mProfile.put("boost_start",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_start, "7.0")));
+//        mProfile.put("boost_end",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_end, "22.0")));
+        mProfile.put("Mealfactor_start",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_start, "11.0")));
+        mProfile.put("Mealfactor_end",  SafeParse.stringToDouble(sp.getString(R.string.key_Mealfactor_end, "23.0")));
+        mProfile.put("UAM_eventualBG",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_eventualBG,"160")));
+        mProfile.put("w2_iob_threshold",SafeParse.stringToDouble(sp.getString(R.string.key_w2_iob_threshold,"10")));
+        mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
         if (profileFunction.getUnits().equals(Constants.MMOL)) {
             mProfile.put("out_units", "mmol/L");
         }
@@ -308,10 +342,23 @@ public class DetermineBasalAdapterSMBJS {
             mCurrentTemp.put("minutesrunning", tempBasal.getRealDuration());
         }
 
+        //MD: TempTarget Info ==== START
+        TempTarget tempTarget = treatmentsPlugin.getTempTargetFromHistory(System.currentTimeMillis());
+
+        if (tempTarget != null) {
+            mProfile.put("temptarget_duration", tempTarget.durationInMinutes);
+            mProfile.put("temptarget_minutesrunning", tempTarget.getRealTTDuration());
+        }
+        //MD: TempTarget Info ==== END
+
+
         mIobData = IobCobCalculatorPlugin.convertToJSONArray(iobArray);
 
         mGlucoseStatus = new JSONObject();
         mGlucoseStatus.put("glucose", glucoseStatus.glucose);
+        // MP data smoothing START
+        mGlucoseStatus.put("glucose_5m", glucoseStatus.bg_5minago);
+        // MP data smoothing end
         mGlucoseStatus.put("noise", glucoseStatus.noise);
 
         if (sp.getBoolean(R.string.key_always_use_shortavg, false)) {
@@ -322,7 +369,34 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("short_avgdelta", glucoseStatus.short_avgdelta);
         mGlucoseStatus.put("long_avgdelta", glucoseStatus.long_avgdelta);
         mGlucoseStatus.put("date", glucoseStatus.date);
-
+        // autoISF === START
+        // mod 7: append 2 variables for 5% range
+        mGlucoseStatus.put("autoISF_duration", glucoseStatus.autoISF_duration);
+        mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average);
+        // autoISF === END
+        // MP data smoothing START
+        mGlucoseStatus.put("o1_weight", glucoseStatus.o1_weight);
+        mGlucoseStatus.put("o1_a", glucoseStatus.o1_a);
+        mGlucoseStatus.put("o2_a", glucoseStatus.o2_a);
+        mGlucoseStatus.put("o2_b", glucoseStatus.o2_b);
+        mGlucoseStatus.put("o1/bg_5m", glucoseStatus.o1_smoothedbg_5m);
+        mGlucoseStatus.put("o1/bg_now", glucoseStatus.o1_smoothedbg_now);
+        mGlucoseStatus.put("o2/bg_5m", glucoseStatus.o2_smoothedbg_5m);
+        mGlucoseStatus.put("o2/bg_now", glucoseStatus.o2_smoothedbg_now);
+        mGlucoseStatus.put("o2/trend_5m", glucoseStatus.o2_smoothedtrend_5m);
+        mGlucoseStatus.put("o2/trend_now", glucoseStatus.o2_smoothedtrend_now);
+        mGlucoseStatus.put("bg_supersmooth_25m", glucoseStatus.bg_supersmooth_25m);
+        mGlucoseStatus.put("bg_supersmooth_20m", glucoseStatus.bg_supersmooth_20m);
+        mGlucoseStatus.put("bg_supersmooth_15m", glucoseStatus.bg_supersmooth_15m);
+        mGlucoseStatus.put("bg_supersmooth_10m", glucoseStatus.bg_supersmooth_10m);
+        mGlucoseStatus.put("bg_supersmooth_5m", glucoseStatus.bg_supersmooth_5m);
+        mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
+        mGlucoseStatus.put("delta_supersmooth_20m", glucoseStatus.delta_supersmooth_20m);
+        mGlucoseStatus.put("delta_supersmooth_15m", glucoseStatus.delta_supersmooth_15m);
+        mGlucoseStatus.put("delta_supersmooth_10m", glucoseStatus.delta_supersmooth_10m);
+        mGlucoseStatus.put("delta_supersmooth_5m", glucoseStatus.delta_supersmooth_5m);
+        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now);
+        // MP data smoothing END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);
         mMealData.put("boluses", mealData.boluses);

@@ -325,6 +325,7 @@
     <string name="openapsma_autosensdata_label">Autosens data</string>
     <string name="openapsma_scriptdebugdata_label">Script debug</string>
     <string name="openapsama_useautosens">Use Autosens feature</string>
+    <string name="openapsama_useautoisf">Use Autoisf feature</string>
     <string name="refresheventsfromnightscout">Refresh events from NS</string>
     <string name="deletefuturetreatments">Delete treatments in the future</string>
     <string name="eatingsoon">Eating Soon</string>
@@ -353,6 +354,10 @@
     <string name="openapsama_autosens_max_summary">Default value: 1.2\nThis is a multiplier cap for autosens (and soon autotune) to set a 20%% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.</string>
     <string name="key_openapsama_autosens_min" translatable="false">autosens_min</string>
     <string name="openapsama_autosens_min_summary">Default value: 0.7\nThe other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.</string>
+    <string name="key_openapsama_autoisf_max" translatable="false">autoisf_max</string>
+    <string name="openapsama_autoisf_max_summary">Default value: 1.2\nThis is a multiplier cap for autoISF to set a limit on how high the autoISF ratio can be, which in turn determines how low it can adjust ISF.</string>
+    <string name="key_openapsama_autoisf_hourlychange" translatable="false">autoisf_hourlychange</string>
+    <string name="openapsama_autoisf_hourlychange_summary">Default value: 0.2\nThis is the rate at which autoISF grows per hour assuming bg is twice the target. With a value of 1.0 it will have reduced ISF to 50% after 1 hour of bg at twice the target.\nWith 0.0 the effect of autoISF is effectively disabled.</string>
     <string name="key_openapsama_autosens_adjusttargets" translatable="false">autosens_adjust_targets</string>
     <string name="openapsama_autosens_adjusttargets">Autosens adjust targets, too</string>
     <string name="openapsama_autosens_adjusttargets_summary">Default value: true\nThis is used to allow autosens to adjust BG targets, in addition to ISF and basals.</string>
@@ -561,6 +566,9 @@
     <string name="careportal_newnstreatment_duration_min_label">Duration [min]</string>
     <string name="openapssmb">OpenAPS SMB</string>
     <string name="key_use_smb" translatable="false">use_smb</string>
+    <!--    <string name="key_use_UAMmeal" translatable="false">use_UAMmeal</string>-->
+    <!--    <string name="use_UAMmeal_summary">Enable UAM to manage meal time withjout carbs or bolus</string>-->
+    <!--    <string name="use_UAMmeal_title">UAM Meal</string>-->
     <string name="key_use_uam" translatable="false">use_uam</string>
     <string name="key_smb_enable_carbs_suggestions_threshold" translatable="false">smb_enable_carbs_suggestions_threshold</string>
     <string name="enableuam">Enable UAM</string>
@@ -701,11 +709,17 @@
     <string name="enablesmbwithhightemptarget">Enable SMB with high temp targets</string>
     <string name="enablesmbwithhightemptarget_summary">Enable SMB when there is high temp target active (exercise, above 100 mg/dl or 5.5 mmol/l)</string>
     <string name="overview_insulin_label">Insulin</string>
+    <!-- MP UAM button test below-->
+    <string name="overview_UAM_label">UAM</string>
+    <!-- MP UAM button test above-->
     <string name="overview_buttons_selection">Buttons</string>
     <string name="key_show_calibration_button" translatable="false">show_calibration_button</string>
     <string name="key_show_cgm_button" translatable="false">show_cgm_button</string>
     <string name="key_show_carbs_button" translatable="false">show_carbs_button</string>
     <string name="key_show_wizard_button" translatable="false">show_wizard_button</string>
+    <!-- MP UAM button test below-->
+    <string name="key_show_UAM_button" translatable="false">show_UAM_button</string>
+    <!-- MP UAM button test above-->
     <string name="key_show_insulin_button" translatable="false">show_insulin_button</string>
     <string name="key_show_treatment_button" translatable="false">show_treatment_button</string>
     <string name="show_calibration_button_summary">Sends a calibration to xDrip+ or open G5 calibration dialog</string>
@@ -718,6 +732,18 @@
     <string name="key_carbs_button_increment_3" translatable="false">carbs_button_increment_3</string>
     <string name="carb_increment_button_message">Number of carbs to add when button is pressed</string>
     <string name="insulin_increment_button_message">Amount of insulin to add when button is pressed</string>
+    <!-- MP button test below -->
+    <string name="UAM_increment_button_message">Amount of insulin to add when button is pressed</string>
+    <string name="key_UAM_button_increment_1" translatable="false">UAM_button_increment_1</string>
+    <string name="key_UAM_button_increment_2" translatable="false">UAM_button_increment_2</string>
+    <string name="key_UAM_button_increment_3" translatable="false">UAM_button_increment_3</string>
+    <string name="firstUAMincrement">First insulin increment</string>
+    <string name="secondUAMincrement">Second insulin increment</string>
+    <string name="thirdUAMincrement">Third insulin increment</string>
+    <string name="prebolus">Prebolus</string>
+    <string name="uam_mode">UAM mode</string>
+    <string name="start_uam">Start UAM assistant?</string>
+    <!-- MP button test above -->
     <string name="error_starting_cgm">Could not launch CGM application.  Make sure it is installed.</string>
     <string name="overview_cgm">CGM</string>
     <string name="ignore5m">Ignore 5m</string>
@@ -801,6 +827,7 @@
     <string name="key_treatmentssafety_maxcarbs" translatable="false">treatmentssafety_maxcarbs</string>
     <string name="unsafeusage">unsafe usage</string>
     <string name="key_openapsama_useautosens" translatable="false">openapsama_useautosens</string>
+    <string name="key_openapsama_useautoisf" translatable="false">openapsama_useautoisf</string>
     <string name="readstatusfailed">Read status failed</string>
     <string name="record_pump_site_change">Record pump site change</string>
     <string name="record_insulin_cartridge_change">Record insulin cartridge change</string>
@@ -812,6 +839,53 @@
     <string name="key_openapssmb_max_iob" translatable="false">openapsmb_max_iob</string>
     <string name="openapssmb_maxiob_title">Maximum total IOB OpenAPS can\'t go over [U]</string>
     <string name="openapssmb_maxiob_summary">This value is called Max IOB in OpenAPS context\nOpenAPS will not add more insulin if current IOB is greater than this value</string>
+    <!--<string name="key_openapsama_high_divisor" translatable="false">High glucose correction divisor</string>
+    <string name="openapsama_high_divisor_summary">High glucose correction divisor. 1 = all insulin required, >1 reduces amount</string>
+    <string name="openapsama_high_divisor_Title">High glucose correction divisor</string>
+    <string name="key_openapsama_boost_bolus" translatable="false">UAM Boost bolus</string>
+    <string name="openapsama_boost_bolus_title">UAM Boost bolus</string>
+    <string name="openapsama_boost_bolus_summary">Default value: 2.0\nThis is the boost bolus given when glucose levels start to climb quickly after a meal.</string>
+    <string name="key_openapsama_boost_start" translatable="false">UAM Boost start time</string>
+    <string name="openapsama_boost_start_summary">Default value: 7\nThis is the start time for the period in which boost is active.</string>
+    <string name="openapsama_boost_start_title">UAM Boost start time</string>
+    <string name="key_openapsama_boost_end" translatable="false">UAM Boost end time</string>
+    <string name="openapsama_boost_end_summary">Default value: 22\nThis is the end time for the period in which boost is active.</string>
+    <string name="openapsama_boost_end_title">UAM Boost end time</string>-->
+    <string name="key_scale_min" translatable="false">scale_min</string>
+    <string name="scale_min_title">scale_min [%]</string>
+    <string name="scale_min_summary">Percentage of profile ISF to use as base ISF for first wave UAM. Default of 100% means no offset is used (profile ISF = base ISF). scale_min describes the base aggressiveness.</string>
+    <string name="key_scale_max" translatable="false">scale_max</string>
+    <string name="scale_max_title">scale_max [%]</string>
+    <string name="scale_max_summary">Minimum percentage of base ISF to scale towards. Example: Scale_max of 50% means that the lowest possible ISF reachable by the scaling algorithm is 50% of your current base ISF. scale_max describes the global aggressiveness.</string>
+    <string name="key_scale_50" translatable="false">scale_50</string>
+    <string name="scale_50_title">scale_50</string>
+    <string name="scale_50_summary">Delta at which 50% of minimal ISF (defined by scale_max) is reached. scale_50 describes the local or initial aggressiveness.</string>
+    <string name="key_W2_modifier" translatable="false">W2_modifier</string>
+    <string name="W2_modifier_title">W2 modifier of scale_50</string>
+    <string name="W2_modifier_summary">Multiplier of scale_50 during 2nd wave assist (outside manually activated UAM mode). It shifts aggressiveness towards larger deltas to reduce the risk of overdosing. Example: If scale_50 = 4 and W2_modifier is 1.5, the scale_50 parameters used by W2 assist is 4 * 1.5 = 6.</string>
+    <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
+    <string name="enable_datasmoothing">Enable data smoothing</string>
+    <string name="enable_datasmoothing_summary">Smooth incoming sensor data for wave 2 UAM assist (useful for noisy sensors or aggressive W2 settings)</string>
+    <string name="key_enable_w_zero" translatable="false">enable_w_zero</string>
+    <string name="enable_w_zero_title">Enable W-zero</string>
+    <string name="enable_w_zero_summary">Automatically detect and handle meals. Does not trigger or replace preboluses!</string>
+    <string name="key_deceleration_scaling" translatable="false">deceleration_scaling</string>
+    <string name="deceleration_scaling_title">Enable deceleration scaling</string>
+    <string name="deceleration_scaling_summary">Dynamically raise scale_max if a glucose rise during W1 and W2 modes is decelerating and expected to peak soon. Lowers aggressiveness before glucose is expected to drop for more safety.</string>
+    <!-- MP: UAMboluscap start -->
+    <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
+    <string name="UAM_UAM_boluscap_title">UAM bolus cap [U]</string>
+    <string name="UAM_boluscap_summary">max SMB size deliverable by UAM meal assists (W1 and W2 assists).</string>
+    <!-- MP: UAMboluscap end -->
+    <string name="key_UAM_InsulinReq" translatable="false">UAM_InsulinReq</string>
+    <string name="UAM_InsulinReq_title">insulinReq delivery percentage [%]</string>
+    <string name="UAM_InsulinReq_summary">Reduces the calculated required SMB size to the specified percentage. Example: If calculated insulin required is 1 U and fraction size is 50%, 0.5 U will be delivered.</string>
+    <string name="key_UAM_PBolus1" translatable="false">UAM_PBolus1</string>
+    <string name="UAM_PBolus1_title">UAM prebolus [U]</string>
+    <string name="UAM_PBolus1_summary">Automatic prebolus if setting a TT of less than 90 mg/dl with a duration between 60 and 120 minutes.</string>
+    <!--    <string name="key_UAM_PBolus2" translatable="false">UAM_PBolus2</string>-->
+    <!--    <string name="UAM_PBolus2_title">UAM PreBolus Long meal</string>-->
+    <!--    <string name="UAM_PBolus2_summary">This bolus will run when TT duration is greater than 120 minutes for a TT lesser than 90 value </string>-->
     <string name="pump_stopped">Pump stopped</string>
     <string name="pump_started">Pump started</string>
     <string name="pump_paused">Pump paused</string>
@@ -845,6 +919,8 @@
     <string name="key_always_use_shortavg" translatable="false">always_use_shortavg</string>
     <string name="openapsama_autosens_max">Max autosens ratio</string>
     <string name="openapsama_autosens_min">Min autosens ratio</string>
+    <string name="openapsama_autoisf_max">Max autoisf ratio</string>
+    <string name="openapsama_autoisf_hourlychange">autoisf hourly increment</string>
     <string name="openapsama_bolussnooze_dia_divisor">Bolus snooze dia divisor</string>
     <string name="openapsama_max_daily_safety_multiplier">Max daily safety multiplier</string>
     <string name="openapsama_current_basal_safety_multiplier">Current basal safety multiplier</string>
@@ -1380,5 +1456,22 @@
     <string name="timetoeat">Time to eat</string>
     <string name="fabric_upload_disabled">Crash logs upload disabled!</string>
     <string name="graph_menu_divider_header">Graph</string>
-
+    <string name="eatingsoon_small">Small meal</string>
+    <string name="eatingsoon_medium">Medium meal PBolus1</string>
+    <string name="eatingsoon_large">Large meal PBolus2</string>
+    <string name="key_Mealfactor_start" translatable="false">W2 assist start time</string>
+    <string name="Mealfactor_start_summary">Hour of the day from when on W2 assist will be enabled.</string>
+    <string name="Mealfactor_start_title">W2 assist start time [h]</string>
+    <string name="key_Mealfactor_end" translatable="false">W2 assist end time</string>
+    <string name="Mealfactor_end_summary">Hour of the day until (and including) which W2 assist is enabled.</string>
+    <string name="Mealfactor_end_title">W2 assist end time [h]</string>
+    <string name="key_UAM_eventualBG" translatable="false">eventualBG above which >100% insulin required is authorised</string>
+    <string name="UAM_eventualBG_summary">eventualBG above which >100% of the calculated insulin required will be delivered. This UAM mode feature aims to halt a glucose climb early and requires good quality sensor data for safe use.</string>
+    <string name="UAM_eventualBG_title">ev.BG threshold for delivery of >100% insulinReq.</string>
+    <string name="key_w2_iob_threshold" translatable="false">w2_iob_threshold</string>
+    <string name="w2_iob_threshold_summary">Minimum percentage of maxIOB above which W2 assist is enabled. Below this threshold IOB, W2 assist will be disabled. Example: If this value is 10 and maxIOB is 8, your current IOB must be at least (8 * 10/100 =) 0.8 U for W2 assist to be active. This parameter is a safety feature assuming that postprandial glucose spikes (e.g. due to fat) occur before all insulin from the last meal decayed. If you set this value to 0, W2 assist will be decoupled from current IOB. Only do this if you are confident your sensor is not noisy, you enabled data smoothing and your scaling parameters and profile allow for safe use of W2 assist.</string>
+    <string name="w2_iob_threshold_title">W2 IOB threshold [%]</string>
+    <string name="key_adjtarget" translatable="false">adjtarget</string>
+    <string name="adjtarget_summary">Factor for dynamic target adjustment by which target bg will be multiplied (in case of predicted low) or divided (in case of predicted high).</string>
+    <string name="adjtarget_title">Dynamic target adjustment factor</string>
 </resources>
