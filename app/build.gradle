@@ -302,6 +302,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+    // MP: Implements the commons_math3 library used for blood glucose curve analysis (UAM tsunami) see: https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
 }
 
 /*
