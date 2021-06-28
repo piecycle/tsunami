@@ -360,6 +360,19 @@ public class TreatmentsPlugin extends PluginBase implements TreatmentsInterface 
         }
     }
 
+    //MP Get last bolus for w-zero (UAM tsunami) start
+    public double getLastBolus() {
+        Treatment last = getService().getLastBolus(false);
+        if (last == null) {
+            getAapsLogger().debug(LTag.DATATREATMENTS, "Last bolus: NOTHING FOUND");
+            return 0;
+        } else {
+            getAapsLogger().debug(LTag.DATATREATMENTS, "Last bolus: " + last.insulin);
+            return last.insulin;
+        }
+    }
+    //MP Get last bolus for w-zero (UAM tsunami) end
+
     public long getLastCarbTime() {
         Treatment last = getService().getLastCarb();
         if (last == null) {

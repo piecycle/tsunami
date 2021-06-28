@@ -772,6 +772,9 @@ public class IobCobCalculatorPlugin extends PluginBase implements IobCobCalculat
             result.usedMinCarbsImpact = autosensData.usedMinCarbsImpact;
         }
         result.lastBolusTime = treatmentsPlugin.getLastBolusTime();
+        //MP Get last bolus for w-zero (UAM tsunami) start
+        result.lastBolus = treatmentsPlugin.getLastBolus();
+        //MP Get last bolus for w-zero (UAM tsunami) end
         return result;
     }
 

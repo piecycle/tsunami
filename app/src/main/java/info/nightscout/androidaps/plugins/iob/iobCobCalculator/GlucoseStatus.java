@@ -18,6 +18,8 @@ import info.nightscout.androidaps.utils.Round;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 // MP: Above: Imports commons.math3 library classes for glucose curve analysis
+//MP below: test
+import info.nightscout.androidaps.data.Profile;
 
 /**
  * Created by mike on 04.01.2017.
@@ -43,7 +45,7 @@ public class GlucoseStatus {
     // autoISF === END
     // MP data smoothing START
     public double bg_5minago = 0d;
-    public int windowsize = 13; //MP number of bg readings to include in smoothing window
+    public int windowsize = 25; //MP number of bg readings to include in smoothing window
     public double o1_weight = 0.4d;
     public double o1_a = 0.5d;
     public double o2_a = 0.4d;
@@ -67,7 +69,7 @@ public class GlucoseStatus {
     public double delta_supersmooth_15m = 0d;
     public double delta_supersmooth_20m = 0d;
      */
-    public boolean insufficientdata = false;
+    public boolean insufficientsmoothingdata = false;
     // MP data smoothing END
     // MP glucose curve analysis START
     public boolean insufficientfittingdata = false;
@@ -90,6 +92,11 @@ public class GlucoseStatus {
     public double bR2 = 0d; //MP R squared value for broadfit
     public double broad_extremum;
     public double mealscore_smooth = 0d;
+    public double mealscore_raw = 0d;
+    public double meal_threshold = 2d;
+//MP test variables
+    public double scoredivisor = 0d;
+
     // MP glucose curve analysis END
 
     public String log() {
@@ -119,7 +126,7 @@ public class GlucoseStatus {
         // autoISF === END
         // MP data smoothing start
         this.bg_5minago = Round.roundTo(this.bg_5minago, 0.1);
-        if (!insufficientdata) {
+        if (!insufficientsmoothingdata) {
             this.o1_smoothedbg_5m = Round.roundTo(this.o1_smoothedbg_5m, 0.1);
             this.o1_smoothedbg_now = Round.roundTo(this.o1_smoothedbg_now, 0.1);
             this.o2_smoothedbg_5m = Round.roundTo(this.o2_smoothedbg_5m, 0.1);
@@ -156,6 +163,7 @@ public class GlucoseStatus {
         this.nsR2 = Round.roundTo(this.nsR2, 0.001);
         this.bR2 = Round.roundTo(this.bR2, 0.001);
         this.broad_extremum = Round.roundTo(this.broad_extremum, 0.1);
+        this.mealscore_raw = Round.roundTo(this.mealscore_raw, 0.0001);
         this.mealscore_smooth = Round.roundTo(this.mealscore_smooth, 0.0001);
         // MP curve analysis end
         return this;
@@ -222,7 +230,7 @@ public class GlucoseStatus {
                 // autoISF === END
                 //MP data smoothing start
                 status.bg_5minago = 0d; //MP If the database contains only one reading, then the bg 5 min ago is zero
-                status.insufficientdata = true;
+                status.insufficientsmoothingdata = true;
                 status.o1_weight = o1_weight; //MP Smoothing parameters remain unchanged
                 status.o1_a = o1_a; //MP Smoothing parameters remain unchanged
                 status.o2_a = o2_a; //MP Smoothing parameters remain unchanged
@@ -422,8 +430,8 @@ OLD CODE*/
 
             //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
             for (int i = 0; i < windowsize; i++) {
-                if (Math.round((data.get(i).date - data.get(i + 1).date) / (1000d * 60)) >= 7) {
-                    //if (Math.round((data.get(i).date - data.get(i + 1).date) / 60000L) <= 7) { //MP crashes the app, useful for testing
+                if (Math.round((data.get(i).date - data.get(i + 1).date) / (1000d * 60)) >= 12) { //MP: 12 min because a missed reading (i.e. readings coming in after 10 min) can occur for various reasons, like walking away from the phone or reinstalling AAPS
+                //if (Math.round((data.get(i).date - data.get(i + 1).date) / 60000L) <= 7) { //MP crashes the app, useful for testing
                     windowsize = i + 1; //MP: If time difference between two readings exceeds 7 min, adjust windowsize to *include* the more recent reading (i = reading; +1 because windowsize reflects number of valid readings);
                     break;
                 } else if (data.get(i).value == 38) {
@@ -441,7 +449,7 @@ OLD CODE*/
                     o1_smoothbg.add(0, o1_smoothbg.get(0) + o1_a * (data.get(windowsize - 1 - i).value - o1_smoothbg.get(0))); //MP build array of 1st order smoothed bgs
                 }
             } else {
-                insufficientdata = true;
+                insufficientsmoothingdata = true;
             }
 
 // CALCULATE SMOOTHING WINDOW - 2nd order exponential smoothing
@@ -456,14 +464,14 @@ OLD CODE*/
                     o2_smoothdelta.add(0, o2_b * (o2_smoothbg.get(0) - o2_smoothbg.get(1)) + (1 - o2_b) * o2_smoothdelta.get(0)); //MP build array of 1st order smoothed bgs
                 }
             } else {
-                insufficientdata = true;
+                insufficientsmoothingdata = true;
             }
 
 // CALCULATE SUPERSMOOTHED GLUCOSE & DELTAS
             ssmooth_bg.clear(); // MP reset supersmoothed bg array
             ssmooth_delta.clear(); // MP reset supersmoothed delta array
 
-            if (!insufficientdata) { //MP Build supersmoothed array only if there is enough valid readings
+            if (!insufficientsmoothingdata) { //MP Build supersmoothed array only if there is enough valid readings
                 for (int i = 0; i < o2_smoothbg.size(); i++) { //MP calculated supersmoothed bg of all o1/o2 smoothed data available; o2 & o1 smoothbg array sizes are equal in size, so only one is used as a condition here
                     ssmooth_bg.add(o1_weight * o1_smoothbg.get(i) + (1 - o1_weight) * o2_smoothbg.get(i)); //MP build array of supersmoothed bgs
                 }
@@ -474,12 +482,12 @@ OLD CODE*/
 
 //MP report smoothing variables in glucose status
             status.bg_5minago = before.value; //MP If the database contains more than one reading, return the value from 5 min ago
-            status.insufficientdata = insufficientdata;
+            status.insufficientsmoothingdata = insufficientsmoothingdata;
             status.o1_weight = o1_weight;
             status.o1_a = o1_a;
             status.o2_a = o2_a;
             status.o2_b = o2_b;
-            if (!insufficientdata) {
+            if (!insufficientsmoothingdata) {
                 status.o1_smoothedbg_5m = o1_smoothbg.get(1);
                 status.o1_smoothedbg_now = o1_smoothbg.get(0);
                 status.o2_smoothedbg_5m = o2_smoothbg.get(1);
@@ -499,22 +507,22 @@ OLD CODE*/
             status.delta_supersmooth_15m = ssmooth_delta.get(3);; //MP supersmooth delta from 15m ago
             status.delta_supersmooth_20m = ssmooth_delta.get(4);; //MP supersmooth delta from 20m ago
             */
-            } else { //todo: below is a placeholder - need better strategy
-                status.o1_smoothedbg_5m = data.get(1).value;
-                status.o1_smoothedbg_now = data.get(0).value;
-                status.o2_smoothedbg_5m = data.get(1).value;
-                status.o2_smoothedbg_now = data.get(0).value;
+            } else { //todo: below is a quick solution, should probably be improved
+                status.o1_smoothedbg_5m = 0d;
+                status.o1_smoothedbg_now = 0d;
+                status.o2_smoothedbg_5m = 0d;
+                status.o2_smoothedbg_now = 0d;
                 status.o2_smoothedtrend_5m = 0d;
                 status.o2_smoothedtrend_now = 0d;
                 status.bg_supersmooth_now = data.get(0).value;
                 status.bg_supersmooth_5m = data.get(1).value;
                 status.bg_supersmooth_10m = data.get(2).value;
                 status.bg_supersmooth_15m = data.get(3).value;
-                status.delta_supersmooth_now = 0d;
-                status.delta_supersmooth_5m = 0d;
-                status.delta_supersmooth_10m = 0d;
+                status.delta_supersmooth_now = data.get(0).value - data.get(1).value;
+                status.delta_supersmooth_5m = data.get(1).value - data.get(2).value;
+                status.delta_supersmooth_10m = data.get(2).value - data.get(3).value;
             }
-            // TODO: add a failsafe if glucose arrays don't contain enough entries to calculate all the required smoothed deltas for w-zero
+            // TODO: communicate to other code snippets / files that use smoothed data if no smoothing occurred due to insufficient dat
 //############################### MP
 //### DATA SMOOTHING CORE END ### MP
 //############################### MP
@@ -578,16 +586,16 @@ OLD CODE END*/
 
 
 //INITIALISE SIZE OF VALID READING DATABASE
-
-            if (narrow_fittingwindow + fitarraylength > sizeRecords) { //MP standard smoothing window
+//todo: if not all the bg readings are valid, the window of useful data is narrowed down. Go through all the different situations to see if the code works in every situation
+            if (narrow_fittingwindow + fitarraylength - 1 > sizeRecords) { //MP standard smoothing window; (narrow_fittingwindow + fitarraylength -1) = number of data points required to fill up an array of specified length using 'narrow_fittingwindow' amount of data points. -1 because the first array already contains as many datapoints as defined by narrow_fittingwindow, so for an arraylength of 5 and a windowsize of 5, at least 5+5-1 = 9 data points are necessary (points 0-4 / 1-5 / 2-6 / 3-7 / 4-8.... 0-8 = 9 data points)
                 insufficientfittingdata = true;
             }
 
-            int validdata = narrow_fittingwindow + fitarraylength;
+            int validdata = narrow_fittingwindow + fitarraylength - 1;
             if (!insufficientfittingdata) {
-                for (int i = 0; i < narrow_fittingwindow + fitarraylength; i++) {
-                    if (Math.round((data.get(i).date - data.get(i + 1).date) / (1000d * 60)) >= 7) {
-                        validdata = i + 1; //MP: If time difference between two readings exceeds 7 min, adjust fitarraylength to *include* the more recent reading (i = reading; +1 because windowsize reflects number of valid readings);
+                for (int i = 0; i < narrow_fittingwindow + fitarraylength - 1; i++) {
+                    if (Math.round((data.get(i).date - data.get(i + 1).date) / (1000d * 60)) >= 12) {
+                        validdata = i + 1; //MP: If time difference between two readings exceeds 12 min, adjust fitarraylength to *include* the more recent reading (i = reading; +1 because windowsize reflects number of valid readings);
                         break;
                     } else if (data.get(i).value == 38) {
                         validdata = i; //MP: 38 mg/dl reflects an xDrip error state; Chain of valid readings ends here, *exclude* this value (windowsize = i; i + 1 would include the current value)
@@ -595,9 +603,9 @@ OLD CODE END*/
                     }
                 }
             }
-            if (validdata < (narrow_fittingwindow + fitarraylength)) {
+            if (validdata < (narrow_fittingwindow + fitarraylength - 1)) {
                 if (validdata >= narrow_fittingwindow) {
-                    fitarraylength = validdata - narrow_fittingwindow; //MP: Adjust size of fitarraylength to the maximum possible value;
+                    fitarraylength = validdata - narrow_fittingwindow + 1; //MP: Adjust size of fitarraylength to the maximum possible value; Example: Valid datapoints: 7; narrow_fittingwindow: 5; Max array lenght possible: 0-4 / 1-5 / 2-6 --> 3 fits possible; 0-6 = 7 data points;
                 } else {
                     insufficientfittingdata = true;
                 }
@@ -605,11 +613,11 @@ OLD CODE END*/
 
 //CREATE ARRAY OF POLYNOMIALS FITTED USING RAW SENSOR DATA
             double nbgavg = 0d; //MP narrow blood glucose average
-            final double[][] rawcoeff_array = new double[fitarraylength + 1][6]; //MP array that holds polynomial coefficients
+            final double[][] rawcoeff_array = new double[fitarraylength][6]; //MP array that holds polynomial coefficients
             final PolynomialCurveFitter narrow_fitter = PolynomialCurveFitter.create(2); //MP curve fitter
 
             if (!insufficientfittingdata) {
-                for (int n = 0; n < fitarraylength + 1; n++) { //MP: Only build array using valid data. Length = fitarraylength + 1 (+1 = the first narrow_fittingwindow; if fitarraylength = 4, the final array will contain (4+1)*fittingwindow values.
+                for (int n = 0; n < fitarraylength; n++) { //MP: Only build array using valid data. Length = fitarraylength.
                     double nSST = 0d;
                     double nSSR = 0d;
                     final WeightedObservedPoints obs_narrow = new WeightedObservedPoints();
@@ -631,18 +639,29 @@ OLD CODE END*/
                     rawcoeff_array[n][4] = -1 * (fitresult_raw[1] / (2 * fitresult_raw[2])) - (5 * n); //MP extrema x (min), where 0 min = now.
                     rawcoeff_array[n][5] = fitresult_raw[2] * Math.pow(-1 * (fitresult_raw[1] / (2 * fitresult_raw[2])), 2) + fitresult_raw[1] * -1 * (fitresult_raw[1] / (2 * fitresult_raw[2])) + fitresult_raw[0]; //MP: Extremum y (glucose)
                 }
-            } else {
-                //todo: What should happen if there's not enough data for fitting?
+            }
+
+//CALCULATE MEAL SCORE AS AN ESTIMATE OF HOW LIKELY A RISE IS DUE TO A MEAL
+            if (!insufficientfittingdata) {
+                mealscore_raw = 0d;
+                scoredivisor = 0d;
+                for (int i = 0; i < fitarraylength; i++) { //MP: Narrow_fittingwindow is the length of the array
+                    if (rawcoeff_array[i][0] >= -0.03) {
+                        mealscore_raw += (rawcoeff_array[i][1] * (1 - 0.1 * i)); //MP: weighted sum of slopes
+                    }
+                    scoredivisor += 1 - 0.1 * i; //MP weighted mealscore
+                }
+                mealscore_raw = (mealscore_raw / scoredivisor) / meal_threshold; //MP: Average the coefficient sum. As the weight of each component decreases, the divisor is the sum of the weights (1+0.9+0.8+0.7+0.6 = 4)
             }
 
 //CREATE ARRAY OF POLYNOMIALS FITTED USING SMOOTHED SENSOR DATA
 //todo: Check if data smoothing occurred, i.e. if there was enough valid data
             double nbgsavg = 0d; //MP narrow blood glucose average
-            final double[][] smoothcoeff_array = new double[fitarraylength + 1][6];
+            final double[][] smoothcoeff_array = new double[fitarraylength][6];
             final PolynomialCurveFitter narrow_fitter_smooth = PolynomialCurveFitter.create(2);
 
-            if (!insufficientfittingdata && !insufficientdata) {
-                for (int n = 0; n < fitarraylength + 1; n++) {
+            if (!insufficientfittingdata && !insufficientsmoothingdata) {
+                for (int n = 0; n < fitarraylength; n++) {
                     double nsSST = 0d;
                     double nsSSR = 0d;
                     final WeightedObservedPoints obs_narrow_smooth = new WeightedObservedPoints();
@@ -679,15 +698,17 @@ OLD CODE END*/
             */
 
 //CALCULATE MEAL SCORE AS AN ESTIMATE OF HOW LIKELY A RISE IS DUE TO A MEAL
-            mealscore_smooth = 0d;
-            int scoredivisor = 0;
-            for (int i = 0; i < fitarraylength + 1; i++) { //MP: Narrow_fittingwindow is the length of the array
-                if (smoothcoeff_array[i][0] >= -0.03) {
-                    mealscore_smooth += smoothcoeff_array[i][1] * (1 - 0.1 * i); //MP: weighted sum of slopes
+            if (!insufficientfittingdata && !insufficientsmoothingdata) {
+                mealscore_smooth = 0d;
+                scoredivisor = 0d;
+                for (int i = 0; i < fitarraylength; i++) { //MP: Narrow_fittingwindow is the length of the array
+                    if (smoothcoeff_array[i][0] >= -0.03) {
+                        mealscore_smooth += smoothcoeff_array[i][1] * (1 - 0.1 * i); //MP: weighted sum of slopes
+                    }
                     scoredivisor += 1 - 0.1 * i;
                 }
+                mealscore_smooth = (mealscore_smooth / scoredivisor) / meal_threshold; //MP: Average the coefficient sum. As the weight of each component decreases, the divisor is the sum of the weights (1+0.9+0.8+0.7+0.6 = 4)
             }
-            mealscore_smooth = mealscore_smooth / scoredivisor; //MP: Average the coefficient sum. As the weight of each component decreases, the divisor is the sum of the weights (1+0.9+0.8+0.7+0.6 = 4)
 
 //CREATE POLYNOMIAL FITTED USING RAW SENSOR DATA, BROAD RANGE
             double bbgavg = 0d;
@@ -719,12 +740,22 @@ OLD CODE END*/
 
             double broad_minmax = -(coeff_broad[1] / (2 * coeff_broad[2]));
 
-            status.narrowfit_a = rawcoeff_array[0][0]; //MP 2nd degree polynomial coefficient a for narrowfit
-            status.narrowfit_b = rawcoeff_array[0][1]; //MP 2nd degree polynomial coefficient b for narrowfit
-            status.narrowfit_c = rawcoeff_array[0][2]; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
-            status.narrowsmoothedfit_a = smoothcoeff_array[0][0]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
-            status.narrowsmoothedfit_b = smoothcoeff_array[0][1]; //MP 2nd degree polynomial coefficient b for smoothed narrowfit
-            status.narrowsmoothedfit_c = smoothcoeff_array[0][2]; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+//UPDATE STATUS OBJECT
+            status.insufficientfittingdata = insufficientfittingdata;
+            if (!insufficientfittingdata) {
+                status.narrowfit_a = rawcoeff_array[0][0]; //MP 2nd degree polynomial coefficient a for narrowfit
+                status.narrowfit_b = rawcoeff_array[0][1]; //MP 2nd degree polynomial coefficient b for narrowfit
+                status.narrowfit_c = rawcoeff_array[0][2]; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            }
+            if (!insufficientfittingdata && !insufficientsmoothingdata) {
+                status.narrowsmoothedfit_a = smoothcoeff_array[0][0]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
+                status.narrowsmoothedfit_b = smoothcoeff_array[0][1]; //MP 2nd degree polynomial coefficient b for smoothed narrowfit
+                status.narrowsmoothedfit_c = smoothcoeff_array[0][2]; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            }/* else if (!insufficientfittingdata && insufficientsmoothingdata) { //MP use raw data fit if data smoothing didn't work out
+                status.narrowsmoothedfit_a = rawcoeff_array[0][0];
+                status.narrowsmoothedfit_b = rawcoeff_array[0][1];
+                status.narrowsmoothedfit_c = rawcoeff_array[0][2];
+            }*/
             //status.arrayfit_r0 = smoothcoeff_array[0][3]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
             //status.arrayfit_r4 = smoothcoeff_array[4][3]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
             status.broadfit_a = coeff_broad[2]; //MP 2nd degree polynomial coefficient a for broadfit
@@ -732,9 +763,21 @@ OLD CODE END*/
             status.broadfit_c = coeff_broad[0]; //MP 2nd degree polynomial coefficient c for broadfit
             status.nR2 = rawcoeff_array[0][3];
             status.nsR2 = smoothcoeff_array[0][3];
-            status.mealscore_smooth = mealscore_smooth; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            if (!insufficientfittingdata) {
+                status.mealscore_raw = mealscore_raw; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            } else {
+                status.mealscore_raw = 0d; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            }
+            if (!insufficientfittingdata && !insufficientsmoothingdata) {
+                status.mealscore_smooth = mealscore_smooth; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            } else {
+                status.mealscore_smooth = 0d; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            }
             status.bR2 = bR2;
             status.broad_extremum = broad_minmax; //MP extremum in broadfit
+            //MP test variables below
+            status.scoredivisor = scoredivisor;
+
 
 
 //################################## MP

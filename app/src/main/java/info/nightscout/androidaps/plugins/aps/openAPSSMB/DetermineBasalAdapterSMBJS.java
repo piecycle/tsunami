@@ -250,6 +250,7 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("max_daily_safety_multiplier", sp.getInt(R.string.key_openapsama_max_daily_safety_multiplier, 3));
         mProfile.put("current_basal_safety_multiplier", sp.getDouble(R.string.key_openapsama_current_basal_safety_multiplier, 4d));
 
+
         //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, SMBDefaults.high_temptarget_raises_sensitivity));
         mProfile.put("high_temptarget_raises_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_high_temptarget_raises_sensitivity),SMBDefaults.high_temptarget_raises_sensitivity));
         //mProfile.put("high_temptarget_raises_sensitivity", false);
@@ -328,7 +329,6 @@ public class DetermineBasalAdapterSMBJS {
             mProfile.put("out_units", "mmol/L");
         }
 
-
         long now = System.currentTimeMillis();
         TemporaryBasal tb = treatmentsPlugin.getTempBasalFromHistory(now);
 
@@ -376,7 +376,8 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average);
         // autoISF === END
         // MP data smoothing START
-        mGlucoseStatus.put("insufficientdata", glucoseStatus.insufficientdata);
+        mGlucoseStatus.put("insufficientsmoothingdata", glucoseStatus.insufficientsmoothingdata);
+        mGlucoseStatus.put("insufficientfittingdata", glucoseStatus.insufficientfittingdata);
         mGlucoseStatus.put("o1_weight", glucoseStatus.o1_weight);
         mGlucoseStatus.put("o1_a", glucoseStatus.o1_a);
         mGlucoseStatus.put("o2_a", glucoseStatus.o2_a);
@@ -417,7 +418,10 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("nsR2", glucoseStatus.nsR2);
         mGlucoseStatus.put("bR2", glucoseStatus.bR2);
         mGlucoseStatus.put("broad_extremum", glucoseStatus.broad_extremum);
+        mGlucoseStatus.put("mealscore_raw", glucoseStatus.mealscore_raw);
         mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth);
+        //MP test variables
+        mGlucoseStatus.put("scoredivisor", glucoseStatus.scoredivisor);
         // MP curve analysis END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);
@@ -426,6 +430,9 @@ public class DetermineBasalAdapterSMBJS {
         mMealData.put("slopeFromMaxDeviation", mealData.slopeFromMaxDeviation);
         mMealData.put("slopeFromMinDeviation", mealData.slopeFromMinDeviation);
         mMealData.put("lastBolusTime", mealData.lastBolusTime);
+        //MP Get last bolus for w-zero (UAM tsunami) start
+        mMealData.put("lastBolus", mealData.lastBolus);
+        //MP Get last bolus for w-zero (UAM tsunami) end
         mMealData.put("lastCarbTime", mealData.lastCarbTime);
 
 
