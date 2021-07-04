@@ -56,10 +56,16 @@ W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier
 - Meals are no longer divided into separate waves (wave 1, wave 2..). Instead, every wave is treated the same (wave 0).
 
 - Please have a look at my lame attempt of depicting a meal curve in ASCII below:
+
+
 .        .--.        .
+
 .       /    \       .
+
 .      /      \      .
+
 .____-´        `-____.
+
 
 An ideal meal curve will feature:
 * a flat line
