@@ -39,11 +39,11 @@ W-ZERO MODE
 
 W-zero handles meals automatically without further user input. However, for technical reasons it does not replace prebolusing. W-zero was introduced with version 1.0 and must be enabled in the SMB preferences. At this point, enabling data smoothing is a prerequisite for using W-zero, thus W-zero cannot be switched on if data smoothing is switched off.
 
--- Theoretical background --
+## Theoretical background
 
 W-zero scales profile ISF values in dependence of the current glucose curve development. Unannounced carbohydrates (and other BG influencing factors) lead to a rapid increase in blood glucose that the default oref1 algorithm will not stop in a timely manner. Larger insulin doses are required to cover a meal than oref1 provides using base ISF values. UAM Tsunami treats unannounced carbohydrates as "resistance units" and corrects for glucose spikes by lowering profile ISF values as if meals were acute episodes of insulin resistance. The default oref1 algorithm has limited UAM functionality and does not deliver enough insulin to cover a meal in due time. ISF scaling as used by UAM tsunami circumvents this issue, enabling the use of oref1 with unannounced meals. This approach comes with its own limitations, however, and although it has been used successfully for months, different strategies will be explored in the future.
 
--- How it works --
+## How it works
 
 W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier tsunami versions. However, several significant changes have been made for reasons of safety.
 
@@ -126,7 +126,7 @@ By limiting the frequency of large SMBs, your body will have more time to absorb
 - Tsunami v1.0 still contains TT based UAM functionality (classic mode). Classic mode is used if w-zero is disabled in the settings. Classic mode will be removed in future releases and is mostly still available in case of unexpected critical errors in the w-zero code, to allow for conveniently switching back to the tried-and-tested code. Classic mode works largely like tsunami v0.7 and does not use AAPS-2.8.2 sensitivity based target adjustment. Instead, the modded version by MT is used at all times (as in v0.7).
 Please note that this means that setting eating-soon temp targets will still deliver automatic preboluses, even if w-zero is enabled. TT-linked preboluses will also be removed in future releases.
 
--– General remarks --
+## General remarks
 
 Automatic meal handling is a challenging task that requires a fine balance between delivering enough insulin rapidly to halt a rise, and dosing insulin carefully to avoid hypoglycaemia. The risks are mitigated by a number of safety features, but highs and lows will still occur. In comparison to tsunami v0.7, glucose values may be longer and more frequently between 160-200 mg/dl. This is because large SMBs will not be sent immediately as glucose starts to rise. In my personal tests (about 1 month at the point of writing), this reduces the occurrence of post-prandial hypoglycaemia caused by residual insulin hours after a meal. The height of prandial peaks can be kept below 200 mg/dl by manually delivering appropriately sized preboluses. I have not tested w-zero without prebolusing for meals, and I would generally not recommend it given the expectedly better outcome with prebolusing. The size of the prebolus depends on the type of meal and you should bolus based on your personal experience. There is no one-size-fits-all here, but in general the purpose of the prebolus is to get active insulin into your system before your sensor registers a meal and w-zero kicks in. Glucose absorption + sensor lag time + insulin absorption all play against us, and the prebolus buys AAPS_tsunami enough time to take over before glucose values get too high.
 
