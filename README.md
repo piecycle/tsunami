@@ -65,7 +65,7 @@ W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier
           .--.
          /    \
         /      \
-  -.-.-´        `-.-.-
+    _.-´        `-._
 
 
 An ideal meal curve will feature:
