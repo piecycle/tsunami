@@ -58,14 +58,11 @@ W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier
 
 - Please have a look at my lame attempt of depicting a meal curve in ASCII below:
 
-// asdga
-// asdgasg
-
 
           .--.
          /    \
         /      \
-     .-´        `-.
+   ...-´        `-...
 
 
 An ideal meal curve will feature:
