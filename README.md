@@ -56,10 +56,10 @@ W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier
 - Meals are no longer divided into separate waves (wave 1, wave 2..). Instead, every wave is treated the same (wave 0).
 
 - Please have a look at my lame attempt of depicting a meal curve in ASCII below:
-        .--.
-       /    \
-      /      \
-____-´        `-____
+.        .--.        .
+.       /    \       .
+.      /      \      .
+.____-´        `-____.
 
 An ideal meal curve will feature:
 * a flat line
@@ -91,7 +91,7 @@ Briefly: a = curvature; b = per minute delta; c = BG;
 
 - Hypo mode: Peak glucose values are calculated with every new reading. If the last peak (or valley) value is below 85 mg/dl and if the current bg is below target * 1.1, w-zero will be deactivated. This feature aims to prevent falsely delivering SMBs in response to hypo carbs.
 
-- Scaling parameter scaling: User-set scaling parameters (scale_min/max, insulin required percent, boluscap (see below)) are no longer fixed constants but also subject to scaling, allowing full aggressiveness only when deemed safe and appropriate.
+- Scaling parameter scaling: Ufser-set scaling parameters (scale_min/max, insulin required percent, boluscap (see below)) are no longer fixed constants but also subject to scaling, allowing full aggressiveness only when deemed safe and appropriate.
 
 - Phase dependent aggressiveness: As described above, w-zero will act differently depending on the current state of the glucose curve. Actions are most aggressive during acceleration phase, become less aggressive during linear phase and reach minimum aggressiveness during deceleration phase.
 
