@@ -93,10 +93,14 @@ public class GlucoseStatus {
     public double broad_extremum;
     public double mealscore_smooth = 0d;
     public double mealscore_raw = 0d;
-    public double meal_threshold = 2d;
+    public double meal_threshold = 1.8d;
 //MP test variables
     public double scoredivisor = 0d;
-
+    public double narrow_0 = 0d;
+    public double narrow_1 = 0d;
+    public double narrow_2 = 0d;
+    public double narrow_3 = 0d;
+    public double narrow_4 = 0d;
     // MP glucose curve analysis END
 
     public String log() {
@@ -535,56 +539,6 @@ OLD CODE*/
             //todo: add fitting variables to above definitions (if glucose list empty etc.)
             // MP narrow window - raw data
 
-/* OLD CODE BEFORE USING FIT ARRAY START
-            double nbgavg = 0d; //MP narrow blood glucose average
-            final WeightedObservedPoints obs_narrow = new WeightedObservedPoints();
-            for (int i = 0; i < narrow_fittingwindow; i++) { // MP: Build data for fitting; x = time (min from now); y = BG;
-                obs_narrow.add(i * -5, data.get(i).value);
-                nbgavg += data.get(i).value;
-            }
-            nbgavg = nbgavg/narrow_fittingwindow; //MP: Calculates average BG of those included in fit
-
-            // MP: Instantiate a 2nd degree polynomial fitter.
-            final PolynomialCurveFitter narrow_fitter = PolynomialCurveFitter.create(2);
-
-            // MP: Perform the fit / retrieve fitted parameters (coefficients of the polynomial function).
-            final double[] coeff_narrow = narrow_fitter.fit(obs_narrow.toList());
-
-            //MP: calculate R2 value (coefficient of determination)
-            double nSST = 0d;
-            double nSSR = 0d;
-            for (int i = 0; i < narrow_fittingwindow; i++) {
-                nSST += Math.pow(data.get(i).value - nbgavg, 2); //MP: Build SS_total value for R2
-                nSSR += Math.pow(data.get(i).value - (coeff_narrow[0] + coeff_narrow[1]*i*-5 + coeff_narrow[2] * Math.pow(i * -5,2)), 2); //MP: Calculates difference between measured BG and modelled BG from polynomial c + bx + ax^2; -5 refers to the minutes (x value) between each reading
-            }
-            nR2 = 1 - (nSSR/nSST); //MP R-squared for narrow window fit
- OLD CODE BEFORE USING FIT ARRAY END */
-/* OLD CODE START (smoothed polynomial fit, before array)
-
-            for (int i = 0; i < narrow_fittingwindow; i++) { // MP: Build data for fitting; x = time (min from now); y = BG;
-                obs_narrow_smooth.add(i * -5, ssmooth_bg.get(i));
-                nbgsavg += ssmooth_bg.get(i);
-            }
-            nbgsavg = nbgsavg/narrow_fittingwindow; //MP: Calculates average BG of those included in fit
-
-            // MP: Instantiate a 2nd degree polynomial fitter.
-            final PolynomialCurveFitter narrow_fitter_smooth = PolynomialCurveFitter.create(2);
-
-            // MP: Perform the fit / retrieve fitted parameters (coefficients of the polynomial function).
-            final double[] fitresult_smooth = narrow_fitter_smooth.fit(obs_narrow_smooth.toList());
-
-            //MP: calculate R2 value (coefficient of determination)
-            double nsSST = 0d;
-            double nsSSR = 0d;
-            for (int i = 0; i < narrow_fittingwindow; i++) {
-                nsSST += Math.pow(ssmooth_bg.get(i) - nbgsavg, 2); //MP: Build SS_total value for R2
-                nsSSR += Math.pow(ssmooth_bg.get(i) - (fitresult_smooth[0] + fitresult_smooth[1]*i*-5 + fitresult_smooth[2] * Math.pow(i * -5,2)), 2); //MP: Calculates difference between measured BG and modelled BG from polynomial c + bx + ax^2; -5 refers to the minutes (x value) between each reading
-            }
-            nsR2 = 1 - (nsSSR/nsSST); //MP R-squared for narrow window fit
-OLD CODE END*/
-            ///////
-
-
 //INITIALISE SIZE OF VALID READING DATABASE
 //todo: if not all the bg readings are valid, the window of useful data is narrowed down. Go through all the different situations to see if the code works in every situation
             if (narrow_fittingwindow + fitarraylength - 1 > sizeRecords) { //MP standard smoothing window; (narrow_fittingwindow + fitarraylength -1) = number of data points required to fill up an array of specified length using 'narrow_fittingwindow' amount of data points. -1 because the first array already contains as many datapoints as defined by narrow_fittingwindow, so for an arraylength of 5 and a windowsize of 5, at least 5+5-1 = 9 data points are necessary (points 0-4 / 1-5 / 2-6 / 3-7 / 4-8.... 0-8 = 9 data points)
@@ -622,8 +576,8 @@ OLD CODE END*/
                     double nSSR = 0d;
                     final WeightedObservedPoints obs_narrow = new WeightedObservedPoints();
                     for (int i = 0; i < narrow_fittingwindow; i++) { // MP: Build data for fitting; x = time (min from now); y = BG;
-                        obs_narrow.add(i * -5, data.get(i).value);
-                        nbgavg += data.get(i).value;
+                        obs_narrow.add(i * -5, data.get(i + n).value);
+                        nbgavg += data.get(i + n).value;
                     }
                     double[] fitresult_raw = narrow_fitter.fit(obs_narrow.toList());
                     nbgavg = nbgavg / narrow_fittingwindow; //MP: Calculates average BG of those included in fit
@@ -667,7 +621,7 @@ OLD CODE END*/
                     final WeightedObservedPoints obs_narrow_smooth = new WeightedObservedPoints();
                     for (int i = 0; i < narrow_fittingwindow; i++) { // MP: Collect readings for fitting; x = time (min from now); y = BG;
                         obs_narrow_smooth.add(i * -5, ssmooth_bg.get(i + n)); //todo: Check against smoothing code to spot potential erros if there's not enough smooth data
-                        nbgsavg += ssmooth_bg.get(i);
+                        nbgsavg += ssmooth_bg.get(i + n);
                     }
                     double[] fitresult_smooth = narrow_fitter_smooth.fit(obs_narrow_smooth.toList());
                     nbgsavg = nbgsavg / narrow_fittingwindow; //MP: Calculates average BG of those included in fit
@@ -746,16 +700,24 @@ OLD CODE END*/
                 status.narrowfit_a = rawcoeff_array[0][0]; //MP 2nd degree polynomial coefficient a for narrowfit
                 status.narrowfit_b = rawcoeff_array[0][1]; //MP 2nd degree polynomial coefficient b for narrowfit
                 status.narrowfit_c = rawcoeff_array[0][2]; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
+            } else {
+                status.narrowfit_a = 0d; //MP 2nd degree polynomial coefficient a for narrowfit
+                status.narrowfit_b = 0d; //MP 2nd degree polynomial coefficient b for narrowfit
+                status.narrowfit_c = 0d; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
             }
             if (!insufficientfittingdata && !insufficientsmoothingdata) {
                 status.narrowsmoothedfit_a = smoothcoeff_array[0][0]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
                 status.narrowsmoothedfit_b = smoothcoeff_array[0][1]; //MP 2nd degree polynomial coefficient b for smoothed narrowfit
                 status.narrowsmoothedfit_c = smoothcoeff_array[0][2]; //MP 2nd degree polynomial coefficient c for smoothed narrowfit
-            }/* else if (!insufficientfittingdata && insufficientsmoothingdata) { //MP use raw data fit if data smoothing didn't work out
+            } else if (!insufficientfittingdata && insufficientsmoothingdata) { //MP use raw data fit if data smoothing didn't work out
                 status.narrowsmoothedfit_a = rawcoeff_array[0][0];
                 status.narrowsmoothedfit_b = rawcoeff_array[0][1];
                 status.narrowsmoothedfit_c = rawcoeff_array[0][2];
-            }*/
+            } else {
+                status.narrowsmoothedfit_a = 0d;
+                status.narrowsmoothedfit_b = 0d;
+                status.narrowsmoothedfit_c = 0d;
+            }
             //status.arrayfit_r0 = smoothcoeff_array[0][3]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
             //status.arrayfit_r4 = smoothcoeff_array[4][3]; //MP 2nd degree polynomial coefficient a for smoothed narrowfit
             status.broadfit_a = coeff_broad[2]; //MP 2nd degree polynomial coefficient a for broadfit
@@ -777,8 +739,11 @@ OLD CODE END*/
             status.broad_extremum = broad_minmax; //MP extremum in broadfit
             //MP test variables below
             status.scoredivisor = scoredivisor;
-
-
+            status.narrow_0 = smoothcoeff_array[0][1];
+            status.narrow_1 = smoothcoeff_array[1][1];
+            status.narrow_2 = smoothcoeff_array[2][1];
+            status.narrow_3 = smoothcoeff_array[3][1];
+            status.narrow_4 = smoothcoeff_array[4][1];
 
 //################################## MP
 //### GLUCOSE CURVE ANALYSIS END ### MP
