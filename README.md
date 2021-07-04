@@ -14,6 +14,7 @@ dev: [![codecov](https://codecov.io/gh/MilosKozak/AndroidAPS/branch/dev/graph/ba
 ![BTC](https://bitit.io/assets/coins/icon-btc-1e5a37bc0eb730ac83130d7aa859052bd4b53ac3f86f99966627801f7b0410be.svg) 3KawK8aQe48478s6fxJ8Ms6VTWkwjgr9f2
 
 ===================================================
+
 UAM Tsunami by Michael Pinner
 
 This README is valid for AAPS_2.8.2_UAM_tsunami_v1.0
@@ -61,7 +62,7 @@ W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier
          .--.
         /    \
        /      \
- .___-´        `-___.
+  ___-´        `-___
 
 
 An ideal meal curve will feature:
