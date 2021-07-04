@@ -69,7 +69,7 @@ W-zero uses Michaelis-Menten equation based ISF scaling as introduced in earlier
 
 
 An ideal meal curve will feature:
-* a flat line
+* a flat base line
 * a sudden increase in curvature (acceleration / delta values increase)
 * a linear climb (steadiness / delta values stay roughly the same)
 * a decrease in curvature (deceleration / delta values becomes smaller)
