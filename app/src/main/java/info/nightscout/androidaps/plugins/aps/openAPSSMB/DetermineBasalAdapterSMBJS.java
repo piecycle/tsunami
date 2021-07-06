@@ -425,11 +425,11 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth);
         //MP test variables
         mGlucoseStatus.put("scoredivisor", glucoseStatus.scoredivisor);
-        mGlucoseStatus.put("narrow0", glucoseStatus.narrow_0);
-        mGlucoseStatus.put("narrow1", glucoseStatus.narrow_1);
-        mGlucoseStatus.put("narrow2", glucoseStatus.narrow_2);
-        mGlucoseStatus.put("narrow3", glucoseStatus.narrow_3);
-        mGlucoseStatus.put("narrow4", glucoseStatus.narrow_4);
+        mGlucoseStatus.put("ssmooth_bg_size", glucoseStatus.smoothsize);
+        mGlucoseStatus.put("fitarraylength", glucoseStatus.fitarraylength);
+        mGlucoseStatus.put("windowsize", glucoseStatus.windowsize);
+        mGlucoseStatus.put("validdata", glucoseStatus.validdata);
+        mGlucoseStatus.put("sizerecords", glucoseStatus.sizerecords);
         // MP curve analysis END
         mMealData = new JSONObject();
         mMealData.put("carbs", mealData.carbs);

@@ -96,11 +96,9 @@ public class GlucoseStatus {
     public double meal_threshold = 1.8d;
 //MP test variables
     public double scoredivisor = 0d;
-    public double narrow_0 = 0d;
-    public double narrow_1 = 0d;
-    public double narrow_2 = 0d;
-    public double narrow_3 = 0d;
-    public double narrow_4 = 0d;
+    public int smoothsize = 0;
+    public int validdata = 0;
+    public int sizerecords = 0;
     // MP glucose curve analysis END
 
     public String log() {
@@ -611,8 +609,15 @@ OLD CODE*/
 //CREATE ARRAY OF POLYNOMIALS FITTED USING SMOOTHED SENSOR DATA
 //todo: Check if data smoothing occurred, i.e. if there was enough valid data
             double nbgsavg = 0d; //MP narrow blood glucose average
-            final double[][] smoothcoeff_array = new double[fitarraylength][6];
             final PolynomialCurveFitter narrow_fitter_smooth = PolynomialCurveFitter.create(2);
+/*
+            fitarraylength = Math.min(fitarraylength, ssmooth_bg.size() - narrow_fittingwindow + 1); //MP: critical if windowsize (smoothing variable) and narrow_fittingwindow (fitting variable) differ in value
+            if (fitarraylength < 1) {
+                insufficientfittingdata = true;
+            }
+*/
+            final double[][] smoothcoeff_array = new double[fitarraylength][6];
+
 
             if (!insufficientfittingdata && !insufficientsmoothingdata) {
                 for (int n = 0; n < fitarraylength; n++) {
@@ -739,12 +744,11 @@ OLD CODE*/
             status.broad_extremum = broad_minmax; //MP extremum in broadfit
             //MP test variables below
             status.scoredivisor = scoredivisor;
-            status.narrow_0 = smoothcoeff_array[0][1];
-            status.narrow_1 = smoothcoeff_array[1][1];
-            status.narrow_2 = smoothcoeff_array[2][1];
-            status.narrow_3 = smoothcoeff_array[3][1];
-            status.narrow_4 = smoothcoeff_array[4][1];
-
+            status.smoothsize = ssmooth_bg.size();
+            status.fitarraylength = fitarraylength;
+            status.windowsize = windowsize;
+            status.validdata = validdata;
+            status.sizerecords = sizeRecords;
 //################################## MP
 //### GLUCOSE CURVE ANALYSIS END ### MP
 //################################## MP
