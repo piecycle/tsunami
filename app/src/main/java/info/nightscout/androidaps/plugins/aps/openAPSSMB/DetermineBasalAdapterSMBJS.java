@@ -22,12 +22,15 @@ import javax.inject.Inject;
 import dagger.android.HasAndroidInjector;
 import info.nightscout.androidaps.Constants;
 import info.nightscout.androidaps.R;
+import info.nightscout.androidaps.data.Iob;
 import info.nightscout.androidaps.data.IobTotal;
 import info.nightscout.androidaps.data.MealData;
 import info.nightscout.androidaps.data.Profile;
 import info.nightscout.androidaps.db.TempTarget;
 import info.nightscout.androidaps.db.TemporaryBasal;
+import info.nightscout.androidaps.db.Treatment;
 import info.nightscout.androidaps.interfaces.ActivePluginProvider;
+import info.nightscout.androidaps.interfaces.InsulinInterface;
 import info.nightscout.androidaps.interfaces.ProfileFunction;
 import info.nightscout.androidaps.interfaces.PumpInterface;
 import info.nightscout.androidaps.logging.AAPSLogger;
@@ -36,6 +39,9 @@ import info.nightscout.androidaps.plugins.aps.logger.LoggerCallback;
 import info.nightscout.androidaps.plugins.aps.loop.ScriptReader;
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker;
 import info.nightscout.androidaps.plugins.general.openhumans.OpenHumansUploader;
+import info.nightscout.androidaps.plugins.insulin.InsulinLyumjevPlugin;
+import info.nightscout.androidaps.plugins.insulin.InsulinOrefBasePlugin;
+import info.nightscout.androidaps.plugins.insulin.InsulinOrefFreePeakPlugin;
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus;
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.IobCobCalculatorPlugin;
 import info.nightscout.androidaps.plugins.treatments.TreatmentsPlugin;
@@ -249,8 +255,6 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("sens", profile.getIsfMgdl());
         mProfile.put("max_daily_safety_multiplier", sp.getInt(R.string.key_openapsama_max_daily_safety_multiplier, 3));
         mProfile.put("current_basal_safety_multiplier", sp.getDouble(R.string.key_openapsama_current_basal_safety_multiplier, 4d));
-
-
         //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, SMBDefaults.high_temptarget_raises_sensitivity));
         mProfile.put("high_temptarget_raises_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_high_temptarget_raises_sensitivity),SMBDefaults.high_temptarget_raises_sensitivity));
         //mProfile.put("high_temptarget_raises_sensitivity", false);
@@ -294,8 +298,6 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("temptargetSet", tempTargetSet);
         mProfile.put("autosens_max", SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autosens_max, "1.2")));
 //        mProfile.put("UAM_PBolus2",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2,"1")));
-        //MP: Make w-zero dependent on datasmoothing
-//MP: UAM_boluscap start
 //        mProfile.put("boost_bolus",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_bolus, "2.0")));
 //        mProfile.put("high_divisor",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_high_divisor, "2.0")));
 //        mProfile.put("boost_start",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_start, "7.0")));
@@ -316,13 +318,16 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
         mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
         mProfile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false));
-        boolean datasmoothingenabled = sp.getBoolean(R.string.key_enable_datasmoothing, false);
+        boolean datasmoothingenabled = sp.getBoolean(R.string.key_enable_datasmoothing, false); //MP: Make w-zero dependent on datasmoothing
         mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
+        mProfile.put("enable_acticontrol", datasmoothingenabled && sp.getBoolean(R.string.key_enable_acticontrol, false));
         mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
         mProfile.put("percentage", profile.getPercentage());
         mProfile.put("wzero_start",  SafeParse.stringToDouble(sp.getString(R.string.key_wzero_start, "11.0")));
         mProfile.put("wzero_end",  SafeParse.stringToDouble(sp.getString(R.string.key_wzero_end, "23.0")));
         mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
+        mProfile.put("dia", profile.getDia());
+        mProfile.put("peaktime",SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak,"45")));
         //MP UAM tsunami profile variables END
 //TODO: remove below
         mProfile.put("UAM_eventualBG",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_eventualBG,"160")));
@@ -359,6 +364,14 @@ public class DetermineBasalAdapterSMBJS {
         mIobData = IobCobCalculatorPlugin.convertToJSONArray(iobArray);
 
         mGlucoseStatus = new JSONObject();
+
+        mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity);
+        mGlucoseStatus.put("sensorlagactivity", glucoseStatus.sensorlagactivity);
+        mGlucoseStatus.put("historicactivity", glucoseStatus.historicactivity);
+        mGlucoseStatus.put("currentactivity", glucoseStatus.currentactivity);
+        mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time);
+
+        //
         mGlucoseStatus.put("glucose", glucoseStatus.glucose);
         // MP data smoothing START
         mGlucoseStatus.put("glucose_5m", glucoseStatus.bg_5minago);

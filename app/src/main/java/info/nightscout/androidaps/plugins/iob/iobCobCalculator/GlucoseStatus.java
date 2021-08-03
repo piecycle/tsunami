@@ -8,6 +8,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.android.HasAndroidInjector;
+import info.nightscout.androidaps.R;
+import info.nightscout.androidaps.data.IobTotal;
 import info.nightscout.androidaps.db.BgReading;
 import info.nightscout.androidaps.logging.AAPSLogger;
 import info.nightscout.androidaps.logging.LTag;
@@ -18,9 +20,11 @@ import info.nightscout.androidaps.utils.Round;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 // MP: Above: Imports commons.math3 library classes for glucose curve analysis
-//MP below: test
-import info.nightscout.androidaps.data.Profile;
-
+//MP activity calculation start
+import info.nightscout.androidaps.interfaces.ProfileFunction;
+import info.nightscout.androidaps.utils.SafeParse;
+import info.nightscout.androidaps.utils.sharedPreferences.SP;
+//MP activity calculation end
 /**
  * Created by mike on 04.01.2017.
  */
@@ -28,6 +32,10 @@ import info.nightscout.androidaps.data.Profile;
 public class GlucoseStatus {
     @Inject public AAPSLogger aapsLogger;
     @Inject public IobCobCalculatorPlugin iobCobCalculatorPlugin;
+    @Inject SP sp;
+    //MP Activity calculation start
+    @Inject ProfileFunction profileFunction;
+    //MP Activity calculation end
 
     private final HasAndroidInjector injector;
 
@@ -100,7 +108,16 @@ public class GlucoseStatus {
     public int validdata = 0;
     public int sizerecords = 0;
     // MP glucose curve analysis END
-
+    //MP Activity calculation start
+    public double futureactivity = 0d;
+    public double sensorlagactivity = 0d;
+    public double historicactivity = 0d;
+    public double currentactivity = 0d;
+    //public long activity_pred_time = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP Time in minutes from now to calculate insulin activity for
+    public long activity_pred_time = 40L; //MP Time in minutes from now to calculate insulin activity for
+    public long sensorlag = -10L; //MP Time in minutes from now which is estimated to be the time point at which the displayed sensor delta actually occurred (i.e. sensor lag time, must be at least -5 min, max -20 min)
+    public long activity_historic = -20L; //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
+    //MP Activity calculation end
     public String log() {
         return "Glucose: " + DecimalFormatter.to0Decimal(glucose) + " mg/dl " +
                 "Noise: " + DecimalFormatter.to0Decimal(noise) + " " +
@@ -168,6 +185,10 @@ public class GlucoseStatus {
         this.mealscore_raw = Round.roundTo(this.mealscore_raw, 0.0001);
         this.mealscore_smooth = Round.roundTo(this.mealscore_smooth, 0.0001);
         // MP curve analysis end
+        this.futureactivity = Round.roundTo(this.futureactivity, 0.0001);
+        this.sensorlagactivity = Round.roundTo(this.sensorlagactivity, 0.0001);
+        this.historicactivity = Round.roundTo(this.historicactivity, 0.0001);
+        this.currentactivity = Round.roundTo(this.currentactivity, 0.0001);
         return this;
     }
 
@@ -753,6 +774,45 @@ OLD CODE*/
 //### GLUCOSE CURVE ANALYSIS END ### MP
 //################################## MP
 
+            //MP Activity calculation start
+            //long activity_pred_time = /*DateUtil.now() + */5*60*1000;
+            /*Profile profile = profileFunction.getProfile(DateUtil.now() + activity_pred_time);
+            IobTotal iob = iobCobCalculatorPlugin.calculateFromTreatmentsAndTempsFutureSynchronized(activity_pred_time, profile);
+            status.activity = iob.activity;*/
+
+           /*List<InMemoryGlucoseValue> bucketed_data = iobCobCalculatorPlugin.getBucketedData();
+            for (int i = bucketed_data.size() - 4; i >= 0; i--) {
+                long bgTime = bucketed_data.get(i).getTimestamp();
+                bgTime = IobCobCalculatorPlugin.roundUpTime(bgTime);
+                Profile profile = profileFunction.getProfile(bgTime);
+                IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTime(activity_pred_time, profile);
+                //if (bgTime > DateUtil.now() - 6*60*60*1000) {
+                status.futureactivity = iob.activity;
+            //}
+            }*/
+            activity_pred_time = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP free oref peak time
+            for (long i = sensorlag - 4; i <= sensorlag; i++) {
+                IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
+                status.sensorlagactivity += iob.activity;
+            }
+            for (long i = activity_pred_time - 4; i <= activity_pred_time; i++) {
+                IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
+                status.futureactivity += iob.activity;
+            }
+            for (long i = activity_historic - 2; i <= activity_historic + 2; i++) {
+                IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
+                status.historicactivity += iob.activity;
+            }
+            for (long i = -4; i <= 0; i++) {
+                IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
+                status.currentactivity += iob.activity;
+            }
+            //IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(activity_pred_time);
+            //IobTotal iob_sensorlag = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(sensorlag);
+            //status.futureactivity = iob.activity;
+            //status.sensorlagactivity = iob_sensorlag.activity;
+            status.activity_pred_time = activity_pred_time;
+            //MP Activity calculation end
             aapsLogger.debug(LTag.GLUCOSE, status.log());
             return status.round();
 

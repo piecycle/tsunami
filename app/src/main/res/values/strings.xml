@@ -866,6 +866,9 @@
     <string name="key_enable_w_zero" translatable="false">enable_w_zero</string>
     <string name="enable_w_zero_title">Enable W-zero</string>
     <string name="enable_w_zero_summary">Automatically detect and handle meals. Does not trigger or replace preboluses!</string>
+    <string name="key_enable_acticontrol" translatable="false">enable_acticontrol</string>
+    <string name="enable_acticontrol_title">Enable Acticontrol</string>
+    <string name="enable_acticontrol_summary">Let UAM tsunami calculate insulin requirements to end meal-related rises early.</string>
     <!-- MP: UAMboluscap start -->
     <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
     <string name="UAM_UAM_boluscap_title">UAM bolus cap [U]</string>
@@ -1459,22 +1462,5 @@
     <string name="key_adjtarget" translatable="false">adjtarget</string>
     <string name="adjtarget_summary">Factor for dynamic target adjustment by which target bg will be multiplied (in case of predicted low) or divided (in case of predicted high).</string>
     <string name="adjtarget_title">Dynamic target adjustment factor</string>
-    
-    <!-- TODO remove below -->
-    <string name="key_UAM_eventualBG" translatable="false">eventualBG above which >100% insulin required is authorised</string>
-    <string name="UAM_eventualBG_summary">eventualBG above which >100% of the calculated insulin required will be delivered. This UAM mode feature aims to halt a glucose climb early and requires good quality sensor data for safe use.</string>
-    <string name="UAM_eventualBG_title">(OLD) ev.BG threshold f. delivery of >100% insulinReq.</string>
-    <string name="key_W2_modifier" translatable="false">W2_modifier</string>
-    <string name="W2_modifier_title">(OLD) W2 modifier of scale_50</string>
-    <string name="W2_modifier_summary">Multiplier of scale_50 during 2nd wave assist (outside manually activated UAM mode). It shifts aggressiveness towards larger deltas to reduce the risk of overdosing. Example: If scale_50 = 4 and W2_modifier is 1.5, the scale_50 parameters used by W2 assist is 4 * 1.5 = 6.</string>
-    <string name="key_w2_iob_threshold" translatable="false">w2_iob_threshold</string>
-    <string name="w2_iob_threshold_summary">Minimum percentage of maxIOB above which W2 assist is enabled. Below this threshold IOB, W2 assist will be disabled. Example: If this value is 10 and maxIOB is 8, your current IOB must be at least (8 * 10/100 =) 0.8 U for W2 assist to be active. This parameter is a safety feature assuming that postprandial glucose spikes (e.g. due to fat) occur before all insulin from the last meal decayed. If you set this value to 0, W2 assist will be decoupled from current IOB. Only do this if you are confident your sensor is not noisy, you enabled data smoothing and your scaling parameters and profile allow for safe use of W2 assist.</string>
-    <string name="w2_iob_threshold_title">(OLD) W2 IOB threshold [%]</string>
-    <string name="key_UAM_PBolus1" translatable="false">UAM_PBolus1</string>
-    <string name="UAM_PBolus1_title">(OLD) UAM prebolus [U]</string>
-    <string name="UAM_PBolus1_summary">Automatic prebolus if setting a TT of less than 90 mg/dl with a duration between 60 and 120 minutes.</string>
-    <string name="key_deceleration_scaling" translatable="false">deceleration_scaling</string>
-    <string name="deceleration_scaling_title">(OLD) Enable deceleration scaling</string>
-    <string name="deceleration_scaling_summary">Dynamically raise scale_max if a glucose rise during W1 and W2 modes is decelerating and expected to peak soon. Lowers aggressiveness before glucose is expected to drop for more safety.</string>
-    <!-- TODO remove above -->
+
 </resources>

@@ -120,7 +120,7 @@ android {
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1500
-        version "2.8.2-UAM_tsunami_1.0.1"
+        version "2.8.2-UAM_tsunami_2.0"
         buildConfigField "String", "VERSION", '"' + version + '"'
         buildConfigField "String", "BUILDVERSION", '"' + generateGitBuild() + '-' + generateDate() + '"'
         buildConfigField "String", "REMOTE", '"' + generateGitRemote() + '"'
@@ -172,7 +172,7 @@ android {
                         // on below line we are replacing our previous name with our app name.
                         newName = newName.replace("app-", "$project.ext.appName-")
                         // on below line we are replacing -release with our formatted date and ID.
-                        newName = newName.replace("-release", "-release-v1.0.1_" + formattedDate)
+                        newName = newName.replace("-release", "-release-v2.0_" + formattedDate)
                         // at last we are setting our apk name to it.
                         output.outputFileName  = newName
                         //MT : here you have to change the path by your way : windows (c:\.....) macos (just replace the xxx by you username and the folder name UAM)

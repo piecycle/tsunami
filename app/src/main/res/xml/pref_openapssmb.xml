@@ -186,6 +186,15 @@
             android:summary="@string/enable_w_zero_summary"
             android:title="@string/enable_w_zero_title" />
 <!-- MP w-zero end -->
+        <!-- MP acticontrol start -->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="@string/key_enable_datasmoothing"
+            android:key="@string/key_enable_acticontrol"
+            android:summary="@string/enable_acticontrol_summary"
+            android:title="@string/enable_acticontrol_title" />
+        <!-- MP acticontrol end -->
+
         <!--        <SwitchPreference-->
         <!--            android:defaultValue="false"-->
         <!--            android:dependency="@string/key_use_smb"-->
@@ -332,54 +341,6 @@
             validate:minNumber="1"
             validate:testType="numericRange" />
 
-        <!-- TODO REMOVE BELOW-->
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="160"
-            android:dialogMessage="@string/UAM_eventualBG_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_UAM_eventualBG"
-            android:title="@string/UAM_eventualBG_title"
-            validate:floatmaxNumber="200"
-            validate:floatminNumber="130"
-            validate:testType="floatNumericRange" />
-
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="1.5"
-            android:dialogMessage="@string/W2_modifier_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_W2_modifier"
-            android:title="@string/W2_modifier_title"
-            validate:floatmaxNumber="3"
-            validate:floatminNumber="1"
-            validate:testType="floatNumericRange" />
-
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="10"
-            android:dialogMessage="@string/w2_iob_threshold_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_w2_iob_threshold"
-            android:title="@string/w2_iob_threshold_title"
-            validate:floatmaxNumber="100"
-            validate:floatminNumber="0"
-            validate:testType="floatNumericRange" />
-
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="2"
-            android:dialogMessage="@string/UAM_PBolus1_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_UAM_PBolus1"
-            android:title="@string/UAM_PBolus1_title"
-            validate:floatmaxNumber="5"
-            validate:floatminNumber="0"
-            validate:testType="floatNumericRange" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_deceleration_scaling"
-            android:summary="@string/deceleration_scaling_summary"
-            android:title="@string/deceleration_scaling_title" />
-
-        <!-- TODO REMOVE ABOVE-->
         <androidx.preference.PreferenceScreen
             android:key="absorption_smb_advanced"
             android:title="@string/advancedsettings_title">

@@ -242,8 +242,9 @@ public class IobCobCalculatorPlugin extends PluginBase implements IobCobCalculat
 
     // roundup to whole minute
     public static long roundUpTime(long time) {
-        if (time % 60000 == 0)
+        if (time % 60000 == 0) {
             return time;
+        }
         long rounded = (time / 60000 + 1) * 60000;
         return rounded;
     }
@@ -505,7 +506,7 @@ public class IobCobCalculatorPlugin extends PluginBase implements IobCobCalculat
         }
         IobTotal bolusIob = treatmentsPlugin.getCalculationToTimeTreatments(time).round();
         IobTotal basalIob = treatmentsPlugin.getCalculationToTimeTempBasals(time, true, now).round();
-        // OpenAPSSMB only
+        // OpenAPSSMB onl y
         // Add expected zero temp basal for next 240 mins
         IobTotal basalIobWithZeroTemp = basalIob.copy();
         TemporaryBasal t = new TemporaryBasal(injector)
@@ -516,7 +517,6 @@ public class IobCobCalculatorPlugin extends PluginBase implements IobCobCalculat
             IobTotal calc = t.iobCalc(time, profile);
             basalIobWithZeroTemp.plus(calc);
         }
-
         basalIob.iobWithZeroTemp = IobTotal.combine(bolusIob, basalIobWithZeroTemp).round();
 
         IobTotal iobTotal = IobTotal.combine(bolusIob, basalIob).round();
@@ -525,6 +525,57 @@ public class IobCobCalculatorPlugin extends PluginBase implements IobCobCalculat
         }
         return iobTotal;
     }
+    //MP activity calculation start
+
+    public IobTotal calculateInsulinActivityAtTimeSynchronized(long time) {
+        synchronized (dataLock) {
+            return calculateInsulinActivityAtTime(time);
+        }
+    }
+    /*public IobTotal calculateFromTreatmentsAndTempsFuture(long time, Profile profile) {
+        long now = System.currentTimeMillis(); //MP time in future
+        long predtime = roundUpTime(bucketed_data.get(0).getTimestamp() + time);
+
+        IobTotal bolusIob = treatmentsPlugin.getCalculationToTimeTreatments(predtime).round();
+        IobTotal basalIob = treatmentsPlugin.getCalculationToTimeTempBasals(bucketed_data.get(0).getTimestamp(), true, now).round();
+        // OpenAPSSMB only
+        // Add expected zero temp basal for next 240 mins
+        IobTotal basalIobWithZeroTemp = basalIob.copy();
+        TemporaryBasal t = new TemporaryBasal(injector)
+                .date(now + 60 * 1000L) //todo MP double check if this makes sense also with future now
+                .duration(240)
+                .absolute(0);
+            if (t.date < predtime) {
+            IobTotal calc = t.iobCalc(predtime, profile);
+            basalIobWithZeroTemp.plus(calc);
+        }
+
+        basalIob.iobWithZeroTemp = IobTotal.combine(bolusIob, basalIobWithZeroTemp).round();
+
+        IobTotal iobTotal = IobTotal.combine(bolusIob, basalIob).round();
+
+        return iobTotal;
+    }*/
+//MP Future activity calculation start
+    public IobTotal calculateInsulinActivityAtTime(long time/*, Profile profile*/) {
+        //MP Requires time from now in minutes to calculate activity prediction for
+        long predtime = roundUpTime(DateUtil.now() + time * 60 * 1000);
+        IobTotal bolusIob = treatmentsPlugin.getCalculationToTimeTreatments(predtime);
+        IobTotal basalIob = treatmentsPlugin.getCalculationToTimeTempBasals(predtime, true, predtime);
+        //IobTotal basalIobWithZeroTemp = basalIob.copy();
+        //TemporaryBasal t = new TemporaryBasal(injector)
+        //        .date(DateUtil.now() + 60 * 1000)
+        //        .duration(240)
+        //        .absolute(0);
+        /*if (t.date < predtime) {
+            IobTotal calc = t.iobCalc(time, profile);
+            basalIobWithZeroTemp.plus(calc);
+        }*/
+        //basalIob.iobWithZeroTemp = IobTotal.combine(bolusIob, basalIobWithZeroTemp).round();
+        IobTotal iobTotal = IobTotal.combine(bolusIob, basalIob).round();
+        return iobTotal;
+    }
+//MP Future activity calculation end
 
     public IobTotal calculateAbsInsulinFromTreatmentsAndTempsSynchronized(long time, Profile profile) {
         synchronized (dataLock) {
