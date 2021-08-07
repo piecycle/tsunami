@@ -20,11 +20,11 @@ import info.nightscout.androidaps.utils.Round;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 // MP: Above: Imports commons.math3 library classes for glucose curve analysis
-//MP activity calculation start
+//MP Tsunami Activity Engine start
 import info.nightscout.androidaps.interfaces.ProfileFunction;
 import info.nightscout.androidaps.utils.SafeParse;
 import info.nightscout.androidaps.utils.sharedPreferences.SP;
-//MP activity calculation end
+//MP Tsunami Activity Engine end
 /**
  * Created by mike on 04.01.2017.
  */
@@ -33,9 +33,9 @@ public class GlucoseStatus {
     @Inject public AAPSLogger aapsLogger;
     @Inject public IobCobCalculatorPlugin iobCobCalculatorPlugin;
     @Inject SP sp;
-    //MP Activity calculation start
+    //MP Tsunami Activity Engine start
     @Inject ProfileFunction profileFunction;
-    //MP Activity calculation end
+    //MP Tsunami Activity Engine end
 
     private final HasAndroidInjector injector;
 
@@ -108,7 +108,7 @@ public class GlucoseStatus {
     public int validdata = 0;
     public int sizerecords = 0;
     // MP glucose curve analysis END
-    //MP Activity calculation start
+    //MP Tsunami Activity Engine start
     public double futureactivity = 0d;
     public double sensorlagactivity = 0d;
     public double historicactivity = 0d;
@@ -117,7 +117,7 @@ public class GlucoseStatus {
     public long activity_pred_time = 40L; //MP Time in minutes from now to calculate insulin activity for
     public long sensorlag = -10L; //MP Time in minutes from now which is estimated to be the time point at which the displayed sensor delta actually occurred (i.e. sensor lag time, must be at least -5 min, max -20 min)
     public long activity_historic = -20L; //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
-    //MP Activity calculation end
+    //MP Tsunami Activity Engine end
     public String log() {
         return "Glucose: " + DecimalFormatter.to0Decimal(glucose) + " mg/dl " +
                 "Noise: " + DecimalFormatter.to0Decimal(noise) + " " +
@@ -774,7 +774,7 @@ OLD CODE*/
 //### GLUCOSE CURVE ANALYSIS END ### MP
 //################################## MP
 
-            //MP Activity calculation start
+            //MP Tsunami Activity Engine start
             //long activity_pred_time = /*DateUtil.now() + */5*60*1000;
             /*Profile profile = profileFunction.getProfile(DateUtil.now() + activity_pred_time);
             IobTotal iob = iobCobCalculatorPlugin.calculateFromTreatmentsAndTempsFutureSynchronized(activity_pred_time, profile);
@@ -812,7 +812,7 @@ OLD CODE*/
             //status.futureactivity = iob.activity;
             //status.sensorlagactivity = iob_sensorlag.activity;
             status.activity_pred_time = activity_pred_time;
-            //MP Activity calculation end
+            //MP Tsunami Activity Engine end
             aapsLogger.debug(LTag.GLUCOSE, status.log());
             return status.round();
 

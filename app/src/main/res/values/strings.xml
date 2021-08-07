@@ -851,6 +851,7 @@
     <string name="key_openapsama_boost_end" translatable="false">UAM Boost end time</string>
     <string name="openapsama_boost_end_summary">Default value: 22\nThis is the end time for the period in which boost is active.</string>
     <string name="openapsama_boost_end_title">UAM Boost end time</string>-->
+    <!--
     <string name="key_scale_min" translatable="false">scale_min</string>
     <string name="scale_min_title">scale_min [%]</string>
     <string name="scale_min_summary">Percentage of profile ISF to use as base ISF during curve acceleration and linearity. Default of 100% means no offset is used (profile ISF = base ISF). scale_min describes the base aggressiveness.</string>
@@ -860,26 +861,26 @@
     <string name="key_scale_50" translatable="false">scale_50</string>
     <string name="scale_50_title">scale_50</string>
     <string name="scale_50_summary">Delta at which 50% of minimal ISF (defined by scale_max) is reached. scale_50 describes the local or initial aggressiveness.</string>
+    -->
     <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
     <string name="enable_datasmoothing">Enable data smoothing</string>
-    <string name="enable_datasmoothing_summary">Smooth incoming sensor data (useful for noisy sensors and aggressive w-zero settings)</string>
+    <string name="enable_datasmoothing_summary">Smooth incoming sensor data.</string>
+    <!--
     <string name="key_enable_w_zero" translatable="false">enable_w_zero</string>
     <string name="enable_w_zero_title">Enable W-zero</string>
     <string name="enable_w_zero_summary">Automatically detect and handle meals. Does not trigger or replace preboluses!</string>
-    <string name="key_enable_acticontrol" translatable="false">enable_acticontrol</string>
-    <string name="enable_acticontrol_title">Enable Acticontrol</string>
-    <string name="enable_acticontrol_summary">Let UAM tsunami calculate insulin requirements to end meal-related rises early.</string>
+    -->
+    <string name="key_enable_tae" translatable="false">enable_tae</string>
+    <string name="enable_tae_title">Tsunami Activity Engine</string>
+    <string name="enable_tae_summary">Automatically detect and handle unannounced meals. Read the documentation before use!</string>
     <!-- MP: UAMboluscap start -->
     <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
     <string name="UAM_UAM_boluscap_title">UAM bolus cap [U]</string>
     <string name="UAM_boluscap_summary">max SMB size deliverable by w-zero.</string>
     <!-- MP: UAMboluscap end -->
-    <string name="key_UAM_InsulinReq" translatable="false">UAM_InsulinReq</string>
-    <string name="UAM_InsulinReq_title">insulinReq delivery percentage [%]</string>
-    <string name="UAM_InsulinReq_summary">Reduces the calculated required SMB size to the specified percentage. Example: If calculated insulin required is 1 U and fraction size is 50%, 0.5 U will be delivered.</string>
-    <!--    <string name="key_UAM_PBolus2" translatable="false">UAM_PBolus2</string>-->
-    <!--    <string name="UAM_PBolus2_title">UAM PreBolus Long meal</string>-->
-    <!--    <string name="UAM_PBolus2_summary">This bolus will run when TT duration is greater than 120 minutes for a TT lesser than 90 value </string>-->
+    <string name="key_insulinreqPCT" translatable="false">insulinreqPCT</string>
+    <string name="insulinreqPCT_title">Insulin delivery percentage [%]</string>
+    <string name="insulinreqPCT_summary">Reduces the calculated insulin required to the specified percentage for delivery. Example: If calculated insulin required is 1 U and fraction size is 50%, at most 0.5 U will be delivered if no other constraints (e.g. bolus caps) apply.</string>
     <string name="pump_stopped">Pump stopped</string>
     <string name="pump_started">Pump started</string>
     <string name="pump_paused">Pump paused</string>
@@ -1450,17 +1451,15 @@
     <string name="timetoeat">Time to eat</string>
     <string name="fabric_upload_disabled">Crash logs upload disabled!</string>
     <string name="graph_menu_divider_header">Graph</string>
-    <string name="eatingsoon_small">Small meal</string>
-    <string name="eatingsoon_medium">Medium meal PBolus1</string>
-    <string name="eatingsoon_large">Large meal PBolus2</string>
-    <string name="key_wzero_start" translatable="false">W-zero start time</string>
-    <string name="wzero_start_summary">Hour of the day from when on W-zero will be enabled.</string>
-    <string name="wzero_start_title">W-zero start time [h]</string>
-    <string name="key_wzero_end" translatable="false">W-zero end time</string>
-    <string name="wzero_end_summary">Hour of the day until (and including) which W-zero is enabled.</string>
-    <string name="wzero_end_title">W-zero end time [h]</string>
+    <string name="key_tae_start" translatable="false">TAE start time</string>
+    <string name="tae_start_summary">Hour of the day from when on W-zero will be enabled.</string>
+    <string name="tae_start_title">TAE start time (incl.) [h]</string>
+    <string name="key_tae_end" translatable="false">TAE end time</string>
+    <string name="tae_end_summary">Hour of the day until (and including) which TAE is enabled.</string>
+    <string name="tae_end_title">TAE end time (incl.) [h]</string>
+    <!--
     <string name="key_adjtarget" translatable="false">adjtarget</string>
     <string name="adjtarget_summary">Factor for dynamic target adjustment by which target bg will be multiplied (in case of predicted low) or divided (in case of predicted high).</string>
     <string name="adjtarget_title">Dynamic target adjustment factor</string>
-
+    -->
 </resources>

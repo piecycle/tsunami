@@ -297,7 +297,6 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("current_basal", basalrate);
         mProfile.put("temptargetSet", tempTargetSet);
         mProfile.put("autosens_max", SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autosens_max, "1.2")));
-//        mProfile.put("UAM_PBolus2",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2,"1")));
 //        mProfile.put("boost_bolus",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_bolus, "2.0")));
 //        mProfile.put("high_divisor",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_high_divisor, "2.0")));
 //        mProfile.put("boost_start",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_boost_start, "7.0")));
@@ -313,30 +312,25 @@ public class DetermineBasalAdapterSMBJS {
         mProfile.put("autoisf_max",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autoisf_max, "1.2")));
         mProfile.put("autoisf_hourlychange",  SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autoisf_hourlychange, "0.2")));
         // autoISF === END
-        mProfile.put("UAM_InsulinReq",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_InsulinReq,"65")));
-        mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
-        mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
-        mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
+        //mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
+        //mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
+        //mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
         mProfile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false));
         boolean datasmoothingenabled = sp.getBoolean(R.string.key_enable_datasmoothing, false); //MP: Make w-zero dependent on datasmoothing
-        mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
-        mProfile.put("enable_acticontrol", datasmoothingenabled && sp.getBoolean(R.string.key_enable_acticontrol, false));
-        mProfile.put("UAM_boluscap",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
+        //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
+        mProfile.put("enable_tae", datasmoothingenabled && sp.getBoolean(R.string.key_enable_tae, false));
+        //boolean tae_enabled = sp.getBoolean(R.string.key_enable_tae, false); //MP: Make variables depend on TAE
+        mProfile.put("UAM_boluscap", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap,"1")));
+        mProfile.put("insulinreqPCT",SafeParse.stringToDouble(sp.getString(R.string.key_insulinreqPCT,"65")));
+        mProfile.put("tae_start",  SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0")));
+        mProfile.put("tae_end", SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0")));
         mProfile.put("percentage", profile.getPercentage());
-        mProfile.put("wzero_start",  SafeParse.stringToDouble(sp.getString(R.string.key_wzero_start, "11.0")));
-        mProfile.put("wzero_end",  SafeParse.stringToDouble(sp.getString(R.string.key_wzero_end, "23.0")));
-        mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
+        mProfile.put("tae_start",  SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0")));
+        mProfile.put("tae_end",  SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0")));
+        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
         mProfile.put("dia", profile.getDia());
         mProfile.put("peaktime",SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak,"45")));
         //MP UAM tsunami profile variables END
-//TODO: remove below
-        mProfile.put("UAM_eventualBG",SafeParse.stringToDouble(sp.getString(R.string.key_UAM_eventualBG,"160")));
-        mProfile.put("w2_iob_threshold",SafeParse.stringToDouble(sp.getString(R.string.key_w2_iob_threshold,"10")));
-        mProfile.put("deceleration_scaling", sp.getBoolean(R.string.key_deceleration_scaling, false));
-        mProfile.put("W2_modifier",SafeParse.stringToDouble(sp.getString(R.string.key_W2_modifier,"1.5")));
-        //MT : Prebolus UAM
-        mProfile.put("UAM_PBolus1", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1,"2")));
-// TODO: remove above
         long now = System.currentTimeMillis();
         TemporaryBasal tb = treatmentsPlugin.getTempBasalFromHistory(now);
 
