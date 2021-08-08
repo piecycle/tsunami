@@ -13,6 +13,7 @@ import info.nightscout.androidaps.interfaces.PluginBase
 import info.nightscout.androidaps.plugins.aps.loop.LoopPlugin
 import info.nightscout.androidaps.plugins.aps.openAPSAMA.OpenAPSAMAPlugin
 import info.nightscout.androidaps.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
+import info.nightscout.androidaps.plugins.aps.tsunami.TsunamiPlugin
 import info.nightscout.androidaps.plugins.configBuilder.ConfigBuilderPlugin
 import info.nightscout.androidaps.plugins.constraints.dstHelper.DstHelperPlugin
 import info.nightscout.androidaps.plugins.constraints.objectives.ObjectivesPlugin
@@ -194,6 +195,12 @@ abstract class PluginsModule {
     @IntoMap
     @IntKey(220)
     abstract fun bindOpenAPSSMBPlugin(plugin: OpenAPSSMBPlugin): PluginBase
+
+    @Binds
+    @APS
+    @IntoMap
+    @IntKey(235)
+    abstract fun bindFullUAMPlugin(plugin: TsunamiPlugin): PluginBase
 
     @Binds
     @AllConfigs

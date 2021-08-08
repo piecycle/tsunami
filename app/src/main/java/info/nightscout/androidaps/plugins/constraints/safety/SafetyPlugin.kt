@@ -8,6 +8,7 @@ import info.nightscout.androidaps.interfaces.*
 import info.nightscout.androidaps.logging.AAPSLogger
 import info.nightscout.androidaps.plugins.aps.openAPSAMA.OpenAPSAMAPlugin
 import info.nightscout.androidaps.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
+import info.nightscout.androidaps.plugins.aps.tsunami.TsunamiPlugin
 import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
 import info.nightscout.androidaps.plugins.general.overview.events.EventNewNotification
@@ -35,6 +36,7 @@ class SafetyPlugin @Inject constructor(
     private val openAPSAMAPlugin: OpenAPSAMAPlugin,
     private val openAPSSMBPlugin: OpenAPSSMBPlugin,
     private val sensitivityOref1Plugin: SensitivityOref1Plugin,
+    private val tsunamiPlugin: TsunamiPlugin,
     private val activePlugin: ActivePlugin,
     private val hardLimits: HardLimits,
     private val buildHelper: BuildHelper,
@@ -186,10 +188,15 @@ class SafetyPlugin @Inject constructor(
 
     override fun applyMaxIOBConstraints(maxIob: Constraint<Double>): Constraint<Double> {
         val apsMode = sp.getString(R.string.key_aps_mode, "open")
-        val maxIobPref: Double = if (openAPSSMBPlugin.isEnabled(PluginType.APS)) sp.getDouble(R.string.key_openapssmb_max_iob, 3.0) else sp.getDouble(R.string.key_openapsma_max_iob, 1.5)
+        val maxIobPref: Double = when {
+            tsunamiPlugin.isEnabled(PluginType.APS)     -> sp.getDouble( R.string.key_openapssmb_max_iob,3.0)
+            openAPSSMBPlugin.isEnabled(PluginType.APS)  -> sp.getDouble( R.string.key_openapssmb_max_iob,3.0)
+            else                                        -> sp.getDouble( R.string.key_openapsma_max_iob,1.5)
+        }
         maxIob.setIfSmaller(aapsLogger, maxIobPref, String.format(resourceHelper.gs(R.string.limitingiob), maxIobPref, resourceHelper.gs(R.string.maxvalueinpreferences)), this)
         if (openAPSAMAPlugin.isEnabled(PluginType.APS)) maxIob.setIfSmaller(aapsLogger, hardLimits.maxIobAMA(), String.format(resourceHelper.gs(R.string.limitingiob), hardLimits.maxIobAMA(), resourceHelper.gs(R.string.hardlimit)), this)
         if (openAPSSMBPlugin.isEnabled(PluginType.APS)) maxIob.setIfSmaller(aapsLogger, hardLimits.maxIobSMB(), String.format(resourceHelper.gs(R.string.limitingiob), hardLimits.maxIobSMB(), resourceHelper.gs(R.string.hardlimit)), this)
+        if (tsunamiPlugin.isEnabled(PluginType.APS)) maxIob.setIfSmaller(aapsLogger, hardLimits.maxIobTAE(), String.format(resourceHelper.gs(R.string.limitingiob), hardLimits.maxIobSMB(), resourceHelper.gs(R.string.hardlimit)), this)
         if (apsMode == "lgs") maxIob.setIfSmaller(aapsLogger, HardLimits.MAX_IOB_LGS, String.format(resourceHelper.gs(R.string.limitingiob), HardLimits.MAX_IOB_LGS, resourceHelper.gs(R.string.lowglucosesuspend)), this)
         return maxIob
     }
