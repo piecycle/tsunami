@@ -764,12 +764,13 @@ OLD CODE*/
             status.bR2 = bR2;
             status.broad_extremum = broad_minmax; //MP extremum in broadfit
             //MP test variables below
+            /*
             status.scoredivisor = scoredivisor;
             status.smoothsize = ssmooth_bg.size();
             status.fitarraylength = fitarraylength;
             status.windowsize = windowsize;
             status.validdata = validdata;
-            status.sizerecords = sizeRecords;
+            status.sizerecords = sizeRecords;*/
 //################################## MP
 //### GLUCOSE CURVE ANALYSIS END ### MP
 //################################## MP

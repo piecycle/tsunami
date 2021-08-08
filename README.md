@@ -1,35 +1,37 @@
-UAM Tsunami by Michael Pinner
+**UAM Tsunami by Michael Pinner**
 
 This README is valid for AAPS_2.8.2_UAM_tsunami_v2.0
+
 _Tsunami v2.0 is a modified variant of AndroidAPS v2.8.2 with added capabilities to automatically handle unannounced meals (UAM). This algorithm is highly experimental – use it at your own risk! Do not use it on children!_
 
 ## Introduction
-Tsunami v2.0 is the third milestone in the history of this project, and it may come with some of the largest changes so far. Please read this README carefully so you understand how this algorithm works – for your own safety.
+Tsunami v2.0 is the third iteration of this project, and it comes with some of the largest changes so far. Please read this README carefully so you understand how this algorithm works – for your own safety.
 
 ### History of the project
 
 #### Tsunami v0.#
-The first versions (v0.#, including the spin-off project AIMI-Tsunami) were based on the Michaelis-Menten equation, which was used to downscale user-set ISF values during meals in dependence of delta values. This approach was necessary to allow the use of the oref1 algorithm for UAM purposes. Originally, oref1 was designed to work with announced carbohydrates only so that the standard version of AAPS is too careful when it is confronted with unannounced carbs. The result is unacceptably high glucose values for UAM.
-Tsunami v0 into separate meal waves, where the first wave at the beginning of a meal is usually associated with a steeper climb than the second and later waves. To account for this, the settings for wave 1 were generally more aggressive, but for reasons of safety had to be turned on by setting an eating-soon temp target (TT). Wave 2 mode was active when no TT was set. Although this approach worked reasonably well, the Michaelis-Menten approach required the user to set a number of scaling and safety parameters to tune aggressiveness. This was confusing to some and often resulted in people copying other people’s settings without truly understanding what each parameter stands for. A second problem was that users had to decide on the optimal TT duration, as too long or too short duration could result in undesired results. Because of this, the earliest versions were only a minor improvement over carb announcement. Development efforts began to focus on TT free UAM. In fact, even though second phase meal handling was weaker, it turned out to still handle UAM reasonably well. Perpetual wave 2 mode was explored further by the AIMI-Tsunami variant.
+The first versions (v0.#, including the spin-off project AIMI-Tsunami) used the Michaelis-Menten equation to scale down user-set ISF values during meals in dependence of delta values. This approach was necessary to use the oref1 algorithm also for UAM. Originally, oref1 was designed to work with announced carbohydrates and thus the standard version of AAPS is too weak when it is confronted with unannounced carbs, resulting in unacceptably high glucose values.
+
+Tsunami v0 separated meals into individual waves: A first spike at the beginning of a meal, and weaker second wave a bit after a meal. Because of this the settings for wave 1 were generally more aggressive, but for reasons of safety had to be turned on manually by setting an eating-soon temp target (TT). In contrast, wave 2 mode did not require manual user input as it was active when no TT was set. Although this approach worked reasonably well, the Michaelis-Menten approach requires the user to set a number of scaling and safety parameters to tune aggressiveness. This was confusing to some and regularly resulted in people copying other people’s settings without truly understanding what each parameter actually does. A second problem was that users had to choose the optimal TT duration for each meal, as too long or too short durations could end with in undesired results. Because of this the earliest versions were only a minor improvement over classic carb announcement. Development efforts began to focus on TT free forms of UAM. In fact, even though second phase meal handling was weaker, it turned out to still handle UAM reasonably well. Perpetual wave 2 mode was explored further by the AIMI-Tsunami variant.
 
 #### Tsunami v1.0 / 1.0.1
-Mainline Tsunami followed a different approach, however, as new mechanisms for glucose curve analysis were introduced. Instead of differentiating between first and second meal waves, three glucose states were defined: acceleration phase, linear phase, deceleration phase. It no longer mattered if a rise was at the beginning of a meal or later. All that mattered was the current development of the glucose curve. This approach worked well and allowed safe meal handling without the need of TTs, but some of the problems already known from v0.# were also present in tsunami v1.0.
+Mainline Tsunami followed a different approach than AIMI-Tsunami, however, as new mechanisms for glucose curve analysis were introduced. Instead of differentiating between individual meal waves, each wave itself was now split up into three phases: acceleration phase, linear phase, deceleration phase. It no longer mattered if a rise occurred at the beginning of a meal or later. All that mattered was the current state of the glucose curve. This approach worked well and allowed safe meal handling without the need of manual user input, but some of the problems already known from v0.# were inherited by tsunami v1.0. Ultimately, these issues triggered the development of version 2.0.
 
 ### The problems of older Tsunami versions & ISF scaling in general
 
-#### Scaling parameters & the scaling approach
-Michaelis-Menten based scaling requires setting of scaling parameters (scale_min/max/50) to tune the aggressiveness of the algorithm. These settings had to be guessed, and many people resorted to adopting the settings of other users without understanding what they mean. As a consequence, it wasn’t always clear to every user which setting they need to adjust to improve results.
+#### 1 - Scaling parameters & the scaling approach
+The tunability of Michaelis-Menten based ISF scaling turned out to be an advantage and disadvantage at the same time. While aggressiveness could be fine-tuned using a set of three scaling parameters, these settings had to be guessed. Some people resorted to adopting the settings of other users without understanding the meaning of the individual parameters. As a consequence, it was not always clear to every user which setting they needed to adjust for improved result. This situation can be potentially dangerous and calls for a simpler, more user friendly UAM code.
 
-#### The illusion of glucose targets
+#### 2 - The illusion of glucose targets
 Set Glucose targets and TTs never really mattered. Oref1 will correct for high glucose values by dividing the difference of current bg and target bg by ISF values. Meals, however, require larger insulin quantities than pure bg corrections. For this reason, ISF scaling is needed to trick oref1 into believing that the already delivered insulin is not enough to bring the current bg down to target. A consequence of this is that insulin requirements calculated using the correction equation are little more than guesses or random values. This renders target bg targets to mild but inconvenient means of further tuning aggressiveness of the code. Importantly though, one has to give up the idea that ISF scaling approaches will bring the glucose curve down to a specific target value.
 
-#### The problem of glucose prediction models & oref1
+#### 3 - The problem of glucose prediction models & oref1
 Oref1 relies heavily on its glucose predictions to judge whether or not it is safe to deliver an SMB. In UAM mode, these predictions are inevitably very crude if not plain false. This problem is made more complex by ISF scaling approaches, which fake lower than normal ISF values and therefore also affect the prediction models. On the other hand, this is part of the reason why ISF scaling approaches work in the first place: It changes the prediction curves such that oref1 is willing to send SMBs in situations where it otherwise would predict low glucose events. ISF scaling was implemented to confer UAM capabilities to oref1, but oref1 was designed to work with carb announcements. This means that ISF scaling forces oref1 to do a job it wasn’t designed for.
 
-#### Same delta values are not always the same
+#### 4 - Same delta values are not always the same
 As will be discussed later, the same reported sensor value (e.g. 5) do not always mean the same thing. This was ignored in previous Tsunami versions, but is at the core of Tsunami v2.0.
 
-#### Same IOB values do not always have the same implications
+#### 5 - Same IOB values do not always have the same implications
 IOB is all the majority of loopers talk about, but there’s a lot more to consider. IOB values are suboptimal for UAM purposes, but they were the main insulin variable used in older Tsunami versions. It does make a difference whether IOB is 1 because you just injected 1 U, or if it is 1 because you have injected 3 U 1.5 h ago. Tsunami v2.0 takes this into account.
 
 ## Tsunami v2.0

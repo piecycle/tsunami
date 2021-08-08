@@ -72,8 +72,8 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/tae_start_title"
-            validate:floatmaxNumber="18"
-            validate:floatminNumber="1"
+            validate:floatmaxNumber="23"
+            validate:floatminNumber="0"
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="23"
@@ -86,8 +86,8 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/tae_end_title"
-            validate:floatmaxNumber="24"
-            validate:floatminNumber="2"
+            validate:floatmaxNumber="23"
+            validate:floatminNumber="0"
             validate:testType="floatNumericRange" />
         <!--
                 <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
