@@ -103,3 +103,8 @@ If you think you have found a bug, please let me know by describing the situatio
 - Removed w-zero target adjustment (full restoration of AAPS master autosens target adjustment)
 - Added Tsunami Activity Engine (TAE)
 - Code clean up
+
+## Final Note
+Remember: Tsunami v2.0 uses your peak-time setting to calculate insulin requirements. For this it is a requirement that you are using the free-peak oref insulin preset. Hit the cog to edit the peak time.
+
+**PLEASE CHANGE YOUR INSULIN PRESET TO FREE-PEAK OREF!**
