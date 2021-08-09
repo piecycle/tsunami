@@ -1619,6 +1619,9 @@ if (!activity_controller) { //MP Bypass oref1 block below if TAE is active
              //MP: UAM_boluscap limiter: Use UAM minutes outside TT (default lines: above)
                  if (profile.enable_tae && activity_controller) {
                     maxBolus = boluscap;
+                 } else if (profile.maxUAMSMBBasalMinutes) {
+                    console.error("profile.maxUAMSMBBasalMinutes:",profile.maxUAMSMBBasalMinutes,"profile.current_basal:",profile.current_basal);
+                    maxBolus = round( profile.current_basal * profile.maxUAMSMBBasalMinutes / 60 ,1);
                  } else {
                     console.error("profile.maxUAMSMBBasalMinutes undefined: defaulting to 30m");
                     maxBolus = round( profile.current_basal * 30 / 60 ,1);
