@@ -71,6 +71,18 @@
                 android:key="@string/key_bolus_password"
                 android:title="@string/bolus_password" />
 
+            <ListPreference
+                android:defaultValue="0"
+                android:entries="@array/protectiontype"
+                android:entryValues="@array/protectiontypeValues"
+                android:key="@string/key_prebolus_protection"
+                android:title="@string/prebolus_protection" />
+
+            <Preference
+                android:inputType="textPassword"
+                android:key="@string/key_prebolus_password"
+                android:title="@string/prebolus_password" />
+
         </PreferenceCategory>
 
         <info.nightscout.androidaps.skins.SkinListPreference

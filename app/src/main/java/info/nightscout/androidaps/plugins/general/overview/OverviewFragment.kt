@@ -27,7 +27,11 @@ import dagger.android.support.DaggerFragment
 import info.nightscout.androidaps.Config
 import info.nightscout.androidaps.Constants
 import info.nightscout.androidaps.R
+import info.nightscout.androidaps.activities.ErrorHelperActivity
+import info.nightscout.androidaps.data.DetailedBolusInfo
 import info.nightscout.androidaps.data.Profile
+import info.nightscout.androidaps.db.CareportalEvent
+import info.nightscout.androidaps.db.Source
 import info.nightscout.androidaps.dialogs.*
 import info.nightscout.androidaps.events.*
 import info.nightscout.androidaps.interfaces.*
@@ -38,7 +42,6 @@ import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.plugins.configBuilder.ConfigBuilderPlugin
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
 import info.nightscout.androidaps.plugins.general.nsclient.data.NSDeviceStatus
-import info.nightscout.androidaps.plugins.general.overview.activities.QuickWizardListActivity
 import info.nightscout.androidaps.plugins.general.overview.graphData.GraphData
 import info.nightscout.androidaps.plugins.general.overview.notifications.NotificationStore
 import info.nightscout.androidaps.plugins.general.wear.ActionStringHandler
@@ -50,6 +53,7 @@ import info.nightscout.androidaps.plugins.pump.common.defs.PumpType
 import info.nightscout.androidaps.plugins.source.DexcomPlugin
 import info.nightscout.androidaps.plugins.source.XdripPlugin
 import info.nightscout.androidaps.plugins.treatments.TreatmentsPlugin
+import info.nightscout.androidaps.queue.Callback
 import info.nightscout.androidaps.queue.CommandQueue
 import info.nightscout.androidaps.skins.SkinProvider
 import info.nightscout.androidaps.utils.*
@@ -186,16 +190,27 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         overview_temptarget?.setOnLongClickListener(this)
         overview_accepttempbutton?.setOnClickListener(this)
         overview_treatmentbutton?.setOnClickListener(this)
-        overview_wizardbutton?.setOnClickListener(this)
-        overview_calibrationbutton?.setOnClickListener(this)
-        overview_cgmbutton?.setOnClickListener(this)
-        overview_insulinbutton?.setOnClickListener(this)
+
+        //ADO UAM PreBolus buttons start
+
+        //overview_wizardbutton?.setOnClickListener(this)
+        //overview_calibrationbutton?.setOnClickListener(this)
+        //overview_cgmbutton?.setOnClickListener(this)
+        overview_prebolus1button?.setOnClickListener(this)
+        overview_prebolus2button?.setOnClickListener(this)
+        overview_prebolus3button?.setOnClickListener(this)
+        overview_prebolus1button?.setOnLongClickListener(this)
+        overview_prebolus2button?.setOnLongClickListener(this)
+        overview_prebolus3button?.setOnLongClickListener(this)
         //MP button test below
-        overview_UAMbutton?.setOnClickListener(this)
+        //overview_UAMbutton?.setOnClickListener(this)
         //MP button test above
-        overview_carbsbutton?.setOnClickListener(this)
-        overview_quickwizardbutton?.setOnClickListener(this)
-        overview_quickwizardbutton?.setOnLongClickListener(this)
+        //overview_carbsbutton?.setOnClickListener(this)
+        //overview_quickwizardbutton?.setOnClickListener(this)
+        //overview_quickwizardbutton?.setOnLongClickListener(this)
+
+        //ADO UAM PreBolus buttons end
+
         overview_apsmode?.setOnClickListener(this)
         overview_apsmode?.setOnLongClickListener(this)
         overview_activeprofile?.setOnLongClickListener(this)
@@ -285,13 +300,21 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         activity?.let { activity ->
             when (v.id) {
                 R.id.overview_treatmentbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) TreatmentDialog().show(childFragmentManager, "Overview") })
-                R.id.overview_wizardbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) WizardDialog().show(childFragmentManager, "Overview") })
-                R.id.overview_insulinbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") })
+
+                //ADO UAM PreBolus buttons start
+
+                //R.id.overview_wizardbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) WizardDialog().show(childFragmentManager, "Overview") })
+                R.id.overview_prebolus1button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREBOLUS, UIRunnable { if(isAdded) prebolus(SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1, "0.5"))) })
+                R.id.overview_prebolus2button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREBOLUS, UIRunnable { if(isAdded) prebolus(SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2, "1.0"))) })
+                R.id.overview_prebolus3button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREBOLUS, UIRunnable { if(isAdded) prebolus(SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus3, "2.0"))) })
                 //MP button test below - causes crash
-                R.id.overview_UAMbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) UAMDialog().show(childFragmentManager, "Overview") })
+                //R.id.overview_UAMbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) UAMDialog().show(childFragmentManager, "Overview") })
                 //MP button test above
-                R.id.overview_quickwizardbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) onClickQuickWizard() })
-                R.id.overview_carbsbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) CarbsDialog().show(childFragmentManager, "Overview") })
+                //R.id.overview_quickwizardbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) onClickQuickWizard() })
+                //R.id.overview_carbsbutton -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) CarbsDialog().show(childFragmentManager, "Overview") })
+
+                //ADO UAM PreBolus buttons end
+
                 R.id.overview_temptarget -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) TempTargetDialog().show(childFragmentManager, "Overview") })
 
                 R.id.overview_activeprofile -> {
@@ -360,6 +383,38 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         }
     }
 
+    //ADO UAM PreBolus buttons start
+    private fun prebolus(pb: Double) {
+        // Check protection exists, if not then do not pre-bolus but open the insulin dialog
+        if (sp.getInt(info.nightscout.androidaps.core.R.string.key_prebolus_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.NONE.ordinal) {
+            InsulinDialog().show(childFragmentManager, "Overview")
+        } else {
+            if (pb > 0) {
+                val detailedBolusInfo = DetailedBolusInfo()
+                detailedBolusInfo.eventType = CareportalEvent.CORRECTIONBOLUS
+                detailedBolusInfo.insulin = pb
+                detailedBolusInfo.context = context
+                detailedBolusInfo.source = Source.USER
+                detailedBolusInfo.notes = "notes"
+                detailedBolusInfo.date = DateUtil.now()
+
+                commandQueue.bolus(detailedBolusInfo, object : Callback() {
+                    override fun run() {
+                        if (!result.success) {
+                            val i = Intent(context, ErrorHelperActivity::class.java)
+                            i.putExtra("soundid", R.raw.boluserror)
+                            i.putExtra("status", result.comment)
+                            i.putExtra("title", resourceHelper.gs(R.string.treatmentdeliveryerror))
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            context?.startActivity(i)
+                        }
+                    }
+                })
+            }
+        }
+    }
+    //ADO UAM PreBolus buttons end
+
     private fun openCgmApp(packageName: String) {
         context?.let {
             val packageManager = it.packageManager
@@ -376,10 +431,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
     override fun onLongClick(v: View): Boolean {
         when (v.id) {
-            R.id.overview_quickwizardbutton -> {
+/*            R.id.overview_quickwizardbutton -> {
                 startActivity(Intent(v.context, QuickWizardListActivity::class.java))
                 return true
-            }
+            }*/
 
             R.id.overview_apsmode -> {
                 activity?.let { activity ->
@@ -394,6 +449,13 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             R.id.overview_temptarget -> v.performClick()
             R.id.overview_activeprofile -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { ProfileSwitchDialog().show(childFragmentManager, "Overview") }) }
 
+            //ADO UAM PreBolus buttons start
+
+            R.id.overview_prebolus1button -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") }) }
+            R.id.overview_prebolus2button -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") }) }
+            R.id.overview_prebolus3button -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") }) }
+
+            //ADO UAM PreBolus buttons end
         }
         return false
     }
@@ -405,7 +467,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val pump = activePlugin.activePump
         val quickWizardEntry = quickWizard.getActive()
         if (quickWizardEntry != null && actualBg != null && profile != null) {
-            overview_quickwizardbutton?.visibility = View.VISIBLE
+            //overview_quickwizardbutton?.visibility = View.VISIBLE
             val wizard = quickWizardEntry.doCalc(profile, profileName, actualBg, true)
             if (wizard.calculatedTotalInsulin > 0.0 && quickWizardEntry.carbs() > 0.0) {
                 val carbsAfterConstraints = constraintChecker.applyCarbsConstraints(Constraint(quickWizardEntry.carbs())).value()
@@ -442,13 +504,13 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
         // QuickWizard button
         val quickWizardEntry = quickWizard.getActive()
-        if (quickWizardEntry != null && lastBG != null && profile != null && pump.isInitialized && !pump.isSuspended) {
-            overview_quickwizardbutton?.visibility = View.VISIBLE
+/*        if (quickWizardEntry != null && lastBG != null && profile != null && pump.isInitialized && !pump.isSuspended) {
+            //overview_quickwizardbutton?.visibility = View.VISIBLE
             val wizard = quickWizardEntry.doCalc(profile, profileName, lastBG, false)
-            overview_quickwizardbutton?.text = quickWizardEntry.buttonText() + "\n" + resourceHelper.gs(R.string.format_carbs, quickWizardEntry.carbs()) +
+            //overview_quickwizardbutton?.text = quickWizardEntry.buttonText() + "\n" + resourceHelper.gs(R.string.format_carbs, quickWizardEntry.carbs()) +
                 " " + resourceHelper.gs(R.string.formatinsulinunits, wizard.calculatedTotalInsulin)
-            if (wizard.calculatedTotalInsulin <= 0) overview_quickwizardbutton?.visibility = View.GONE
-        } else overview_quickwizardbutton?.visibility = View.GONE
+            //if (wizard.calculatedTotalInsulin <= 0) overview_quickwizardbutton?.visibility = View.GONE
+        } else overview_quickwizardbutton?.visibility = View.GONE*/
 
         // **** Temp button ****
         val lastRun = loopPlugin.lastRun
@@ -467,13 +529,18 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         }
 
         // **** Various treatment buttons ****
-        overview_carbsbutton?.visibility = ((!activePlugin.activePump.pumpDescription.storesCarbInfo || pump.isInitialized && !pump.isSuspended) && profile != null && sp.getBoolean(R.string.key_show_carbs_button, true)).toVisibility()
+/*        overview_carbsbutton?.visibility = ((!activePlugin.activePump.pumpDescription.storesCarbInfo || pump.isInitialized && !pump.isSuspended) && profile != null && sp.getBoolean(R.string.key_show_carbs_button, true)).toVisibility()
         overview_treatmentbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_treatment_button, false)).toVisibility()
         overview_wizardbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_wizard_button, true)).toVisibility()
-        overview_insulinbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
         //MP button test below
         overview_UAMbutton?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_UAM_button, true)).toVisibility()
-        //MP button test above
+        //MP button test above*/
+
+        //ADO UAM PreBolus buttons start
+        overview_prebolus1button?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
+        overview_prebolus2button?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
+        overview_prebolus3button?.visibility = (pump.isInitialized && !pump.isSuspended && profile != null && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
+        //ADO UAM PreBolus buttons end
 
         // **** Calibration & CGM buttons ****
         val xDripIsBgSource = xdripPlugin.isEnabled(PluginType.BGSOURCE)
@@ -550,6 +617,12 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         overview_notifications?.let { notificationStore.updateNotifications(it) }
         overview_pumpstatuslayout?.visibility = View.GONE
         overview_looplayout?.visibility = View.VISIBLE
+
+        //ADO UAM PreBolus buttons start
+        overview_prebolus1button.setText("PreBolus (" + SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1, "0.5")) + ")")
+        overview_prebolus2button.setText("PreBolus (" + SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2, "1.0")) + ")")
+        overview_prebolus3button.setText("PreBolus (" + SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus3, "2.0")) + ")")
+        //ADO UAM PreBolus buttons end
 
         val profile = profileFunction.getProfile() ?: return
         val actualBG = iobCobCalculatorPlugin.actualBg()
