@@ -709,6 +709,9 @@
     <string name="enablesmbwithhightemptarget">Enable SMB with high temp targets</string>
     <string name="enablesmbwithhightemptarget_summary">Enable SMB when there is high temp target active (exercise, above 100 mg/dl or 5.5 mmol/l)</string>
     <string name="overview_insulin_label">Insulin</string>
+    <string name="overview_prebolus1_label">PB (0.5)</string>
+    <string name="overview_prebolus2_label">PB (1.0)</string>
+    <string name="overview_prebolus3_label">PB (2.0)</string>
     <!-- MP UAM button test below-->
     <string name="overview_UAM_label">UAM</string>
     <!-- MP UAM button test above-->
