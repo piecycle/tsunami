@@ -102,6 +102,9 @@ public class GlucoseStatus {
     public double mealscore_smooth = 0d;
     public double mealscore_raw = 0d;
     public double meal_threshold = 1.8d;
+    public double deltascore = 0d;
+    public double deltathreshold = 7d; //MP average delta above which deltascore will be 1.
+    public double weight = 0.15d; //MP Weighting used for weighted averages
 //MP test variables
     public double scoredivisor = 0d;
     public int smoothsize = 0;
@@ -184,6 +187,7 @@ public class GlucoseStatus {
         this.broad_extremum = Round.roundTo(this.broad_extremum, 0.1);
         this.mealscore_raw = Round.roundTo(this.mealscore_raw, 0.0001);
         this.mealscore_smooth = Round.roundTo(this.mealscore_smooth, 0.0001);
+        this.deltascore = Round.roundTo(this.deltascore, 0.01);
         // MP curve analysis end
         this.futureactivity = Round.roundTo(this.futureactivity, 0.0001);
         this.sensorlagactivity = Round.roundTo(this.sensorlagactivity, 0.0001);
@@ -503,6 +507,20 @@ OLD CODE*/
                 }
             }
 
+// MP Tsunami Activity Engine meal detection system
+
+            if (!insufficientfittingdata) {
+                deltascore = 0d;
+                scoredivisor = 0d;
+                for (int i = 0; i < Math.min(windowsize - 1, 6); i++) { //MP Dynamically adjust deltas to include
+                    deltascore += ssmooth_delta.get(i) * (1 - weight * i);
+                    scoredivisor += 1 - weight * i; //MP weighted mealscore
+                }
+                deltascore = (deltascore / scoredivisor) / deltathreshold; //MP: Check how deltascore compares to the threshold
+            } else {
+                deltascore = 0.5d; //MP If there's not enough data, set deltascore to 50%
+            }
+
 //MP report smoothing variables in glucose status
             status.bg_5minago = before.value; //MP If the database contains more than one reading, return the value from 5 min ago
             status.insufficientsmoothingdata = insufficientsmoothingdata;
@@ -510,6 +528,7 @@ OLD CODE*/
             status.o1_a = o1_a;
             status.o2_a = o2_a;
             status.o2_b = o2_b;
+            status.deltascore = deltascore;
             if (!insufficientsmoothingdata) {
                 status.o1_smoothedbg_5m = o1_smoothbg.get(1);
                 status.o1_smoothedbg_now = o1_smoothbg.get(0);
@@ -808,10 +827,7 @@ OLD CODE*/
                 IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
                 status.currentactivity += iob.activity;
             }
-            //IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(activity_pred_time);
-            //IobTotal iob_sensorlag = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(sensorlag);
-            //status.futureactivity = iob.activity;
-            //status.sensorlagactivity = iob_sensorlag.activity;
+
             status.activity_pred_time = activity_pred_time;
             //MP Tsunami Activity Engine end
             aapsLogger.debug(LTag.GLUCOSE, status.log());

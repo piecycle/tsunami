@@ -353,7 +353,8 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var tae_bg = glucose_status.bg_supersmooth_now; //MP BG used by TAE
     var tae_delta = Math.min(glucose_status.delta_supersmooth_now, glucose_status.delta); //MP Delta used by TAE will switch between sensor data and smoothed data, depending on which is lower - for added safety
     var insulinReqPCT = profile.insulinreqPCT/100; // Uset-set percentage to modify insulin required by
-    var mealscore = Math.min(1, Math.max(glucose_status.mealscore_smooth, 0)); //MP Modifies insulinReqPCT; Mealscore grows larger the largest the previous deltas were, until it reaches 1
+    //var mealscore = Math.min(1, Math.max(glucose_status.mealscore_smooth, 0)); //MP Modifies insulinReqPCT; Mealscore grows larger the largest the previous deltas were, until it reaches 1
+    var mealscore = Math.min(1, Math.max(glucose_status.deltascore, 0)); //MP Modifies insulinReqPCT; Mealscore grows larger the largest the previous deltas were, until it reaches 1
     var boluscap = profile.UAM_boluscap * profile.percentage/100; //MP: User-set may SMB size for TAE. Boluscap is grows and shrinks with profile percentage;
 
     //MP Give SMBs that are 70% of boluscap or more extra time to be absorbed before delivering another large SMB.
