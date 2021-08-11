@@ -272,7 +272,8 @@ public class OpenAPSSMBPlugin extends PluginBase implements APSInterface, Constr
                     smbAllowed.value(),
                     uam.value(),
                     advancedFiltering.value(),
-                    activePlugin.getActiveBgSource().getClass().getSimpleName().equals("DexcomPlugin")
+                    advancedFiltering.value() // true for dexcom plugin and xdrip g5 or g6 native
+                    //activePlugin.getActiveBgSource().getClass().getSimpleName().equals("DexcomPlugin")
             );
         } catch (JSONException e) {
             fabricPrivacy.logException(e);
