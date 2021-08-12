@@ -307,8 +307,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             "tae_end",
             SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0"))
         )
-        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
-        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
+        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
+        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
         this.profile.put("dia", profile.dia)
         this.profile.put("peaktime", TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak)) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
         )
@@ -334,16 +334,16 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 //**********************************************************************************************************************************************
         iobData = iobCobCalculator.convertToJSONArray(iobArray)
 //**********************************************************************************************************************************************
-        mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity);
-        mGlucoseStatus.put("sensorlagactivity", glucoseStatus.sensorlagactivity);
-        mGlucoseStatus.put("historicactivity", glucoseStatus.historicactivity);
-        mGlucoseStatus.put("currentactivity", glucoseStatus.currentactivity);
-        mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time);
+        mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity)
+        mGlucoseStatus.put("sensorlagactivity", glucoseStatus.sensorlagactivity)
+        mGlucoseStatus.put("historicactivity", glucoseStatus.historicactivity)
+        mGlucoseStatus.put("currentactivity", glucoseStatus.currentactivity)
+        mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time)
 //**********************************************************************************************************************************************
         mGlucoseStatus.put("glucose", glucoseStatus.glucose)
 //**********************************************************************************************************************************************
         // MP data smoothing START
-        mGlucoseStatus.put("glucose_5m", glucoseStatus.bg_5minago);
+        mGlucoseStatus.put("glucose_5m", glucoseStatus.bg_5minago)
         // MP data smoothing end
 //**********************************************************************************************************************************************
         mGlucoseStatus.put("noise", glucoseStatus.noise)
@@ -358,30 +358,31 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 //**********************************************************************************************************************************************
         // autoISF === START
         // mod 7: append 2 variables for 5% range
-        mGlucoseStatus.put("autoISF_duration", glucoseStatus.autoISF_duration);
-        mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average);
+        mGlucoseStatus.put("autoISF_duration", glucoseStatus.autoISF_duration)
+        mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average)
         // autoISF === END
         // MP data smoothing START
-        mGlucoseStatus.put("insufficientsmoothingdata", glucoseStatus.insufficientsmoothingdata);
-        mGlucoseStatus.put("insufficientfittingdata", glucoseStatus.insufficientfittingdata);
-        mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
-        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now);
+        mGlucoseStatus.put("insufficientsmoothingdata", glucoseStatus.insufficientsmoothingdata)
+        mGlucoseStatus.put("insufficientfittingdata", glucoseStatus.insufficientfittingdata)
+        mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now)
+        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now)
         // MP data smoothing END
         // MP curve analysis START
-        mGlucoseStatus.put("broadfit_a", glucoseStatus.broadfit_a);
-        mGlucoseStatus.put("broadfit_b", glucoseStatus.broadfit_b);
-        mGlucoseStatus.put("broadfit_c", glucoseStatus.broadfit_c);
-        mGlucoseStatus.put("broad_extremum", glucoseStatus.broad_extremum);
-        mGlucoseStatus.put("mealscore_raw", glucoseStatus.mealscore_raw);
-        mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth);
+        mGlucoseStatus.put("broadfit_a", glucoseStatus.broadfit_a)
+        mGlucoseStatus.put("broadfit_b", glucoseStatus.broadfit_b)
+        mGlucoseStatus.put("broadfit_c", glucoseStatus.broadfit_c)
+        mGlucoseStatus.put("broad_extremum", glucoseStatus.broad_extremum)
+        mGlucoseStatus.put("mealscore_raw", glucoseStatus.mealscore_raw)
+        mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth)
+        mGlucoseStatus.put("deltascore", glucoseStatus.deltascore)
         //MP test variables
         /*
-        mGlucoseStatus.put("scoredivisor", glucoseStatus.scoredivisor);
-        mGlucoseStatus.put("ssmooth_bg_size", glucoseStatus.smoothsize);
-        mGlucoseStatus.put("fitarraylength", glucoseStatus.fitarraylength);
-        mGlucoseStatus.put("windowsize", glucoseStatus.windowsize);
-        mGlucoseStatus.put("validdata", glucoseStatus.validdata);
-        mGlucoseStatus.put("sizerecords", glucoseStatus.sizerecords);
+        mGlucoseStatus.put("scoredivisor", glucoseStatus.scoredivisor)
+        mGlucoseStatus.put("ssmooth_bg_size", glucoseStatus.smoothsize)
+        mGlucoseStatus.put("fitarraylength", glucoseStatus.fitarraylength)
+        mGlucoseStatus.put("windowsize", glucoseStatus.windowsize)
+        mGlucoseStatus.put("validdata", glucoseStatus.validdata)
+        mGlucoseStatus.put("sizerecords", glucoseStatus.sizerecords)
         */
         // MP curve analysis END
 //**********************************************************************************************************************************************
@@ -392,7 +393,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
 //**********************************************************************************************************************************************
         //MP Get last bolus for w-zero (UAM tsunami) start
-        this.mealData.put("lastBolus", mealData.lastBolus);
+        this.mealData.put("lastBolus", mealData.lastBolus)
         //MP Get last bolus for w-zero (UAM tsunami) end
 //**********************************************************************************************************************************************
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
