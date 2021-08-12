@@ -172,7 +172,7 @@ android {
                         // on below line we are replacing our previous name with our app name.
                         newName = newName.replace("app-", "$project.ext.appName-")
                         // on below line we are replacing -release with our formatted date and ID.
-                        newName = newName.replace("-release", "-release-v2.0.1_" + formattedDate)
+                        newName = newName.replace("-release", "-release-v2.1.1_" + formattedDate)
                         // at last we are setting our apk name to it.
                         output.outputFileName  = newName
                         //MT : here you have to change the path by your way : windows (c:\.....) macos (just replace the xxx by you username and the folder name UAM)
