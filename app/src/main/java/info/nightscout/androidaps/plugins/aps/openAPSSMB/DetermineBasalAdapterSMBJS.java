@@ -429,6 +429,7 @@ public class DetermineBasalAdapterSMBJS {
         mGlucoseStatus.put("broad_extremum", glucoseStatus.broad_extremum);
         mGlucoseStatus.put("mealscore_raw", glucoseStatus.mealscore_raw);
         mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth);
+        mGlucoseStatus.put("deltascore", glucoseStatus.deltascore);
         //MP test variables
         /*
         mGlucoseStatus.put("scoredivisor", glucoseStatus.scoredivisor);

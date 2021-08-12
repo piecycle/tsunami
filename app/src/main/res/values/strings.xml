@@ -879,7 +879,7 @@
     <!-- MP: UAMboluscap start -->
     <string name="key_UAM_boluscap" translatable="false">UAM_boluscap</string>
     <string name="UAM_UAM_boluscap_title">UAM bolus cap [U]</string>
-    <string name="UAM_boluscap_summary">max SMB size deliverable by w-zero.</string>
+    <string name="UAM_boluscap_summary">max SMB size deliverable by TAE.</string>
     <!-- MP: UAMboluscap end -->
     <string name="key_UAM_PBolus1" translatable="false">UAM_PBolus1</string>
     <string name="UAM_PBolus1_title">UAM prebolus button1 [U]</string>
@@ -1464,7 +1464,7 @@
     <string name="fabric_upload_disabled">Crash logs upload disabled!</string>
     <string name="graph_menu_divider_header">Graph</string>
     <string name="key_tae_start" translatable="false">TAE start time</string>
-    <string name="tae_start_summary">Hour of the day from when on W-zero will be enabled.</string>
+    <string name="tae_start_summary">Hour of the day from when on TAE will be enabled.</string>
     <string name="tae_start_title">TAE start time (incl.) [h]</string>
     <string name="key_tae_end" translatable="false">TAE end time</string>
     <string name="tae_end_summary">Hour of the day until (and including) which TAE is enabled.</string>

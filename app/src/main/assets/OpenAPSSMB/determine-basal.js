@@ -337,7 +337,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var act_future = 0;
     var act_zerodelta = 0;
     var act_missing = 0;
-    var mealscore = 0;
+    var deltascore = 0;
     var bgscore = 0;
     var pure_delta = 0;
     var tsunami_insreq = 0;
@@ -354,6 +354,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var tae_delta = Math.min(glucose_status.delta_supersmooth_now, glucose_status.delta); //MP Delta used by TAE will switch between sensor data and smoothed data, depending on which is lower - for added safety
     var insulinReqPCT = profile.insulinreqPCT/100; // Uset-set percentage to modify insulin required by
     var mealscore = Math.min(1, Math.max(glucose_status.mealscore_smooth, 0)); //MP Modifies insulinReqPCT; Mealscore grows larger the largest the previous deltas were, until it reaches 1
+    var deltascore = Math.min(1, Math.max(glucose_status.deltascore, 0)); //MP Modifies insulinReqPCT; deltascore grows larger the largest the previous deltas were, until it reaches 1
     var boluscap = profile.UAM_boluscap * profile.percentage/100; //MP: User-set may SMB size for TAE. Boluscap is grows and shrinks with profile percentage;
 
     //MP Give SMBs that are 70% of boluscap or more extra time to be absorbed before delivering another large SMB.
@@ -378,7 +379,8 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     if (tae_delta <= 4.1) {
         //MP Adjust activity target to 75% of current activity if glucose is near constant / delta is low (near-constant activity)
         var act_missing = round((act_curr * 0.75 - Math.max(act_future, 0))/5, 4); //MP Use 75% of current activity as target activity in the future; Divide by 5 to get per-minute activity
-        mealscore = Math.min(1, Math.max((tae_bg - target_bg)/100, 0)); //MP redefines mealscore as it otherwise would be near-zero (low deltas). The higher the bg, the larger mealscore
+        deltascore = Math.min(1, Math.max((tae_bg - target_bg)/100, 0)); //MP redefines deltascore as it otherwise would be near-zero (low deltas). The higher the bg, the larger deltascore
+        mealscore = deltascore;
     } else {
         //MP Escalate activity at medium to high delta (activity build-up)
         var act_missing = round((act_zerodelta - Math.max(act_future, 0))/5, 4); //MP Calculate required activity to end a rise in t minutes; Divide by 5 to get per-minute activity
@@ -393,8 +395,14 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var S = 1 / (1 - a + (1 + a) * Math.exp(-td / tau));
     var tsunami_insreq = round(act_missing / ((S / Math.pow(tau, 2.0)) * t * (1 - t / td) * Math.exp(-t / tau)), 2);
 
-    //MP Mealscore and BG score
-    insulinReqPCT = round(insulinReqPCT * mealscore, 3); //MP Modify insulinReqPCT in dependence of previous delta values
+    //MP If the usual bg correction equation yields a higher insulin requirement than TAE,
+    var bg_correction = (tae_bg - target_bg) / sens;
+    if (bg_correction > iob_data.iob && bg_correction > tsunami_insreq) {
+        tsunami_insreq = bg_correction;
+    }
+
+    //MP deltascore and BG score
+    insulinReqPCT = round(insulinReqPCT * deltascore, 3); //MP Modify insulinReqPCT in dependence of previous delta values
     var bgscore_upper_threshold = 140; //MP BG above which no penalty will be given
     var bgscore_lower_threshold = 80; //MP BG below which tae will not deliver SMBs
     var bgscore = round(Math.min((tae_bg - bgscore_lower_threshold)/(bgscore_upper_threshold-bgscore_lower_threshold), 1), 3); //MP Penalty at low or near-target bg values. Modifies boluscap.
@@ -428,15 +436,20 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         console.log("pure delta: "+pure_delta);
         console.log("used bg: "+tae_bg);
         console.log("-------------");
-        console.log("mealscore_live: "+round(mealscore, 3));
+        console.log("deltascore_live: "+round(deltascore, 3));
+        console.log("mealscore_live (OLD): "+round(mealscore, 3));
         console.log("bgscore_live: "+bgscore);
         console.log("insulinreqPCT_live: "+insulinReqPCT);
         console.log("boluscap_live: "+boluscap);
         console.log("tsunami_insreq: "+tsunami_insreq);
-        if (tae_delta <= 4.1 && act_curr > 0) {
-            console.log("Mode: Near-constant activity.");
-        } else if (act_curr > 0) {
-            console.log("Mode: Building up activity.");
+        if (bg_correction > iob_data.iob && bg_correction > tsunami_insreq) {
+                console.log("Mode: IOB too low, correcting for BG.");
+        } else {
+            if (tae_delta <= 4.1 && act_curr > 0) {
+                console.log("Mode: Near-constant activity.");
+            } else if (act_curr > 0) {
+                console.log("Mode: Building up activity.");
+            }
         }
         console.log("------------------------------");
     } else {
@@ -1674,9 +1687,9 @@ if (!activity_controller) { //MP Bypass oref1 block below if TAE is active
             //MP rT.reason for UAM mods start
 
             if (activity_controller) {
-                rT.reason += " mealscore: " + round(mealscore, 3);
+                rT.reason += " deltascore: " + round(deltascore, 3);
                 rT.reason += "; bgscore: " + bgscore;
-                rT.reason += "; insulinreqPCT_live: " + round(profile.insulinreqPCT * mealscore, 3);
+                rT.reason += "; insulinreqPCT_live: " + round(profile.insulinreqPCT * deltascore, 3);
                 rT.reason += "; boluscap_live: " + boluscap;
                 rT.reason += "; tsunami_insreq: " + tsunami_insreq;
                 rT.reason += "; tae_delta: " + tae_delta;
