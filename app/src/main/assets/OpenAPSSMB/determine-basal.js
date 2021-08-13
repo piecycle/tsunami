@@ -377,8 +377,16 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
 
     //MP Switch between near-constant and activity build-up modes
     if (tae_delta <= 4.1) {
-        //MP Adjust activity target to 75% of current activity if glucose is near constant / delta is low (near-constant activity)
-        var act_missing = round((act_curr * 0.75 - Math.max(act_future, 0))/5, 4); //MP Use 75% of current activity as target activity in the future; Divide by 5 to get per-minute activity
+        var activity_base_target = 0.75; //MP Base percentage of current activity to aim for
+        var activity_target = activity_base_target; //MP adjustable version of activity_base_target;
+        if (tae_bg >= 160) { //MP Plateau breaker
+            var activity_step = 0.05; //MP Step size by which to increase activity_target after every plateaustep minutes
+            var plateaustep = 20; //MP Time in min after which activity_target is increased by activity_step
+            var dura05 = glucose_status.autoISF_duration; //MP Plateau duration (how long has glucose been between +/- 5% of the plateau average BG?)
+            activity_target = activity_target + activity_step * Math.min(Math.trunc(dura05/plateaustep), (1.2 - activity_base_target)/activity_step); //MP apply changes but cap activity_target at 120%
+        }
+        //MP Adjust activity target to activity_target % of current activity if glucose is near constant / delta is low (near-constant activity)
+        var act_missing = round((act_curr * activity_target - Math.max(act_future, 0))/5, 4); //MP Use activity_target% of current activity as target activity in the future; Divide by 5 to get per-minute activity
         deltascore = Math.min(1, Math.max((tae_bg - target_bg)/100, 0)); //MP redefines deltascore as it otherwise would be near-zero (low deltas). The higher the bg, the larger deltascore
         mealscore = deltascore;
     } else {
@@ -446,7 +454,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
                 console.log("Mode: IOB too low, correcting for BG.");
         } else {
             if (tae_delta <= 4.1 && act_curr > 0) {
-                console.log("Mode: Near-constant activity.");
+                console.log("Mode: Near-constant activity. Target: "+ activity_target * 100 +"%");
             } else if (act_curr > 0) {
                 console.log("Mode: Building up activity.");
             }
