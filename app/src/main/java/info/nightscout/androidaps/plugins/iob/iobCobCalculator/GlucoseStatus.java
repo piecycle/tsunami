@@ -105,7 +105,7 @@ public class GlucoseStatus {
     public double deltascore = 0d;
     public double deltathreshold = 7d; //MP average delta above which deltascore will be 1.
     public double weight = 0.15d; //MP Weighting used for weighted averages
-//MP test variables
+    //MP test variables
     public double scoredivisor = 0d;
     public int smoothsize = 0;
     public int validdata = 0;
@@ -403,7 +403,7 @@ public class GlucoseStatus {
             } else { //MP failsafe, if bg database is empty...
                 windowsize = 0; //MP Don't smooth an empty database
                 datacontinuity = 0;
-            } 
+            }
 OLD CODE */
 /* OLD CODE
             if (sizeRecords >= windowsize + 1) { //MP standard smoothing window of 1 h
@@ -458,7 +458,7 @@ OLD CODE*/
             //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
             for (int i = 0; i < windowsize; i++) {
                 if (Math.round((data.get(i).date - data.get(i + 1).date) / (1000d * 60)) >= 12) { //MP: 12 min because a missed reading (i.e. readings coming in after 10 min) can occur for various reasons, like walking away from the phone or reinstalling AAPS
-                //if (Math.round((data.get(i).date - data.get(i + 1).date) / 60000L) <= 7) { //MP crashes the app, useful for testing
+                    //if (Math.round((data.get(i).date - data.get(i + 1).date) / 60000L) <= 7) { //MP crashes the app, useful for testing
                     windowsize = i + 1; //MP: If time difference between two readings exceeds 7 min, adjust windowsize to *include* the more recent reading (i = reading; +1 because windowsize reflects number of valid readings);
                     break;
                 } else if (data.get(i).value == 38) {
@@ -509,7 +509,7 @@ OLD CODE*/
 
 // MP Tsunami Activity Engine meal detection system
 
-            if (!insufficientfittingdata) {
+            if (!insufficientsmoothingdata) {
                 deltascore = 0d;
                 scoredivisor = 0d;
                 for (int i = 0; i < Math.min(windowsize - 1, 6); i++) { //MP Dynamically adjust deltas to include
