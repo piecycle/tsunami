@@ -11,6 +11,8 @@ import info.nightscout.androidaps.database.embedments.InterfaceIDs
 import info.nightscout.androidaps.database.interfaces.DBEntryWithTimeAndDuration
 import info.nightscout.androidaps.database.interfaces.TraceableDBEntry
 import java.util.*
+import android.R.attr.end
+import java.util.concurrent.TimeUnit
 
 @Entity(tableName = TABLE_TEMPORARY_TARGETS,
     foreignKeys = [ForeignKey(
@@ -72,5 +74,14 @@ data class TemporaryTarget(
             fun fromString(reason: String?) = values().firstOrNull { it.text == reason }
                 ?: CUSTOM
         }
+    }
+
+    val realTTDuration: Int
+        get() = getDurationToTime(System.currentTimeMillis())
+
+    private fun getDurationToTime(time: Long): Int {
+        val endTime = Math.min(time, timestamp + duration)
+        val msecs: Long = endTime - timestamp
+        return TimeUnit.MILLISECONDS.toMinutes(msecs).toInt()
     }
 }

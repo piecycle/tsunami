@@ -6,6 +6,7 @@ import info.nightscout.androidaps.data.IobTotal
 import info.nightscout.androidaps.data.MealData
 import info.nightscout.androidaps.database.AppRepository
 import info.nightscout.androidaps.database.ValueWrapper
+import info.nightscout.androidaps.database.entities.Bolus
 import info.nightscout.androidaps.extensions.convertedToAbsolute
 import info.nightscout.androidaps.extensions.getPassedDurationToTimeInMinutes
 import info.nightscout.androidaps.extensions.plannedRemainingMinutes
@@ -22,6 +23,7 @@ import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
 import info.nightscout.androidaps.plugins.general.openhumans.OpenHumansUploader
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus
 import info.nightscout.androidaps.utils.SafeParse
+import info.nightscout.androidaps.utils.T
 import info.nightscout.androidaps.utils.resources.ResourceHelper
 import info.nightscout.androidaps.utils.sharedPreferences.SP
 import org.json.JSONArray
@@ -59,6 +61,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
     private var smbAlwaysAllowed = false
     private var currentTime: Long = 0
     private var saveCgmSource = false
+    private var lastBolusNormalTime: Long = 0
+    private val millsToThePast = T.days(1).msecs()
     var currentTempParam: String? = null
         private set
     var iobDataParam: String? = null
@@ -328,7 +332,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 
         if (tempTarget is ValueWrapper.Existing) {
             this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
-            this.profile.put("temptarget_minutesrunning", tempTarget.value.getRealTTDuration())
+            this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
         }
         //MD: TempTarget Info ==== END
 //**********************************************************************************************************************************************
@@ -393,7 +397,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
 //**********************************************************************************************************************************************
         //MP Get last bolus for w-zero (UAM tsunami) start
-        this.mealData.put("lastBolus", mealData.lastBolus)
+        bolusMealLinks(now)?.forEach { bolus -> if (bolus.type == Bolus.Type.NORMAL && bolus.isValid && bolus.timestamp > lastBolusNormalTime ) lastBolusNormalTime = bolus.timestamp }
+        this.mealData.put("lastBolus", lastBolusNormalTime)
         //MP Get last bolus for w-zero (UAM tsunami) end
 //**********************************************************************************************************************************************
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
@@ -425,6 +430,10 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         }
         return string
     }
+
+//**********************************************************************************************************************************************
+    private fun bolusMealLinks(now: Long) = repository.getBolusesDataFromTime(now - millsToThePast, false).blockingGet()
+//**********************************************************************************************************************************************
 
     init {
         injector.androidInjector().inject(this)
