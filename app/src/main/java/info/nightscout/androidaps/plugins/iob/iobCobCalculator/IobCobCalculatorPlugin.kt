@@ -296,7 +296,10 @@ open class IobCobCalculatorPlugin @Inject constructor(
             .forEach {
                 if (it.amount > 0) {
                     result.carbs += it.amount
-                    if (it.timestamp > result.lastCarbTime) result.lastCarbTime = it.timestamp
+                    if (it.timestamp > result.lastCarbTime) {
+                        result.lastCarbTime = it.timestamp
+                        result.lastBolus = it.amount
+                    }
                 }
             }
         val autosensData = getLastAutosensDataWithWaitForCalculationFinish("getMealData()")

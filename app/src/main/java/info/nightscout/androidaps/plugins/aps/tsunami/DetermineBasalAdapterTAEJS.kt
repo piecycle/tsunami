@@ -61,8 +61,6 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
     private var smbAlwaysAllowed = false
     private var currentTime: Long = 0
     private var saveCgmSource = false
-    private var lastBolusNormalTime: Long = 0
-    private val millsToThePast = T.days(1).msecs()
     var currentTempParam: String? = null
         private set
     var iobDataParam: String? = null
@@ -328,7 +326,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 //**********************************************************************************************************************************************
         //MD: TempTarget Info ==== START
         //MD: TempTarget Info ==== START
-        val tempTarget = repository.getTemporaryTargetActiveAt(System.currentTimeMillis()).blockingGet()
+        val tempTarget = repository.getTemporaryTargetActiveAt(now).blockingGet()
 
         if (tempTarget is ValueWrapper.Existing) {
             this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
@@ -397,8 +395,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
 //**********************************************************************************************************************************************
         //MP Get last bolus for w-zero (UAM tsunami) start
-        bolusMealLinks(now)?.forEach { bolus -> if (bolus.type == Bolus.Type.NORMAL && bolus.isValid && bolus.timestamp > lastBolusNormalTime ) lastBolusNormalTime = bolus.timestamp }
-        this.mealData.put("lastBolus", lastBolusNormalTime)
+        this.mealData.put("lastBolus", mealData.lastBolus)
         //MP Get last bolus for w-zero (UAM tsunami) end
 //**********************************************************************************************************************************************
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
@@ -430,10 +427,6 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         }
         return string
     }
-
-//**********************************************************************************************************************************************
-    private fun bolusMealLinks(now: Long) = repository.getBolusesDataFromTime(now - millsToThePast, false).blockingGet()
-//**********************************************************************************************************************************************
 
     init {
         injector.androidInjector().inject(this)
