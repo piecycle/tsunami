@@ -1455,7 +1455,7 @@
     <string name="tae_start_summary">Hour of the day from when on TAE will be enabled.</string>
     <string name="tae_start_title">TAE start time (incl.) [h]</string>
     <string name="key_tae_end" translatable="false">TAE end time</string>
-    <string name="tae_end_summary">Hour of the day until (and including) which TAE is enabled.</string>
+    <string name="tae_end_summary">Hour of the day until which TAE is enabled (till x:59 of that hour). (If the end time less than start time it will be considered next day).</string>
     <string name="tae_end_title">TAE end time (incl.) [h]</string>
     <!--
     <string name="key_adjtarget" translatable="false">adjtarget</string>
