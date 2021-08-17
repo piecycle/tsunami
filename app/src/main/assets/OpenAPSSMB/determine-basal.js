@@ -350,6 +350,16 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var now = new Date().getHours(); //MP Hour of the day
     var tae_start = profile.tae_start; //MP User-set start hour of TAE
     var tae_end = profile.tae_end; //MP User-set end hour of TAE
+    var DE_tae_active_time = false ;
+    if (tae_end>tae_start) {
+        if (now >= tae_start && now <= tae_end) {var DE_tae_active_time = true ;}
+    } else {
+        if (now >= tae_start && now <= tae_end+24) {
+            var DE_tae_active_time = true ;
+        } else {
+            if (now <= tae_end ) { var DE_tae_active_time = true ;}
+        }
+    }
     var tae_bg = glucose_status.bg_supersmooth_now; //MP BG used by TAE
     var tae_delta = Math.min(glucose_status.delta_supersmooth_now, glucose_status.delta); //MP Delta used by TAE will switch between sensor data and smoothed data, depending on which is lower - for added safety
     var insulinReqPCT = profile.insulinreqPCT/100; // Uset-set percentage to modify insulin required by
@@ -419,8 +429,9 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     //MP Enable TAE SMB sizing if the safety conditions are all met
     if (profile.enable_tae &&
         hypodetect == false &&
-        now >= tae_start &&
-        now <= tae_end &&
+        //now >= tae_start &&
+        //now <= tae_end &&
+        DE_tae_active_time == true &&
         tae_delta >= 0 &&
         tae_bg >= target_bg &&
         iob_data.iob > 0.1 &&
@@ -468,7 +479,8 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         console.log("TAE bypassed - reasons:");
         if (!profile.enable_tae)                {console.log("TAE disabled in settings.");}
         if (hypodetect == true)                 {console.log("Recent low glucose event.");}
-        if (now < tae_start || now > tae_end)   {console.log("Outside active hours.");}
+        //if (now < tae_start || now > tae_end)   {console.log("Outside active hours.");}
+        if (DE_tae_active_time == false)        {console.log("Outside active hours.");}
         if (tae_delta < 0)                      {console.log("Negative delta reported. ("+tae_delta+")");}
         if (tae_bg < target_bg)                 {console.log("Glucose is below target.");}
         if (iob_data.iob <= 0.1)                {console.log("IOB is below minimum of 0.1 U.");}
@@ -567,7 +579,8 @@ if (profile.enable_tae && hypodetect == false && now >= tae_start && now <= tae_
         if (tsunami_insreq + iob_data.iob < (tae_bg - target_bg)/profile_sens)  {console.log("Incompatible insulin & glucose status. Let oref1 take over for now.");}
         console.log("------------------------------");
 }*/
-if (profile.use_autoisf && (now < tae_start || now > tae_end)) { //MP Enables autoISF outside of TAE hours
+//if (profile.use_autoisf && (now < tae_start || now > tae_end)) { //MP Enables autoISF outside of TAE hours
+if (profile.use_autoisf && (DE_tae_active_time == false)) { //MP Enables autoISF outside of TAE hours
     sens = autoISF(sens, target_bg, profile, glucose_status, meal_data, autosens_data, sensitivityRatio); //autoISF
 }
 
