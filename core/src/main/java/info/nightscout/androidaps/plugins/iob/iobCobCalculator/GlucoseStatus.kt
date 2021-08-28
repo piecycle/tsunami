@@ -15,21 +15,25 @@ data class GlucoseStatus(
     var sensorlagactivity: Double = 0.0,
     var historicactivity: Double = 0.0,
     var currentactivity: Double = 0.0,
-    var activity_pred_time: Long = 0L,
+    var activity_pred_time: Long = 40L, //MP Time in minutes from now to calculate insulin activity for
     var bg_5minago: Double = 0.0,
-    var autoISF_duration: Long = 0L,
+    var autoISF_duration: Double = 0.0,
     var autoISF_average: Double = 0.0,
     var insufficientsmoothingdata: Boolean = false,
     var insufficientfittingdata: Boolean = false,
     var bg_supersmooth_now: Double = 0.0,
     var delta_supersmooth_now: Double = 0.0,
-    var broadfit_a: Double = 0.0,
-    var broadfit_b: Double = 0.0,
-    var broadfit_c: Double = 0.0,
+    var broadfit_a: Double = 0.0,       //MP 2nd degree polynomial coefficient a for broadfit
+    var broadfit_b: Double = 0.0,       //MP 2nd degree polynomial coefficient b for broadfit
+    var broadfit_c: Double = 0.0,       //MP 2nd degree polynomial coefficient c for broadfit
     var broad_extremum: Double = 0.0,
     var mealscore_raw: Double = 0.0,
     var mealscore_smooth: Double = 0.0,
-    var deltascore: Double = 0.0
+    var meal_threshold: Double = 1.8,
+    var deltascore: Double = 0.0,
+    var deltathreshold: Double = 7.0, //MP average delta above which deltascore will be 1.
+    var weight: Double = 0.15 //MP Weighting used for weighted averages
+
     //**********************************************************************************************************************************************
 ) {
 
@@ -43,7 +47,7 @@ data class GlucoseStatus(
         "sensorlagactivity: " + DecimalFormatter.to2Decimal(sensorlagactivity) + " U/min" + //Todo Check Unit (/min or /5min ?)
         "historicactivity: " + DecimalFormatter.to2Decimal(historicactivity) + " U/min" +   //Todo Check Unit (/min or /5min ?)
         "currentactivity: " + DecimalFormatter.to2Decimal(currentactivity) + " U/min" +     //Todo Check Unit (/min or /5min ?)
-        "autoISF_duration: " + activity_pred_time + " min" +                                //Todo Check Unit (min or msec)
+        "autoISF_duration: " + activity_pred_time + " min" +
         "bg_5minago: " + DecimalFormatter.to0Decimal(bg_5minago) + " mg/dl " +
         "autoISF_duration: " + autoISF_duration + " min" +                                  //Todo Check Unit (min or msec)
         "autoISF_average: " + DecimalFormatter.to1Decimal(autoISF_average) + " mg/dl/U" +
@@ -65,5 +69,22 @@ fun GlucoseStatus.asRounded() = copy(
     noise = Round.roundTo(noise, 0.01),
     delta = Round.roundTo(delta, 0.01),
     shortAvgDelta = Round.roundTo(shortAvgDelta, 0.01),
-    longAvgDelta = Round.roundTo(longAvgDelta, 0.01)
+    longAvgDelta = Round.roundTo(longAvgDelta, 0.01),
+    //*** Tsunami specific values ******************************************************************************************************************
+    futureactivity = Round.roundTo(futureactivity, 0.0001),
+    sensorlagactivity = Round.roundTo(sensorlagactivity, 0.0001),
+    historicactivity = Round.roundTo(historicactivity, 0.0001),
+    currentactivity = Round.roundTo(currentactivity, 0.0001),
+    bg_5minago = Round.roundTo(this.bg_5minago, 0.1),
+    autoISF_duration = Round.roundTo(autoISF_duration, 0.1),
+    autoISF_average = Round.roundTo(this.autoISF_average, 0.1),
+    bg_supersmooth_now = Round.roundTo(bg_supersmooth_now, 0.1),
+    delta_supersmooth_now =Round.roundTo(delta_supersmooth_now, 0.1),
+    broadfit_a = Round.roundTo(broadfit_a, 0.0001),
+    broadfit_b = Round.roundTo(broadfit_b, 0.001),
+    broadfit_c = Round.roundTo(broadfit_c, 0.001),
+    broad_extremum = Round.roundTo(broad_extremum, 0.1),
+    mealscore_raw = Round.roundTo(mealscore_raw, 0.0001),
+    mealscore_smooth = Round.roundTo(mealscore_smooth, 0.0001),
+    deltascore = Round.roundTo(deltascore, 0.01)
 )
