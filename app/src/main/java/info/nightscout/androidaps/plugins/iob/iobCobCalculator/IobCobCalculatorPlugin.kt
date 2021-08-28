@@ -5,6 +5,7 @@ import androidx.collection.LongSparseArray
 import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.Constants
 import info.nightscout.androidaps.R
+import info.nightscout.androidaps.data.Iob
 import info.nightscout.androidaps.data.IobTotal
 import info.nightscout.androidaps.data.MealData
 import info.nightscout.androidaps.database.AppRepository
@@ -622,13 +623,115 @@ open class IobCobCalculatorPlugin @Inject constructor(
 
 
     //MP Future activity calculation start
-    open fun calculateInsulinActivityAtTime(time: Long): IobTotal {
+    fun calculateInsulinActivityAtTime(time: Long): IobTotal {
         //MP Requires time from now in minutes to calculate activity prediction for
         val predtime: Long = ads.roundUpTime(dateUtil.now() + time * 60 * 1000)
-        val bolusIob: IobTotal = treatmentsPlugin.getCalculationToTimeTreatments(predtime)
-        val basalIob: IobTotal = treatmentsPlugin.getCalculationToTimeTempBasals(predtime, true, predtime)
+        val bolusIob: IobTotal = getCalculationToTimeTreatments(predtime)
+        val basalIob: IobTotal = getCalculationToTimeTempBasals(predtime, true, predtime)
         return IobTotal.combine(bolusIob, basalIob).round()
     }
+
+    //This function doesn't exist anymore in AAPS v3... I create it but not sure of correct implementation
+    fun getCalculationToTimeTempBasals(time: Long, truncate: Boolean, truncateTime: Long): IobTotal {
+        val total = IobTotal(time)
+        val pumpInterface = activePlugin.activePump
+        val temporaryBasals = repository.getTemporaryBasalsDataFromTimeToTime(time - range(), time, true).blockingGet()
+        synchronized(temporaryBasals) {
+            for (pos in 0 until temporaryBasals.size) {
+                val t: TemporaryBasal = temporaryBasals.get(pos)
+                if (t.timestamp > time) continue
+                var calc: IobTotal?
+                val profile = profileFunction.getProfile(t.timestamp) ?: continue
+                if (truncate && t.end > truncateTime) {
+                    val dummyTemp = TemporaryBasal(
+                        timestamp = t.timestamp,
+                        rate = t.rate,
+                        duration = truncateTime - t.timestamp,
+                        type = t.type,
+                        isAbsolute = t.isAbsolute,
+                        isValid = t.isValid
+                    )
+                    calc = dummyTemp.iobCalc(time, profile, activePlugin.activeInsulin)
+                } else {
+                    calc = t.iobCalc(time, profile, activePlugin.activeInsulin)
+                }
+                //log.debug("BasalIOB " + new Date(time) + " >>> " + calc.basaliob);
+                total.plus(calc)
+            }
+        }
+        if (pumpInterface.isFakingTempsByExtendedBoluses) {
+            val totalExt = IobTotal(time)
+            val extendedBoluses = repository.getExtendedBolusDataFromTimeToTime(time - range(), time, true).blockingGet()
+            synchronized(extendedBoluses) {
+                for (pos in 0 until extendedBoluses.size) {
+                    val e: ExtendedBolus = extendedBoluses.get(pos)
+                    if (e.timestamp > time) continue
+                    var calc: IobTotal?
+                    val profile = profileFunction.getProfile(e.timestamp) ?: continue
+                    if (truncate && e.end > truncateTime) {
+                        val dummyExt = ExtendedBolus(
+                            timestamp = e.timestamp,
+                            amount = e.amount,
+                            duration = truncateTime - e.timestamp,
+                            isEmulatingTempBasal = e.isEmulatingTempBasal,
+                            interfaceIDs_backing = e.interfaceIDs_backing
+                        )
+                        calc = dummyExt.iobCalc(time, profile, activePlugin.activeInsulin)
+                    } else {
+                        calc = e.iobCalc(time, profile, activePlugin.activeInsulin)
+                    }
+                    totalExt.plus(calc!!)
+                }
+            }
+            // Convert to basal iob
+            totalExt.basaliob = totalExt.iob
+            totalExt.iob = 0.0
+            totalExt.netbasalinsulin = totalExt.extendedBolusInsulin
+            totalExt.hightempinsulin = totalExt.extendedBolusInsulin
+            total.plus(totalExt)
+        }
+        return total
+    }
+
+    //This function doesn't exist anymore in AAPS v3... I create it but not sure of correct implementation
+    fun getCalculationToTimeTreatments(time: Long): IobTotal {
+        val total = IobTotal(time)
+        val profile = profileFunction.getProfile() ?: return total
+        val pumpInterface = activePlugin.activePump
+        val dia = profile.dia
+        val treatments = repository.getBolusesDataFromTime(time - range(), true).blockingGet()
+        synchronized(treatments) {
+            for (pos in 0 until treatments.size) {
+                val t: Bolus = treatments.get(pos)
+                if (!t.isValid) continue
+                if (t.timestamp > time) continue
+                val tIOB: Iob = t.iobCalc(activePlugin, time, dia)
+                total.iob += tIOB.iobContrib
+                total.activity += tIOB.activityContrib
+                if (t.amount > 0 && t.timestamp > total.lastBolusTime) total.lastBolusTime = t.timestamp
+                if (t.type != Bolus.Type.SMB) {
+                    // instead of dividing the DIA that only worked on the bilinear curves,
+                    // multiply the time the treatment is seen active.
+                    val timeSinceTreatment: Long = time - t.timestamp
+                    val snoozeTime: Long = t.timestamp + (timeSinceTreatment * sp.getDouble(R.string.key_openapsama_bolussnooze_dia_divisor,2.0)) as Long
+                    val bIOB: Iob = t.iobCalc(activePlugin, snoozeTime, dia)
+                    total.bolussnooze += bIOB.iobContrib
+                }
+            }
+        }
+        val extendedBoluses = repository.getExtendedBolusDataFromTime(time - range(), true).blockingGet()
+        if (!pumpInterface.isFakingTempsByExtendedBoluses) synchronized(extendedBoluses) {
+            for (pos in 0 until extendedBoluses.size) {
+                val e: ExtendedBolus = extendedBoluses.get(pos)
+                if (e.timestamp > time) continue
+                val calc: IobTotal = e.iobCalc(time, profile, activePlugin.activeInsulin)
+                total.plus(calc)
+            }
+        }
+        return total
+    }
+
+
 //MP Future activity calculation end
 
 }
