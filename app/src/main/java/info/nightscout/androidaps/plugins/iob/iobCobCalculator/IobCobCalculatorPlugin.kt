@@ -614,4 +614,21 @@ open class IobCobCalculatorPlugin @Inject constructor(
         }
         return total
     }
+
+    //MP activity calculation start
+    override fun calculateInsulinActivityAtTimeSynchronized(time: Long): IobTotal {
+        synchronized(dataLock) { return calculateInsulinActivityAtTime(time) }
+    }
+
+
+    //MP Future activity calculation start
+    open fun calculateInsulinActivityAtTime(time: Long): IobTotal {
+        //MP Requires time from now in minutes to calculate activity prediction for
+        val predtime: Long = ads.roundUpTime(dateUtil.now() + time * 60 * 1000)
+        val bolusIob: IobTotal = treatmentsPlugin.getCalculationToTimeTreatments(predtime)
+        val basalIob: IobTotal = treatmentsPlugin.getCalculationToTimeTempBasals(predtime, true, predtime)
+        return IobTotal.combine(bolusIob, basalIob).round()
+    }
+//MP Future activity calculation end
+
 }

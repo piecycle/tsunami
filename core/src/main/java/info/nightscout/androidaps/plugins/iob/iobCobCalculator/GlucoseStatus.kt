@@ -71,10 +71,6 @@ fun GlucoseStatus.asRounded() = copy(
     shortAvgDelta = Round.roundTo(shortAvgDelta, 0.01),
     longAvgDelta = Round.roundTo(longAvgDelta, 0.01),
     //*** Tsunami specific values ******************************************************************************************************************
-    futureactivity = Round.roundTo(futureactivity, 0.0001),
-    sensorlagactivity = Round.roundTo(sensorlagactivity, 0.0001),
-    historicactivity = Round.roundTo(historicactivity, 0.0001),
-    currentactivity = Round.roundTo(currentactivity, 0.0001),
     bg_5minago = Round.roundTo(this.bg_5minago, 0.1),
     autoISF_duration = Round.roundTo(autoISF_duration, 0.1),
     autoISF_average = Round.roundTo(this.autoISF_average, 0.1),

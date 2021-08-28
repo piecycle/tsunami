@@ -21,6 +21,7 @@ import info.nightscout.androidaps.plugins.aps.loop.ScriptReader
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
 import info.nightscout.androidaps.plugins.general.openhumans.OpenHumansUploader
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus
+import info.nightscout.androidaps.utils.Round
 import info.nightscout.androidaps.utils.SafeParse
 import info.nightscout.androidaps.utils.resources.ResourceHelper
 import info.nightscout.androidaps.utils.sharedPreferences.SP
@@ -248,19 +249,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.profile.put("use_autoisf", sp.getBoolean(R.string.key_tae_useautoisf, false))
         // mod 7d: can I add autosens_min here?
         // mod 7d: can I add autosens_min here?
-        this.profile.put(
-            "autoisf_max",
-            SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_max, "1.2"))
-        )
-        this.profile.put(
-            "autoisf_hourlychange",
-            SafeParse.stringToDouble(
-                sp.getString(
-                    R.string.key_tae_autoisf_hourlychange,
-                    "0.2"
-                )
-            )
-        )
+        this.profile.put("autoisf_max", SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_max,"1.2")))
+        this.profile.put("autoisf_hourlychange", SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_hourlychange,"0.2")))
         // autoISF === END
         //mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
         //mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
@@ -269,49 +259,22 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         //mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
         //mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
         //mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
-        this.profile.put(
-            "enable_datasmoothing",
-            sp.getBoolean(R.string.key_enable_datasmoothing, false)
-        )
-        val datasmoothingenabled: Boolean =
-            sp.getBoolean(R.string.key_enable_datasmoothing, false) //MP: datasmoothing dependency
+        this.profile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false))
+        val datasmoothingenabled: Boolean = sp.getBoolean(R.string.key_enable_datasmoothing, false) //MP: datasmoothing dependency
 
         //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
         //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
-        this.profile.put(
-            "enable_tae",
-            datasmoothingenabled && sp.getBoolean(R.string.key_enable_tae, false)
-        )
-        this.profile.put(
-            "UAM_boluscap",
-            SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap, "1"))
-        )
-        this.profile.put(
-            "insulinreqPCT",
-            SafeParse.stringToDouble(sp.getString(R.string.key_insulinreqPCT, "65"))
-        )
-        this.profile.put(
-            "tae_start",
-            SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0"))
-        )
-        this.profile.put(
-            "tae_end",
-            SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0"))
-        )
+        this.profile.put("enable_tae",datasmoothingenabled && sp.getBoolean(R.string.key_enable_tae, false))
+        this.profile.put("UAM_boluscap", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap, "1")))
+        this.profile.put("insulinreqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinreqPCT, "65")))
+        this.profile.put("tae_start", SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0")))
+        this.profile.put("tae_end", SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0")))
         this.profile.put("percentage", profile.percentage)
-        this.profile.put(
-            "tae_start",
-            SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0"))
-        )
-        this.profile.put(
-            "tae_end",
-            SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0"))
-        )
-        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
         //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
         this.profile.put("dia", profile.dia)
-        this.profile.put("peaktime", TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
-        )
+
+        val activityPredTime = TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak)
+        this.profile.put("peaktime", activityPredTime) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
         //MP UAM tsunami profile variables END
 //**********************************************************************************************************************************************
         val now = System.currentTimeMillis()
@@ -330,15 +293,45 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
             this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
         }
+
+        var sensorlagactivity = 0.0
+        var futureactivity = 0.0
+        var historicactivity = 0.0
+        var currentactivity = 0.0
+        val sensorlag = -10L //MP Time in minutes from now which is estimated to be the time point at which the displayed sensor delta actually occurred (i.e. sensor lag time, must be at least -5 min, max -20 min)
+        val activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
+
+        for (i in sensorlag - 4..sensorlag) {
+            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
+            sensorlagactivity += iob.activity
+        }
+        for (i in activityPredTime - 4..activityPredTime) {
+            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
+            futureactivity += iob.activity
+        }
+        for (i in activity_historic - 2..activity_historic + 2) {
+            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
+            historicactivity += iob.activity
+        }
+        for (i in -4L..0L) {
+            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
+            currentactivity += iob.activity
+        }
+
+        futureactivity = Round.roundTo(futureactivity, 0.0001)
+        sensorlagactivity = Round.roundTo(sensorlagactivity, 0.0001)
+        historicactivity = Round.roundTo(historicactivity, 0.0001)
+        currentactivity = Round.roundTo(currentactivity, 0.0001)
+
         //MD: TempTarget Info ==== END
 //**********************************************************************************************************************************************
         iobData = iobCobCalculator.convertToJSONArray(iobArray)
 //**********************************************************************************************************************************************
-        mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity)
-        mGlucoseStatus.put("sensorlagactivity", glucoseStatus.sensorlagactivity)
-        mGlucoseStatus.put("historicactivity", glucoseStatus.historicactivity)
-        mGlucoseStatus.put("currentactivity", glucoseStatus.currentactivity)
-        mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time)
+        mGlucoseStatus.put("futureactivity", futureactivity)
+        mGlucoseStatus.put("sensorlagactivity", sensorlagactivity)
+        mGlucoseStatus.put("historicactivity", historicactivity)
+        mGlucoseStatus.put("currentactivity", currentactivity)
+        mGlucoseStatus.put("activity_pred_time", activityPredTime)
 //**********************************************************************************************************************************************
         mGlucoseStatus.put("glucose", glucoseStatus.glucose)
 //**********************************************************************************************************************************************
