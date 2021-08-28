@@ -6,7 +6,6 @@ import info.nightscout.androidaps.data.IobTotal
 import info.nightscout.androidaps.data.MealData
 import info.nightscout.androidaps.database.AppRepository
 import info.nightscout.androidaps.database.ValueWrapper
-import info.nightscout.androidaps.database.entities.Bolus
 import info.nightscout.androidaps.extensions.convertedToAbsolute
 import info.nightscout.androidaps.extensions.getPassedDurationToTimeInMinutes
 import info.nightscout.androidaps.extensions.plannedRemainingMinutes
@@ -23,7 +22,6 @@ import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
 import info.nightscout.androidaps.plugins.general.openhumans.OpenHumansUploader
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus
 import info.nightscout.androidaps.utils.SafeParse
-import info.nightscout.androidaps.utils.T
 import info.nightscout.androidaps.utils.resources.ResourceHelper
 import info.nightscout.androidaps.utils.sharedPreferences.SP
 import org.json.JSONArray
@@ -247,18 +245,18 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         //MP UAM tsunami profile variables START
         // autoISF === START
         // mod 7e: can I add use autoisf here?
-        this.profile.put("use_autoisf", sp.getBoolean(R.string.key_openapsama_useautoisf, false))
+        this.profile.put("use_autoisf", sp.getBoolean(R.string.key_tae_useautoisf, false))
         // mod 7d: can I add autosens_min here?
         // mod 7d: can I add autosens_min here?
         this.profile.put(
             "autoisf_max",
-            SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autoisf_max, "1.2"))
+            SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_max, "1.2"))
         )
         this.profile.put(
             "autoisf_hourlychange",
             SafeParse.stringToDouble(
                 sp.getString(
-                    R.string.key_openapsama_autoisf_hourlychange,
+                    R.string.key_tae_autoisf_hourlychange,
                     "0.2"
                 )
             )
@@ -312,7 +310,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
         //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
         this.profile.put("dia", profile.dia)
-        this.profile.put("peaktime", TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak)) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
+        this.profile.put("peaktime", TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
         )
         //MP UAM tsunami profile variables END
 //**********************************************************************************************************************************************
