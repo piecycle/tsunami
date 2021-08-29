@@ -11,10 +11,6 @@ data class GlucoseStatus(
     val longAvgDelta: Double = 0.0,
     val date: Long = 0L,
     //*** Tsunami specific values ******************************************************************************************************************
-    var futureactivity: Double = 0.0,
-    var sensorlagactivity: Double = 0.0,
-    var historicactivity: Double = 0.0,
-    var currentactivity: Double = 0.0,
     var activity_pred_time: Long = 40L, //MP Time in minutes from now to calculate insulin activity for
     var bg_5minago: Double = 0.0,
     var autoISF_duration: Double = 0.0,
@@ -43,10 +39,6 @@ data class GlucoseStatus(
         "Short avg. delta: " + " " + DecimalFormatter.to2Decimal(shortAvgDelta) + " mg/dl " +
         "Long avg. delta: " + DecimalFormatter.to2Decimal(longAvgDelta) + " mg/dl" +
     //*** Tsunami specific values ******************************************************************************************************************
-        "futureactivity: " + DecimalFormatter.to2Decimal(futureactivity) + " U/min" +       //Todo Check Unit (/min or /5min ?)
-        "sensorlagactivity: " + DecimalFormatter.to2Decimal(sensorlagactivity) + " U/min" + //Todo Check Unit (/min or /5min ?)
-        "historicactivity: " + DecimalFormatter.to2Decimal(historicactivity) + " U/min" +   //Todo Check Unit (/min or /5min ?)
-        "currentactivity: " + DecimalFormatter.to2Decimal(currentactivity) + " U/min" +     //Todo Check Unit (/min or /5min ?)
         "autoISF_duration: " + activity_pred_time + " min" +
         "bg_5minago: " + DecimalFormatter.to0Decimal(bg_5minago) + " mg/dl " +
         "autoISF_duration: " + autoISF_duration + " min" +                                  //Todo Check Unit (min or msec)
