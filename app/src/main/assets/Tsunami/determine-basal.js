@@ -362,7 +362,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     }
 
     //Hypo detection by curve analysis
-    var extremum_bg_broad = glucose_status.broadfit_a * Math.pow(glucose_status.broad_extremum, 2) + glucose_status.broadfit_b * glucose_status.broad_extremum + glucose_status.broadfit_c;
+    var extremum_bg_broad = -35;
     var hypodetect = false;
     if (glucose_status.broad_extremum >= -34 && glucose_status.broad_extremum <= 0 && (extremum_bg_broad <= 85 || bg <= 85)  && glucose_status.glucose < target_bg * 1.15) { //MP: Checks if an extremum within the last 30-34 min was a minimum with a value of less than 85 mg/dl. If current bg is less than 1.15 * target_bg, then recognise a current rise as hypo correction and don't scale ISF.
         hypodetect = true;

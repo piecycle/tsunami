@@ -8,8 +8,7 @@ import info.nightscout.androidaps.utils.DateUtil
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToLong
-import org.apache.commons.math3.fitting.PolynomialCurveFitter
-import org.apache.commons.math3.fitting.WeightedObservedPoints
+
 
 @Reusable
 class GlucoseStatusProvider @Inject constructor(
@@ -51,10 +50,6 @@ class GlucoseStatusProvider @Inject constructor(
                 insufficientsmoothingdata = true,
                 bg_supersmooth_now = now.value,
                 delta_supersmooth_now = 0.0,
-                broadfit_a = 0.0, //MP 2nd degree polynomial coefficient a for broadfit
-                broadfit_b = 0.0, //MP 2nd degree polynomial coefficient b for broadfit
-                broadfit_c = 0.0, //MP 2nd degree polynomial coefficient c for broadfit
-                broad_extremum = 0.0
                 //MP curve analysis end
             ).asRounded()
         }
@@ -75,15 +70,6 @@ class GlucoseStatusProvider @Inject constructor(
         val o2_a = 0.4
         val o2_b = 1.0
         var insufficientsmoothingdata = false
-        var insufficientfittingdata = false
-        var fitarraylength = 5 //MP number of fits to create
-        val narrow_fittingwindow = 5 //MP number of bg readings to include in local curve fit (for analysis of curve development)
-        val broad_fittingwindow = 12 //MP number of bg readings to include in global curve fit (for detection of maxima)
-        var nR2 = 0.0 //MP R squared value for narrowfit
-        var nsR2 = 0.0 //MP R squared value for smoothed narrowfit
-        var mealscore_smooth = 0.0
-        var mealscore_raw = 0.0
-        val meal_threshold = 1.8
         var deltascore = 0.0
         val deltathreshold = 7.0 //MP average delta above which deltascore will be 1.
         val weight = 0.15 //MP Weighting used for weighted averages
@@ -320,193 +306,6 @@ class GlucoseStatusProvider @Inject constructor(
 //############################### MP
 //### DATA SMOOTHING CORE END ### MP
 //############################### MP
-
-//#################################### MP
-//### GLUCOSE CURVE ANALYSIS START ### MP
-//#################################### MP
-
-// MP: fit last sensor readings (narrow (n) and broad (b) windows) to a 2nd degree polynomial
-        //todo: add fitting variables to above definitions (if glucose list empty etc.)
-        // MP narrow window - raw data
-
-//INITIALISE SIZE OF VALID READING DATABASE
-//todo: if not all the bg readings are valid, the window of useful data is narrowed down. Go through all the different situations to see if the code works in every situation
-        if (narrow_fittingwindow + fitarraylength - 1 > sizeRecords) { //MP standard smoothing window; (narrow_fittingwindow + fitarraylength -1) = number of data points required to fill up an array of specified length using 'narrow_fittingwindow' amount of data points. -1 because the first array already contains as many datapoints as defined by narrow_fittingwindow, so for an arraylength of 5 and a windowsize of 5, at least 5+5-1 = 9 data points are necessary (points 0-4 / 1-5 / 2-6 / 3-7 / 4-8.... 0-8 = 9 data points)
-            insufficientfittingdata = true
-        }
-
-        var validdata: Int = narrow_fittingwindow + fitarraylength - 1
-        if (!insufficientfittingdata) {
-            for (i in 0 until narrow_fittingwindow + fitarraylength - 1) {
-                if (Math.round((data[i].timestamp - data[i + 1].timestamp) / (1000.0 * 60)) >= 12) {
-                    validdata =
-                        i + 1 //MP: If time difference between two readings exceeds 12 min, adjust fitarraylength to *include* the more recent reading (i = reading; +1 because windowsize reflects number of valid readings);
-                    break
-                } else if (data[i].value == 38.0) {
-                    validdata =
-                        i //MP: 38 mg/dl reflects an xDrip error state; Chain of valid readings ends here, *exclude* this value (windowsize = i; i + 1 would include the current value)
-                    break
-                }
-            }
-        }
-        if (validdata < narrow_fittingwindow + fitarraylength - 1) {
-            if (validdata >= narrow_fittingwindow) {
-                fitarraylength =
-                    validdata - narrow_fittingwindow + 1 //MP: Adjust size of fitarraylength to the maximum possible value; Example: Valid datapoints: 7; narrow_fittingwindow: 5; Max array lenght possible: 0-4 / 1-5 / 2-6 --> 3 fits possible; 0-6 = 7 data points;
-            } else {
-                insufficientfittingdata = true
-            }
-        }
-
-//CREATE ARRAY OF POLYNOMIALS FITTED USING RAW SENSOR DATA
-
-        var nbgavg = 0.0 //MP narrow blood glucose average
-
-        val rawcoeff_array = Array(fitarraylength) { DoubleArray(6 ) } //MP array that holds polynomial coefficients
-
-        val narrow_fitter: PolynomialCurveFitter = PolynomialCurveFitter.create(2) //MP curve fitter
-
-        if (!insufficientfittingdata) {
-            for (n in 0 until fitarraylength) { //MP: Only build array using valid data. Length = fitarraylength.
-                var nSST = 0.0
-                var nSSR = 0.0
-                val obs_narrow = WeightedObservedPoints()
-                for (i in 0 until narrow_fittingwindow) { // MP: Build data for fitting; x = time (min from now); y = BG;
-                    obs_narrow.add(i * -5, data[i + n].value)
-                    nbgavg += data[i + n].value
-                }
-                val fitresult_raw: DoubleArray = narrow_fitter.fit(obs_narrow.toList())
-                nbgavg = nbgavg / narrow_fittingwindow //MP: Calculates average BG of those included in fit
-                for (i in 0 until narrow_fittingwindow) {
-                    nSST += Math.pow(data[i].value - nbgavg, 2.0) //MP: Build SS_total value for R2
-                    nSSR += Math.pow( data[i].value - (fitresult_raw[0] + fitresult_raw[1] * i * -5 + fitresult_raw[2] * Math.pow((i * -5).toDouble(), 2.0)), 2.0)
-                    //MP: Calculates difference between measured BG and modelled BG from polynomial c + bx + ax^2; -5 refers to the minutes (x value) between each reading
-                }
-                nR2 = 1 - nSSR / nSST //MP R-squared for narrow window fit
-                rawcoeff_array[n][0] = fitresult_raw[2] //MP quadratic term
-                rawcoeff_array[n][1] = fitresult_raw[1] //MP linear term
-                rawcoeff_array[n][2] = fitresult_raw[0] //MP constant term
-                rawcoeff_array[n][3] = nR2 //MP R2
-                rawcoeff_array[n][4] = -1 * (fitresult_raw[1] / (2 * fitresult_raw[2])) - 5 * n //MP extrema x (min), where 0 min = now.
-                rawcoeff_array[n][5] = fitresult_raw[2] * Math.pow(-1 * (fitresult_raw[1] / (2 * fitresult_raw[2])), 2.0) + fitresult_raw[1] * -1 * (fitresult_raw[1] / (2 * fitresult_raw[2])) + fitresult_raw[0] //MP: Extremum y (glucose)
-            }
-        }
-
-
-//CALCULATE MEAL SCORE AS AN ESTIMATE OF HOW LIKELY A RISE IS DUE TO A MEAL
-        if (!insufficientfittingdata) {
-            mealscore_raw = 0.0
-            scoredivisor = 0.0
-            for (i in 0 until fitarraylength) { //MP: Narrow_fittingwindow is the length of the array
-                if (rawcoeff_array[i][0] >= -0.03) {
-                    mealscore_raw += rawcoeff_array[i][1] * (1 - 0.1 * i) //MP: weighted sum of slopes
-                }
-                scoredivisor += 1 - 0.1 * i //MP weighted mealscore
-            }
-            mealscore_raw = mealscore_raw / scoredivisor / meal_threshold //MP: Average the coefficient sum. As the weight of each component decreases, the divisor is the sum of the weights (1+0.9+0.8+0.7+0.6 = 4)
-        }
-
-//CREATE ARRAY OF POLYNOMIALS FITTED USING SMOOTHED SENSOR DATA
-//todo: Check if data smoothing occurred, i.e. if there was enough valid data
-
-//CREATE ARRAY OF POLYNOMIALS FITTED USING SMOOTHED SENSOR DATA
-//todo: Check if data smoothing occurred, i.e. if there was enough valid data
-        var nbgsavg = 0.0 //MP narrow blood glucose average
-
-        val narrow_fitter_smooth: PolynomialCurveFitter = PolynomialCurveFitter.create(2)
-
-        val smoothcoeff_array = Array(fitarraylength) { DoubleArray(6) }
-
-        if (!insufficientfittingdata && !insufficientsmoothingdata) {
-            for (n in 0 until fitarraylength) {
-                var nsSST = 0.0
-                var nsSSR = 0.0
-                val obs_narrow_smooth = WeightedObservedPoints()
-                for (i in 0 until narrow_fittingwindow) { // MP: Collect readings for fitting; x = time (min from now); y = BG;
-                    obs_narrow_smooth.add( i * -5, ssmooth_bg[i + n]) //todo: Check against smoothing code to spot potential erros if there's not enough smooth data
-                    nbgsavg += ssmooth_bg[i + n]
-                }
-                val fitresult_smooth: DoubleArray = narrow_fitter_smooth.fit(obs_narrow_smooth.toList())
-                nbgsavg = nbgsavg / narrow_fittingwindow //MP: Calculates average BG of those included in fit
-                for (i in 0 until narrow_fittingwindow) {
-                    nsSST += Math.pow(ssmooth_bg[i] - nbgsavg, 2.0) //MP: Build SS_total value for R2
-                    nsSSR += Math.pow(ssmooth_bg[i] - (fitresult_smooth[0] + fitresult_smooth[1] * i * -5 + fitresult_smooth[2] * Math.pow((i * -5).toDouble(), 2.0)), 2.0) //MP: Calculates difference between measured BG and modelled BG from polynomial c + bx + ax^2; -5 refers to the minutes (x value) between each reading
-                }
-                nsR2 = 1 - nsSSR / nsSST //MP R-squared for narrow window fit
-                smoothcoeff_array[n][0] = fitresult_smooth[2] //MP quadratic term
-                smoothcoeff_array[n][1] = fitresult_smooth[1] //MP linear term
-                smoothcoeff_array[n][2] = fitresult_smooth[0] //MP constant term
-                smoothcoeff_array[n][3] = nsR2 //MP R2
-                smoothcoeff_array[n][4] = -1 * (fitresult_smooth[1] / (2 * fitresult_smooth[2])) - 5 * n //MP extrema x (min), where 0 min = now.
-                smoothcoeff_array[n][5] = fitresult_smooth[2] * Math.pow(-1 * (fitresult_smooth[1] / (2 * fitresult_smooth[2])), 2.0) + fitresult_smooth[1] * -1 * (fitresult_smooth[1] / (2 * fitresult_smooth[2])) + fitresult_smooth[0] //MP: Extremum y (glucose)
-            }
-        }
-
-//CALCULATE MEAL SCORE AS AN ESTIMATE OF HOW LIKELY A RISE IS DUE TO A MEAL
-        if (!insufficientfittingdata && !insufficientsmoothingdata) {
-            mealscore_smooth = 0.0
-            scoredivisor = 0.0
-            for (i in 0 until fitarraylength) { //MP: Narrow_fittingwindow is the length of the array
-                if (smoothcoeff_array[i][0] >= -0.03) {
-                    mealscore_smooth += smoothcoeff_array[i][1] * (1 - 0.1 * i) //MP: weighted sum of slopes
-                }
-                scoredivisor += 1 - 0.1 * i
-            }
-            mealscore_smooth = mealscore_smooth / scoredivisor / meal_threshold //MP: Average the coefficient sum. As the weight of each component decreases, the divisor is the sum of the weights (1+0.9+0.8+0.7+0.6 = 4)
-        }
-        */
-
-//CREATE POLYNOMIAL FITTED USING RAW SENSOR DATA, BROAD RANGE
-        var bbgavg = 0.0
-        val obs_broad = WeightedObservedPoints()
-        for (i in 0 until broad_fittingwindow) { // MP: Build data for fitting; x = time (min from now); y = BG;
-            obs_broad.add(i * -5, data[i].value)
-            bbgavg += data[i].value
-        }
-        bbgavg = bbgavg / broad_fittingwindow //MP: Calculates average BG of those included in fit
-
-        // MP: Instantiate a 2nd degree polynomial fitter.
-        val broad_fitter: PolynomialCurveFitter = PolynomialCurveFitter.create(2)
-
-        // MP: Perform the fit / retrieve fitted parameters (coefficients of the polynomial function).
-        val coeff_broad: DoubleArray = broad_fitter.fit(obs_broad.toList())
-
-        //check for maxima/minima by manual polynom differentiation and create a new list containing relevant information
-        // Finding extrema: f(x) = ax^2 + bx +c; f'(x) = 2ax + b; x(extremum) = -b/2a;
-        // Determine if max/min: f''(x) = 2a; if 2a > 0 --> minimum; if 2a < 0 --> maximum; if 2a == 0 --> saddle point; In our case (2nd degree polynomial), just checking whether coefficient a is >/< 0 is enough;
-
-        //check for maxima/minima by manual polynom differentiation and create a new list containing relevant information
-        // Finding extrema: f(x) = ax^2 + bx +c; f'(x) = 2ax + b; x(extremum) = -b/2a;
-        // Determine if max/min: f''(x) = 2a; if 2a > 0 --> minimum; if 2a < 0 --> maximum; if 2a == 0 --> saddle point; In our case (2nd degree polynomial), just checking whether coefficient a is >/< 0 is enough;
-        val broad_minmax = -(coeff_broad[1] / (2 * coeff_broad[2]))
-
-//UPDATE STATUS OBJECT
-        status.insufficientfittingdata = insufficientfittingdata
-        status.broadfit_a = coeff_broad[2] //MP 2nd degree polynomial coefficient a for broadfit
-        status.broadfit_b = coeff_broad[1] //MP 2nd degree polynomial coefficient b for broadfit
-        status.broadfit_c = coeff_broad[0] //MP 2nd degree polynomial coefficient c for broadfit
-        if (!insufficientfittingdata) {
-            status.mealscore_raw = mealscore_raw //MP 2nd degree polynomial coefficient c for smoothed narrowfit
-        } else {
-            status.mealscore_raw = 0.0 //MP 2nd degree polynomial coefficient c for smoothed narrowfit
-        }
-        if (!insufficientfittingdata && !insufficientsmoothingdata) {
-            status.mealscore_smooth =
-                mealscore_smooth //MP 2nd degree polynomial coefficient c for smoothed narrowfit
-        } else {
-            status.mealscore_smooth =
-                0.0 //MP 2nd degree polynomial coefficient c for smoothed narrowfit
-        }
-        status.broad_extremum = broad_minmax //MP extremum in broadfit
-
-
-//################################## MP
-//### GLUCOSE CURVE ANALYSIS END ### MP
-//################################## MP
-
-//################################## MP
-//### GLUCOSE CURVE ANALYSIS END ### MP
-//################################## MP
 
         return status.also { aapsLogger.debug(LTag.GLUCOSE, it.log()) }.asRounded()
     }

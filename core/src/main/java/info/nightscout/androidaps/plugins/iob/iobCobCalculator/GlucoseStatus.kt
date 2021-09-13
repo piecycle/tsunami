@@ -19,13 +19,6 @@ data class GlucoseStatus(
     var insufficientfittingdata: Boolean = false,
     var bg_supersmooth_now: Double = 0.0,
     var delta_supersmooth_now: Double = 0.0,
-    var broadfit_a: Double = 0.0,       //MP 2nd degree polynomial coefficient a for broadfit
-    var broadfit_b: Double = 0.0,       //MP 2nd degree polynomial coefficient b for broadfit
-    var broadfit_c: Double = 0.0,       //MP 2nd degree polynomial coefficient c for broadfit
-    var broad_extremum: Double = 0.0,
-    var mealscore_raw: Double = 0.0,
-    var mealscore_smooth: Double = 0.0,
-    var meal_threshold: Double = 1.8,
     var deltascore: Double = 0.0,
     var deltathreshold: Double = 7.0, //MP average delta above which deltascore will be 1.
     var weight: Double = 0.15 //MP Weighting used for weighted averages
@@ -47,13 +40,7 @@ data class GlucoseStatus(
         "insufficientfittingdata: " + insufficientfittingdata +
         "bg_supersmooth_now: " + DecimalFormatter.to0Decimal(bg_supersmooth_now) + " mg/dl " +
         "delta_supersmooth_now: " + DecimalFormatter.to0Decimal(delta_supersmooth_now) + " mg/dl " +
-        "broadfit_a: " + DecimalFormatter.to2Decimal(broadfit_a) + " ??????" +              //Todo define unit
-        "broadfit_b: " + DecimalFormatter.to2Decimal(broadfit_b) + " ??????" +              //Todo define unit
-        "broadfit_c: " + DecimalFormatter.to2Decimal(broadfit_c) + " ??????" +              //Todo define unit
-        "broad_extremum: " + DecimalFormatter.to2Decimal(broad_extremum) + " ??????" +      //Todo define unit
-        "mealscore_raw: " + DecimalFormatter.to0Decimal(mealscore_raw) + " ??????" +        //Todo define unit
-        "mealscore_smooth: " + DecimalFormatter.to0Decimal(mealscore_smooth) + " ??????" +  //Todo define unit
-        "deltascore: " + DecimalFormatter.to2Decimal(deltascore) + " ??????"                //Todo define unit
+        "deltascore: " + DecimalFormatter.to2Decimal(deltascore) + " a.u."
 }
 
 fun GlucoseStatus.asRounded() = copy(
@@ -68,11 +55,5 @@ fun GlucoseStatus.asRounded() = copy(
     autoISF_average = Round.roundTo(this.autoISF_average, 0.1),
     bg_supersmooth_now = Round.roundTo(bg_supersmooth_now, 0.1),
     delta_supersmooth_now =Round.roundTo(delta_supersmooth_now, 0.1),
-    broadfit_a = Round.roundTo(broadfit_a, 0.0001),
-    broadfit_b = Round.roundTo(broadfit_b, 0.001),
-    broadfit_c = Round.roundTo(broadfit_c, 0.001),
-    broad_extremum = Round.roundTo(broad_extremum, 0.1),
-    mealscore_raw = Round.roundTo(mealscore_raw, 0.0001),
-    mealscore_smooth = Round.roundTo(mealscore_smooth, 0.0001),
     deltascore = Round.roundTo(deltascore, 0.01)
 )

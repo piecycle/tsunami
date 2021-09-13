@@ -353,28 +353,9 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         // autoISF === END
         // MP data smoothing START
         mGlucoseStatus.put("insufficientsmoothingdata", glucoseStatus.insufficientsmoothingdata)
-        mGlucoseStatus.put("insufficientfittingdata", glucoseStatus.insufficientfittingdata)
         mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now)
         mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now)
         // MP data smoothing END
-        // MP curve analysis START
-        mGlucoseStatus.put("broadfit_a", glucoseStatus.broadfit_a)
-        mGlucoseStatus.put("broadfit_b", glucoseStatus.broadfit_b)
-        mGlucoseStatus.put("broadfit_c", glucoseStatus.broadfit_c)
-        mGlucoseStatus.put("broad_extremum", glucoseStatus.broad_extremum)
-        mGlucoseStatus.put("mealscore_raw", glucoseStatus.mealscore_raw)
-        mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth)
-        mGlucoseStatus.put("deltascore", glucoseStatus.deltascore)
-        //MP test variables
-        /*
-        mGlucoseStatus.put("scoredivisor", glucoseStatus.scoredivisor)
-        mGlucoseStatus.put("ssmooth_bg_size", glucoseStatus.smoothsize)
-        mGlucoseStatus.put("fitarraylength", glucoseStatus.fitarraylength)
-        mGlucoseStatus.put("windowsize", glucoseStatus.windowsize)
-        mGlucoseStatus.put("validdata", glucoseStatus.validdata)
-        mGlucoseStatus.put("sizerecords", glucoseStatus.sizerecords)
-        */
-        // MP curve analysis END
 //**********************************************************************************************************************************************
         this.mealData.put("carbs", mealData.carbs)
         this.mealData.put("mealCOB", mealData.mealCOB)
