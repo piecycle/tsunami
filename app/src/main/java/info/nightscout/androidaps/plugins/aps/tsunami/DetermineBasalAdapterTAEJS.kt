@@ -34,6 +34,10 @@ import java.lang.reflect.InvocationTargetException
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import info.nightscout.androidaps.plugins.iob.iobCobCalculator.IobCobCalculatorPlugin
+
+
+
 
 
 
@@ -47,6 +51,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
     @Inject lateinit var iobCobCalculator: IobCobCalculator
     @Inject lateinit var activePlugin: ActivePlugin
     @Inject lateinit var repository: AppRepository
+    @Inject lateinit var iobCobCalculatorPlugin: IobCobCalculatorPlugin
 
     private var profile = JSONObject()
     private var mGlucoseStatus = JSONObject()
@@ -291,28 +296,30 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
         }
 
-        var sensorlagactivity = 0.0
-        var futureactivity = 0.0
-        var historicactivity = 0.0
         var currentactivity = 0.0
-        val sensorlag = -10L //MP Time in minutes from now which is estimated to be the time point at which the displayed sensor delta actually occurred (i.e. sensor lag time, must be at least -5 min, max -20 min)
-        val activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
-
-        for (i in sensorlag - 4..sensorlag) {
-            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
-            sensorlagactivity += iob.activity
+        for (i in -4..0) { //MP: -4 to 0 calculates all the insulin active during the last 5 minutes
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(i.toLong()), profile)
+            currentactivity += iob.activity
         }
-        for (i in activityPredTime - 4..activityPredTime) {
-            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
+
+        var futureactivity = 0.0
+        for (i in -2..2) { //MP: calculate 5-minute-insulin activity centering around peaktime
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityPredTime - i), profile)
             futureactivity += iob.activity
         }
-        for (i in activity_historic - 2..activity_historic + 2) {
-            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
-            historicactivity += iob.activity
+
+        var sensorlag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
+        var sensorlagactivity = 0.0
+        for (i in -2..2) {
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorlag - i), profile)
+            sensorlagactivity += iob.activity
         }
-        for (i in -4L..0L) {
-            val iob: IobTotal = iobCobCalculator.calculateInsulinActivityAtTimeSynchronized(i)
-            currentactivity += iob.activity
+
+        var activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
+        var historicactivity = 0.0
+        for (i in -2..2) {
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activity_historic - i), profile)
+            historicactivity += iob.activity
         }
 
         futureactivity = Round.roundTo(futureactivity, 0.0001)
@@ -329,6 +336,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         mGlucoseStatus.put("historicactivity", historicactivity)
         mGlucoseStatus.put("currentactivity", currentactivity)
         mGlucoseStatus.put("activity_pred_time", activityPredTime)
+        mGlucoseStatus.put("deltascore", glucoseStatus.deltascore);
 //**********************************************************************************************************************************************
         mGlucoseStatus.put("glucose", glucoseStatus.glucose)
 //**********************************************************************************************************************************************
@@ -363,9 +371,9 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.mealData.put("slopeFromMinDeviation", mealData.slopeFromMinDeviation)
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
 //**********************************************************************************************************************************************
-        //MP Get last bolus for w-zero (UAM tsunami) start
+        //MP Get last bolus for UAM tsunami start
         this.mealData.put("lastBolus", mealData.lastBolus)
-        //MP Get last bolus for w-zero (UAM tsunami) end
+        //MP Get last bolus for UAM tsunami end
 //**********************************************************************************************************************************************
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
         if (constraintChecker.isAutosensModeEnabled().value()) {

@@ -174,12 +174,6 @@ class GlucoseStatusProvider @Inject constructor(
 //### DATA SMOOTHING CORE START ### MP
 //################################# MP
 
-
-//################################# MP
-//### DATA SMOOTHING CORE START ### MP
-//################################# MP
-
-
 //TODO: Decide what happens if there's insufficient data
 
 // ADJUST SMOOTHING WINDOW TO ONLY INCLUDE VALID READINGS
@@ -262,12 +256,9 @@ class GlucoseStatusProvider @Inject constructor(
         if (!insufficientsmoothingdata) {
             deltascore = 0.0
             scoredivisor = 0.0
-            for (i in 0 until Math.min(
-                windowsize - 1,
-                6
-            )) { //MP Dynamically adjust deltas to include
+            for (i in 0 until Math.min(windowsize - 1, 6)) { //MP Dynamically adjust deltas to include
                 deltascore += ssmooth_delta[i] * (1 - weight * i)
-                scoredivisor += 1 - weight * i //MP weighted mealscore
+                scoredivisor += 1 - weight * i //MP weighted score
             }
             deltascore = deltascore / scoredivisor / deltathreshold //MP: Check how deltascore compares to the threshold
         } else {
@@ -287,21 +278,6 @@ class GlucoseStatusProvider @Inject constructor(
             status.bg_supersmooth_now = data[0].value
             status.delta_supersmooth_now = data[0].value - data[1].value
         }
-        // TODO: communicate to other code snippets / files that use smoothed data if no smoothing occurred due to insufficient dat
-//############################### MP
-//### DATA SMOOTHING CORE END ### MP
-//############################### MP
-
-//#################################### MP
-//### GLUCOSE CURVE ANALYSIS START ### MP
-//#################################### MP
-
-// MP: fit last sensor readings (narrow (n) and broad (b) windows) to a 2nd degree polynomial
-        //todo: add fitting variables to above definitions (if glucose list empty etc.)
-        // MP narrow window - raw data
-
-//INITIALISE SIZE OF VALID READING DATABASE
-//todo: if not all the bg readings are valid, the window of useful data is narrowed down. Go through all the different situations to see if the code works in every situation
         // TODO: communicate to other code snippets / files that use smoothed data if no smoothing occurred due to insufficient dat
 //############################### MP
 //### DATA SMOOTHING CORE END ### MP

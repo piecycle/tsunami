@@ -16,13 +16,11 @@ data class GlucoseStatus(
     var autoISF_duration: Double = 0.0,
     var autoISF_average: Double = 0.0,
     var insufficientsmoothingdata: Boolean = false,
-    var insufficientfittingdata: Boolean = false,
     var bg_supersmooth_now: Double = 0.0,
     var delta_supersmooth_now: Double = 0.0,
     var deltascore: Double = 0.0,
     var deltathreshold: Double = 7.0, //MP average delta above which deltascore will be 1.
     var weight: Double = 0.15 //MP Weighting used for weighted averages
-
     //**********************************************************************************************************************************************
 ) {
 
@@ -37,7 +35,6 @@ data class GlucoseStatus(
         "autoISF_duration: " + autoISF_duration + " min" +                                  //Todo Check Unit (min or msec)
         "autoISF_average: " + DecimalFormatter.to1Decimal(autoISF_average) + " mg/dl/U" +
         "insufficientsmoothingdata: " + insufficientsmoothingdata +
-        "insufficientfittingdata: " + insufficientfittingdata +
         "bg_supersmooth_now: " + DecimalFormatter.to0Decimal(bg_supersmooth_now) + " mg/dl " +
         "delta_supersmooth_now: " + DecimalFormatter.to0Decimal(delta_supersmooth_now) + " mg/dl " +
         "deltascore: " + DecimalFormatter.to2Decimal(deltascore) + " a.u."

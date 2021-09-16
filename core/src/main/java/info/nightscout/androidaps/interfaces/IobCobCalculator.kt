@@ -94,5 +94,4 @@ interface IobCobCalculator {
      */
     fun calculateIobFromTempBasalsIncludingConvertedExtended(): IobTotal
 
-    fun calculateInsulinActivityAtTimeSynchronized(i: Long): IobTotal
 }
