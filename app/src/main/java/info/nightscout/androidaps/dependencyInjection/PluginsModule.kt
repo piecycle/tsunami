@@ -201,7 +201,7 @@ abstract class PluginsModule {
     @APS
     @IntoMap
     @IntKey(235)
-    abstract fun bindFullUAMPlugin(plugin: TsunamiPlugin): PluginBase
+    abstract fun bindTAEPlugin(plugin: TsunamiPlugin): PluginBase
 
     @Binds
     @AllConfigs
