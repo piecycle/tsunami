@@ -77,12 +77,14 @@
     <string name="description_smb">Most recent algorithm for advanced users</string>
 
     <!-- MP: UAMboluscap Start -->
-    <string name="description_tsunami">Tsunami Active Engine for automatic handling of meals</string>
+    <string name="description_tsunami">Tsunami Activity Engine for automatic handling of meals</string>
     <string name="tsunami_useautoisf">Use Autoisf feature</string>
-    <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
     <string name="key_tsunami_settings" translatable="false">tsunami_settings</string>
+    <!-- MP: Make data smoothing optional, turned off by default
+    <string name="key_enable_datasmoothing" translatable="false">enable_datasmoothing</string>
     <string name="enable_datasmoothing">Enable data smoothing</string>
     <string name="enable_datasmoothing_summary">Smooth incoming sensor data.</string>
+    -->
     <string name="key_enable_tae" translatable="false">enable_tae</string>
     <string name="enable_tae_title">Tsunami Activity Engine</string>
     <string name="enable_tae_summary">Automatically detect and handle unannounced meals. Read the documentation before use!</string>

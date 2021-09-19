@@ -416,8 +416,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     boluscap = round(boluscap * bgscore, 2);
 
     //MP Enable TAE SMB sizing if the safety conditions are all met
-    if (profile.enable_tae &&
-        hypodetect == false &&
+    if (hypodetect == false &&
         now >= tae_start &&
         now <= tae_end &&
         tae_delta >= 0 &&
@@ -452,7 +451,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
                 console.log("Mode: IOB too low, correcting for BG.");
         } else {
             if (tae_delta <= 4.1 && act_curr > 0) {
-                console.log("Mode: Near-constant activity. Target: "+ activity_target * 100 +"%");
+                console.log("Mode: Activity control. Target: "+ activity_target * 100 +"%");
             } else if (act_curr > 0) {
                 console.log("Mode: Building up activity.");
             }

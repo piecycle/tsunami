@@ -261,12 +261,13 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         //mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
         //mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
         //mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
-        this.profile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false))
-        val datasmoothingenabled: Boolean = sp.getBoolean(R.string.key_enable_datasmoothing, false) //MP: datasmoothing dependency
+
+        //MP: Make data smoothing optional
+        //this.profile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false))
+        //val datasmoothingenabled: Boolean = sp.getBoolean(R.string.key_enable_datasmoothing, false) //MP: datasmoothing dependency
 
         //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
         //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
-        this.profile.put("enable_tae",datasmoothingenabled && sp.getBoolean(R.string.key_enable_tae, false))
         this.profile.put("UAM_boluscap", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap, "1")))
         this.profile.put("insulinreqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinreqPCT, "65")))
         this.profile.put("tae_start", SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0")))

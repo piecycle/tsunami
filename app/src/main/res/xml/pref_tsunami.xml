@@ -27,24 +27,15 @@
             validate:floatmaxNumber="25.0"
             validate:floatminNumber="0"
             validate:testType="floatNumericRange" />
-        <!-- MP data smoothing start -->
+        <!-- MP Make data smoothing optional
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/key_enable_datasmoothing"
             android:summary="@string/enable_datasmoothing_summary"
             android:title="@string/enable_datasmoothing" />
-        <!-- MP data smoothing end -->
-        <!-- MP Tsunami Activity Engine start -->
-        <SwitchPreference
-            android:defaultValue="false"
-            android:dependency="@string/key_enable_datasmoothing"
-            android:key="@string/key_enable_tae"
-            android:summary="@string/enable_tae_summary"
-            android:title="@string/enable_tae_title" />
-        <!-- MP tae end -->
+        MP data smoothing end -->
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="1"
-            android:dependency="@string/key_enable_tae"
             android:dialogMessage="@string/UAM_boluscap_summary"
             android:inputType="numberDecimal"
             android:key="@string/key_UAM_boluscap"
@@ -54,7 +45,6 @@
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="65"
-            android:dependency="@string/key_enable_tae"
             android:dialogMessage="@string/insulinreqPCT_summary"
             android:inputType="numberDecimal"
             android:key="@string/key_insulinreqPCT"
@@ -64,7 +54,6 @@
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="11"
-            android:dependency="@string/key_enable_tae"
             android:dialogMessage="@string/tae_start_summary"
             android:digits="0123456789.,"
             android:inputType="number"
@@ -78,7 +67,6 @@
             validate:testType="floatNumericRange" />
         <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
             android:defaultValue="23"
-            android:dependency="@string/key_enable_tae"
             android:dialogMessage="@string/tae_end_summary"
             android:digits="0123456789.,"
             android:inputType="number"
