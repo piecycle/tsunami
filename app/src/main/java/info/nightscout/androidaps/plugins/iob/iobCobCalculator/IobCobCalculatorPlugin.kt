@@ -61,12 +61,13 @@ class IobCobCalculatorPlugin @Inject constructor(
     private val fabricPrivacy: FabricPrivacy,
     private val dateUtil: DateUtil,
     private val repository: AppRepository
-) : PluginBase(PluginDescription()
-    .mainType(PluginType.GENERAL)
-    .pluginName(R.string.iobcobcalculator)
-    .showInList(false)
-    .neverVisible(true)
-    .alwaysEnabled(true),
+) : PluginBase(
+    PluginDescription()
+        .mainType(PluginType.GENERAL)
+        .pluginName(R.string.iobcobcalculator)
+        .showInList(false)
+        .neverVisible(true)
+        .alwaysEnabled(true),
     aapsLogger, resourceHelper, injector
 ), IobCobCalculator {
 
@@ -87,38 +88,51 @@ class IobCobCalculatorPlugin @Inject constructor(
         disposable += rxBus
             .toObservable(EventConfigBuilderChange::class.java)
             .observeOn(aapsSchedulers.io)
-            .subscribe({ event -> resetDataAndRunCalculation("onEventConfigBuilderChange", event) }, fabricPrivacy::logException)
-        // EventNewBasalProfile
+            .subscribe({ event ->
+                           resetDataAndRunCalculation("onEventConfigBuilderChange", event)
+                       }, fabricPrivacy::logException)
+        // EventEffectiveProfileSwitchChanged
         disposable += rxBus
-            .toObservable(EventNewBasalProfile::class.java)
+            .toObservable(EventEffectiveProfileSwitchChanged::class.java)
             .observeOn(aapsSchedulers.io)
-            .subscribe({ event -> resetDataAndRunCalculation("onNewProfile", event) }, fabricPrivacy::logException)
+            .subscribe({ event ->
+                           newHistoryData(event.startDate, false, event)
+                       }, fabricPrivacy::logException)
         // EventPreferenceChange
         disposable += rxBus
             .toObservable(EventPreferenceChange::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({ event ->
-                if (event.isChanged(resourceHelper, R.string.key_openapsama_autosens_period) ||
-                    event.isChanged(resourceHelper, R.string.key_age) ||
-                    event.isChanged(resourceHelper, R.string.key_absorption_maxtime) ||
-                    event.isChanged(resourceHelper, R.string.key_openapsama_min_5m_carbimpact) ||
-                    event.isChanged(resourceHelper, R.string.key_absorption_cutoff) ||
-                    event.isChanged(resourceHelper, R.string.key_openapsama_autosens_max) ||
-                    event.isChanged(resourceHelper, R.string.key_openapsama_autosens_min) ||
-                    event.isChanged(resourceHelper, R.string.key_insulin_oref_peak)) {
-                    resetDataAndRunCalculation("onEventPreferenceChange", event)
-                }
-            }, fabricPrivacy::logException)
+                           if (event.isChanged(resourceHelper, R.string.key_openapsama_autosens_period) ||
+                               event.isChanged(resourceHelper, R.string.key_age) ||
+                               event.isChanged(resourceHelper, R.string.key_absorption_maxtime) ||
+                               event.isChanged(resourceHelper, R.string.key_openapsama_min_5m_carbimpact) ||
+                               event.isChanged(resourceHelper, R.string.key_absorption_cutoff) ||
+                               event.isChanged(resourceHelper, R.string.key_openapsama_autosens_max) ||
+                               event.isChanged(resourceHelper, R.string.key_openapsama_autosens_min) ||
+                               event.isChanged(resourceHelper, R.string.key_insulin_oref_peak)
+                           ) {
+                               resetDataAndRunCalculation("onEventPreferenceChange", event)
+                           }
+                       }, fabricPrivacy::logException)
         // EventAppInitialized
         disposable += rxBus
             .toObservable(EventAppInitialized::class.java)
             .observeOn(aapsSchedulers.io)
-            .subscribe({ event -> runCalculation("onEventAppInitialized", System.currentTimeMillis(), bgDataReload = true, limitDataToOldestAvailable = true, cause = event) }, fabricPrivacy::logException)
+            .subscribe(
+                { event -> runCalculation("onEventAppInitialized", System.currentTimeMillis(), bgDataReload = true, limitDataToOldestAvailable = true, cause = event) },
+                fabricPrivacy::logException
+            )
         // EventNewHistoryData
         disposable += rxBus
             .toObservable(EventNewHistoryData::class.java)
             .observeOn(aapsSchedulers.io)
-            .subscribe({ event -> newHistoryData(event.oldDataTimestamp, event.reloadBgData, if (event.newestGlucoseValue != null) EventNewBG(event.newestGlucoseValue) else event) }, fabricPrivacy::logException)
+            .subscribe(
+                { event ->
+                    newHistoryData(event.oldDataTimestamp, event.reloadBgData, if (event.newestGlucoseValue != null) EventNewBG(event.newestGlucoseValue) else event)
+                },
+                fabricPrivacy::logException
+            )
     }
 
     override fun onStop() {
@@ -188,7 +202,8 @@ class IobCobCalculatorPlugin @Inject constructor(
             duration = 240,
             rate = 0.0,
             isAbsolute = true,
-            type = TemporaryBasal.Type.NORMAL)
+            type = TemporaryBasal.Type.NORMAL
+        )
         if (t.timestamp < time) {
             val calc = t.iobCalc(time, profile, activePlugin.activeInsulin)
             basalIobWithZeroTemp.plus(calc)
@@ -215,7 +230,8 @@ class IobCobCalculatorPlugin @Inject constructor(
             duration = 240,
             rate = 0.0,
             isAbsolute = true,
-            type = TemporaryBasal.Type.NORMAL)
+            type = TemporaryBasal.Type.NORMAL
+        )
         if (t.timestamp < time) {
             val profile = profileFunction.getProfile(t.timestamp)
             if (profile != null) {
@@ -404,7 +420,7 @@ class IobCobCalculatorPlugin @Inject constructor(
             }
             ads.newHistoryData(time, aapsLogger, dateUtil)
         }
-        runCalculation("onEventNewHistoryData", System.currentTimeMillis(), bgDataReload, true, event)
+        runCalculation(event.javaClass.simpleName, System.currentTimeMillis(), bgDataReload, true, event)
         //log.debug("Releasing onNewHistoryData");
     }
 
@@ -514,10 +530,11 @@ class IobCobCalculatorPlugin @Inject constructor(
 
         val tb = repository.getTemporaryBasalActiveAt(timestamp).blockingGet()
         if (tb is ValueWrapper.Existing) return tb.value
-        val eb = repository.getExtendedBolusActiveAt(timestamp).blockingGet()
-        val profile = profileFunction.getProfile(timestamp) ?: return null
-        if (eb is ValueWrapper.Existing && activePlugin.activePump.isFakingTempsByExtendedBoluses)
-            return eb.value.toTemporaryBasal(profile)
+        if (activePlugin.activePump.isFakingTempsByExtendedBoluses) {
+            val eb = repository.getExtendedBolusActiveAt(timestamp).blockingGet()
+            val profile = profileFunction.getProfile(timestamp) ?: return null
+            if (eb is ValueWrapper.Existing) return eb.value.toTemporaryBasal(profile)
+        }
         return null
     }
 
