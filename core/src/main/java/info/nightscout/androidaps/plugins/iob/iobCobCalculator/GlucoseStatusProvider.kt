@@ -70,15 +70,15 @@ class GlucoseStatusProvider @Inject constructor(
         val o2_a = 0.4
         val o2_b = 1.0
         var insufficientsmoothingdata = false
-        var deltascore = 0.0
+        var deltascore: Double
         val deltathreshold = 7.0 //MP average delta above which deltascore will be 1.
         val weight = 0.15 //MP Weighting used for weighted averages
         //MP test variables
         //MP test variables
-        var scoredivisor = 0.0
+        var scoredivisor: Double
         //public long activity_pred_time = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP Time in minutes from now to calculate insulin activity for
         //public long activity_pred_time = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP Time in minutes from now to calculate insulin activity for
-        var activity_pred_time = 40L //MP Time in minutes from now to calculate insulin activity for
+        //var activity_pred_time = 40L //MP Time in minutes from now to calculate insulin activity for
 
         //MP Tsunami Activity Engine end
         //MP curve analysis end
