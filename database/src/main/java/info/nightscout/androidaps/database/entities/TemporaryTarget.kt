@@ -14,18 +14,21 @@ import java.util.*
 import android.R.attr.end
 import java.util.concurrent.TimeUnit
 
-@Entity(tableName = TABLE_TEMPORARY_TARGETS,
+@Entity(
+    tableName = TABLE_TEMPORARY_TARGETS,
     foreignKeys = [ForeignKey(
         entity = TemporaryTarget::class,
         parentColumns = ["id"],
-        childColumns = ["referenceId"])],
+        childColumns = ["referenceId"]
+    )],
     indices = [
         Index("id"),
         Index("isValid"),
         Index("nightscoutId"),
         Index("referenceId"),
         Index("timestamp")
-    ])
+    ]
+)
 data class TemporaryTarget(
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
@@ -55,6 +58,12 @@ data class TemporaryTarget(
     fun isRecordDeleted(other: TemporaryTarget): Boolean =
         isValid && !other.isValid
 
+    fun onlyNsIdAdded(previous: TemporaryTarget): Boolean =
+        previous.id != id &&
+            contentEqualsTo(previous) &&
+            previous.interfaceIDs.nightscoutId == null &&
+            interfaceIDs.nightscoutId != null
+
     enum class Reason(val text: String) {
         @SerializedName("Custom")
         CUSTOM("Custom"),
@@ -71,6 +80,7 @@ data class TemporaryTarget(
         ;
 
         companion object {
+
             fun fromString(reason: String?) = values().firstOrNull { it.text == reason }
                 ?: CUSTOM
         }
