@@ -37,10 +37,6 @@ import javax.inject.Inject
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.IobCobCalculatorPlugin
 
 
-
-
-
-
 class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) {
 
     @Inject lateinit var aapsLogger: AAPSLogger
