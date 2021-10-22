@@ -360,7 +360,7 @@ public class TreatmentsPlugin extends PluginBase implements TreatmentsInterface 
         }
     }
 
-    //MP Get last bolus for w-zero (UAM tsunami) start
+    //MP Get last bolus for TAE (UAM tsunami) start
     public double getLastBolus() {
         Treatment last = getService().getLastBolus(false);
         if (last == null) {
@@ -371,7 +371,7 @@ public class TreatmentsPlugin extends PluginBase implements TreatmentsInterface 
             return last.insulin;
         }
     }
-    //MP Get last bolus for w-zero (UAM tsunami) end
+    //MP Get last bolus for TAE (UAM tsunami) end
 
     public long getLastCarbTime() {
         Treatment last = getService().getLastCarb();

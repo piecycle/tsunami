@@ -172,16 +172,6 @@
         <!--            validate:floatmaxNumber="3"-->
         <!--            validate:floatminNumber="1"-->
         <!--            validate:testType="floatNumericRange" />-->
-        <!-- MP w-zero start -->
-        <!--
-                <SwitchPreference
-                    android:defaultValue="false"
-                    android:dependency="@string/key_enable_datasmoothing"
-                    android:key="@string/key_enable_w_zero"
-                    android:summary="@string/enable_w_zero_summary"
-                    android:title="@string/enable_w_zero_title" />
-         -->
-         <!-- MP w-zero end -->
         <SwitchPreference
             android:defaultValue="false"
             android:key="openapsama_useautosens"

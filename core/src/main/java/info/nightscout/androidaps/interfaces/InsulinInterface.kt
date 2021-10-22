@@ -13,8 +13,9 @@ interface InsulinInterface : ConfigExportImportInterface{
         OREF_RAPID_ACTING(2),
         OREF_ULTRA_RAPID_ACTING(3),
         OREF_FREE_PEAK(4),
-        OREF_LYUMJEV(5);
-
+        OREF_LYUMJEV(5),
+        //MP added LJ U200
+        OREF_LYUMJEV_U200(6);
         companion object {
             private val map = values().associateBy(InsulinType::value)
             fun fromInt(type: Int) = map[type]
@@ -27,4 +28,5 @@ interface InsulinInterface : ConfigExportImportInterface{
     val dia: Double
 
     fun iobCalcForTreatment(treatment: Treatment, time: Long, dia: Double): Iob
+    fun getInsId() = id.value
 }

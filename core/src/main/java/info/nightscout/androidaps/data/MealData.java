@@ -10,9 +10,9 @@ public class MealData {
     public double slopeFromMaxDeviation = 0;
     public double slopeFromMinDeviation = 999;
     public long lastBolusTime;
-    //MP Get last bolus for w-zero (UAM tsunami) start
+    //MP Get last bolus for TAE (UAM tsunami) start
     public double lastBolus;
-    //MP Get last bolus for w-zero (UAM tsunami) end
+    //MP Get last bolus for TAE (UAM tsunami) end
     public long lastCarbTime = 0L;
     public double usedMinCarbsImpact = 0d;
 }
