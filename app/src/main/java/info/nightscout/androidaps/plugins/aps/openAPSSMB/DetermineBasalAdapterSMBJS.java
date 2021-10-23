@@ -22,13 +22,11 @@ import javax.inject.Inject;
 import dagger.android.HasAndroidInjector;
 import info.nightscout.androidaps.Constants;
 import info.nightscout.androidaps.R;
-import info.nightscout.androidaps.data.Iob;
 import info.nightscout.androidaps.data.IobTotal;
 import info.nightscout.androidaps.data.MealData;
 import info.nightscout.androidaps.data.Profile;
 import info.nightscout.androidaps.db.TempTarget;
 import info.nightscout.androidaps.db.TemporaryBasal;
-import info.nightscout.androidaps.db.Treatment;
 import info.nightscout.androidaps.interfaces.ActivePluginProvider;
 import info.nightscout.androidaps.interfaces.InsulinInterface;
 import info.nightscout.androidaps.interfaces.ProfileFunction;
@@ -39,9 +37,6 @@ import info.nightscout.androidaps.plugins.aps.logger.LoggerCallback;
 import info.nightscout.androidaps.plugins.aps.loop.ScriptReader;
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker;
 import info.nightscout.androidaps.plugins.general.openhumans.OpenHumansUploader;
-import info.nightscout.androidaps.plugins.insulin.InsulinLyumjevPlugin;
-import info.nightscout.androidaps.plugins.insulin.InsulinOrefBasePlugin;
-import info.nightscout.androidaps.plugins.insulin.InsulinOrefFreePeakPlugin;
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus;
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.IobCobCalculatorPlugin;
 import info.nightscout.androidaps.plugins.treatments.TreatmentsPlugin;
@@ -60,7 +55,8 @@ public class DetermineBasalAdapterSMBJS {
     @Inject TreatmentsPlugin treatmentsPlugin;
     @Inject ActivePluginProvider activePluginProvider;
     @Inject OpenHumansUploader openHumansUploader;
-
+    //MP test
+    @Inject ActivePluginProvider activePlugin;
 
     private final ScriptReader mScriptReader;
     private JSONObject mProfile;
@@ -329,6 +325,11 @@ public class DetermineBasalAdapterSMBJS {
         //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")));
         mProfile.put("dia", profile.getDia());
         mProfile.put("peaktime",SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak,"45")));
+
+        InsulinInterface insulinInterface = activePlugin.getActiveInsulin();
+        int insulinID = insulinInterface.getId().getValue();
+        mProfile.put("insulinID", insulinID);
+
         //MP UAM tsunami profile variables END
         long now = System.currentTimeMillis();
         TemporaryBasal tb = treatmentsPlugin.getTempBasalFromHistory(now);
@@ -386,49 +387,9 @@ public class DetermineBasalAdapterSMBJS {
         // autoISF === END
         // MP data smoothing START
         mGlucoseStatus.put("insufficientsmoothingdata", glucoseStatus.insufficientsmoothingdata);
-        mGlucoseStatus.put("insufficientfittingdata", glucoseStatus.insufficientfittingdata);
-        //mGlucoseStatus.put("o1_weight", glucoseStatus.o1_weight);
-        //mGlucoseStatus.put("o1_a", glucoseStatus.o1_a);
-        //mGlucoseStatus.put("o2_a", glucoseStatus.o2_a);
-        //mGlucoseStatus.put("o2_b", glucoseStatus.o2_b);
-        //mGlucoseStatus.put("o1/bg_5m", glucoseStatus.o1_smoothedbg_5m);
-        //mGlucoseStatus.put("o1/bg_now", glucoseStatus.o1_smoothedbg_now);
-        //mGlucoseStatus.put("o2/bg_5m", glucoseStatus.o2_smoothedbg_5m);
-        //mGlucoseStatus.put("o2/bg_now", glucoseStatus.o2_smoothedbg_now);
-        //mGlucoseStatus.put("o2/trend_5m", glucoseStatus.o2_smoothedtrend_5m);
-        //mGlucoseStatus.put("o2/trend_now", glucoseStatus.o2_smoothedtrend_now);
-        /*
-        mGlucoseStatus.put("bg_supersmooth_25m", glucoseStatus.bg_supersmooth_25m);
-        mGlucoseStatus.put("bg_supersmooth_20m", glucoseStatus.bg_supersmooth_20m);*/
-        //mGlucoseStatus.put("bg_supersmooth_15m", glucoseStatus.bg_supersmooth_15m);
-        //mGlucoseStatus.put("bg_supersmooth_10m", glucoseStatus.bg_supersmooth_10m);
-        //mGlucoseStatus.put("bg_supersmooth_5m", glucoseStatus.bg_supersmooth_5m);
         mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now);
-        /*
-        mGlucoseStatus.put("delta_supersmooth_20m", glucoseStatus.delta_supersmooth_20m);
-        mGlucoseStatus.put("delta_supersmooth_15m", glucoseStatus.delta_supersmooth_15m);*/
-        //mGlucoseStatus.put("delta_supersmooth_10m", glucoseStatus.delta_supersmooth_10m);
-        //mGlucoseStatus.put("delta_supersmooth_5m", glucoseStatus.delta_supersmooth_5m);
         mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now);
         // MP data smoothing END
-        // MP curve analysis START
-        /*mGlucoseStatus.put("narrowfit_a", glucoseStatus.narrowfit_a);
-        mGlucoseStatus.put("narrowfit_b", glucoseStatus.narrowfit_b);
-        mGlucoseStatus.put("narrowfit_c", glucoseStatus.narrowfit_c);
-        mGlucoseStatus.put("narrowsmoothedfit_a", glucoseStatus.narrowsmoothedfit_a);
-        mGlucoseStatus.put("narrowsmoothedfit_b", glucoseStatus.narrowsmoothedfit_b);
-        mGlucoseStatus.put("narrowsmoothedfit_c", glucoseStatus.narrowsmoothedfit_c);*/
-        //mGlucoseStatus.put("arrayfit_r0", glucoseStatus.arrayfit_r0);
-        //mGlucoseStatus.put("arrayfit_r4", glucoseStatus.arrayfit_r4);
-        mGlucoseStatus.put("broadfit_a", glucoseStatus.broadfit_a);
-        mGlucoseStatus.put("broadfit_b", glucoseStatus.broadfit_b);
-        mGlucoseStatus.put("broadfit_c", glucoseStatus.broadfit_c);
-        //mGlucoseStatus.put("nR2", glucoseStatus.nR2);
-        //mGlucoseStatus.put("nsR2", glucoseStatus.nsR2);
-        //mGlucoseStatus.put("bR2", glucoseStatus.bR2);
-        mGlucoseStatus.put("broad_extremum", glucoseStatus.broad_extremum);
-        mGlucoseStatus.put("mealscore_raw", glucoseStatus.mealscore_raw);
-        mGlucoseStatus.put("mealscore_smooth", glucoseStatus.mealscore_smooth);
         mGlucoseStatus.put("deltascore", glucoseStatus.deltascore);
         //MP test variables
         /*
@@ -447,9 +408,9 @@ public class DetermineBasalAdapterSMBJS {
         mMealData.put("slopeFromMaxDeviation", mealData.slopeFromMaxDeviation);
         mMealData.put("slopeFromMinDeviation", mealData.slopeFromMinDeviation);
         mMealData.put("lastBolusTime", mealData.lastBolusTime);
-        //MP Get last bolus for w-zero (UAM tsunami) start
+        //MP Get last bolus for TAE (UAM tsunami) start
         mMealData.put("lastBolus", mealData.lastBolus);
-        //MP Get last bolus for w-zero (UAM tsunami) end
+        //MP Get last bolus for TAE (UAM tsunami) end
         mMealData.put("lastCarbTime", mealData.lastCarbTime);
 
 
