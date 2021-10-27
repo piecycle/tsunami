@@ -359,11 +359,17 @@ public class DetermineBasalAdapterSMBJS {
 
         mGlucoseStatus = new JSONObject();
 
-        mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity);
+        if (insulinID != 5 && insulinID != 6) {
+            mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity_PK);
+            mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time_PK);
+        } else {
+            mGlucoseStatus.put("futureactivity", glucoseStatus.futureactivity_PD);
+            mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time_PD);
+        }
         mGlucoseStatus.put("sensorlagactivity", glucoseStatus.sensorlagactivity);
         mGlucoseStatus.put("historicactivity", glucoseStatus.historicactivity);
         mGlucoseStatus.put("currentactivity", glucoseStatus.currentactivity);
-        mGlucoseStatus.put("activity_pred_time", glucoseStatus.activity_pred_time);
+
 
         //
         mGlucoseStatus.put("glucose", glucoseStatus.glucose);

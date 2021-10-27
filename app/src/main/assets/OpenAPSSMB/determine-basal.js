@@ -384,19 +384,21 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var act_curr = glucose_status.sensorlagactivity; //MP Current delta value, due to sensor lag, is more likely to represent situation from about 10 minutes ago - therefore activity from 10 minutes ago is used for activity calculations.
     var act_future = glucose_status.futureactivity; //MP prognosed activity in "peak-time" minutes (peak-time must be set by the user using free-peak oref)
     var pure_delta = round(tae_delta + Math.max(act_curr * profile_sens, 0), 1); //MP 5-minute-delta value if insulin activity was zero;
-    var act_zerodelta = pure_delta / profile_sens; //MP Insulin activity at which delta should be zero (if delta remains unchanged)
+    var act_zerodelta = pure_delta / profile_sens; //MP 5-min-insulin activity at which delta should be zero (if delta remains unchanged)
     var act_missing;
 
-    //MP Switch between near-constant and activity build-up modes
+    //MP Switch between activity control and activity build-up modes
     if (tae_delta <= 4.1) {
         var activity_base_target = 0.75; //MP Base percentage of current activity to aim for
         var activity_target = activity_base_target; //MP adjustable version of activity_base_target;
+        /*
         if (tae_bg >= 160) { //MP Plateau breaker
             var activity_step = 0.05; //MP Step size by which to increase activity_target after every plateaustep minutes
             var plateaustep = 20; //MP Time in min after which activity_target is increased by activity_step
             var dura05 = glucose_status.autoISF_duration; //MP Plateau duration (how long has glucose been between +/- 5% of the plateau average BG?)
-            activity_target = activity_target + activity_step * Math.min(Math.trunc(dura05 / plateaustep), (1.2 - activity_base_target) / activity_step); //MP apply changes but cap activity_target at 120%
+            activity_target = activity_target + activity_step * Math.min(Math.trunc(dura05 / plateaustep), (1.0 - activity_base_target) / activity_step); //MP apply changes but cap activity_target at 100%
         }
+        */
         //MP Adjust activity target to activity_target % of current activity if glucose is near constant / delta is low (near-constant activity)
         act_missing = round((act_curr * activity_target - Math.max(act_future, 0)) / 5, 4); //MP Use activity_target% of current activity as target activity in the future; Divide by 5 to get per-minute activity
         deltascore = Math.min(1, Math.max((tae_bg - target_bg) / 100, 0)); //MP redefines deltascore as it otherwise would be near-zero (low deltas). The higher the bg, the larger deltascore
@@ -413,6 +415,15 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var t;
     var tsunami_insreq;
     var iterations; //MP Not used in the PK model - will show up as 'undefined' - this can be used for debugging if people send screenshots of TSUNAMI STATUS
+
+        tp = profile.peaktime; //MP Insulin peak time as stated in InsulinOrefFreePeakPlugin. Doesn't work with insulin presets. Should be same value as used for act_future calculation (see glucoseStatus.java)
+        t = tp; //MP time at which activity of insulin should outcompete current delta
+        var td = profile.dia * 60; //MP Duration of insulin activity, in min
+        var tau = tp * (1 - tp / td) / (1 - 2 * tp / td);
+        var a = 2 * tau / td;
+        var S = 1 / (1 - a + (1 + a) * Math.exp(-td / tau));
+        tsunami_insreq = act_missing / ((S / Math.pow(tau, 2.0)) * t * (1 - t / td) * Math.exp(-t / tau));
+        console.log("PK tsunami_insreq: "+round(tsunami_insreq,3));
 
     if (profile.insulinID != 6 && profile.insulinID != 5) {
         // PK BASED MODEL CODE
@@ -432,33 +443,34 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         var B1 = 0.05185;
 
         //Variables for dose approximation
-        t = glucose_status.activity_pred_time; //MP time at which activity of insulin should outcompete current delta - set in GlucoseStatus.java; currently 45 min
+        //t = glucose_status.activity_pred_time; //MP time at which activity of insulin should outcompete current delta - set in GlucoseStatus.java; currently 45 min
         var tp_model;
         var act_at_t = 0.000001; //MP Dummy value to enter while-loop
-        var actratio;
+        var actratio = 1; //MP initialising value
         tsunami_insreq = 1; //MP Initial guess
         iterations = 0;
 
         //Iterative dose estimation (allowed rel. error: +/- 2%)
         if (act_missing != 0) {
-            //console.log("tsunami_insreq ("+iterations+"): "+round(tsunami_insreq,4));
             while ((round(act_at_t / act_missing, 2) > 1.02 || round(act_at_t / act_missing, 2) < 0.98)) {
+                tsunami_insreq = tsunami_insreq / actratio;
                 if (profile.insulinID == 6) { //MP ID = 6 for Lyumjev U200
                     tp = (A0 + A1 * 2 * tsunami_insreq) / (1 + B1 * 2 * tsunami_insreq);
                 } else { //MP Lyumjev U100 (ID = 5)
                     tp = (A0 + A1 * tsunami_insreq) / (1 + B1 * tsunami_insreq);
                 }
+                t = tp;
                 tp_model = Math.pow(tp, 2.0) * 2;
                 act_at_t = (2 * tsunami_insreq / tp_model) * t * Math.exp((-Math.pow(t, 2.0) / tp_model));
                 actratio = act_at_t / act_missing;
-                tsunami_insreq = tsunami_insreq / actratio;
+                console.log("tsunami_insreq ("+iterations+"): "+round(tsunami_insreq,3)+" | ("+round(actratio,3)+")");
                 iterations += 1;
-                //console.log("tsunami_insreq ("+iterations+"): "+round(tsunami_insreq,4));
             }
         } else {
             tsunami_insreq = 0;
         }
     }
+    iterations -= 1; //MP Minus 1 as the iterations are overcounted by 1 in the while loop
 
     //MP If the usual bg correction equation yields a higher insulin requirement than TAE,
     var bg_correction = (tae_bg - target_bg) / sens;
@@ -511,7 +523,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             console.log("Mode: IOB too low, correcting for BG.");
         } else {
             if (tae_delta <= 4.1 && act_curr > 0) {
-                console.log("Mode: Activity control. Target: " + activity_target * 100 + "%");
+                console.log("Mode: Activity control. Target: " + round(activity_target * 100, 0) + "%");
             } else if (act_curr > 0) {
                 console.log("Mode: Building up activity.");
             }
@@ -1498,6 +1510,36 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             //MP rT.reason for UAM mods start
 
             if (activity_controller) {
+                rT.reason += " ##TSUNAMI STATUS##";
+                rT.reason += " act. lag: " + glucose_status.sensorlagactivity;
+                rT.reason += "; act. now: " + act_curr + " (" + glucose_status.currentactivity + ")";
+                rT.reason += "; act. future: " + glucose_status.futureactivity;
+                rT.reason += "; miss./act. future: " + act_missing;
+                rT.reason += "; ###";
+                rT.reason += " delta: " + glucose_status.delta;
+                rT.reason += "; smoothed delta: " + glucose_status.delta_supersmooth_now;
+                rT.reason += "; used delta: " + tae_delta;
+                rT.reason += "; pure delta: " + pure_delta;
+                rT.reason += "; used bg: " + tae_bg;
+                rT.reason += "; ###";
+                rT.reason += " deltascore_live: " + round(deltascore, 3);
+                rT.reason += "; bgscore_live: " + bgscore;
+                rT.reason += "; insulinreqPCT_live: " + insulinReqPCT;
+                rT.reason += "; boluscap_live: " + boluscap;
+                rT.reason += "; tsunami_insreq: " + tsunami_insreq;
+                rT.reason += "; iterations: " + iterations;
+                rT.reason += "; ###";
+                if (bg_correction > iob_data.iob && bg_correction > tsunami_insreq) {
+                    rT.reason += " Mode: IOB too low, correcting for BG.";
+                } else {
+                    if (tae_delta <= 4.1 && act_curr > 0) {
+                        rT.reason += " Mode: Activity control. Target: " + round(activity_target * 100, 0) + "%";
+                    } else if (act_curr > 0) {
+                        rT.reason += " Mode: Building up activity.";
+                    }
+                }
+                rT.reason += " ##TSUNAMI STATUS END##";
+                /* Shorter Tsunami rT
                 rT.reason += " deltascore: " + round(deltascore, 3);
                 rT.reason += "; bgscore: " + bgscore;
                 rT.reason += "; insulinreqPCT_live: " + round(profile.insulinreqPCT * deltascore, 3);
@@ -1505,6 +1547,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
                 rT.reason += "; tsunami_insreq: " + tsunami_insreq;
                 rT.reason += "; tae_delta: " + tae_delta;
                 rT.reason += "; tae_bg: " + tae_bg;
+                */
             }
 
             //MP rT.reason for UAM mods end

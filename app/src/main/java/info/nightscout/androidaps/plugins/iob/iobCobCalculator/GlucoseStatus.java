@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.android.HasAndroidInjector;
+import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.data.IobTotal;
 import info.nightscout.androidaps.db.BgReading;
 import info.nightscout.androidaps.logging.AAPSLogger;
@@ -17,6 +18,7 @@ import info.nightscout.androidaps.utils.DecimalFormatter;
 import info.nightscout.androidaps.utils.Round;
 //MP Tsunami Activity Engine start
 import info.nightscout.androidaps.interfaces.ProfileFunction;
+import info.nightscout.androidaps.utils.SafeParse;
 import info.nightscout.androidaps.utils.sharedPreferences.SP;
 //MP Tsunami Activity Engine end
 /**
@@ -78,12 +80,14 @@ public class GlucoseStatus {
     public double deltathreshold = 7d; //MP average delta above which deltascore will be 1.
     public double weight = 0.15d; //MP Weighting used for weighted averages
     public double scoredivisor = 0d;
-    public double futureactivity = 0d;
+    public double futureactivity_PK = 0d;
+    public double futureactivity_PD = 0d;
     public double sensorlagactivity = 0d;
     public double historicactivity = 0d;
     public double currentactivity = 0d;
     //public long activity_pred_time = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP Time in minutes from now to calculate insulin activity for
-    public long activity_pred_time = 40L; //MP Time in minutes from now to calculate insulin activity for
+    public long activity_pred_time_PK = 45L; //MP Time in minutes from now to calculate insulin activity for
+    public long activity_pred_time_PD = 65L; //MP Time in minutes from now to calculate insulin activity for
     public long sensorlag = -10L; //MP Time in minutes from now which is estimated to be the time point at which the displayed sensor delta actually occurred (i.e. sensor lag time, must be at least -5 min, max -20 min)
     public long activity_historic = -20L; //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
     //MP Tsunami Activity Engine end
@@ -136,7 +140,8 @@ public class GlucoseStatus {
         }
         // MP data smoothing end
         this.deltascore = Round.roundTo(this.deltascore, 0.01);
-        this.futureactivity = Round.roundTo(this.futureactivity, 0.0001);
+        this.futureactivity_PK = Round.roundTo(this.futureactivity_PK, 0.0001);
+        this.futureactivity_PD = Round.roundTo(this.futureactivity_PD, 0.0001);
         this.sensorlagactivity = Round.roundTo(this.sensorlagactivity, 0.0001);
         this.historicactivity = Round.roundTo(this.historicactivity, 0.0001);
         this.currentactivity = Round.roundTo(this.currentactivity, 0.0001);
@@ -506,16 +511,22 @@ OLD CODE*/
 
             //MP Tsunami Activity Engine start
 
-            //activity_pred_time = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP free oref peak time
-            activity_pred_time = 45L; //MP Fixed minute target in the future.
+            activity_pred_time_PK = SafeParse.stringToLong(sp.getString(R.string.key_insulin_oref_peak,"45")); //MP free oref peak time
+            activity_pred_time_PD = 65L; //MP Fixed minute target in the future.
             for (long i = sensorlag - 4; i <= sensorlag; i++) {
                 IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
                 status.sensorlagactivity += iob.activity;
             }
-            for (long i = activity_pred_time - 4; i <= activity_pred_time; i++) {
+            for (long i = activity_pred_time_PK - 4; i <= activity_pred_time_PK; i++) {
                 IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
-                status.futureactivity += iob.activity;
+                status.futureactivity_PK += iob.activity;
             }
+
+            for (long i = activity_pred_time_PD - 4; i <= activity_pred_time_PD; i++) {
+                IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
+                status.futureactivity_PD += iob.activity;
+            }
+
             for (long i = activity_historic - 2; i <= activity_historic + 2; i++) {
                 IobTotal iob = iobCobCalculatorPlugin.calculateInsulinActivityAtTimeSynchronized(i);
                 status.historicactivity += iob.activity;
@@ -525,7 +536,8 @@ OLD CODE*/
                 status.currentactivity += iob.activity;
             }
 
-            status.activity_pred_time = activity_pred_time;
+            status.activity_pred_time_PK = activity_pred_time_PK;
+            status.activity_pred_time_PD = activity_pred_time_PD;
             //MP Tsunami Activity Engine end
             aapsLogger.debug(LTag.GLUCOSE, status.log());
             return status.round();
