@@ -11,7 +11,6 @@ data class GlucoseStatus(
     val longAvgDelta: Double = 0.0,
     val date: Long = 0L,
     //*** Tsunami specific values ******************************************************************************************************************
-    var activity_pred_time: Long = 40L, //MP Time in minutes from now to calculate insulin activity for
     var bg_5minago: Double = 0.0,
     var autoISF_duration: Double = 0.0,
     var autoISF_average: Double = 0.0,
@@ -30,7 +29,6 @@ data class GlucoseStatus(
         "Short avg. delta: " + " " + DecimalFormatter.to2Decimal(shortAvgDelta) + " mg/dl " +
         "Long avg. delta: " + DecimalFormatter.to2Decimal(longAvgDelta) + " mg/dl" +
     //*** Tsunami specific values ******************************************************************************************************************
-        "autoISF_duration: " + activity_pred_time + " min" +
         "bg_5minago: " + DecimalFormatter.to0Decimal(bg_5minago) + " mg/dl " +
         "autoISF_duration: " + autoISF_duration + " min" +                                  //Todo Check Unit (min or msec)
         "autoISF_average: " + DecimalFormatter.to1Decimal(autoISF_average) + " mg/dl/U" +
