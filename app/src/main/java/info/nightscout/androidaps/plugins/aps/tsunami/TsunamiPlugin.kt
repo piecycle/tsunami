@@ -51,8 +51,7 @@ open class TsunamiPlugin @Inject constructor(
     .pluginName(R.string.tsunami)
     .shortName(R.string.tsunami_shortname)
     .preferencesId(R.xml.pref_tsunami)
-    .description(R.string.description_tsunami)
-    .setDefault(),
+    .description(R.string.description_tsunami),
     aapsLogger, resourceHelper, injector
 ), APS, Constraints {
 
