@@ -541,7 +541,11 @@ class IobCobCalculatorPlugin @Inject constructor(
             for (pos in extendedBoluses.indices) {
                 val e = extendedBoluses[pos]
                 if (e.timestamp > toTime) continue
-                if (e.end > now) e.duration = now - e.timestamp
+                if (e.end > now) {
+                    val newDuration = now - e.timestamp
+                    e.amount *= newDuration.toDouble() / e.duration
+                    e.duration = newDuration
+                }
                 val profile = profileFunction.getProfile(e.timestamp) ?: return total
                 val calc = e.iobCalc(toTime, profile, activePlugin.activeInsulin)
                 total.plus(calc)
@@ -636,7 +640,11 @@ class IobCobCalculatorPlugin @Inject constructor(
                 val e = extendedBoluses[pos]
                 if (e.timestamp > toTime) continue
                 val profile = profileFunction.getProfile(e.timestamp) ?: continue
-                if (e.end > now) e.duration = now - e.timestamp
+                if (e.end > now) {
+                    val newDuration = now - e.timestamp
+                    e.amount *= newDuration.toDouble() / e.duration
+                    e.duration = newDuration
+                }
                 val calc = e.iobCalc(toTime, profile, activePlugin.activeInsulin)
                 totalExt.plus(calc)
             }
@@ -671,7 +679,11 @@ class IobCobCalculatorPlugin @Inject constructor(
                 val e = extendedBoluses[pos]
                 if (e.timestamp > toTime) continue
                 val profile = profileFunction.getProfile(e.timestamp) ?: continue
-                if (e.end > now) e.duration = now - e.timestamp
+                if (e.end > now) {
+                    val newDuration = now - e.timestamp
+                    e.amount *= newDuration.toDouble() / e.duration
+                    e.duration = newDuration
+                }
                 val calc = e.iobCalc(toTime, profile, lastAutosensResult, exercise_mode, half_basal_exercise_target, isTempTarget, activePlugin.activeInsulin)
                 totalExt.plus(calc)
             }
