@@ -406,7 +406,7 @@ class IobCobCalculatorPlugin @Inject constructor(
             scheduledEvent = event
             scheduledHistoryPost = historyWorker.schedule({
                                                               synchronized(this) {
-                                                                  aapsLogger.debug(LTag.DATABASE, "Running newHistoryData")
+                                                                  aapsLogger.debug(LTag.AUTOSENS, "Running newHistoryData")
                                                                   newHistoryData(
                                                                       event.oldDataTimestamp,
                                                                       event.reloadBgData,
