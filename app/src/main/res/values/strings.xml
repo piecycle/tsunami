@@ -90,9 +90,6 @@
     <string name="enable_datasmoothing">Enable data smoothing</string>
     <string name="enable_datasmoothing_summary">Smooth incoming sensor data.</string>
     -->
-    <string name="key_enable_tae" translatable="false">enable_tae</string>
-    <string name="enable_tae_title">Tsunami Activity Engine</string>
-    <string name="enable_tae_summary">Automatically detect and handle unannounced meals. Read the documentation before use!</string>
     <string name="key_tae_useautoisf" translatable="false">openapsama_useautoisf</string>
     <string name="key_tae_autoisf_max" translatable="false">autoisf_max</string>
     <!--

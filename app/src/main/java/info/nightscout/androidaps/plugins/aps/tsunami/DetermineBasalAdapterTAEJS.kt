@@ -238,42 +238,23 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             this.profile.put("out_units", "mmol/L")
         }
 //**********************************************************************************************************************************************
-        //MP UAM tsunami profile variables START
-        // autoISF === START
-        // mod 7e: can I add use autoisf here?
-        //MP UAM tsunami profile variables START
-        // autoISF === START
-        // mod 7e: can I add use autoisf here?
         this.profile.put("use_autoisf", sp.getBoolean(R.string.key_tae_useautoisf, false))
-        // mod 7d: can I add autosens_min here?
-        // mod 7d: can I add autosens_min here?
         this.profile.put("autoisf_max", SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_max,"1.2")))
         this.profile.put("autoisf_hourlychange", SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_hourlychange,"0.2")))
-        // autoISF === END
-        //mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
-        //mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
-        //mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
-        // autoISF === END
-        //mProfile.put("scale_min",SafeParse.stringToDouble(sp.getString(R.string.key_scale_min,"10")));
-        //mProfile.put("scale_max",SafeParse.stringToDouble(sp.getString(R.string.key_scale_max,"30")));
-        //mProfile.put("scale_50",SafeParse.stringToDouble(sp.getString(R.string.key_scale_50,"4")));
-
-        //MP: Make data smoothing optional
-        //this.profile.put("enable_datasmoothing", sp.getBoolean(R.string.key_enable_datasmoothing, false))
-        //val datasmoothingenabled: Boolean = sp.getBoolean(R.string.key_enable_datasmoothing, false) //MP: datasmoothing dependency
-
-        //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
-        //mProfile.put("enable_w_zero", datasmoothingenabled && sp.getBoolean(R.string.key_enable_w_zero, false));
         this.profile.put("UAM_boluscap", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap, "1")))
         this.profile.put("insulinreqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinreqPCT, "65")))
         this.profile.put("tae_start", SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0")))
         this.profile.put("tae_end", SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0")))
         this.profile.put("percentage", profile.percentage)
-        //mProfile.put("adjtarget",SafeParse.stringToDouble(sp.getString(R.string.key_adjtarget,"1.2")))
         this.profile.put("dia", profile.dia)
 
-        val activityPredTime = TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak)
-        this.profile.put("peaktime", activityPredTime) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
+        val activityPredTime_PK = TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak) //MP act. pred. time for PK ins. models; target time = insulin peak time
+        val activityPredTime_PD = 65L //MP activity prediction time for pharmacodynamic model; fixed to 65 min (approx. peak time of 1 U bolus)
+        this.profile.put("peaktime", activityPredTime_PK) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
+        val insulinInterface = activePlugin.activeInsulin
+        val insulinID = insulinInterface.id.value
+        this.profile.put("insulinID", insulinID)
+
         //MP UAM tsunami profile variables END
 //**********************************************************************************************************************************************
         val now = System.currentTimeMillis()
@@ -300,14 +281,20 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         }
 
         var futureactivity = 0.0
-        for (i in -2..2) { //MP: calculate 5-minute-insulin activity centering around peaktime
+        var activityPredTime: Long
+        if (insulinID != 6 && insulinID != 7) { //MP if not using PD insulin models
+            activityPredTime = activityPredTime_PK
+        } else { //MP if using PD insulin models
+            activityPredTime = activityPredTime_PD
+        }
+        for (i in -4..0) { //MP: calculate 5-minute-insulin activity centering around peaktime
             val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityPredTime - i), profile)
             futureactivity += iob.activity
         }
 
         var sensorlag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
         var sensorlagactivity = 0.0
-        for (i in -2..2) {
+        for (i in -4..0) {
             val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorlag - i), profile)
             sensorlagactivity += iob.activity
         }
@@ -328,11 +315,11 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 //**********************************************************************************************************************************************
         iobData = iobCobCalculator.convertToJSONArray(iobArray)
 //**********************************************************************************************************************************************
-        mGlucoseStatus.put("futureactivity", futureactivity)
+        mGlucoseStatus.put("futureactivity", futureactivity);
+        mGlucoseStatus.put("activityPredTime", activityPredTime);
         mGlucoseStatus.put("sensorlagactivity", sensorlagactivity)
         mGlucoseStatus.put("historicactivity", historicactivity)
         mGlucoseStatus.put("currentactivity", currentactivity)
-        mGlucoseStatus.put("activity_pred_time", activityPredTime)
         mGlucoseStatus.put("deltascore", glucoseStatus.deltascore);
 //**********************************************************************************************************************************************
         mGlucoseStatus.put("glucose", glucoseStatus.glucose)
