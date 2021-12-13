@@ -233,7 +233,8 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         // Biometric protection activated without set master password
         if ((rh.gs(R.string.key_settings_protection) == key ||
                 rh.gs(R.string.key_application_protection) == key ||
-                rh.gs(R.string.key_bolus_protection) == key) &&
+                rh.gs(R.string.key_bolus_protection) == key ||
+                rh.gs(R.string.key_prebolus_protection) == key) &&  //ADO UAM PreBolus buttons
             sp.getString(R.string.key_master_password, "") == "" &&
             sp.getInt(key, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.BIOMETRIC.ordinal
         ) {
@@ -247,7 +248,8 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         // Master password erased with activated Biometric protection
         val isBiometricActivated = sp.getInt(R.string.key_settings_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.BIOMETRIC.ordinal ||
             sp.getInt(R.string.key_application_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.BIOMETRIC.ordinal ||
-            sp.getInt(R.string.key_bolus_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.BIOMETRIC.ordinal
+            sp.getInt(R.string.key_bolus_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.BIOMETRIC.ordinal ||
+            sp.getInt(R.string.key_prebolus_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.BIOMETRIC.ordinal  //ADO UAM PreBolus buttons
         if (rh.gs(R.string.key_master_password) == key && sp.getString(key, "") == "" && isBiometricActivated) {
             activity?.let {
                 val title = rh.gs(R.string.unsecure_fallback_biometric)
@@ -341,6 +343,13 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
                 val pass: Preference? = findPreference(rh.gs(R.string.key_bolus_password))
                 if (pass != null) pass.isEnabled = pref.value == ProtectionCheck.ProtectionType.CUSTOM_PASSWORD.ordinal.toString()
             }
+
+            //ADO UAM PreBolus buttons start
+            if (pref.getKey() == rh.gs(R.string.key_prebolus_protection)) {
+                val pass: Preference? = findPreference(rh.gs(R.string.key_prebolus_password))
+                if (pass != null) pass.isEnabled = pref.value == ProtectionCheck.ProtectionType.CUSTOM_PASSWORD.ordinal.toString()
+            }
+            //ADO UAM PreBolus buttons end
         }
         if (pref is EditTextPreference) {
             if (pref.getKey().contains("password") || pref.getKey().contains("secret")) {
@@ -356,6 +365,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         }
 
         val hmacPasswords = arrayOf(
+            rh.gs(R.string.key_prebolus_password),  //ADO UAM PreBolus buttons
             rh.gs(R.string.key_bolus_password),
             rh.gs(R.string.key_master_password),
             rh.gs(R.string.key_application_password),
@@ -410,6 +420,12 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
                     passwordCheck.setPassword(context, R.string.bolus_password, R.string.key_bolus_password)
                     return true
                 }
+                //ADO UAM PreBolus buttons start
+                if (preference.key == rh.gs(R.string.key_prebolus_password)) {
+                    passwordCheck.setPassword(context, R.string.prebolus_password, R.string.key_prebolus_password)
+                    return true
+                }
+                //ADO UAM PreBolus buttons end
                 if (preference.key == rh.gs(R.string.key_application_password)) {
                     passwordCheck.setPassword(context, R.string.application_password, R.string.key_application_password)
                     return true
