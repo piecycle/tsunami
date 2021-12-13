@@ -122,6 +122,13 @@
                 validate:minNumber="-50"
                 validate:testType="numericRange" />
 
+            <!-- ADO prebolus buttons START-->
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/key_show_prebolus_button"
+                android:title="@string/overview_prebolus_label" />
+            <!-- ADO prebolus buttons END-->
+
             <SwitchPreference
                 android:defaultValue="false"
                 android:key="@string/key_show_cgm_button"
