@@ -25,7 +25,6 @@ package info.nightscout.androidaps.plugins.general.overview.graphExtensions;
  */
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -154,9 +153,6 @@ public class PointsWithLabelGraphSeries<E extends DataPointWithLabelInterface> e
             E value = values.next();
 
             mPaint.setColor(value.getColor());
-            if (value.getShape() == Shape.BG) {
-                mPaint.setColor(Color.WHITE);
-            }
 
             double valY = value.getY() - minY;
             double ratY = valY / diffY;
@@ -229,7 +225,6 @@ public class PointsWithLabelGraphSeries<E extends DataPointWithLabelInterface> e
                     drawArrows(points, canvas, mPaint);
                 } else if (value.getShape() == Shape.BOLUS) {
                     mPaint.setStrokeWidth(0);
-                    mPaint.setColor(Color.LTGRAY);
                     Point[] points = new Point[3];
                     points[0] = new Point((int) endX, (int) (endY - scaledPxSize));
                     points[1] = new Point((int) (endX + scaledPxSize), (int) (endY + scaledPxSize * 0.67));
@@ -252,7 +247,6 @@ public class PointsWithLabelGraphSeries<E extends DataPointWithLabelInterface> e
                     }
                 } else if (value.getShape() == Shape.SMB) {
                     mPaint.setStrokeWidth(2);
-                    mPaint.setColor(Color.LTGRAY);
                     Point[] points = new Point[3];
                     float size = value.getSize() * scaledPxSize;
                     points[0] = new Point((int) endX, (int) (endY - size));
