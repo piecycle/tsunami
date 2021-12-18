@@ -63,47 +63,6 @@
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 
-        <!--ADO prebolus buttons START-->
-        <info.nightscout.androidaps.utils.ui.SingleClickButton
-            android:id="@+id/prebolus1button"
-            style="?android:attr/buttonStyle"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginEnd="-4dp"
-            android:layout_weight="0.5"
-            android:drawableTop="@drawable/ic_bolus"
-            android:text="@string/overview_prebolus1_label"
-            android:textColor="@color/colorInsulinButton"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
-
-        <info.nightscout.androidaps.utils.ui.SingleClickButton
-            android:id="@+id/prebolus2button"
-            style="?android:attr/buttonStyle"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginEnd="-4dp"
-            android:layout_weight="0.5"
-            android:drawableTop="@drawable/ic_bolus"
-            android:text="@string/overview_prebolus2_label"
-            android:textColor="@color/colorInsulinButton"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
-
-        <info.nightscout.androidaps.utils.ui.SingleClickButton
-            android:id="@+id/prebolus3button"
-            style="?android:attr/buttonStyle"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginEnd="-4dp"
-            android:layout_weight="0.5"
-            android:drawableTop="@drawable/ic_bolus"
-            android:text="@string/overview_prebolus3_label"
-            android:textColor="@color/colorInsulinButton"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
-        <!--ADO prebolus buttons END-->
-
         <info.nightscout.androidaps.utils.ui.SingleClickButton
             android:id="@+id/carbs_button"
             style="?android:attr/buttonStyle"

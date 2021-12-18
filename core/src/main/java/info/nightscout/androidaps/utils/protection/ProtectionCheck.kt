@@ -15,8 +15,7 @@ class ProtectionCheck @Inject constructor(
     enum class Protection {
         PREFERENCES,
         APPLICATION,
-        BOLUS,
-        PREBOLUS      //ADO UAM PreBolus buttons
+        BOLUS
     }
 
     enum class ProtectionType {
@@ -29,20 +28,17 @@ class ProtectionCheck @Inject constructor(
     private val passwordsResourceIDs = listOf(
         R.string.key_settings_password,
         R.string.key_application_password,
-        R.string.key_bolus_password,  //ADO UAM PreBolus buttons
-        R.string.key_prebolus_password)  //ADO UAM PreBolus buttons
+        R.string.key_bolus_password)
 
     private val protectionTypeResourceIDs = listOf(
         R.string.key_settings_protection,
         R.string.key_application_protection,
-        R.string.key_bolus_protection,  //ADO UAM PreBolus buttons
-        R.string.key_prebolus_protection)  //ADO UAM PreBolus buttons
+        R.string.key_bolus_protection)
 
     private val titleResourceIDs = listOf(
         R.string.settings_password,
         R.string.application_password,
-        R.string.bolus_password,  //ADO UAM PreBolus buttons
-        R.string.prebolus_password)  //ADO UAM PreBolus buttons
+        R.string.bolus_password)
 
     fun isLocked(protection: Protection): Boolean {
         return when (ProtectionType.values()[sp.getInt(protectionTypeResourceIDs[protection.ordinal], ProtectionType.NONE.ordinal)]) {
