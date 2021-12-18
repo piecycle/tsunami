@@ -51,8 +51,7 @@ open class TsunamiPlugin @Inject constructor(
     .pluginName(R.string.tsunami)
     .shortName(R.string.tsunami_shortname)
     .preferencesId(R.xml.pref_tsunami)
-    .description(R.string.description_tsunami)
-    .setDefault(),
+    .description(R.string.description_tsunami),
     aapsLogger, resourceHelper, injector
 ), APS, Constraints {
 
@@ -174,7 +173,9 @@ open class TsunamiPlugin @Inject constructor(
                 smbAllowed.value(),
                 uam.value(),
                 advancedFiltering.value(),
-                activePlugin.activeBgSource.javaClass.simpleName == "DexcomPlugin")
+                advancedFiltering.value() // true for dexcom plugin and xdrip g5 or g6 native
+                   //activePlugin.getActiveBgSource().getClass().getSimpleName().equals("DexcomPlugin")
+            );
             val now = System.currentTimeMillis()
             val determineBasalResultTAE = determineBasalAdapterTAEJS.invoke()
             profiler.log(LTag.APS, "SMB calculation", start)
