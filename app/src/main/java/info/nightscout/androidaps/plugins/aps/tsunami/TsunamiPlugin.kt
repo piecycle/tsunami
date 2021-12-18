@@ -5,6 +5,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.R
+import info.nightscout.androidaps.annotations.OpenForTesting
 import info.nightscout.androidaps.database.AppRepository
 import info.nightscout.androidaps.database.ValueWrapper
 import info.nightscout.androidaps.extensions.target
@@ -27,13 +28,14 @@ import info.nightscout.shared.sharedPreferences.SP
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OpenForTesting
 @Singleton
-open class TsunamiPlugin @Inject constructor(
+class TsunamiPlugin @Inject constructor(
     injector: HasAndroidInjector,
     aapsLogger: AAPSLogger,
     private val rxBus: RxBus,
     private val constraintChecker: ConstraintChecker,
-    resourceHelper: ResourceHelper,
+    rh: ResourceHelper,
     private val profileFunction: ProfileFunction,
     private val context: Context,
     private val activePlugin: ActivePlugin,
@@ -52,7 +54,7 @@ open class TsunamiPlugin @Inject constructor(
     .shortName(R.string.tsunami_shortname)
     .preferencesId(R.xml.pref_tsunami)
     .description(R.string.description_tsunami),
-    aapsLogger, resourceHelper, injector
+    aapsLogger, rh, injector
 ), APS, Constraints {
 
     // last values
