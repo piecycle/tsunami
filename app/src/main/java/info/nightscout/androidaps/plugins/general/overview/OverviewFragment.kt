@@ -68,7 +68,11 @@ import info.nightscout.androidaps.plugins.source.DexcomPlugin
 import info.nightscout.androidaps.plugins.source.XdripPlugin
 import info.nightscout.androidaps.queue.Callback
 import info.nightscout.androidaps.skins.SkinProvider
-import info.nightscout.androidaps.utils.*
+import info.nightscout.androidaps.utils.DateUtil
+import info.nightscout.androidaps.utils.DefaultValueHelper
+import info.nightscout.androidaps.utils.FabricPrivacy
+import info.nightscout.androidaps.utils.ToastUtils
+import info.nightscout.androidaps.utils.TrendCalculator
 import info.nightscout.androidaps.utils.alertDialogs.OKDialog
 import info.nightscout.androidaps.utils.buildHelper.BuildHelper
 import info.nightscout.androidaps.utils.protection.ProtectionCheck
@@ -217,15 +221,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         binding.infoLayout.apsMode.setOnClickListener(this)
         binding.infoLayout.apsMode.setOnLongClickListener(this)
         binding.activeProfile.setOnLongClickListener(this)
-        //ADO UAM PreBolus buttons start
-        binding.buttonsLayout.prebolus1button?.setOnClickListener(this)
-        binding.buttonsLayout.prebolus2button?.setOnClickListener(this)
-        binding.buttonsLayout.prebolus3button?.setOnClickListener(this)
-        binding.buttonsLayout.prebolus1button?.setOnLongClickListener(this)
-        binding.buttonsLayout.prebolus2button?.setOnLongClickListener(this)
-        binding.buttonsLayout.prebolus3button?.setOnLongClickListener(this)
-        //ADO UAM PreBolus buttons end
-
     }
 
     @Synchronized
@@ -379,11 +374,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     activity,
                     ProtectionCheck.Protection.BOLUS,
                     UIRunnable { if (isAdded) TempTargetDialog().show(childFragmentManager, "Overview") })
-                //ADO UAM PreBolus buttons start
-                R.id.prebolus1button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREBOLUS, UIRunnable { if(isAdded) prebolus(SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1, "0.5"))) })
-                R.id.prebolus2button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREBOLUS, UIRunnable { if(isAdded) prebolus(SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2, "1.0"))) })
-                R.id.prebolus3button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREBOLUS, UIRunnable { if(isAdded) prebolus(SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus3, "2.0"))) })
-                //ADO UAM PreBolus buttons end
 
                 R.id.active_profile      -> {
                     ProfileViewerDialog().also { pvd ->
@@ -453,39 +443,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         }
     }
 
-    //ADO UAM PreBolus buttons start
-    private fun prebolus(pb: Double) {
-        // Check protection exists, if not then do not pre-bolus but open the insulin dialog
-        if (sp.getInt(info.nightscout.androidaps.core.R.string.key_prebolus_protection, ProtectionCheck.ProtectionType.NONE.ordinal) == ProtectionCheck.ProtectionType.NONE.ordinal) {
-            InsulinDialog().show(childFragmentManager, "Overview")
-        } else {
-            if (pb > 0) {
-                val detailedBolusInfo = DetailedBolusInfo()
-                //val notes = binding.notesLayout.notes.text.toString()
-                val time = dateUtil.now()
-                detailedBolusInfo.eventType = DetailedBolusInfo.EventType.CORRECTION_BOLUS
-                detailedBolusInfo.insulin = pb
-                detailedBolusInfo.context = context
-                detailedBolusInfo.notes = "notes"
-                detailedBolusInfo.timestamp = time
-
-                    uel.log(Action.BOLUS, Sources.InsulinDialog,
-                            "notes",
-                            ValueWithUnit.Insulin(pb))
-                    commandQueue.bolus(detailedBolusInfo, object : Callback() {
-                        override fun run() {
-                            if (!result.success) {
-                                ErrorHelperActivity.runAlarm(ctx, result.comment, rh.gs(R.string.treatmentdeliveryerror), R.raw.boluserror)
-                            } else {
-                                bolusTimer.removeBolusReminder()
-                            }
-                        }
-                    })
-            }
-        }
-    }
-    //ADO UAM PreBolus buttons end
-
     private fun openCgmApp(packageName: String) {
         context?.let {
             val packageManager = it.packageManager
@@ -525,13 +482,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     UIRunnable { ProfileSwitchDialog().show(childFragmentManager, "ProfileSwitchDialog") })
             }
 
-            //ADO UAM PreBolus buttons start
-
-            R.id.prebolus1button -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") }) }
-            R.id.prebolus2button -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") }) }
-            R.id.prebolus3button -> activity?.let { activity -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if(isAdded) InsulinDialog().show(childFragmentManager, "Overview") }) }
-
-            //ADO UAM PreBolus buttons end
         }
         return false
     }
@@ -601,12 +551,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         binding.buttonsLayout.treatmentButton.visibility = (pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_treatment_button, false)).toVisibility()
         binding.buttonsLayout.wizardButton.visibility = (pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_wizard_button, true)).toVisibility()
         binding.buttonsLayout.insulinButton.visibility = (pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
-
-        //ADO UAM PreBolus buttons start
-        binding.buttonsLayout.prebolus1button.visibility = (pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_prebolus_button, true)).toVisibility()
-        binding.buttonsLayout.prebolus2button.visibility = (pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_prebolus_button, true)).toVisibility()
-        binding.buttonsLayout.prebolus3button.visibility = (pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_prebolus_button, true)).toVisibility()
-        //ADO UAM PreBolus buttons end
 
         // **** Calibration & CGM buttons ****
         val xDripIsBgSource = xdripPlugin.isEnabled()
@@ -782,12 +726,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         binding.infoLayout.bg.setTextColor(overviewData.lastBgColor)
         binding.infoLayout.arrow.setImageResource(trendCalculator.getTrendArrow(overviewData.lastBg).directionToIcon())
         binding.infoLayout.arrow.setColorFilter(overviewData.lastBgColor)
-
-        //ADO UAM PreBolus buttons start
-        binding.buttonsLayout.prebolus1button.setText("PreBolus (" + SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus1, "0.5")) + ")")
-        binding.buttonsLayout.prebolus2button.setText("PreBolus (" + SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus2, "1.0")) + ")")
-        binding.buttonsLayout.prebolus3button.setText("PreBolus (" + SafeParse.stringToDouble(sp.getString(R.string.key_UAM_PBolus3, "2.0")) + ")")
-        //ADO UAM PreBolus buttons end
 
         val glucoseStatus = glucoseStatusProvider.glucoseStatusData
         if (glucoseStatus != null) {

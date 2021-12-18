@@ -113,36 +113,6 @@
             validate:minNumber="15"
             validate:testType="numericRange" />
 
-        <!-- ADO prebolus buttons START-->
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="0.5"
-            android:dialogMessage="@string/UAM_PBolus1_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_UAM_PBolus1"
-            android:title="@string/UAM_PBolus1_title"
-            validate:floatmaxNumber="5"
-            validate:floatminNumber="0"
-            validate:testType="floatNumericRange" />
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="1.0"
-            android:dialogMessage="@string/UAM_PBolus2_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_UAM_PBolus2"
-            android:title="@string/UAM_PBolus2_title"
-            validate:floatmaxNumber="5"
-            validate:floatminNumber="0"
-            validate:testType="floatNumericRange" />
-        <info.nightscout.androidaps.utils.textValidator.ValidatingEditTextPreference
-            android:defaultValue="2.0"
-            android:dialogMessage="@string/UAM_PBolus3_summary"
-            android:inputType="numberDecimal"
-            android:key="@string/key_UAM_PBolus3"
-            android:title="@string/UAM_PBolus3_title"
-            validate:floatmaxNumber="5"
-            validate:floatminNumber="0"
-            validate:testType="floatNumericRange" />
-        <!-- ADO prebolus buttons END-->
-
 
         <SwitchPreference
             android:defaultValue="false"

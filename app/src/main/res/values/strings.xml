@@ -1176,20 +1176,4 @@
     <string name="recalculated_data_used">Recalculated data used</string>
     <string name="bg_too_close">BG too close:\n%1$s\n%2$s</string>
 
-    <!-- ADO prebolus buttons START-->
-    <string name="overview_prebolus1_label">PB (0.5)</string>
-    <string name="overview_prebolus2_label">PB (1.0)</string>
-    <string name="overview_prebolus3_label">PB (2.0)</string>
-    <string name="key_show_prebolus_button" translatable="false">show_prebolus_button</string>
-    <string name="overview_prebolus_label" translatable="false">Pre-Bolus</string>
-    <string name="key_UAM_PBolus1" translatable="false">UAM_PBolus1</string>
-    <string name="UAM_PBolus1_title">UAM prebolus button1 [U]</string>
-    <string name="UAM_PBolus1_summary">Pre-Bolus button 1 units. Also used within TT of less than 90 mg/dl with a duration between 60 and 120 minutes.</string>
-    <string name="key_UAM_PBolus2" translatable="false">UAM_PBolus2</string>
-    <string name="UAM_PBolus2_title">UAM prebolus button2 [U]</string>
-    <string name="UAM_PBolus2_summary">Pre-Bolus button 2 units</string>
-    <string name="key_UAM_PBolus3" translatable="false">UAM_PBolus3</string>
-    <string name="UAM_PBolus3_title">UAM prebolus button3 [U]</string>
-    <string name="UAM_PBolus3_summary">Pre-Bolus button 3 units</string>
-    <!-- ADO prebolus buttons START-->
 </resources>
