@@ -1309,7 +1309,6 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             // rate required to deliver insulinReq less insulin over 30m:
             var rate = basal + (2 * insulinReq);
             rate = round_basal(rate, profile);
-            rate = round(rate, 2);
 
             // if required temp < existing temp basal
             var insulinScheduled = currenttemp.duration * (currenttemp.rate - basal) / 60;
@@ -1428,7 +1427,6 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         // rate required to deliver insulinReq more insulin over 30m:
         rate = basal + (2 * insulinReq);
         rate = round_basal(rate, profile);
-        rate = round(rate, 2);
         insulinReq = round(insulinReq, 3);
         rT.insulinReq = insulinReq;
         //console.error(iob_data.lastBolusTime);
@@ -1576,8 +1574,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         if (rate > maxSafeBasal) {
             rT.reason += "adj. req. rate: " + round(rate, 2) + " to maxSafeBasal: " + maxSafeBasal + ", ";
             rate = round_basal(maxSafeBasal, profile);
-            rate = round(rate, 2);
-            }
+        }
 
         insulinScheduled = currenttemp.duration * (currenttemp.rate - basal) / 60;
         if (insulinScheduled >= insulinReq * 2) { // if current temp would deliver >2x more than the required insulin, lower the rate
