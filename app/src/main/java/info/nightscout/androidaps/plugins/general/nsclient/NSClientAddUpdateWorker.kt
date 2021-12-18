@@ -16,8 +16,8 @@ import info.nightscout.androidaps.database.transactions.*
 import info.nightscout.androidaps.extensions.*
 import info.nightscout.androidaps.interfaces.ActivePlugin
 import info.nightscout.androidaps.interfaces.Config
-import info.nightscout.androidaps.logging.AAPSLogger
-import info.nightscout.androidaps.logging.LTag
+import info.nightscout.shared.logging.AAPSLogger
+import info.nightscout.shared.logging.LTag
 import info.nightscout.androidaps.logging.UserEntryLogger
 import info.nightscout.androidaps.plugins.bus.RxBus
 import info.nightscout.androidaps.plugins.general.overview.events.EventNewNotification
@@ -28,7 +28,7 @@ import info.nightscout.androidaps.utils.DateUtil
 import info.nightscout.androidaps.utils.JsonHelper
 import info.nightscout.androidaps.utils.JsonHelper.safeGetLong
 import info.nightscout.androidaps.utils.buildHelper.BuildHelper
-import info.nightscout.androidaps.utils.sharedPreferences.SP
+import info.nightscout.shared.sharedPreferences.SP
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -130,6 +130,13 @@ class NSClientAddUpdateWorker(
                                         ValueWithUnit.Gram(it.amount.toInt())
                                     )
                                     aapsLogger.debug(LTag.DATABASE, "Invalidated carbs $it")
+                                }
+                                result.updated.forEach {
+                                    uel.log(Action.CARBS, Sources.NSClient,
+                                        ValueWithUnit.Timestamp(it.timestamp),
+                                        ValueWithUnit.Gram(it.amount.toInt())
+                                    )
+                                    aapsLogger.debug(LTag.DATABASE, "Updated carbs $it")
                                 }
                                 result.updatedNsId.forEach {
                                     aapsLogger.debug(LTag.DATABASE, "Updated nsId carbs $it")
