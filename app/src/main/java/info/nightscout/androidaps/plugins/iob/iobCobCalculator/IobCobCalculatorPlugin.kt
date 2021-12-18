@@ -316,7 +316,6 @@ class IobCobCalculatorPlugin @Inject constructor(
                     result.carbs += it.amount
                     if (it.timestamp > result.lastCarbTime) {
                         result.lastCarbTime = it.timestamp
-                        result.lastBolus = it.amount
                     }
                 }
             }
@@ -329,6 +328,7 @@ class IobCobCalculatorPlugin @Inject constructor(
         }
         val lastBolus = repository.getLastBolusRecordWrapped().blockingGet()
         result.lastBolusTime = if (lastBolus is ValueWrapper.Existing) lastBolus.value.timestamp else 0L
+        result.lastBolus = if (lastBolus is ValueWrapper.Existing) lastBolus.value.amount else 0.0 //MP save last bolus size into MealData for use by Tsunami plugin
         return result
     }
 
