@@ -77,7 +77,9 @@
     <string name="description_insulin_lyumjev">Insulin preset for Lyumjev. (classic
         pharmacokinetic model)</string>
     <string name="description_insulin_lyumjev_U100_PD">Glucodynamic model for Lyumjev U100 (standard concentration); This model automatically adjusts the duration of insulin action (DIA).</string>
-    <string name="description_insulin_lyumjev_U200_PD">Glucodynamic model for Lyumjev U200 (2 x concentrated); This model automatically adjusts the duration of insulin action (DIA). HALVE YOUR BASALS AND DOUBLE YOUR ISFS!</string>
+    <string name="description_insulin_lyumjev_U200_PD">Glucodynamic model for Lyumjev U200 (2 x
+        concentrated); This model automatically adjusts the duration of insulin action (DIA).
+        YOU MUST HALVE YOUR BASALS AND DOUBLE YOUR ISFS BEFORE USE!</string>
     <string name="description_insulin_free_peak">Allows you to define the peak of the insulin activity and should only be used by advanced users</string>
     <string name="description_loop">Activate or deactivate the implementation triggering the loop.</string>
     <string name="description_ns_client">Synchronizes your data with Nightscout</string>
