@@ -91,10 +91,6 @@ abstract class InsulinOrefBasePlugin(
                 }
                 val tp_model = tp.pow(2.0) * 2 //MP The peak time in the model is defined as half of the square root of this variable - thus the tp entered into the model must be transformed first
                 //MP Calculate remaining IOB of this bolus (PD based approach)
-                var pct_ins_left = 0.0 //MP insulin equivalents in U that are still "unused"
-                for (i in 0..t.toInt()) {
-                    pct_ins_left += (2 * bolus.amount / tp_model) * i * exp(-i.toDouble().pow(2.0) / tp_model)
-                }
                 /**
                  *
                  * MP - UAM Tsunami PD model U100 vs U200
@@ -110,7 +106,19 @@ abstract class InsulinOrefBasePlugin(
                  *
                  */
                 result.activityContrib = (2 * bolus.amount / tp_model) * t * exp(-t.pow(2.0) / tp_model)
-                result.iobContrib = bolus.amount * (1 - (pct_ins_left/bolus.amount))
+
+                //MP New IOB formula - integrated version of the above activity curve
+                val lowerLimit = t //MP lower integration limit
+                val upperLimit = 8.0 //MP upper integration limit
+                result.iobContrib = bolus.amount - (0.5 * (2 * bolus.amount / tp_model) * tp_model * (exp(-upperLimit.pow(2)/tp_model) - exp(-lowerLimit.pow(2)/tp_model)))
+
+                //MP Below: old IOB formula; produces (almost?) identical results, but requires for loop
+                //var pct_ins_left = 0.0 //MP insulin equivalents in U that are still "unused"
+                //for (i in 0..t.toInt()) {
+                //    pct_ins_left += (2 * bolus.amount / tp_model) * i * exp(-i.toDouble().pow(2.0) / tp_model)
+                //}
+                //result.iobContrib = bolus.amount * (1 - (pct_ins_left/bolus.amount))
+
             } else {
                 // MP: If the Lyumjev pharmacodynamic models are not used (IDs 6 & 7), use the traditional PK-based insulin model instead;
                 val peak = peak
