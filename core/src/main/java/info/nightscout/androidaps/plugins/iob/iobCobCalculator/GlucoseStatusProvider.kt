@@ -187,9 +187,7 @@ class GlucoseStatusProvider @Inject constructor(
             windowsize = sizeRecords //MP Adjust smoothing window to the size of database if it is smaller than the original window size
         }
 
-        //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
-
-        //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
+       //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
         for (i in 0 until windowsize) {
             if (Math.round((data[i].timestamp - data[i + 1].timestamp) / (1000.0 * 60)) >= 12) { //MP: 12 min because a missed reading (i.e. readings coming in after 10 min) can occur for various reasons, like walking away from the phone or reinstalling AAPS
                 //if (Math.round((data.get(i).date - data.get(i + 1).date) / 60000L) <= 7) { //MP crashes the app, useful for testing
@@ -200,8 +198,6 @@ class GlucoseStatusProvider @Inject constructor(
                 break
             }
         }
-
-// CALCULATE SMOOTHING WINDOW - 1st order exponential smoothing
 
 // CALCULATE SMOOTHING WINDOW - 1st order exponential smoothing
         o1_smoothbg.clear() // MP reset smoothed bg array
