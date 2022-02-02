@@ -17,8 +17,6 @@ import info.nightscout.shared.logging.AAPSLogger
 import info.nightscout.shared.logging.LTag
 import info.nightscout.androidaps.plugins.aps.logger.LoggerCallback
 import info.nightscout.androidaps.plugins.aps.loop.ScriptReader
-import info.nightscout.androidaps.plugins.aps.openAPSSMB.DetermineBasalResultSMB
-import info.nightscout.androidaps.plugins.aps.openAPSSMB.SMBDefaults
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
 import info.nightscout.androidaps.plugins.iob.iobCobCalculator.GlucoseStatus
 import info.nightscout.androidaps.utils.Round
@@ -72,7 +70,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         private set
 
     @Suppress("SpellCheckingInspection")
-    operator fun invoke(): DetermineBasalResultSMB? {
+    operator fun invoke(): DetermineBasalResultTAE? {
         aapsLogger.debug(LTag.APS, ">>> Invoking determine_basal <<<")
         aapsLogger.debug(LTag.APS, "Glucose status: " + mGlucoseStatus.toString().also { glucoseStatusParam = it })
         aapsLogger.debug(LTag.APS, "IOB data:       " + iobData.toString().also { iobDataParam = it })
@@ -85,7 +83,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         aapsLogger.debug(LTag.APS, "SMBAlwaysAllowed:  $smbAlwaysAllowed")
         aapsLogger.debug(LTag.APS, "CurrentTime: $currentTime")
         aapsLogger.debug(LTag.APS, "isSaveCgmSource: $saveCgmSource")
-        var determineBasalResultSMB: DetermineBasalResultSMB? = null
+        var determineBasalResultSMB: DetermineBasalResultTAE? = null
         val rhino = Context.enter()
         val scope: Scriptable = rhino.initStandardObjects()
         // Turn off optimization to make Rhino Android compatible
@@ -134,7 +132,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
                 aapsLogger.debug(LTag.APS, "Result: $result")
                 try {
                     val resultJson = JSONObject(result)
-                    determineBasalResultSMB = DetermineBasalResultSMB(injector, resultJson)
+                    determineBasalResultSMB = DetermineBasalResultTAE(injector, resultJson)
                 } catch (e: JSONException) {
                     aapsLogger.error(LTag.APS, "Unhandled exception", e)
                 }
@@ -198,12 +196,12 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.profile.put("high_temptarget_raises_sensitivity", false)
         //mProfile.put("low_temptarget_lowers_sensitivity", SP.getBoolean(R.string.key_low_temptarget_lowers_sensitivity, SMBDefaults.low_temptarget_lowers_sensitivity));
         this.profile.put("low_temptarget_lowers_sensitivity", false)
-        this.profile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, SMBDefaults.sensitivity_raises_target))
-        this.profile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, SMBDefaults.resistance_lowers_target))
-        this.profile.put("adv_target_adjustments", SMBDefaults.adv_target_adjustments)
-        this.profile.put("exercise_mode", SMBDefaults.exercise_mode)
-        this.profile.put("half_basal_exercise_target", SMBDefaults.half_basal_exercise_target)
-        this.profile.put("maxCOB", SMBDefaults.maxCOB)
+        this.profile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, TAEDefaults.sensitivity_raises_target))
+        this.profile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, TAEDefaults.resistance_lowers_target))
+        this.profile.put("adv_target_adjustments", TAEDefaults.adv_target_adjustments)
+        this.profile.put("exercise_mode", TAEDefaults.exercise_mode)
+        this.profile.put("half_basal_exercise_target", TAEDefaults.half_basal_exercise_target)
+        this.profile.put("maxCOB", TAEDefaults.maxCOB)
         this.profile.put("skip_neutral_temps", pump.setNeutralTempAtFullHour())
         // min_5m_carbimpact is not used within SMB determinebasal
         //if (mealData.usedMinCarbsImpact > 0) {
@@ -211,21 +209,21 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         //} else {
         //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, SMBDefaults.min_5m_carbimpact));
         //}
-        this.profile.put("remainingCarbsCap", SMBDefaults.remainingCarbsCap)
+        this.profile.put("remainingCarbsCap", TAEDefaults.remainingCarbsCap)
         this.profile.put("enableUAM", uamAllowed)
-        this.profile.put("A52_risk_enable", SMBDefaults.A52_risk_enable)
+        this.profile.put("A52_risk_enable", TAEDefaults.A52_risk_enable)
         val smbEnabled = sp.getBoolean(R.string.key_use_smb, false)
-        this.profile.put("SMBInterval", sp.getInt(R.string.key_smbinterval, SMBDefaults.SMBInterval))
+        this.profile.put("SMBInterval", sp.getInt(R.string.key_smbinterval, TAEDefaults.SMBInterval))
         this.profile.put("enableSMB_with_COB", smbEnabled && sp.getBoolean(R.string.key_enableSMB_with_COB, false))
         this.profile.put("enableSMB_with_temptarget", smbEnabled && sp.getBoolean(R.string.key_enableSMB_with_temptarget, false))
         this.profile.put("allowSMB_with_high_temptarget", smbEnabled && sp.getBoolean(R.string.key_allowSMB_with_high_temptarget, false))
         this.profile.put("enableSMB_always", smbEnabled && sp.getBoolean(R.string.key_enableSMB_always, false) && advancedFiltering)
         this.profile.put("enableSMB_after_carbs", smbEnabled && sp.getBoolean(R.string.key_enableSMB_after_carbs, false) && advancedFiltering)
-        this.profile.put("maxSMBBasalMinutes", sp.getInt(R.string.key_smbmaxminutes, SMBDefaults.maxSMBBasalMinutes))
-        this.profile.put("maxUAMSMBBasalMinutes", sp.getInt(R.string.key_uamsmbmaxminutes, SMBDefaults.maxUAMSMBBasalMinutes))
+        this.profile.put("maxSMBBasalMinutes", sp.getInt(R.string.key_smbmaxminutes, TAEDefaults.maxSMBBasalMinutes))
+        this.profile.put("maxUAMSMBBasalMinutes", sp.getInt(R.string.key_uamsmbmaxminutes, TAEDefaults.maxUAMSMBBasalMinutes))
         //set the min SMB amount to be the amount set by the pump.
         this.profile.put("bolus_increment", pumpBolusStep)
-        this.profile.put("carbsReqThreshold", sp.getInt(R.string.key_carbsReqThreshold, SMBDefaults.carbsReqThreshold))
+        this.profile.put("carbsReqThreshold", sp.getInt(R.string.key_carbsReqThreshold, TAEDefaults.carbsReqThreshold))
         this.profile.put("current_basal", basalRate)
         this.profile.put("temptargetSet", tempTargetSet)
         this.profile.put("autosens_max", SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autosens_max, "1.2")))
