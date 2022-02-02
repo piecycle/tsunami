@@ -45,6 +45,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
     @Inject lateinit var profileFunction: ProfileFunction
     @Inject lateinit var iobCobCalculator: IobCobCalculator
     @Inject lateinit var activePlugin: ActivePlugin
+    @Inject lateinit var repository: AppRepository
+    @Inject lateinit var iobCobCalculatorPlugin: IobCobCalculatorPlugin
 
     private var profile = JSONObject()
     private var mGlucoseStatus = JSONObject()
@@ -83,7 +85,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         aapsLogger.debug(LTag.APS, "SMBAlwaysAllowed:  $smbAlwaysAllowed")
         aapsLogger.debug(LTag.APS, "CurrentTime: $currentTime")
         aapsLogger.debug(LTag.APS, "isSaveCgmSource: $saveCgmSource")
-        var determineBasalResultSMB: DetermineBasalResultTAE? = null
+        var determineBasalResultTAE: DetermineBasalResultTAE? = null
         val rhino = Context.enter()
         val scope: Scriptable = rhino.initStandardObjects()
         // Turn off optimization to make Rhino Android compatible
@@ -102,8 +104,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             rhino.evaluateString(scope, "require = function() {return round_basal;};", "JavaScript", 0, null)
 
             //generate functions "determine_basal" and "setTempBasal"
-            rhino.evaluateString(scope, readFile("OpenAPSSMB/determine-basal.js"), "JavaScript", 0, null)
-            rhino.evaluateString(scope, readFile("OpenAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
+            rhino.evaluateString(scope, readFile("Tsunami/determine-basal.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("Tsunami/basal-set-temp.js"), "setTempBasal.js", 0, null)
             val determineBasalObj = scope["determine_basal", scope]
             val setTempBasalFunctionsObj = scope["tempBasalFunctions", scope]
 
@@ -132,7 +134,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
                 aapsLogger.debug(LTag.APS, "Result: $result")
                 try {
                     val resultJson = JSONObject(result)
-                    determineBasalResultSMB = DetermineBasalResultTAE(injector, resultJson)
+                    determineBasalResultTAE = DetermineBasalResultTAE(injector, resultJson)
                 } catch (e: JSONException) {
                     aapsLogger.error(LTag.APS, "Unhandled exception", e)
                 }
@@ -157,7 +159,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         currentTempParam = currentTemp.toString()
         profileParam = profile.toString()
         mealDataParam = mealData.toString()
-        return determineBasalResultSMB
+        return determineBasalResultTAE
     }
 
     @Suppress("SpellCheckingInspection") fun setData(profile: Profile,
@@ -192,10 +194,14 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.profile.put("max_daily_safety_multiplier", sp.getInt(R.string.key_openapsama_max_daily_safety_multiplier, 3))
         this.profile.put("current_basal_safety_multiplier", sp.getDouble(R.string.key_openapsama_current_basal_safety_multiplier, 4.0))
 
-        //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, SMBDefaults.high_temptarget_raises_sensitivity));
+        //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, UAMDefaults.high_temptarget_raises_sensitivity));
+//**********************************************************************************************************************************************
         this.profile.put("high_temptarget_raises_sensitivity", false)
-        //mProfile.put("low_temptarget_lowers_sensitivity", SP.getBoolean(R.string.key_low_temptarget_lowers_sensitivity, SMBDefaults.low_temptarget_lowers_sensitivity));
+        //mProfile.put("low_temptarget_lowers_sensitivity", SP.getBoolean(R.string.key_low_temptarget_lowers_sensitivity, UAMDefaults.low_temptarget_lowers_sensitivity));
+        //this.profile.put("high_temptarget_raises_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_high_temptarget_raises_sensitivity),TAEDefaults.high_temptarget_raises_sensitivity))
+        //this.profile.put("low_temptarget_lowers_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_low_temptarget_lowers_sensitivity),TAEDefaults.low_temptarget_lowers_sensitivity))
         this.profile.put("low_temptarget_lowers_sensitivity", false)
+//**********************************************************************************************************************************************
         this.profile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, TAEDefaults.sensitivity_raises_target))
         this.profile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, TAEDefaults.resistance_lowers_target))
         this.profile.put("adv_target_adjustments", TAEDefaults.adv_target_adjustments)
@@ -207,7 +213,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         //if (mealData.usedMinCarbsImpact > 0) {
         //    mProfile.put("min_5m_carbimpact", mealData.usedMinCarbsImpact);
         //} else {
-        //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, SMBDefaults.min_5m_carbimpact));
+        //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, UAMDefaults.min_5m_carbimpact));
         //}
         this.profile.put("remainingCarbsCap", TAEDefaults.remainingCarbsCap)
         this.profile.put("enableUAM", uamAllowed)
@@ -230,6 +236,26 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         if (profileFunction.getUnits() == GlucoseUnit.MMOL) {
             this.profile.put("out_units", "mmol/L")
         }
+//**********************************************************************************************************************************************
+        this.profile.put("use_autoisf", sp.getBoolean(R.string.key_tae_useautoisf, false))
+        this.profile.put("autoisf_max", SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_max,"1.2")))
+        this.profile.put("autoisf_hourlychange", SafeParse.stringToDouble(sp.getString(R.string.key_tae_autoisf_hourlychange,"0.2")))
+        this.profile.put("UAM_boluscap", SafeParse.stringToDouble(sp.getString(R.string.key_UAM_boluscap, "1")))
+        this.profile.put("insulinreqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinreqPCT, "65")))
+        this.profile.put("tae_start", SafeParse.stringToDouble(sp.getString(R.string.key_tae_start, "11.0")))
+        this.profile.put("tae_end", SafeParse.stringToDouble(sp.getString(R.string.key_tae_end, "23.0")))
+        this.profile.put("percentage", profile.percentage)
+        this.profile.put("dia", profile.dia)
+
+        val activityPredTime_PK = TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak) //MP act. pred. time for PK ins. models; target time = insulin peak time
+        val activityPredTime_PD = 65L //MP activity prediction time for pharmacodynamic model; fixed to 65 min (approx. peak time of 1 U bolus)
+        this.profile.put("peaktime", activityPredTime_PK) //            SafeParse.stringToDouble(sp.getString(R.string.key_insulin_oref_peak, "45"))
+        val insulinInterface = activePlugin.activeInsulin
+        val insulinID = insulinInterface.id.value
+        this.profile.put("insulinID", insulinID)
+
+        //MP UAM tsunami profile variables END
+//**********************************************************************************************************************************************
         val now = System.currentTimeMillis()
         val tb = iobCobCalculator.getTempBasalIncludingConvertedExtended(now)
         currentTemp.put("temp", "absolute")
@@ -237,9 +263,70 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         currentTemp.put("rate", tb?.convertedToAbsolute(now, profile) ?: 0.0)
         // as we have non default temps longer than 30 mintues
         if (tb != null) currentTemp.put("minutesrunning", tb.getPassedDurationToTimeInMinutes(now))
+//**********************************************************************************************************************************************
+        //MD: TempTarget Info ==== START
+        //MD: TempTarget Info ==== START
+        //val tempTarget = repository.getTemporaryTargetActiveAt(now).blockingGet()
 
+        //if (tempTarget is ValueWrapper.Existing) {
+        //    this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
+        //    this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
+        //}
+
+        var currentactivity = 0.0
+        for (i in -4..0) { //MP: -4 to 0 calculates all the insulin active during the last 5 minutes
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(i.toLong()), profile)
+            currentactivity += iob.activity
+        }
+
+        var futureactivity = 0.0
+        var activityPredTime: Long
+        if (insulinID != 6 && insulinID != 7) { //MP if not using PD insulin models
+            activityPredTime = activityPredTime_PK
+        } else { //MP if using PD insulin models
+            activityPredTime = activityPredTime_PD
+        }
+        for (i in -4..0) { //MP: calculate 5-minute-insulin activity centering around peaktime
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityPredTime - i), profile)
+            futureactivity += iob.activity
+        }
+
+        var sensorlag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
+        var sensorlagactivity = 0.0
+        for (i in -4..0) {
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorlag - i), profile)
+            sensorlagactivity += iob.activity
+        }
+
+        var activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
+        var historicactivity = 0.0
+        for (i in -2..2) {
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activity_historic - i), profile)
+            historicactivity += iob.activity
+        }
+
+        futureactivity = Round.roundTo(futureactivity, 0.0001)
+        sensorlagactivity = Round.roundTo(sensorlagactivity, 0.0001)
+        historicactivity = Round.roundTo(historicactivity, 0.0001)
+        currentactivity = Round.roundTo(currentactivity, 0.0001)
+
+        //MD: TempTarget Info ==== END
+//**********************************************************************************************************************************************
         iobData = iobCobCalculator.convertToJSONArray(iobArray)
+//**********************************************************************************************************************************************
+        mGlucoseStatus.put("futureactivity", futureactivity);
+        mGlucoseStatus.put("activityPredTime", activityPredTime);
+        mGlucoseStatus.put("sensorlagactivity", sensorlagactivity)
+        mGlucoseStatus.put("historicactivity", historicactivity)
+        mGlucoseStatus.put("currentactivity", currentactivity)
+        mGlucoseStatus.put("deltascore", glucoseStatus.deltascore);
+//**********************************************************************************************************************************************
         mGlucoseStatus.put("glucose", glucoseStatus.glucose)
+//**********************************************************************************************************************************************
+        // MP data smoothing START
+        mGlucoseStatus.put("glucose_5m", glucoseStatus.bg_5minago)
+        // MP data smoothing end
+//**********************************************************************************************************************************************
         mGlucoseStatus.put("noise", glucoseStatus.noise)
         if (sp.getBoolean(R.string.key_always_use_shortavg, false)) {
             mGlucoseStatus.put("delta", glucoseStatus.shortAvgDelta)
@@ -249,11 +336,28 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         mGlucoseStatus.put("short_avgdelta", glucoseStatus.shortAvgDelta)
         mGlucoseStatus.put("long_avgdelta", glucoseStatus.longAvgDelta)
         mGlucoseStatus.put("date", glucoseStatus.date)
+//**********************************************************************************************************************************************
+        // autoISF === START
+        // mod 7: append 2 variables for 5% range
+        mGlucoseStatus.put("autoISF_duration", glucoseStatus.autoISF_duration)
+        mGlucoseStatus.put("autoISF_average", glucoseStatus.autoISF_average)
+        // autoISF === END
+        // MP data smoothing START
+        mGlucoseStatus.put("insufficientsmoothingdata", glucoseStatus.insufficientsmoothingdata)
+        mGlucoseStatus.put("bg_supersmooth_now", glucoseStatus.bg_supersmooth_now)
+        mGlucoseStatus.put("delta_supersmooth_now", glucoseStatus.delta_supersmooth_now)
+        // MP data smoothing END
+//**********************************************************************************************************************************************
         this.mealData.put("carbs", mealData.carbs)
         this.mealData.put("mealCOB", mealData.mealCOB)
         this.mealData.put("slopeFromMaxDeviation", mealData.slopeFromMaxDeviation)
         this.mealData.put("slopeFromMinDeviation", mealData.slopeFromMinDeviation)
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
+//**********************************************************************************************************************************************
+        //MP Get last bolus for UAM tsunami start
+        this.mealData.put("lastBolus", mealData.lastBolus)
+        //MP Get last bolus for UAM tsunami end
+//**********************************************************************************************************************************************
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
         if (constraintChecker.isAutosensModeEnabled().value()) {
             autosensData.put("ratio", autosensDataRatio)
