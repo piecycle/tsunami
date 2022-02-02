@@ -267,12 +267,12 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 //**********************************************************************************************************************************************
         //MD: TempTarget Info ==== START
         //MD: TempTarget Info ==== START
-        val tempTarget = repository.getTemporaryTargetActiveAt(now).blockingGet()
+        //val tempTarget = repository.getTemporaryTargetActiveAt(now).blockingGet()
 
-        if (tempTarget is ValueWrapper.Existing) {
-            this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
-            this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
-        }
+        //if (tempTarget is ValueWrapper.Existing) {
+        //    this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
+        //    this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
+        //}
 
         var currentactivity = 0.0
         for (i in -4..0) { //MP: -4 to 0 calculates all the insulin active during the last 5 minutes
