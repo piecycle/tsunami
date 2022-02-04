@@ -9,7 +9,6 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToLong
 
-
 @Reusable
 class GlucoseStatusProvider @Inject constructor(
     private val aapsLogger: AAPSLogger,
@@ -126,14 +125,7 @@ class GlucoseStatusProvider @Inject constructor(
             average(lastDeltas)
         }
 
-        val status = GlucoseStatus(
-            glucose = now.value,
-            date = nowDate,
-            noise = 0.0, //for now set to nothing as not all CGMs report noise
-            shortAvgDelta = shortAverageDelta,
-            delta = delta,
-            longAvgDelta = average(longDeltas),
-        )
+        //MP Tsunami code start
         // autoISF === START
         // mod 7: calculate 2 variables for 5% range
         //  initially just test the handling of arguments
@@ -166,8 +158,6 @@ class GlucoseStatusProvider @Inject constructor(
                 break
             }
         }
-        status.autoISF_average = oldavg
-        status.autoISF_duration = minutesdur.toDouble()
         // autoISF === END
 
 //################################# MP
@@ -188,8 +178,6 @@ class GlucoseStatusProvider @Inject constructor(
         }
 
         //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
-
-        //MP: Adjust smoothing window further if a gap in the BG database is detected, e.g. due to sensor errors of sensor swaps, or if 38 mg/dl are reported (xDrip error state)
         for (i in 0 until windowsize) {
             if (Math.round((data[i].timestamp - data[i + 1].timestamp) / (1000.0 * 60)) >= 12) { //MP: 12 min because a missed reading (i.e. readings coming in after 10 min) can occur for various reasons, like walking away from the phone or reinstalling AAPS
                 //if (Math.round((data.get(i).date - data.get(i + 1).date) / 60000L) <= 7) { //MP crashes the app, useful for testing
@@ -200,8 +188,6 @@ class GlucoseStatusProvider @Inject constructor(
                 break
             }
         }
-
-// CALCULATE SMOOTHING WINDOW - 1st order exponential smoothing
 
 // CALCULATE SMOOTHING WINDOW - 1st order exponential smoothing
         o1_smoothbg.clear() // MP reset smoothed bg array
@@ -266,24 +252,36 @@ class GlucoseStatusProvider @Inject constructor(
         }
 
 //MP report smoothing variables in glucose status
-        status.bg_5minago =
-            before.value //MP If the database contains more than one reading, return the value from 5 min ago
-
-        status.insufficientsmoothingdata = insufficientsmoothingdata
-        status.deltascore = deltascore
+        var bg_supersmooth_now : Double
+        var delta_supersmooth_now : Double
         if (!insufficientsmoothingdata) {
-            status.bg_supersmooth_now = ssmooth_bg[0]
-            status.delta_supersmooth_now = ssmooth_delta[0]
+            bg_supersmooth_now = ssmooth_bg[0]
+            delta_supersmooth_now = ssmooth_delta[0]
         } else { //todo: below is a quick solution, should probably be improved
-            status.bg_supersmooth_now = data[0].value
-            status.delta_supersmooth_now = data[0].value - data[1].value
+            bg_supersmooth_now = data[0].value
+            delta_supersmooth_now = data[0].value - data[1].value
         }
         // TODO: communicate to other code snippets / files that use smoothed data if no smoothing occurred due to insufficient dat
 //############################### MP
 //### DATA SMOOTHING CORE END ### MP
 //############################### MP
+        //MP Tsunami code end
 
-        return status.also { aapsLogger.debug(LTag.GLUCOSE, it.log()) }.asRounded()
+        return GlucoseStatus(
+            glucose = now.value,
+            date = nowDate,
+            noise = 0.0, //for now set to nothing as not all CGMs report noise
+            shortAvgDelta = shortAverageDelta,
+            delta = delta,
+            longAvgDelta = average(longDeltas),
+            bg_5minago = before.value,
+            insufficientsmoothingdata = insufficientsmoothingdata,
+            deltascore = deltascore,
+            bg_supersmooth_now = bg_supersmooth_now,
+            delta_supersmooth_now = delta_supersmooth_now,
+            autoISF_average = oldavg,
+            autoISF_duration = minutesdur.toDouble(),
+        ).also { aapsLogger.debug(LTag.GLUCOSE, it.log()) }.asRounded()
     }
 
     companion object {

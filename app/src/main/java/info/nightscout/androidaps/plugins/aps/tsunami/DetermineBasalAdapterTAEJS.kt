@@ -5,7 +5,6 @@ import info.nightscout.androidaps.R
 import info.nightscout.androidaps.data.IobTotal
 import info.nightscout.androidaps.data.MealData
 import info.nightscout.androidaps.database.AppRepository
-import info.nightscout.androidaps.database.ValueWrapper
 import info.nightscout.androidaps.extensions.convertedToAbsolute
 import info.nightscout.androidaps.extensions.getPassedDurationToTimeInMinutes
 import info.nightscout.androidaps.extensions.plannedRemainingMinutes
@@ -42,7 +41,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var constraintChecker: ConstraintChecker
     @Inject lateinit var sp: SP
-    @Inject lateinit var resourceHelper: ResourceHelper
+    @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var profileFunction: ProfileFunction
     @Inject lateinit var iobCobCalculator: IobCobCalculator
     @Inject lateinit var activePlugin: ActivePlugin
@@ -197,11 +196,11 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 
         //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, UAMDefaults.high_temptarget_raises_sensitivity));
 //**********************************************************************************************************************************************
-        //this.profile.put("high_temptarget_raises_sensitivity", false)
+        this.profile.put("high_temptarget_raises_sensitivity", false)
         //mProfile.put("low_temptarget_lowers_sensitivity", SP.getBoolean(R.string.key_low_temptarget_lowers_sensitivity, UAMDefaults.low_temptarget_lowers_sensitivity));
-        this.profile.put("high_temptarget_raises_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_high_temptarget_raises_sensitivity),TAEDefaults.high_temptarget_raises_sensitivity))
-        this.profile.put("low_temptarget_lowers_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_low_temptarget_lowers_sensitivity),TAEDefaults.low_temptarget_lowers_sensitivity))
-        //this.profile.put("low_temptarget_lowers_sensitivity", false)
+        //this.profile.put("high_temptarget_raises_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_high_temptarget_raises_sensitivity),TAEDefaults.high_temptarget_raises_sensitivity))
+        //this.profile.put("low_temptarget_lowers_sensitivity",sp.getBoolean(resourceHelper.gs(R.string.key_low_temptarget_lowers_sensitivity),TAEDefaults.low_temptarget_lowers_sensitivity))
+        this.profile.put("low_temptarget_lowers_sensitivity", false)
 //**********************************************************************************************************************************************
         this.profile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, TAEDefaults.sensitivity_raises_target))
         this.profile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, TAEDefaults.resistance_lowers_target))
@@ -267,12 +266,12 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
 //**********************************************************************************************************************************************
         //MD: TempTarget Info ==== START
         //MD: TempTarget Info ==== START
-        val tempTarget = repository.getTemporaryTargetActiveAt(now).blockingGet()
+        //val tempTarget = repository.getTemporaryTargetActiveAt(now).blockingGet()
 
-        if (tempTarget is ValueWrapper.Existing) {
-            this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
-            this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
-        }
+        //if (tempTarget is ValueWrapper.Existing) {
+        //    this.profile.put("temptarget_duration", TimeUnit.MILLISECONDS.toMinutes(tempTarget.value.duration))
+        //    this.profile.put("temptarget_minutesrunning", tempTarget.value.realTTDuration)
+        //}
 
         var currentactivity = 0.0
         for (i in -4..0) { //MP: -4 to 0 calculates all the insulin active during the last 5 minutes

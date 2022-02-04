@@ -12,13 +12,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
 */
-var round_basal = require('../round-basal');
+
+
+var round_basal = require('../round-basal')
 
 // Rounds value to 'digits' decimal places
-function round(value, digits) {
-    if (!digits) {
-        digits = 0;
-    }
+function round(value, digits)
+{
+    if (! digits) { digits = 0; }
     var scale = Math.pow(10, digits);
     return Math.round(value * scale) / scale;
 }
@@ -34,10 +35,14 @@ function calculate_expected_delta(target_bg, eventual_bg, bgi) {
 }
 
 
-function convert_bg(value, profile) {
-    if (profile.out_units === "mmol/L") {
+function convert_bg(value, profile)
+{
+    if (profile.out_units === "mmol/L")
+    {
         return round(value / 18, 1).toFixed(1);
-    } else {
+    }
+    else
+    {
         return Math.round(value);
     }
 }
