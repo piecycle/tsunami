@@ -245,7 +245,7 @@ tasks.whenTaskAdded { task ->
 printf('--------------\n')
 printf('isMaster: %s\n', isMaster().toString())
 printf('gitAvailable: %s\n', gitAvailable().toString())
-printf('allCommitted: %s\n', allCommitted().toSitring())
+printf('allCommitted: %s\n', allCommitted().toString())
 printf('--------------\n')
 if (isMaster() && !gitAvailable()) {
     throw new GradleException('GIT system is not available. On Windows try to run Android Studio as an Administrator. Check if GIT is installed and Studio have permissions to use it')
