@@ -13,16 +13,16 @@ class MinutesNumberPicker constructor(context: Context, attrs: AttributeSet? = n
     }
 
     override fun updateEditText() {
-        if (currentValue == 0.0 && !allowZero) editText?.setText("")
+        if (value == 0.0 && !allowZero) editText.setText("")
         else {
-            if (focused) editText?.setText(DecimalFormat("0").format(currentValue))
+            if (focused) editText.setText(DecimalFormat("0").format(value))
             else {
-                val hours = (currentValue / 60).toInt()
-                val minutes = (currentValue - hours * 60).toInt()
+                val hours = (value / 60).toInt()
+                val minutes = (value - hours * 60).toInt()
                 val formatted =
                     if (hours != 0) String.format(context.getString(R.string.format_hour_minute), hours, minutes)
-                    else DecimalFormat("0").format(currentValue)
-                editText?.setText(formatted)
+                    else DecimalFormat("0").format(value)
+                editText.setText(formatted)
             }
         }
     }

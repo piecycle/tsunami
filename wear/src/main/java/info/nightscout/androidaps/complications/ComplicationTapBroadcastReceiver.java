@@ -1,6 +1,7 @@
 package info.nightscout.androidaps.complications;
 
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 
-import javax.inject.Inject;
-
-import dagger.android.DaggerBroadcastReceiver;
 import info.nightscout.androidaps.R;
+import info.nightscout.androidaps.Aaps;
 import info.nightscout.androidaps.interaction.actions.BolusActivity;
 import info.nightscout.androidaps.interaction.actions.ECarbActivity;
 import info.nightscout.androidaps.interaction.actions.WizardActivity;
@@ -23,16 +22,11 @@ import info.nightscout.androidaps.interaction.menus.StatusMenuActivity;
 import info.nightscout.androidaps.interaction.utils.Constants;
 import info.nightscout.androidaps.interaction.utils.DisplayFormat;
 import info.nightscout.androidaps.interaction.utils.WearUtil;
-import info.nightscout.shared.sharedPreferences.SP;
 
 /*
  * Created by dlvoy on 2019-11-12
  */
-public class ComplicationTapBroadcastReceiver extends DaggerBroadcastReceiver {
-
-    @Inject WearUtil wearUtil;
-    @Inject DisplayFormat displayFormat;
-    @Inject SP sp;
+public class ComplicationTapBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = ComplicationTapBroadcastReceiver.class.getSimpleName();
 
@@ -47,7 +41,6 @@ public class ComplicationTapBroadcastReceiver extends DaggerBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
         Bundle extras = intent.getExtras();
         ComponentName provider = extras.getParcelable(EXTRA_PROVIDER_COMPONENT);
         int complicationId = extras.getInt(EXTRA_COMPLICATION_ID);
@@ -58,7 +51,7 @@ public class ComplicationTapBroadcastReceiver extends DaggerBroadcastReceiver {
             action = ComplicationAction.valueOf(ComplicationAction.class, complicationAction);
         } catch (IllegalArgumentException | NullPointerException ex) {
             // but how?
-            Log.e(TAG, "Cannot interpret complication action: " + complicationAction);
+            Log.e(TAG, "Cannot interpret complication action: "+complicationAction);
         }
 
         action = remapActionWithUserPreferences(action);
@@ -74,45 +67,40 @@ public class ComplicationTapBroadcastReceiver extends DaggerBroadcastReceiver {
                 // do nothing
                 return;
             case WIZARD:
-                intentOpen = new Intent(context, WizardActivity.class);
+                intentOpen = new Intent(Aaps.getAppContext(), WizardActivity.class);
                 break;
             case BOLUS:
-                intentOpen = new Intent(context, BolusActivity.class);
+                intentOpen = new Intent(Aaps.getAppContext(), BolusActivity.class);
                 break;
             case ECARB:
-                intentOpen = new Intent(context, ECarbActivity.class);
+                intentOpen = new Intent(Aaps.getAppContext(), ECarbActivity.class);
                 break;
             case STATUS:
-                intentOpen = new Intent(context, StatusMenuActivity.class);
+                intentOpen = new Intent(Aaps.getAppContext(), StatusMenuActivity.class);
                 break;
             case WARNING_OLD:
             case WARNING_SYNC:
-                long oneAndHalfMinuteAgo =
-                        wearUtil.timestamp() - (Constants.MINUTE_IN_MS + Constants.SECOND_IN_MS * 30);
+                long oneAndHalfMinuteAgo = WearUtil.timestamp() - (Constants.MINUTE_IN_MS+Constants.SECOND_IN_MS * 30);
                 long since = extras.getLong(EXTRA_COMPLICATION_SINCE, oneAndHalfMinuteAgo);
                 @StringRes int labelId = (action == ComplicationAction.WARNING_SYNC) ?
                         R.string.msg_warning_sync : R.string.msg_warning_old;
-                String msg = String.format(context.getString(labelId), displayFormat.shortTimeSince(since));
-                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                String msg = String.format(context.getString(labelId), DisplayFormat.shortTimeSince(since));
+                Toast.makeText(Aaps.getAppContext(), msg, Toast.LENGTH_LONG).show();
                 break;
             case MENU:
             default:
-                intentOpen = new Intent(context, MainMenuActivity.class);
+                intentOpen = new Intent(Aaps.getAppContext(), MainMenuActivity.class);
         }
 
         if (intentOpen != null) {
             // Perform intent - open dialog
             intentOpen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intentOpen);
+            Aaps.getAppContext().startActivity(intentOpen);
         }
     }
 
-    private String getComplicationTapAction() {
-        return sp.getString("complication_tap_action", "default");
-    }
-
     private ComplicationAction remapActionWithUserPreferences(ComplicationAction originalAction) {
-        final String userPrefAction = getComplicationTapAction();
+        final String userPrefAction = Aaps.getComplicationTapAction();
         switch (originalAction) {
             case WARNING_OLD:
             case WARNING_SYNC:
@@ -154,7 +142,7 @@ public class ComplicationTapBroadcastReceiver extends DaggerBroadcastReceiver {
         // Pass complicationId as the requestCode to ensure that different complications get
         // different intents.
         return PendingIntent.getBroadcast(
-                context, complicationId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                context, complicationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -173,7 +161,7 @@ public class ComplicationTapBroadcastReceiver extends DaggerBroadcastReceiver {
         // Pass complicationId as the requestCode to ensure that different complications get
         // different intents.
         return PendingIntent.getBroadcast(
-                context, complicationId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                context, complicationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

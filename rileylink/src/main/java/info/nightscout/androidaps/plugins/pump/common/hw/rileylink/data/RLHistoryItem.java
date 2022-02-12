@@ -57,13 +57,13 @@ public class RLHistoryItem {
         return errorCode;
     }
 
-    public String getDescription(ResourceHelper rh) {
+    public String getDescription(ResourceHelper resourceHelper) {
         switch (this.source) {
             case RileyLink:
-                return "State: " + rh.gs(serviceState.getResourceId())
+                return "State: " + resourceHelper.gs(serviceState.getResourceId())
                         + (this.errorCode == null ? "" : ", Error Code: " + errorCode);
             case MedtronicPump:
-                return rh.gs(pumpDeviceState.getResourceId());
+                return resourceHelper.gs(pumpDeviceState.getResourceId());
             default:
                 return "Unknown Description";
         }

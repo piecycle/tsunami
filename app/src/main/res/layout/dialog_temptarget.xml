@@ -141,6 +141,8 @@
 
         </LinearLayout>
 
+        <include layout="@layout/datetime" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -206,10 +208,6 @@
                 android:textSize="11sp" />
 
         </LinearLayout>
-        
-        <include
-            android:id="@+id/datetime"
-            layout="@layout/datetime" />
 
         <include
             android:id="@+id/okcancel"

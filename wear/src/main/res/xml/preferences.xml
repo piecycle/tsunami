@@ -5,16 +5,16 @@
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="show_iob"
-        android:summary="Show insulin on board."
         android:title="@string/pref_show_iob"
+        android:summary="Show insulin on board."
         app:wear_iconOff="@drawable/settings_off"
         app:wear_iconOn="@drawable/settings_on" />
 
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="show_cob"
-        android:summary="Show carb on board."
         android:title="@string/pref_show_cob"
+        android:summary="Show carb on board."
         app:wear_iconOff="@drawable/settings_off"
         app:wear_iconOn="@drawable/settings_on" />
 
@@ -24,7 +24,7 @@
         android:summary="Show BG."
         android:title="@string/pref_show_bg"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -32,7 +32,7 @@
         android:summary="Show delta."
         android:title="@string/pref_show_delta"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -40,14 +40,14 @@
         android:summary="Show the avgDelta."
         android:title="@string/pref_show_avgdelta"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="show_direction"
         android:summary="Show direction arrow"
         android:title="@string/pref_show_direction_arrow"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -55,7 +55,7 @@
         android:summary="Minutes since last reading."
         android:title="@string/pref_show_ago"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -85,13 +85,15 @@
         app:wear_iconOff="@drawable/settings_off"
         app:wear_iconOn="@drawable/settings_on" />
 
+
+
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="highlight_basals"
         android:summary="Better visible basal rate and temp basals"
         android:title="@string/pref_highlight_basals"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <ListPreference
         android:defaultValue="3"
@@ -101,12 +103,14 @@
         android:summary="Chart Timeframe"
         android:title="@string/pref_chart_timeframe" />
 
+
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="units_mgdl"
-        android:summaryOff="mmol/l"
-        android:summaryOn="mg/dl"
         android:title="@string/pref_units_for_actions"
+        android:summaryOn="mg/dl"
+        android:summaryOff="mmol/l"
         app:wear_iconOff="@drawable/settings_off"
         app:wear_iconOn="@drawable/settings_on" />
 
@@ -124,7 +128,7 @@
         android:summary="Wizard from watch possible"
         android:title="@string/pref_wizard_in_menu"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -139,7 +143,7 @@
         android:summary="Prime/Fill from watch possible"
         android:title="@string/pref_prime_in_menu"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -147,7 +151,7 @@
         android:summary="Single temp-target instead of a range."
         android:title="@string/pref_single_target"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <CheckBoxPreference
         android:defaultValue="false"
@@ -155,7 +159,9 @@
         android:summary="Percentage correction."
         android:title="@string/pref_wizard_percentage"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
+
+
 
     <ListPreference
         android:defaultValue="default"
@@ -171,7 +177,7 @@
         android:summary="Use unicode special characters in complications."
         android:title="@string/pref_unicode_in_complications"
         app:wear_iconOff="@drawable/settings_off"
-        app:wear_iconOn="@drawable/settings_on" />
+        app:wear_iconOn="@drawable/settings_on"/>
 
     <info.nightscout.androidaps.interaction.utils.VersionPreference
         android:defaultValue="1"

@@ -5,8 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.data.ListenerService;
@@ -28,34 +27,34 @@ public class MainMenuActivity extends MenuListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        setTitle(R.string.label_actions_activity);
         super.onCreate(savedInstanceState);
         ListenerService.requestData(this);
     }
 
     @Override
-    protected List<MenuItem> getElements() {
+    protected String[] getElements() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        List<MenuItem> menuItems = new ArrayList<>();
-        if (!sp.getBoolean("wearcontrol", false)) {
-            menuItems.add(new MenuItem(R.drawable.ic_settings, getString(R.string.menu_settings)));
-            menuItems.add(new MenuItem(R.drawable.ic_sync, getString(R.string.menu_resync)));
-
-            return menuItems;
+        if (!sharedPreferences.getBoolean("wearcontrol", false)) {
+            return new String[]{
+                    getString(R.string.menu_settings),
+                    getString(R.string.menu_resync)};
         }
+
 
         boolean showPrimeFill = sp.getBoolean("primefill", false);
         boolean showWizard = sp.getBoolean("showWizard", true);
 
-        if (showWizard) menuItems.add(new MenuItem(R.drawable.ic_calculator, getString(R.string.menu_wizard)));
-        menuItems.add(new MenuItem(R.drawable.ic_e_carbs, getString(R.string.menu_ecarb)));
-        menuItems.add(new MenuItem(R.drawable.ic_bolus, getString(R.string.menu_bolus)));
-        menuItems.add(new MenuItem(R.drawable.ic_temptarget, getString(R.string.menu_tempt)));
-        menuItems.add(new MenuItem(R.drawable.ic_settings, getString(R.string.menu_settings)));
-        menuItems.add(new MenuItem(R.drawable.ic_status, getString(R.string.menu_status)));
-        if (showPrimeFill) menuItems.add(new MenuItem(R.drawable.ic_canula, getString(R.string.menu_prime_fill)));
+        Vector<String> menuitems = new Vector<String>();
+        menuitems.add(getString(R.string.menu_tempt));
+        if (showWizard) menuitems.add(getString(R.string.menu_wizard));
+        menuitems.add(getString(R.string.menu_ecarb));
+        menuitems.add(getString(R.string.menu_bolus));
+        menuitems.add(getString(R.string.menu_settings));
+        menuitems.add(getString(R.string.menu_status));
+        if (showPrimeFill) menuitems.add(getString(R.string.menu_prime_fill));
 
-        return menuItems;
+        return menuitems.toArray(new String[menuitems.size()]);
     }
 
     @Override

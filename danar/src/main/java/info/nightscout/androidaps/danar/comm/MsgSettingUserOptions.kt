@@ -1,7 +1,8 @@
 package info.nightscout.androidaps.danar.comm
 
 import dagger.android.HasAndroidInjector
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.logging.LTag
+import java.util.*
 
 class MsgSettingUserOptions(
     injector: HasAndroidInjector
@@ -15,7 +16,7 @@ class MsgSettingUserOptions(
 
     override fun handleMessage(packet: ByteArray) {
         val bytes = getDataBytes(packet, packet.size - 10)
-        danaPump.userOptionsFromPump = bytes.copyOf(bytes.size) // saving pumpDataBytes to use it in MsgSetUserOptions
+        danaPump.userOptionsFrompump = Arrays.copyOf(bytes, bytes!!.size) // saving pumpDataBytes to use it in MsgSetUserOptions
         for (pos in bytes.indices) {
             aapsLogger.debug(LTag.PUMPCOMM, "[" + pos + "]" + bytes[pos])
         }
@@ -45,7 +46,10 @@ class MsgSettingUserOptions(
         aapsLogger.debug(LTag.PUMPCOMM, "Low reservoir: " + danaPump.lowReservoirRate)
     }
 
-    private fun getDataBytes(bytes: ByteArray, len: Int): ByteArray {
+    private fun getDataBytes(bytes: ByteArray?, len: Int): ByteArray? {
+        if (bytes == null) {
+            return null
+        }
         val ret = ByteArray(len)
         System.arraycopy(bytes, 6, ret, 0, len)
         return ret

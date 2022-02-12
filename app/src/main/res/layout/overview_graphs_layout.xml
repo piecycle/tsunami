@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,32 +11,32 @@
         android:layout_weight="1">
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/bg_graph"
+            android:id="@+id/overview_bggraph"
             android:layout_width="wrap_content"
             android:layout_height="200dp" />
 
         <ImageButton
-            android:id="@+id/chart_menu_button"
+            android:id="@+id/overview_chartMenuButton"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:contentDescription="@string/chart_menu"
+            android:contentDescription="@string/chartmenu"
             android:paddingTop="5dp"
             app:srcCompat="@drawable/ic_arrow_drop_down_white_24dp" />
 
         <TextView
-            android:id="@+id/iob_calculation_progress"
+            android:id="@+id/overview_iobcalculationprogess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:ignore="RelativeOverlap" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </RelativeLayout>
 
+
     <LinearLayout
-        android:id="@+id/iob_graph"
+        android:id="@+id/overview_iobgraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />

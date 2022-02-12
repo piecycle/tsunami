@@ -1,16 +1,14 @@
 package info.nightscout.androidaps.plugins.general.tidepool.elements
 
 import com.google.gson.annotations.Expose
-import info.nightscout.androidaps.database.entities.GlucoseValue
-import info.nightscout.androidaps.utils.DateUtil
+import info.nightscout.androidaps.db.BgReading
 import java.util.*
 
-class SensorGlucoseElement(bgReading: GlucoseValue, private val dateUtil: DateUtil)
-    : BaseElement(bgReading.timestamp, UUID.nameUUIDFromBytes(("AAPS-cgm" + bgReading.timestamp).toByteArray()).toString(), dateUtil) {
+class SensorGlucoseElement(bgReading: BgReading)
+    : BaseElement(bgReading.date, UUID.nameUUIDFromBytes(("AAPS-cgm" + bgReading.date).toByteArray()).toString()) {
 
     @Expose
     internal var units: String = "mg/dL"
-
     @Expose
     internal var value: Int = 0
 
@@ -20,11 +18,10 @@ class SensorGlucoseElement(bgReading: GlucoseValue, private val dateUtil: DateUt
     }
 
     companion object {
-
-        internal fun fromBgReadings(bgReadingList: List<GlucoseValue>, dateUtil: DateUtil): List<SensorGlucoseElement> {
+        internal fun fromBgReadings(bgReadingList: List<BgReading>): List<SensorGlucoseElement> {
             val results = LinkedList<SensorGlucoseElement>()
             for (bgReading in bgReadingList) {
-                results.add(SensorGlucoseElement(bgReading, dateUtil))
+                results.add(SensorGlucoseElement(bgReading))
             }
             return results
         }

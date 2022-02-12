@@ -4,14 +4,13 @@ import dagger.android.AndroidInjector
 import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.Constants
 import info.nightscout.androidaps.data.Iob
-import info.nightscout.androidaps.database.entities.Bolus
-import info.nightscout.androidaps.interfaces.ActivePlugin
-import info.nightscout.androidaps.interfaces.Config
-import info.nightscout.androidaps.interfaces.Insulin
+import info.nightscout.androidaps.interfaces.ActivePluginProvider
+import info.nightscout.androidaps.logging.AAPSLogger
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.interfaces.ProfileFunction
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.androidaps.plugins.bus.RxBus
 import info.nightscout.androidaps.plugins.insulin.InsulinOrefBasePlugin.Companion.MIN_DIA
+import info.nightscout.androidaps.db.Treatment
+import info.nightscout.androidaps.interfaces.InsulinInterface
 import info.nightscout.androidaps.utils.DefaultValueHelper
 import info.nightscout.androidaps.utils.resources.ResourceHelper
 import org.json.JSONObject
@@ -31,13 +30,12 @@ class InsulinOrefBasePluginTest {
 
     inner class InsulinBaseTest(
         injector: HasAndroidInjector,
-        rh: ResourceHelper,
+        resourceHelper: ResourceHelper,
         profileFunction: ProfileFunction,
-        rxBus: RxBus,
-        aapsLogger: AAPSLogger,
-        config: Config
+        rxBus: RxBusWrapper,
+        aapsLogger: AAPSLogger
     ) : InsulinOrefBasePlugin(
-        injector, rh, profileFunction, rxBus, aapsLogger, config
+        injector, resourceHelper, profileFunction, rxBus, aapsLogger
     ) {
 
         override fun sendShortDiaNotification(dia: Double) {
@@ -51,7 +49,7 @@ class InsulinOrefBasePluginTest {
             get() = testPeak
 
         override fun commentStandardText(): String = ""
-        override val id get(): Insulin.InsulinType = Insulin.InsulinType.UNKNOWN
+        override val id get(): InsulinInterface.InsulinType = InsulinInterface.InsulinType.UNKNOWN
         override val friendlyName get(): String = ""
         override fun configuration(): JSONObject = JSONObject()
         override fun applyConfiguration(configuration: JSONObject) {}
@@ -63,21 +61,26 @@ class InsulinOrefBasePluginTest {
     private lateinit var sut: InsulinBaseTest
 
     @Mock lateinit var defaultValueHelper: DefaultValueHelper
-    @Mock lateinit var rh: ResourceHelper
+    @Mock lateinit var resourceHelper: ResourceHelper
     @Mock lateinit var profileFunction: ProfileFunction
-    @Mock lateinit var rxBus: RxBus
+    @Mock lateinit var rxBus: RxBusWrapper
     @Mock lateinit var aapsLogger: AAPSLogger
-    @Mock lateinit var activePlugin: ActivePlugin
-    @Mock lateinit var config: Config
+    @Mock lateinit var activePlugin: ActivePluginProvider
 
     private var injector: HasAndroidInjector = HasAndroidInjector {
         AndroidInjector {
+            if (it is Treatment) {
+                it.defaultValueHelper = defaultValueHelper
+                it.resourceHelper = resourceHelper
+                it.profileFunction = profileFunction
+                it.activePlugin = activePlugin
+            }
         }
     }
 
     @Before
     fun setUp() {
-        sut = InsulinBaseTest(injector, rh, profileFunction, rxBus, aapsLogger, config)
+        sut = InsulinBaseTest(injector, resourceHelper, profileFunction, rxBus, aapsLogger)
     }
 
     @Test
@@ -97,32 +100,31 @@ class InsulinOrefBasePluginTest {
 
     @Test
     fun testIobCalcForTreatment() {
-        val treatment = Bolus(timestamp = 0, amount = 10.0, type = Bolus.Type.NORMAL)
+        val treatment = Treatment(injector) //TODO: this should be a separate sut. I'd prefer a separate class.
         val expected = Iob()
-        Assert.assertEquals(expected.iobContrib, sut.iobCalcForTreatment(treatment, 0, 0.0).iobContrib, 0.001)
-        Assert.assertEquals(expected.activityContrib, sut.iobCalcForTreatment(treatment, 0, 0.0).activityContrib, 0.001)
+        Assert.assertEquals(expected, sut.iobCalcForTreatment(treatment, 0, 0.0))
         testPeak = 30
         testUserDefinedDia = 4.0
         val time = System.currentTimeMillis()
         // check directly after bolus
-        treatment.timestamp = time
-        treatment.amount = 10.0
+        treatment.date = time
+        treatment.insulin = 10.0
         Assert.assertEquals(10.0, sut.iobCalcForTreatment(treatment, time, Constants.defaultDIA).iobContrib, 0.1)
         // check after 1 hour
-        treatment.timestamp = time - 1 * 60 * 60 * 1000 // 1 hour
-        treatment.amount = 10.0
+        treatment.date = time - 1 * 60 * 60 * 1000 // 1 hour
+        treatment.insulin = 10.0
         Assert.assertEquals(3.92, sut.iobCalcForTreatment(treatment, time, Constants.defaultDIA).iobContrib, 0.1)
         // check after 2 hour
-        treatment.timestamp = time - 2 * 60 * 60 * 1000 // 2 hours
-        treatment.amount = 10.0
+        treatment.date = time - 2 * 60 * 60 * 1000 // 1 hour
+        treatment.insulin = 10.0
         Assert.assertEquals(0.77, sut.iobCalcForTreatment(treatment, time, Constants.defaultDIA).iobContrib, 0.1)
         // check after 3 hour
-        treatment.timestamp = time - 3 * 60 * 60 * 1000 // 3 hours
-        treatment.amount = 10.0
+        treatment.date = time - 3 * 60 * 60 * 1000 // 1 hour
+        treatment.insulin = 10.0
         Assert.assertEquals(0.10, sut.iobCalcForTreatment(treatment, time, Constants.defaultDIA).iobContrib, 0.1)
         // check after dia
-        treatment.timestamp = time - 4 * 60 * 60 * 1000 // 4 hours
-        treatment.amount = 10.0
+        treatment.date = time - 4 * 60 * 60 * 1000
+        treatment.insulin = 10.0
         Assert.assertEquals(0.0, sut.iobCalcForTreatment(treatment, time, Constants.defaultDIA).iobContrib, 0.1)
     }
 }

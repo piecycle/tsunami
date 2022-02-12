@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="@string/key_configbuilder_general_settings"
-        android:title="@string/configbuilder_general"
-        app:initialExpandedChildrenCount="0">
+        app:initialExpandedChildrenCount="0"
+        android:title="@string/configbuilder_general">
 
         <ListPreference
             android:defaultValue="mg/dl"
@@ -28,9 +27,7 @@
             android:summary="@string/patient_name_summary"
             />
 
-        <PreferenceCategory
-            android:key="@string/key_protection_settings"
-            android:title="@string/protection">
+        <PreferenceCategory android:title="@string/protection">
 
             <Preference
                 android:inputType="textPassword"

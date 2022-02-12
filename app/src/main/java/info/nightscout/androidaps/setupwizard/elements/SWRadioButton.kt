@@ -20,21 +20,21 @@ class SWRadioButton(injector: HasAndroidInjector) : SWItem(injector, Type.RADIOB
     }
 
     private fun labels(): Array<String> {
-        return rh.gsa(labelsArray)
+        return resourceHelper.gsa(labelsArray)
     }
 
     fun values(): Array<String> {
-        return rh.gsa(valuesArray)
+        return resourceHelper.gsa(valuesArray)
     }
 
     override fun generateDialog(layout: LinearLayout) {
         val context = layout.context
-        val desc = TextView(context)
-        comment?.let { desc.setText(it) }
+        val pdesc = TextView(context)
+        pdesc.text = getComment()
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.setMargins(0, 0, 0, 40)
-        desc.layoutParams = params
-        layout.addView(desc)
+        pdesc.layoutParams = params
+        layout.addView(pdesc)
 
         // Get if there is already value in SP
         val previousValue = sp.getString(preferenceId, "none")
@@ -43,12 +43,12 @@ class SWRadioButton(injector: HasAndroidInjector) : SWItem(injector, Type.RADIOB
         radioGroup?.orientation = LinearLayout.VERTICAL
         radioGroup?.visibility = View.VISIBLE
         for (i in labels().indices) {
-            val rdBtn = RadioButton(context)
-            rdBtn.id = View.generateViewId()
-            rdBtn.text = labels()[i]
-            if (previousValue == values()[i]) rdBtn.isChecked = true
-            rdBtn.tag = i
-            radioGroup!!.addView(rdBtn)
+            val rdbtn = RadioButton(context)
+            rdbtn.id = View.generateViewId()
+            rdbtn.text = labels()[i]
+            if (previousValue == values()[i]) rdbtn.isChecked = true
+            rdbtn.tag = i
+            radioGroup!!.addView(rdbtn)
         }
         radioGroup!!.setOnCheckedChangeListener { group: RadioGroup, checkedId: Int ->
             val i = group.findViewById<View>(checkedId).tag as Int

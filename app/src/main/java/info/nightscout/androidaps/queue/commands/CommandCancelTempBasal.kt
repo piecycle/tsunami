@@ -1,9 +1,8 @@
 package info.nightscout.androidaps.queue.commands
 
 import dagger.android.HasAndroidInjector
-import info.nightscout.androidaps.R
-import info.nightscout.androidaps.interfaces.ActivePlugin
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.interfaces.ActivePluginProvider
+import info.nightscout.androidaps.logging.LTag
 import info.nightscout.androidaps.queue.Callback
 import javax.inject.Inject
 
@@ -13,7 +12,7 @@ class CommandCancelTempBasal(
     callback: Callback?
 ) : Command(injector, CommandType.TEMPBASAL, callback) {
 
-    @Inject lateinit var activePlugin: ActivePlugin
+    @Inject lateinit var activePlugin: ActivePluginProvider
 
     override fun execute() {
         val r = activePlugin.activePump.cancelTempBasal(enforceNew)
@@ -21,7 +20,5 @@ class CommandCancelTempBasal(
         callback?.result(r)?.run()
     }
 
-    override fun status(): String = rh.gs(R.string.uel_accepts_temp_basal)
-
-    override fun log(): String = "CANCEL TEMPBASAL"
+    override fun status(): String = "CANCEL TEMPBASAL"
 }

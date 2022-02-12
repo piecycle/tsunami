@@ -31,7 +31,7 @@ class PreferencesActivity : NoSplashAppCompatActivity(), PreferenceFragmentCompa
             override fun afterTextChanged(s: Editable) {}
         })
 
-        title = rh.gs(R.string.nav_preferences)
+        title = resourceHelper.gs(R.string.nav_preferences)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         myPreferenceFragment = MyPreferenceFragment()

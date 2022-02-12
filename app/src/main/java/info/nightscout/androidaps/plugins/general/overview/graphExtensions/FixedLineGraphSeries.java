@@ -1,5 +1,9 @@
 package info.nightscout.androidaps.plugins.general.overview.graphExtensions;
 
+/**
+ * Created by mike on 24.04.2017.
+ */
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,7 +25,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
     /**
      * wrapped styles regarding the line
      */
-    private static final class Styles {
+    private final class Styles {
         /**
          * the thickness of the line.
          * This option will be ignored if you are
@@ -96,7 +100,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
     /**
      * creates a series without data
      */
-    @SuppressWarnings("unused") public FixedLineGraphSeries() {
+    public FixedLineGraphSeries() {
         init();
     }
 
@@ -154,8 +158,8 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
         Iterator<E> values = getValues(minX, maxX);
 
         // draw background
-        double lastEndY;
-        double lastEndX;
+        double lastEndY = 0;
+        double lastEndX = 0;
 
         // draw data
         mPaint.setStrokeWidth(mStyles.thickness);
@@ -259,8 +263,8 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
                 lastUsedEndX = endX;
             } else if (mStyles.drawDataPoints) {
                 //fix: last value not drawn as datapoint. Draw first point here, and then on every step the end values (above)
-                // float first_X = (float) x + (graphLeft + 1);
-                // float first_Y = (float) (graphTop - y) + graphHeight;
+                float first_X = (float) x + (graphLeft + 1);
+                float first_Y = (float) (graphTop - y) + graphHeight;
                 //TODO canvas.drawCircle(first_X, first_Y, dataPointsRadius, mPaint);
             }
             lastEndY = orgY;
@@ -285,7 +289,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      *
      * @return the thickness of the line
      */
-    @SuppressWarnings("unused") public int getThickness() {
+    public int getThickness() {
         return mStyles.thickness;
     }
 
@@ -308,7 +312,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      * @return whether the background will be drawn
      * @see #getBackgroundColor()
      */
-    @SuppressWarnings("unused") public boolean isDrawBackground() {
+    public boolean isDrawBackground() {
         return mStyles.drawBackground;
     }
 
@@ -331,7 +335,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      * @return flag whether the data points are highlighted
      * @see #setDataPointsRadius(float)
      */
-    @SuppressWarnings("unused") public boolean isDrawDataPoints() {
+    public boolean isDrawDataPoints() {
         return mStyles.drawDataPoints;
     }
 
@@ -342,7 +346,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      * @param drawDataPoints flag whether the data points are highlighted
      * @see #setDataPointsRadius(float)
      */
-    @SuppressWarnings("unused") public void setDrawDataPoints(boolean drawDataPoints) {
+    public void setDrawDataPoints(boolean drawDataPoints) {
         mStyles.drawDataPoints = drawDataPoints;
     }
 
@@ -350,7 +354,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      * @return the radius for the data points.
      * @see #setDrawDataPoints(boolean)
      */
-    @SuppressWarnings("unused") public float getDataPointsRadius() {
+    public float getDataPointsRadius() {
         return mStyles.dataPointsRadius;
     }
 
@@ -358,7 +362,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      * @param dataPointsRadius the radius for the data points.
      * @see #setDrawDataPoints(boolean)
      */
-    @SuppressWarnings("unused") public void setDataPointsRadius(float dataPointsRadius) {
+    public void setDataPointsRadius(float dataPointsRadius) {
         mStyles.dataPointsRadius = dataPointsRadius;
     }
 
@@ -367,7 +371,7 @@ public class FixedLineGraphSeries<E extends DataPointInterface> extends BaseSeri
      *          the line.
      * @see #setDrawBackground(boolean)
      */
-    @SuppressWarnings("unused") public int getBackgroundColor() {
+    public int getBackgroundColor() {
         return mStyles.backgroundColor;
     }
 

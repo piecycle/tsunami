@@ -1,7 +1,7 @@
 package info.nightscout.androidaps.danar.comm
 
 import dagger.android.HasAndroidInjector
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.logging.LTag
 
 class MsgSetExtendedBolusStop(
     injector: HasAndroidInjector
@@ -19,7 +19,7 @@ class MsgSetExtendedBolusStop(
             aapsLogger.debug(LTag.PUMPBTCOMM, "Set extended bolus stop result: $result FAILED!!!")
         } else {
             failed = false
-            aapsLogger.debug(LTag.PUMPBTCOMM, "Set extended bolus stop result: $result OK")
+            aapsLogger.debug(LTag.PUMPBTCOMM, "Set extended bolus stop result: $result")
         }
     }
 }

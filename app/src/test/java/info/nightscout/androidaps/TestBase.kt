@@ -1,8 +1,6 @@
 package info.nightscout.androidaps
 
-import info.nightscout.shared.logging.AAPSLoggerTest
-import info.nightscout.androidaps.utils.rx.AapsSchedulers
-import info.nightscout.androidaps.utils.rx.TestAapsSchedulers
+import info.nightscout.androidaps.logging.AAPSLoggerTest
 import org.junit.Before
 import org.junit.Rule
 import org.mockito.Mockito
@@ -13,7 +11,6 @@ import java.util.*
 open class TestBase {
 
     val aapsLogger = AAPSLoggerTest()
-    val aapsSchedulers: AapsSchedulers = TestAapsSchedulers()
 
     // Add a JUnit rule that will setup the @Mock annotated vars and log.
     // Another possibility would be to add `MockitoAnnotations.initMocks(this) to the setup method.

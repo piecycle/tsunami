@@ -1,3 +1,5 @@
 package info.nightscout.androidaps.events
 
-class EventTreatmentChange : EventLoop()
+import info.nightscout.androidaps.db.Treatment
+
+class EventTreatmentChange(val treatment: Treatment?) : EventLoop()

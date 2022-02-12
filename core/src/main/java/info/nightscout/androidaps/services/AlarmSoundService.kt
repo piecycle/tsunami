@@ -7,15 +7,13 @@ import android.media.MediaPlayer
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
 import dagger.android.DaggerService
-import info.nightscout.androidaps.activities.ErrorHelperActivity
 import info.nightscout.androidaps.core.R
-import info.nightscout.androidaps.interfaces.NotificationHolder
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.interfaces.NotificationHolderInterface
+import info.nightscout.androidaps.logging.AAPSLogger
+import info.nightscout.androidaps.logging.LTag
 import info.nightscout.androidaps.utils.resources.ResourceHelper
-import info.nightscout.shared.sharedPreferences.SP
+import info.nightscout.androidaps.utils.sharedPreferences.SP
 import javax.inject.Inject
 import kotlin.math.ln
 import kotlin.math.pow
@@ -23,8 +21,8 @@ import kotlin.math.pow
 class AlarmSoundService : DaggerService() {
 
     @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var rh: ResourceHelper
-    @Inject lateinit var notificationHolder: NotificationHolder
+    @Inject lateinit var resourceHelper: ResourceHelper
+    @Inject lateinit var notificationHolder: NotificationHolderInterface
     @Inject lateinit var sp: SP
 
     private var player: MediaPlayer? = null
@@ -38,7 +36,7 @@ class AlarmSoundService : DaggerService() {
         private const val VOLUME_INCREASE_MIN_DELAY_MILLIS = 2_000L // Minimum delay between volume increments
 
         /*
-         * Delay until the next volume increment will be the lowest value of VOLUME_INCREASE_MIN_DELAY_MILLIS and
+         * Delay until the next volumen increment will be the lowest value of VOLUME_INCREASE_MIN_DELAY_MILLIS and
          * VOLUME_INCREASE_BASE_DELAY_MILLIS - (currentVolumeLevel - 1) ^ VOLUME_INCREASE_DELAY_DECREMENT_EXPONENT * 1000
          *
          */
@@ -54,7 +52,7 @@ class AlarmSoundService : DaggerService() {
     private val binder = LocalBinder()
     override fun onBind(intent: Intent): IBinder = binder
 
-    private val increaseVolumeHandler = Handler(Looper.getMainLooper())
+    private val increaseVolumeHandler = Handler()
     private var currentVolumeLevel = 0
 
     override fun onCreate() {
@@ -71,10 +69,10 @@ class AlarmSoundService : DaggerService() {
 
         player?.let { if (it.isPlaying) it.stop() }
 
-        if (intent?.hasExtra(ErrorHelperActivity.SOUND_ID) == true) resourceId = intent.getIntExtra(ErrorHelperActivity.SOUND_ID, R.raw.error)
+        if (intent?.hasExtra("soundid") == true) resourceId = intent.getIntExtra("soundid", R.raw.error)
         player = MediaPlayer()
         try {
-            val afd = rh.openRawResourceFd(resourceId) ?: return START_STICKY
+            val afd = resourceHelper.openRawResourceFd(resourceId) ?: return START_STICKY
             player?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             afd.close()
             player?.isLooping = true

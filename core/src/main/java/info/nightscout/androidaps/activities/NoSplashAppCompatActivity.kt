@@ -7,12 +7,12 @@ import info.nightscout.androidaps.utils.locale.LocaleHelper
 
 open class NoSplashAppCompatActivity : DaggerAppCompatActivityWithResult() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme_NoActionBar)
     }
 
-    override fun attachBaseContext(newBase: Context) {
+    public override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.wrap(newBase))
     }
 }

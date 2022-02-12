@@ -1,8 +1,7 @@
 package info.nightscout.androidaps.queue.commands
 
 import dagger.android.HasAndroidInjector
-import info.nightscout.androidaps.R
-import info.nightscout.androidaps.interfaces.ActivePlugin
+import info.nightscout.androidaps.interfaces.ActivePluginProvider
 import info.nightscout.androidaps.plugins.pump.insight.LocalInsightPlugin
 import info.nightscout.androidaps.queue.Callback
 import javax.inject.Inject
@@ -13,7 +12,7 @@ class CommandInsightSetTBROverNotification constructor(
     callback: Callback?
 ) : Command(injector, CommandType.INSIGHT_SET_TBR_OVER_ALARM, callback) {
 
-    @Inject lateinit var activePlugin: ActivePlugin
+    @Inject lateinit var activePlugin: ActivePluginProvider
 
     override fun execute() {
         val pump = activePlugin.activePump
@@ -24,7 +23,5 @@ class CommandInsightSetTBROverNotification constructor(
     }
 
     @Suppress("SpellCheckingInspection")
-    override fun status(): String = rh.gs(R.string.insight_set_tbr_over_notification)
-
-    override fun log(): String = "INSIGHTSETTBROVERNOTIFICATION"
+    override fun status(): String = "INSIGHTSETTBROVERNOTIFICATION"
 }

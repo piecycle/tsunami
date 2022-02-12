@@ -1,37 +1,37 @@
 package info.nightscout.androidaps.plugins.general.smsCommunicator
 
-abstract class SmsAction(val pumpCommand: Boolean) : Runnable {
-
+abstract class SmsAction : Runnable {
     var aDouble: Double? = null
     var anInteger: Int? = null
     var secondInteger: Int? = null
     var secondLong: Long? = null
     var aString: String? = null
 
-    internal constructor(pumpCommand: Boolean, aDouble: Double) : this(pumpCommand) {
+    internal constructor()
+    internal constructor(aDouble: Double) {
         this.aDouble = aDouble
     }
 
-    internal constructor(pumpCommand: Boolean, aDouble: Double, secondInteger: Int) : this(pumpCommand) {
+    internal constructor(aDouble: Double, secondInteger: Int) {
         this.aDouble = aDouble
         this.secondInteger = secondInteger
     }
 
-    internal constructor(pumpCommand: Boolean, aString: String, secondInteger: Int) : this(pumpCommand) {
+    internal constructor(aString: String, secondInteger: Int) {
         this.aString = aString
         this.secondInteger = secondInteger
     }
 
-    internal constructor(pumpCommand: Boolean, anInteger: Int) : this(pumpCommand) {
+    internal constructor(anInteger: Int) {
         this.anInteger = anInteger
     }
 
-    internal constructor(pumpCommand: Boolean, anInteger: Int, secondInteger: Int) : this(pumpCommand) {
+    internal constructor(anInteger: Int, secondInteger: Int) {
         this.anInteger = anInteger
         this.secondInteger = secondInteger
     }
 
-    internal constructor(pumpCommand: Boolean, anInteger: Int, secondLong: Long) : this(pumpCommand) {
+    internal constructor(anInteger: Int, secondLong: Long) {
         this.anInteger = anInteger
         this.secondLong = secondLong
     }

@@ -2,10 +2,8 @@ package info.nightscout.androidaps.watchfaces;
 
 import android.content.Intent;
 import android.graphics.Color;
-
 import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
-
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.LayoutInflater;
 
@@ -24,30 +22,29 @@ public class Home2 extends BaseWatchFace {
         super.onCreate();
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         layoutView = inflater.inflate(R.layout.activity_home_2, null);
-
         performViewSetup();
     }
 
     @Override
     protected void onTapCommand(int tapType, int x, int y, long eventTime) {
 
-        int extra = mSgv != null ? (mSgv.getRight() - mSgv.getLeft()) / 2 : 0;
+        int extra = mSgv!=null?(mSgv.getRight() - mSgv.getLeft())/2:0;
 
-        if (tapType == TAP_TYPE_TAP &&
-                x >= chart.getLeft() &&
-                x <= chart.getRight() &&
+        if (tapType == TAP_TYPE_TAP&&
+                x >=chart.getLeft() &&
+                x <= chart.getRight()&&
                 y >= chart.getTop() &&
-                y <= chart.getBottom()) {
-            if (eventTime - chartTapTime < 800) {
+                y <= chart.getBottom()){
+            if (eventTime - chartTapTime < 800){
                 changeChartTimeframe();
             }
             chartTapTime = eventTime;
-        } else if (tapType == TAP_TYPE_TAP &&
-                x + extra >= mSgv.getLeft() &&
-                x - extra <= mSgv.getRight() &&
+        } else if (tapType == TAP_TYPE_TAP&&
+                x + extra >=mSgv.getLeft() &&
+                x - extra <= mSgv.getRight()&&
                 y >= mSgv.getTop() &&
-                y <= mSgv.getBottom()) {
-            if (eventTime - sgvTapTime < 800) {
+                y <= mSgv.getBottom()){
+            if (eventTime - sgvTapTime < 800){
                 Intent intent = new Intent(this, MainMenuActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -58,12 +55,12 @@ public class Home2 extends BaseWatchFace {
 
     private void changeChartTimeframe() {
         int timeframe = Integer.parseInt(sharedPrefs.getString("chart_timeframe", "3"));
-        timeframe = (timeframe % 5) + 1;
-        sharedPrefs.edit().putString("chart_timeframe", "" + timeframe).apply();
+        timeframe = (timeframe%5) + 1;
+        sharedPrefs.edit().putString("chart_timeframe", "" + timeframe).commit();
     }
 
     @Override
-    protected WatchFaceStyle getWatchFaceStyle() {
+    protected WatchFaceStyle getWatchFaceStyle(){
         return new WatchFaceStyle.Builder(this).setAcceptsTapEvents(true).build();
     }
 
@@ -117,9 +114,7 @@ public class Home2 extends BaseWatchFace {
         mBasalRate.setTextColor(dividerTxtColor);
         mBgi.setTextColor(dividerTxtColor);
 
-        if (loopLevel == -1) {
-            mLoop.setBackgroundResource(R.drawable.loop_grey_25);
-        } else if (loopLevel == 1) {
+        if (loopLevel == 1) {
             mLoop.setBackgroundResource(R.drawable.loop_green_25);
         } else {
             mLoop.setBackgroundResource(R.drawable.loop_red_25);
@@ -181,7 +176,7 @@ public class Home2 extends BaseWatchFace {
 
         if (getCurrentWatchMode() == WatchMode.INTERACTIVE) {
 
-            @ColorInt final int dividerTxtColor = dividerMatchesBg ? Color.BLACK :
+            @ColorInt final int dividerTxtColor = dividerMatchesBg ?  Color.BLACK :
                     ContextCompat.getColor(getApplicationContext(), R.color.dark_midColor);
             @ColorInt final int dividerBgColor = ContextCompat.getColor(getApplicationContext(),
                     dividerMatchesBg ? R.color.light_background : R.color.light_stripe_background);
@@ -228,9 +223,7 @@ public class Home2 extends BaseWatchFace {
             mBasalRate.setTextColor(dividerTxtColor);
             mBgi.setTextColor(dividerTxtColor);
 
-            if (loopLevel == -1) {
-                mLoop.setBackgroundResource(R.drawable.loop_grey_25);
-            } else if (loopLevel == 1) {
+            if (loopLevel == 1) {
                 mLoop.setBackgroundResource(R.drawable.loop_green_25);
             } else {
                 mLoop.setBackgroundResource(R.drawable.loop_red_25);
@@ -264,5 +257,4 @@ public class Home2 extends BaseWatchFace {
             }
         }
     }
-
 }

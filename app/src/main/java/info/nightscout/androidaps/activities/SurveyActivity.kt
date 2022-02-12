@@ -5,30 +5,31 @@ import android.widget.ArrayAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import info.nightscout.androidaps.R
+import info.nightscout.androidaps.data.defaultProfile.DefaultProfile
 import info.nightscout.androidaps.databinding.ActivitySurveyBinding
 import info.nightscout.androidaps.dialogs.ProfileViewerDialog
-import info.nightscout.androidaps.interfaces.ActivePlugin
+import info.nightscout.androidaps.interfaces.ActivePluginProvider
 import info.nightscout.androidaps.interfaces.ProfileFunction
+import info.nightscout.androidaps.logging.AAPSLogger
+import info.nightscout.androidaps.logging.LTag
 import info.nightscout.androidaps.utils.ActivityMonitor
 import info.nightscout.androidaps.utils.DateUtil
 import info.nightscout.androidaps.utils.InstanceId
+import info.nightscout.androidaps.utils.SafeParse
 import info.nightscout.androidaps.utils.ToastUtils
-import info.nightscout.androidaps.utils.defaultProfile.DefaultProfile
 import info.nightscout.androidaps.utils.stats.TddCalculator
 import info.nightscout.androidaps.utils.stats.TirCalculator
-import info.nightscout.shared.SafeParse
-import info.nightscout.shared.logging.LTag
 import javax.inject.Inject
 
 class SurveyActivity : NoSplashAppCompatActivity() {
 
-    @Inject lateinit var activePlugin: ActivePlugin
+    @Inject lateinit var aapsLogger: AAPSLogger
+    @Inject lateinit var activePlugin: ActivePluginProvider
     @Inject lateinit var tddCalculator: TddCalculator
     @Inject lateinit var tirCalculator: TirCalculator
     @Inject lateinit var profileFunction: ProfileFunction
     @Inject lateinit var activityMonitor: ActivityMonitor
     @Inject lateinit var defaultProfile: DefaultProfile
-    @Inject lateinit var dateUtil: DateUtil
 
     private lateinit var binding: ActivitySurveyBinding
 
@@ -39,7 +40,7 @@ class SurveyActivity : NoSplashAppCompatActivity() {
 
         binding.id.text = InstanceId.instanceId()
 
-        val profileStore = activePlugin.activeProfileSource.profile
+        val profileStore = activePlugin.activeProfileInterface.profile
         val profileList = profileStore?.getProfileList() ?: return
         binding.spinner.adapter = ArrayAdapter(this, R.layout.spinner_centered, profileList)
 
@@ -67,10 +68,11 @@ class SurveyActivity : NoSplashAppCompatActivity() {
                 defaultProfile.profile(age, tdd, weight, profileFunction.getUnits())?.let { profile ->
                     ProfileViewerDialog().also { pvd ->
                         pvd.arguments = Bundle().also {
-                            it.putLong("time", dateUtil.now())
+                            it.putLong("time", DateUtil.now())
                             it.putInt("mode", ProfileViewerDialog.Mode.PROFILE_COMPARE.ordinal)
-                            it.putString("customProfile", runningProfile.toPureNsJson(dateUtil).toString())
-                            it.putString("customProfile2", profile.jsonObject.toString())
+                            it.putString("customProfile", runningProfile.data.toString())
+                            it.putString("customProfile2", profile.data.toString())
+                            it.putString("customProfileUnits", profile.units)
                             it.putString("customProfileName", "Age: $age TDD: $tdd Weight: $weight")
                         }
                     }.show(supportFragmentManager, "ProfileViewDialog")

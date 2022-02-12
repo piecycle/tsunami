@@ -3,7 +3,7 @@ package info.nightscout.androidaps.plugins.general.tidepool.elements
 import com.google.gson.annotations.Expose
 import info.nightscout.androidaps.utils.DateUtil
 
-open class BaseElement(timestamp: Long, uuid: String, dateUtil: DateUtil) {
+open class BaseElement(timestamp: Long, uuid: String) {
     @Expose
     var deviceTime: String = ""
     @Expose
@@ -16,9 +16,9 @@ open class BaseElement(timestamp: Long, uuid: String, dateUtil: DateUtil) {
     var origin: Origin? = null
 
     init {
-        deviceTime = dateUtil.toISONoZone(timestamp)
-        time = dateUtil.toISOAsUTC(timestamp)
-        timezoneOffset = dateUtil.getTimeZoneOffsetMinutes(timestamp) // TODO
+        deviceTime = DateUtil.toISONoZone(timestamp)
+        time = DateUtil.toISOAsUTC(timestamp)
+        timezoneOffset = DateUtil.getTimeZoneOffsetMinutes(timestamp) // TODO
         origin = Origin(uuid)
     }
 

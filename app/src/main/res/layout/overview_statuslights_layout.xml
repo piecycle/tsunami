@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/status_lights"
+    android:id="@+id/overview_statuslights"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="3dp"
@@ -19,11 +19,10 @@
         android:scaleType="centerInside"
         android:scaleX="2"
         android:scaleY="2"
-        app:srcCompat="@drawable/ic_cp_age_cannula"
-        android:contentDescription="@string/cannula" />
+        app:srcCompat="@drawable/ic_cp_age_canula" />
 
     <TextView
-        android:id="@+id/cannula_age"
+        android:id="@+id/careportal_canulaage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -39,11 +38,10 @@
         android:scaleType="centerInside"
         android:scaleX="1.8"
         android:scaleY="1.8"
-        app:srcCompat="@drawable/ic_cp_age_insulin"
-        android:contentDescription="@string/insulin_label" />
+        app:srcCompat="@drawable/ic_cp_age_insulin" />
 
     <TextView
-        android:id="@+id/insulin_age"
+        android:id="@+id/careportal_insulinage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -52,7 +50,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/reservoir_level"
+        android:id="@+id/careportal_reservoirlevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -66,11 +64,10 @@
         android:scaleType="centerInside"
         android:scaleX="2"
         android:scaleY="2"
-        app:srcCompat="@drawable/ic_cp_age_sensor"
-        android:contentDescription="@string/careportal_sensor_label" />
+        app:srcCompat="@drawable/ic_cp_age_sensor" />
 
     <TextView
-        android:id="@+id/sensor_age"
+        android:id="@+id/careportal_sensorage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -86,11 +83,10 @@
         android:scaleType="centerInside"
         android:scaleX="2"
         android:scaleY="2"
-        app:srcCompat="@drawable/ic_cp_age_battery"
-        android:contentDescription="@string/battery_label" />
+        app:srcCompat="@drawable/ic_cp_age_battery" />
 
     <TextView
-        android:id="@+id/pb_age"
+        android:id="@+id/careportal_pbage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -99,7 +95,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/battery_level"
+        android:id="@+id/careportal_batterylevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

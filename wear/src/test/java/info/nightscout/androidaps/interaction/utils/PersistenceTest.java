@@ -1,37 +1,66 @@
 package info.nightscout.androidaps.interaction.utils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static info.nightscout.androidaps.testing.mockers.WearUtilMocker.REF_NOW;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.android.gms.wearable.DataMap;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Set;
 
-import info.nightscout.androidaps.TestBase;
+import info.nightscout.androidaps.Aaps;
+import info.nightscout.androidaps.testing.mockers.AAPSMocker;
+import info.nightscout.androidaps.testing.mockers.AndroidMocker;
+import info.nightscout.androidaps.testing.mockers.LogMocker;
+import info.nightscout.androidaps.testing.mockers.WearUtilMocker;
 
-@SuppressWarnings("SpellCheckingInspection")
-public class PersistenceTest extends TestBase {
+import static info.nightscout.androidaps.testing.mockers.WearUtilMocker.REF_NOW;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest( { WearUtil.class, Log.class, SharedPreferences.class, Context.class, Aaps.class, android.util.Base64.class} )
+public class PersistenceTest {
+
+    @Before
+    public void mock() throws Exception {
+        WearUtilMocker.prepareMock();
+        LogMocker.prepareMock();
+        AAPSMocker.prepareMock();
+        AAPSMocker.resetMockedSharedPrefs();
+        AndroidMocker.mockBase64();
+    }
 
     @Test
     public void putStringTest() {
+        // GIVEN
+        Persistence persistence = new Persistence();
+
         // WHEN
         final String emptyGot = persistence.getString("test-key", "default-value");
         persistence.putString("test-key", "newValue");
         final String updatedGot = persistence.getString("test-key", "another-default-value");
 
         // THEN
-        assertEquals(emptyGot, "default-value");
-        assertEquals(updatedGot, "newValue");
+        assertThat(emptyGot, is("default-value"));
+        assertThat(updatedGot, is("newValue"));
     }
 
     @Test
     public void putBooleanTest() {
+        // GIVEN
+        Persistence persistence = new Persistence();
+
         // WHEN
         final boolean emptyGot = persistence.getBoolean("test-key", false);
         persistence.putBoolean("test-key", true);
@@ -45,35 +74,36 @@ public class PersistenceTest extends TestBase {
     @Test
     public void whenDataUpdatedTest() {
         // GIVEN
+        Persistence persistence = new Persistence();
         DataMap map = new DataMap();
 
         // WHEN
         final long whenNotUpdated = persistence.whenDataUpdated();
 
-        persistence.storeDataMap("data-map", map);
+        Persistence.storeDataMap("data-map", map);
         final long whenUpdatedFirst = persistence.whenDataUpdated();
 
-        getWearUtilMocker().progressClock(60000);
-        persistence.storeDataMap("data-map", map);
+        WearUtilMocker.progressClock(60000);
+        Persistence.storeDataMap("data-map", map);
         final long whenUpdatedNext = persistence.whenDataUpdated();
 
         // THEN
-        assertEquals(whenNotUpdated, 0L);
-        assertEquals(whenUpdatedFirst, REF_NOW);
-        assertEquals(whenUpdatedNext, REF_NOW + 60000);
+        assertThat(whenNotUpdated, is(0L));
+        assertThat(whenUpdatedFirst, is(REF_NOW));
+        assertThat(whenUpdatedNext, is(REF_NOW + 60000));
     }
 
     @Test
     public void getDataMapTest() {
         // GIVEN
+        Persistence persistence = new Persistence();
         DataMap map = new DataMap();
         map.putByteArray("test-key", new byte[]{9, 42, 127, -5});
 
         // WHEN
         DataMap notExisting = persistence.getDataMap("not-there");
-        persistence.storeDataMap("data-map", map);
+        Persistence.storeDataMap("data-map", map);
         DataMap restoredMap = persistence.getDataMap("data-map");
-        assert restoredMap != null;
         byte[] restoredMapContents = restoredMap.getByteArray("test-key");
 
         // THEN
@@ -81,15 +111,18 @@ public class PersistenceTest extends TestBase {
         assertNotNull(restoredMap);
         assertTrue(restoredMap.containsKey("test-key"));
 
-        assertEquals(restoredMapContents.length, 4);
-        assertEquals(restoredMapContents[0], (byte) 9);
-        assertEquals(restoredMapContents[1], (byte) 42);
-        assertEquals(restoredMapContents[2], (byte) 127);
-        assertEquals(restoredMapContents[3], (byte) -5);
+        assertThat(restoredMapContents.length, is(4));
+        assertThat(restoredMapContents[0], is((byte)9));
+        assertThat(restoredMapContents[1], is((byte)42));
+        assertThat(restoredMapContents[2], is((byte)127));
+        assertThat(restoredMapContents[3], is((byte)-5));
     }
 
     @Test
     public void brokenDataMapTest() {
+        // GIVEN
+        Persistence persistence = new Persistence();
+
         // WHEN
         persistence.putString("data-map", "ZmFrZSBkYXRh");
         DataMap restoredMap = persistence.getDataMap("data-map");
@@ -100,6 +133,9 @@ public class PersistenceTest extends TestBase {
 
     @Test
     public void setsTest() {
+        // GIVEN
+        Persistence persistence = new Persistence();
+
         // WHEN
         Set<String> emptySet = persistence.getSetOf("some fake id");
 
@@ -111,7 +147,7 @@ public class PersistenceTest extends TestBase {
         persistence.addToSet("test-set", "6");
 
         Set<String> initialSet = persistence.getSetOf("test-set");
-        Set<String> sameInitialSet = persistence.getSetOf("test-set");
+        Set<String> sameInitialSet = Persistence.setOf("test-set");
 
         persistence.addToSet("test-set", "second-elem");
         persistence.addToSet("test-set", "new-one");
@@ -125,9 +161,9 @@ public class PersistenceTest extends TestBase {
         Set<String> reducedSet = persistence.getSetOf("test-set");
 
         // THEN
-        assertEquals(emptySet.size(), 0);
+        assertThat(emptySet.size(), is(0));
 
-        assertEquals(initialSet.size(), 6);
+        assertThat(initialSet.size(), is(6));
         assertTrue(initialSet.contains("element1"));
         assertTrue(initialSet.contains("second-elem"));
         assertTrue(initialSet.contains("3rd"));
@@ -135,12 +171,12 @@ public class PersistenceTest extends TestBase {
         assertTrue(initialSet.contains("V"));
         assertTrue(initialSet.contains("6"));
 
-        assertEquals(initialSet, sameInitialSet);
+        assertThat(initialSet, is(sameInitialSet));
 
-        assertEquals(extendedSet.size(), 7);
+        assertThat(extendedSet.size(), is(7));
         assertTrue(extendedSet.contains("new-one"));
 
-        assertEquals(reducedSet.size(), 4);
+        assertThat(reducedSet.size(), is(4));
         assertTrue(reducedSet.contains("element1"));
         assertTrue(reducedSet.contains("second-elem"));
         assertFalse(reducedSet.contains("3rd"));

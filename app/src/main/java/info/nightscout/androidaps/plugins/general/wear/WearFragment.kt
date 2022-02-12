@@ -5,34 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
-import info.nightscout.androidaps.databinding.WearFragmentBinding
+import info.nightscout.androidaps.R
+import kotlinx.android.synthetic.main.wear_fragment.*
 import javax.inject.Inject
 
 class WearFragment : DaggerFragment() {
-
     @Inject lateinit var wearPlugin: WearPlugin
 
-    private var _binding: WearFragmentBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        _binding = WearFragmentBinding.inflate(inflater, container, false)
-        return binding.root
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.wear_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.resend.setOnClickListener { wearPlugin.resendDataToWatch() }
-        binding.opensettings.setOnClickListener { wearPlugin.openSettings() }
-    }
-
-    @Synchronized
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        wear_resend.setOnClickListener { wearPlugin.resendDataToWatch() }
+        wear_opensettings.setOnClickListener { wearPlugin.openSettings() }
     }
 }

@@ -1,5 +1,7 @@
 package info.nightscout.androidaps.plugins.treatments;
 
+import info.nightscout.androidaps.db.Treatment;
+
 public class TreatmentUpdateReturn {
 
     public TreatmentUpdateReturn(boolean success, boolean newRecord) {

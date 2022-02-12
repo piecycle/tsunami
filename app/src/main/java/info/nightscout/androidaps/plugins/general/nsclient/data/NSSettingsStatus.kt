@@ -1,15 +1,11 @@
 package info.nightscout.androidaps.plugins.general.nsclient.data
 
 import android.content.Context
-import info.nightscout.androidaps.interfaces.Config
+import info.nightscout.androidaps.Config
 import info.nightscout.androidaps.R
-import info.nightscout.androidaps.annotations.OpenForTesting
-import info.nightscout.androidaps.database.entities.UserEntry
-import info.nightscout.androidaps.database.entities.UserEntry.Action
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.shared.logging.LTag
-import info.nightscout.androidaps.logging.UserEntryLogger
-import info.nightscout.androidaps.plugins.bus.RxBus
+import info.nightscout.androidaps.logging.AAPSLogger
+import info.nightscout.androidaps.logging.LTag
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.plugins.general.overview.events.EventDismissNotification
 import info.nightscout.androidaps.plugins.general.overview.events.EventNewNotification
 import info.nightscout.androidaps.plugins.general.overview.notifications.Notification
@@ -17,7 +13,7 @@ import info.nightscout.androidaps.utils.DefaultValueHelper
 import info.nightscout.androidaps.utils.JsonHelper
 import info.nightscout.androidaps.utils.alertDialogs.OKDialog
 import info.nightscout.androidaps.utils.resources.ResourceHelper
-import info.nightscout.shared.sharedPreferences.SP
+import info.nightscout.androidaps.utils.sharedPreferences.SP
 import org.json.JSONException
 import org.json.JSONObject
 import javax.inject.Inject
@@ -113,44 +109,26 @@ import javax.inject.Singleton
  "activeProfile": "2016 +30%"
  }
  */
-@Suppress("SpellCheckingInspection")
-@OpenForTesting
 @Singleton
 class NSSettingsStatus @Inject constructor(
     private val aapsLogger: AAPSLogger,
-    private val rh: ResourceHelper,
-    private val rxBus: RxBus,
+    private val resourceHelper: ResourceHelper,
+    private val rxBus: RxBusWrapper,
     private val defaultValueHelper: DefaultValueHelper,
     private val sp: SP,
-    private val config: Config,
-    private val uel: UserEntryLogger
+    private val config: Config
 ) {
 
+    var nightscoutVersionName = ""
+
     // ***** PUMP STATUS ******
-    private var data: JSONObject? = null
+    var data: JSONObject? = null
 
-    /*  Other received data to 2016/02/10
-        {
-          status: 'ok'
-          , name: env.name
-          , version: env.version
-          , versionNum: versionNum (for ver 1.2.3 contains 10203)
-          , serverTime: new Date().toISOString()
-          , apiEnabled: apiEnabled
-          , careportalEnabled: apiEnabled && env.settings.enable.indexOf('careportal') > -1
-          , boluscalcEnabled: apiEnabled && env.settings.enable.indexOf('boluscalc') > -1
-          , head: env.head
-          , settings: env.settings
-          , extendedSettings: ctx.plugins && ctx.plugins.extendedClientSettings ? ctx.plugins.extendedClientSettings(env.extendedSettings) : {}
-          , activeProfile ..... calculated from treatments or missing
-        }
-     */
-
-    fun handleNewData(status: JSONObject) {
-        data = status
-        aapsLogger.debug(LTag.NSCLIENT, "Got versions: Nightscout: ${getVersion()}")
-        if (getVersionNum() < config.SUPPORTEDNSVERSION) {
-            val notification = Notification(Notification.OLD_NS, rh.gs(R.string.unsupportednsversion), Notification.NORMAL)
+    fun handleNewData(nightscoutVersionName: String, nightscoutVersionCode: Int, status: JSONObject) {
+        this.nightscoutVersionName = nightscoutVersionName
+        aapsLogger.debug(LTag.NSCLIENT, "Got versions: Nightscout: $nightscoutVersionName")
+        if (nightscoutVersionCode < config.SUPPORTEDNSVERSION) {
+            val notification = Notification(Notification.OLD_NS, resourceHelper.gs(R.string.unsupportednsversion), Notification.NORMAL)
             rxBus.send(EventNewNotification(notification))
         } else {
             rxBus.send(EventDismissNotification(Notification.OLD_NS))
@@ -164,10 +142,13 @@ class NSSettingsStatus @Inject constructor(
         if (config.NSCLIENT) copyStatusLightsNsSettings(null)
     }
 
-    fun getVersion(): String =
-        JsonHelper.safeGetStringAllowNull(data, "version", null) ?: "UNKNOWN"
+    fun getName(): String? =
+        JsonHelper.safeGetStringAllowNull(data, "name", null)
 
-    private fun getVersionNum(): Int =
+    fun getVersion(): String? =
+        JsonHelper.safeGetStringAllowNull(data, "version", null)
+
+    fun getVersionNum(): Int =
         JsonHelper.safeGetInt(data, "versionNum")
 
     private fun getSettings() =
@@ -178,13 +159,13 @@ class NSSettingsStatus @Inject constructor(
 
     // valid property is "warn" or "urgent"
     // plugings "iage" "sage" "cage" "pbage"
-    private fun getExtendedWarnValue(plugin: String, property: String): Double? {
+    fun getExtendedWarnValue(plugin: String, property: String): Double? {
         val extendedSettings = getExtendedSettings() ?: return null
         val pluginJson = extendedSettings.optJSONObject(plugin) ?: return null
-        return try {
-            pluginJson.getDouble(property)
+        try {
+            return pluginJson.getDouble(property)
         } catch (e: Exception) {
-            null
+            return null
         }
     }
 
@@ -192,7 +173,7 @@ class NSSettingsStatus @Inject constructor(
     // "bgTargetTop": 180,
     // "bgTargetBottom": 72,
     // "bgLow": 71
-    private fun getSettingsThreshold(what: String): Double? {
+    fun getSettingsThreshold(what: String): Double? {
         val threshold = JsonHelper.safeGetJSONObject(getSettings(), "thresholds", null)
         return JsonHelper.safeGetDoubleAllowNull(threshold, what)
     }
@@ -231,6 +212,9 @@ class NSSettingsStatus @Inject constructor(
     private fun extendedPumpSettings(): JSONObject? =
         JsonHelper.safeGetJSONObject(getExtendedSettings(), "pump", null)
 
+    fun pumpExtendedSettingsEnabledAlerts(): Boolean =
+        JsonHelper.safeGetBoolean(extendedPumpSettings(), "enableAlerts")
+
     fun pumpExtendedSettingsFields(): String =
         JsonHelper.safeGetString(extendedPumpSettings(), "fields", "")
 
@@ -249,10 +233,9 @@ class NSSettingsStatus @Inject constructor(
             getExtendedWarnValue("sage", "urgent")?.let { sp.putDouble(R.string.key_statuslights_sage_critical, it) }
             getExtendedWarnValue("bage", "warn")?.let { sp.putDouble(R.string.key_statuslights_bage_warning, it) }
             getExtendedWarnValue("bage", "urgent")?.let { sp.putDouble(R.string.key_statuslights_bage_critical, it) }
-            uel.log(Action.NS_SETTINGS_COPIED, UserEntry.Sources.NSClient)
         }
 
-        if (context != null) OKDialog.showConfirmation(context, rh.gs(R.string.statuslights), rh.gs(R.string.copyexistingvalues), action)
+        if (context != null) OKDialog.showConfirmation(context, resourceHelper.gs(R.string.statuslights), resourceHelper.gs(R.string.copyexistingvalues), action)
         else action.run()
     }
 }

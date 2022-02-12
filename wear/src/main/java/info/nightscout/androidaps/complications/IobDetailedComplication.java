@@ -3,15 +3,18 @@ package info.nightscout.androidaps.complications;
 import android.app.PendingIntent;
 import android.support.wearable.complications.ComplicationData;
 import android.support.wearable.complications.ComplicationText;
+import android.util.Log;
 
 import info.nightscout.androidaps.data.RawDisplayData;
+import info.nightscout.androidaps.interaction.utils.DisplayFormat;
 import info.nightscout.androidaps.interaction.utils.Pair;
-import info.nightscout.shared.logging.LTag;
 
 /*
  * Created by dlvoy on 2019-11-12
  */
 public class IobDetailedComplication extends BaseComplicationProviderService {
+
+    private static final String TAG = IobDetailedComplication.class.getSimpleName();
 
     public ComplicationData buildComplicationData(int dataType, RawDisplayData raw, PendingIntent complicationPendingIntent) {
 
@@ -19,7 +22,7 @@ public class IobDetailedComplication extends BaseComplicationProviderService {
 
         if (dataType == ComplicationData.TYPE_SHORT_TEXT) {
 
-            Pair<String, String> iob = displayFormat.detailedIob(raw);
+            Pair<String, String> iob = DisplayFormat.detailedIob(raw);
             final ComplicationData.Builder builder = new ComplicationData.Builder(ComplicationData.TYPE_SHORT_TEXT)
                     .setShortText(ComplicationText.plainText(iob.first))
                     .setTapAction(complicationPendingIntent);
@@ -30,7 +33,9 @@ public class IobDetailedComplication extends BaseComplicationProviderService {
 
             complicationData = builder.build();
         } else {
-            aapsLogger.warn(LTag.WEAR, "Unexpected complication type " + dataType);
+            if (Log.isLoggable(TAG, Log.WARN)) {
+                Log.w(TAG, "Unexpected complication type " + dataType);
+            }
         }
         return complicationData;
     }

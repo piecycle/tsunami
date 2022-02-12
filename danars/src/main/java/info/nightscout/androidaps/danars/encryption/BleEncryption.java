@@ -126,9 +126,7 @@ public class BleEncryption {
 
     private static native void setPairingKeysJni(byte[] pairingKey, byte[] randomPairingKey, byte randomSyncKey);
 
-    private static native void setBle5KeyJni(byte[] ble5Key);
-
-    private static native void setEnhancedEncryptionJni(int securityVersion);
+    private static native void setEnhancedEncryptionJni(boolean isSecurityVersion);
 
     private static native byte[] encryptSecondLevelPacketJni(Object context, byte[] bytes);
 
@@ -146,12 +144,8 @@ public class BleEncryption {
         setPairingKeysJni(pairingKey, randomPairingKey, randomSyncKey);
     }
 
-    public void setBle5Key(byte[] ble5Key) {
-        setBle5KeyJni(ble5Key);
-    }
-
-    public void setEnhancedEncryption(EncryptionType securityVersion) {
-        setEnhancedEncryptionJni(securityVersion.ordinal());
+    public void setEnhancedEncryption(boolean isSecureVersion) {
+        setEnhancedEncryptionJni(isSecureVersion);
     }
 
     public byte[] encryptSecondLevelPacket(byte[] bytes) {

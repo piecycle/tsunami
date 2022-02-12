@@ -3,7 +3,8 @@ package info.nightscout.androidaps.plugins.pump.common.hw.rileylink.service.task
 import javax.inject.Inject;
 
 import dagger.android.HasAndroidInjector;
-import info.nightscout.shared.logging.AAPSLogger;
+import info.nightscout.androidaps.interfaces.ActivePluginProvider;
+import info.nightscout.androidaps.logging.AAPSLogger;
 import info.nightscout.androidaps.plugins.pump.common.hw.rileylink.defs.RileyLinkPumpDevice;
 
 /**

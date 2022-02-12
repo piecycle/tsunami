@@ -8,52 +8,42 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import info.nightscout.androidaps.R
-import info.nightscout.androidaps.databinding.OpenapsamaFragmentBinding
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.logging.AAPSLogger
+import info.nightscout.androidaps.logging.LTag
 import info.nightscout.androidaps.plugins.aps.events.EventOpenAPSUpdateGui
 import info.nightscout.androidaps.plugins.aps.events.EventOpenAPSUpdateResultGui
-import info.nightscout.androidaps.plugins.bus.RxBus
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.utils.DateUtil
 import info.nightscout.androidaps.utils.FabricPrivacy
 import info.nightscout.androidaps.utils.JSONFormatter
+import info.nightscout.androidaps.utils.extensions.plusAssign
 import info.nightscout.androidaps.utils.resources.ResourceHelper
-import info.nightscout.androidaps.utils.rx.AapsSchedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
+import kotlinx.android.synthetic.main.openapsama_fragment.*
 import org.json.JSONArray
 import org.json.JSONException
 import javax.inject.Inject
 
 class OpenAPSSMBFragment : DaggerFragment() {
-
     private var disposable: CompositeDisposable = CompositeDisposable()
 
     @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var aapsSchedulers: AapsSchedulers
-    @Inject lateinit var rxBus: RxBus
-    @Inject lateinit var rh: ResourceHelper
+    @Inject lateinit var rxBus: RxBusWrapper
+    @Inject lateinit var resourceHelper: ResourceHelper
     @Inject lateinit var fabricPrivacy: FabricPrivacy
     @Inject lateinit var openAPSSMBPlugin: OpenAPSSMBPlugin
     @Inject lateinit var dateUtil: DateUtil
-    @Inject lateinit var jsonFormatter: JSONFormatter
-
-    private var _binding: OpenapsamaFragmentBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        _binding = OpenapsamaFragmentBinding.inflate(inflater, container, false)
-        return binding.root
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.openapsama_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.run.setOnClickListener {
+        openapsma_run.setOnClickListener {
             openAPSSMBPlugin.invoke("OpenAPSSMB button", false)
         }
     }
@@ -63,16 +53,16 @@ class OpenAPSSMBFragment : DaggerFragment() {
         super.onResume()
         disposable += rxBus
             .toObservable(EventOpenAPSUpdateGui::class.java)
-            .observeOn(aapsSchedulers.main)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 updateGUI()
-            }, fabricPrivacy::logException)
+            }, { fabricPrivacy.logException(it) })
         disposable += rxBus
             .toObservable(EventOpenAPSUpdateResultGui::class.java)
-            .observeOn(aapsSchedulers.main)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 updateResultGUI(it.text)
-            }, fabricPrivacy::logException)
+            }, { fabricPrivacy.logException(it) })
 
         updateGUI()
     }
@@ -84,57 +74,51 @@ class OpenAPSSMBFragment : DaggerFragment() {
     }
 
     @Synchronized
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    @Synchronized
     fun updateGUI() {
-        if (_binding == null) return
+        if (openapsma_result == null) return
         openAPSSMBPlugin.lastAPSResult?.let { lastAPSResult ->
-            binding.result.text = jsonFormatter.format(lastAPSResult.json)
-            binding.request.text = lastAPSResult.toSpanned()
+            openapsma_result.text = JSONFormatter.format(lastAPSResult.json)
+            openapsma_request.text = lastAPSResult.toSpanned()
         }
         openAPSSMBPlugin.lastDetermineBasalAdapterSMBJS?.let { determineBasalAdapterSMBJS ->
-            binding.glucosestatus.text = jsonFormatter.format(determineBasalAdapterSMBJS.glucoseStatusParam)
-            binding.currenttemp.text = jsonFormatter.format(determineBasalAdapterSMBJS.currentTempParam)
+            openapsma_glucosestatus.text = JSONFormatter.format(determineBasalAdapterSMBJS.glucoseStatusParam)
+            openapsma_currenttemp.text = JSONFormatter.format(determineBasalAdapterSMBJS.currentTempParam)
             try {
                 val iobArray = JSONArray(determineBasalAdapterSMBJS.iobDataParam)
-                binding.iobdata.text = TextUtils.concat(rh.gs(R.string.array_of_elements, iobArray.length()) + "\n", jsonFormatter.format(iobArray.getString(0)))
+                openapsma_iobdata.text = TextUtils.concat(resourceHelper.gs(R.string.array_of_elements, iobArray.length()) + "\n", JSONFormatter.format(iobArray.getString(0)))
             } catch (e: JSONException) {
                 aapsLogger.error(LTag.APS, "Unhandled exception", e)
                 @SuppressLint("SetTextI18n")
-                binding.iobdata.text = "JSONException see log for details"
+                openapsma_iobdata.text = "JSONException see log for details"
             }
 
-            binding.profile.text = jsonFormatter.format(determineBasalAdapterSMBJS.profileParam)
-            binding.mealdata.text = jsonFormatter.format(determineBasalAdapterSMBJS.mealDataParam)
-            binding.scriptdebugdata.text = determineBasalAdapterSMBJS.scriptDebug
+            openapsma_profile.text = JSONFormatter.format(determineBasalAdapterSMBJS.profileParam)
+            openapsma_mealdata.text = JSONFormatter.format(determineBasalAdapterSMBJS.mealDataParam)
+            openapsma_scriptdebugdata.text = determineBasalAdapterSMBJS.scriptDebug
             openAPSSMBPlugin.lastAPSResult?.inputConstraints?.let {
-                binding.constraints.text = it.getReasons(aapsLogger)
+                openapsma_constraints.text = it.getReasons(aapsLogger)
             }
         }
         if (openAPSSMBPlugin.lastAPSRun != 0L) {
-            binding.lastrun.text = dateUtil.dateAndTimeString(openAPSSMBPlugin.lastAPSRun)
+            openapsma_lastrun.text = dateUtil.dateAndTimeString(openAPSSMBPlugin.lastAPSRun)
         }
-        openAPSSMBPlugin.lastAutosensResult.let {
-            binding.autosensdata.text = jsonFormatter.format(it.json())
+        openAPSSMBPlugin.lastAutosensResult?.let {
+            openapsma_autosensdata.text = JSONFormatter.format(it.json())
         }
     }
 
     @Synchronized
     private fun updateResultGUI(text: String) {
-        if (_binding == null) return
-        binding.result.text = text
-        binding.glucosestatus.text = ""
-        binding.currenttemp.text = ""
-        binding.iobdata.text = ""
-        binding.profile.text = ""
-        binding.mealdata.text = ""
-        binding.autosensdata.text = ""
-        binding.scriptdebugdata.text = ""
-        binding.request.text = ""
-        binding.lastrun.text = ""
+        if (openapsma_result == null) return
+        openapsma_result.text = text
+        openapsma_glucosestatus.text = ""
+        openapsma_currenttemp.text = ""
+        openapsma_iobdata.text = ""
+        openapsma_profile.text = ""
+        openapsma_mealdata.text = ""
+        openapsma_autosensdata.text = ""
+        openapsma_scriptdebugdata.text = ""
+        openapsma_request.text = ""
+        openapsma_lastrun.text = ""
     }
 }

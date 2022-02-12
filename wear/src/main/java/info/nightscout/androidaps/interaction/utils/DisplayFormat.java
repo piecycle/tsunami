@@ -1,48 +1,35 @@
 package info.nightscout.androidaps.interaction.utils;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+import info.nightscout.androidaps.Aaps;
 import info.nightscout.androidaps.data.RawDisplayData;
-import info.nightscout.shared.sharedPreferences.SP;
 
-@Singleton
 public class DisplayFormat {
-
-    @Inject SP sp;
-    @Inject WearUtil wearUtil;
-
-    @Inject DisplayFormat() {}
 
     /**
      * Maximal and minimal lengths of fields/labels shown in complications, in characters
      * For MAX values - above that WearOS and watch faces may start ellipsize (...) contents
      * For MIN values - this is minimal length that can hold legible data
      */
-    public final int MAX_FIELD_LEN_LONG = 22; // this is found out empirical, for TYPE_LONG_TEXT
-    public final int MAX_FIELD_LEN_SHORT = 7; // according to Wear OS docs for TYPE_SHORT_TEXT
-    public final int MIN_FIELD_LEN_COB = 3;   // since carbs are usually 0..99g
-    public final int MIN_FIELD_LEN_IOB = 3;   // IoB can range from like .1U to 99U
+    public static final int MAX_FIELD_LEN_LONG = 22; // this is found out empirical, for TYPE_LONG_TEXT
+    public static final int MAX_FIELD_LEN_SHORT = 7; // according to Wear OS docs for TYPE_SHORT_TEXT
+    public static final int MIN_FIELD_LEN_COB = 3;   // since carbs are usually 0..99g
+    public static final int MIN_FIELD_LEN_IOB = 3;   // IoB can range from like .1U to 99U
 
-    private boolean areComplicationsUnicode() {
-        return sp.getBoolean("complication_unicode", true);
+    public static String deltaSymbol() {
+        return Aaps.areComplicationsUnicode() ? "\u0394" : "";
     }
 
-    public String deltaSymbol() {
-        return areComplicationsUnicode() ? "\u0394" : "";
+    public static String verticalSeparatorSymbol() {
+        return Aaps.areComplicationsUnicode() ? "\u205E" : "|";
     }
 
-    public String verticalSeparatorSymbol() {
-        return areComplicationsUnicode() ? "\u205E" : "|";
+    public static String basalRateSymbol() {
+        return Aaps.areComplicationsUnicode() ? "\u238D\u2006" : "";
     }
 
-    public String basalRateSymbol() {
-        return areComplicationsUnicode() ? "\u238D\u2006" : "";
-    }
+    public static String shortTimeSince(final long refTime) {
 
-    public String shortTimeSince(final long refTime) {
-
-        long deltaTimeMs = wearUtil.msSince(refTime);
+        long deltaTimeMs = WearUtil.msSince(refTime);
 
         if (deltaTimeMs < Constants.MINUTE_IN_MS) {
             return "0'";
@@ -63,7 +50,7 @@ public class DisplayFormat {
         }
     }
 
-    public String shortTrend(final RawDisplayData raw) {
+    public static String shortTrend(final RawDisplayData raw) {
         String minutes = "--";
         if (raw.datetime > 0) {
             minutes = shortTimeSince(raw.datetime);
@@ -84,11 +71,11 @@ public class DisplayFormat {
         return minutes + " " + shortDelta;
     }
 
-    public String longGlucoseLine(final RawDisplayData raw) {
+    public static String longGlucoseLine(final RawDisplayData raw) {
         return raw.sSgv + raw.sDirection + " " + deltaSymbol() + (new SmallestDoubleString(raw.sDelta)).minimise(8) + " (" + shortTimeSince(raw.datetime) + ")";
     }
 
-    public String longDetailsLine(final RawDisplayData raw) {
+    public static String longDetailsLine(final RawDisplayData raw) {
 
         final String SEP_LONG = "  " + verticalSeparatorSymbol() + "  ";
         final String SEP_SHORT = " " + verticalSeparatorSymbol() + " ";
@@ -124,7 +111,7 @@ public class DisplayFormat {
         return line;
     }
 
-    public Pair<String, String> detailedIob(RawDisplayData raw) {
+    public static Pair<String, String> detailedIob(RawDisplayData raw) {
         final String iob1 = new SmallestDoubleString(raw.sIOB1, SmallestDoubleString.Units.USE).minimise(MAX_FIELD_LEN_SHORT);
         String iob2 = "";
         if (raw.sIOB2.contains("|")) {
@@ -143,7 +130,7 @@ public class DisplayFormat {
         return Pair.create(iob1, iob2);
     }
 
-    public Pair<String, String> detailedCob(final RawDisplayData raw) {
+    public static Pair<String, String> detailedCob(final RawDisplayData raw) {
         SmallestDoubleString cobMini = new SmallestDoubleString(raw.sCOB2, SmallestDoubleString.Units.USE);
 
         String cob2 = "";

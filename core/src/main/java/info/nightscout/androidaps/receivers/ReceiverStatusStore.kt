@@ -1,17 +1,15 @@
 package info.nightscout.androidaps.receivers
 
-import info.nightscout.androidaps.annotations.OpenForTesting
 import android.content.Context
 import android.content.Intent
 import info.nightscout.androidaps.events.EventChargingState
 import info.nightscout.androidaps.events.EventNetworkChange
-import info.nightscout.androidaps.plugins.bus.RxBus
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@OpenForTesting
 @Singleton
-class ReceiverStatusStore @Inject constructor(val context: Context, val rxBus: RxBus) {
+class ReceiverStatusStore @Inject constructor(val context: Context, val rxBus: RxBusWrapper) {
 
     var lastNetworkEvent: EventNetworkChange? = null
 

@@ -4,24 +4,27 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import android.os.IBinder
-import info.nightscout.androidaps.interfaces.NotificationHolder
+import androidx.annotation.RequiresApi
+import info.nightscout.androidaps.interfaces.NotificationHolderInterface
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /*
     This code replaces  following
     val alarm = Intent(context, DummyService::class.java)
-    alarm.putExtra("soundId", n.soundId)
+    alarm.putExtra("soundid", n.soundId)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(alarm) else context.startService(alarm)
 
     it fails randomly with error
     Context.startForegroundService() did not then call Service.startForeground(): ServiceRecord{e317f7e u0 info.nightscout.nsclient/info.nightscout.androidaps.services.DummyService}
 
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Singleton
 class DummyServiceHelper @Inject constructor(
-    private val notificationHolder: NotificationHolder
+    private val notificationHolder: NotificationHolderInterface
 ) {
 
     fun startService(context: Context) {

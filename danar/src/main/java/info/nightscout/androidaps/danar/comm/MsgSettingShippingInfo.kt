@@ -1,7 +1,7 @@
 package info.nightscout.androidaps.danar.comm
 
 import dagger.android.HasAndroidInjector
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.logging.LTag
 
 class MsgSettingShippingInfo(
     injector: HasAndroidInjector

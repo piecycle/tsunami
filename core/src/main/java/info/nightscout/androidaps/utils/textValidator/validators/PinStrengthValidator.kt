@@ -22,11 +22,11 @@ class PinStrengthValidator(val _customErrorMessage: String?) : Validator(_custom
                         same = false
                     }
 
-                    if (last.code + 1 != c.code) {
+                    if (last.toInt() + 1 != c.toInt()) {
                         falling = false
                     }
 
-                    if (last.code != c.code + 1) {
+                    if (last.toInt() != c.toInt() + 1) {
                         rising = false
                     }
                 }

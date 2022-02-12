@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerDialogFragment
 import info.nightscout.androidaps.R
-import info.nightscout.androidaps.databinding.ObjectivesExamFragmentBinding
-import info.nightscout.androidaps.plugins.bus.RxBus
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.plugins.constraints.objectives.events.EventObjectivesUpdateGui
 import info.nightscout.androidaps.plugins.constraints.objectives.objectives.Objective
 import info.nightscout.androidaps.plugins.constraints.objectives.objectives.Objective.ExamTask
@@ -16,36 +15,28 @@ import info.nightscout.androidaps.utils.DateUtil
 import info.nightscout.androidaps.utils.T
 import info.nightscout.androidaps.utils.ToastUtils
 import info.nightscout.androidaps.utils.resources.ResourceHelper
+import kotlinx.android.synthetic.main.objectives_exam_fragment.*
 import javax.inject.Inject
 
 class ObjectivesExamDialog : DaggerDialogFragment() {
-
-    @Inject lateinit var rxBus: RxBus
-    @Inject lateinit var rh: ResourceHelper
+    @Inject lateinit var rxBus: RxBusWrapper
+    @Inject lateinit var resourceHelper: ResourceHelper
     @Inject lateinit var dateUtil: DateUtil
 
     companion object {
-
         var objective: Objective? = null
     }
 
     private var currentTask = 0
 
-    private var _binding: ObjectivesExamFragmentBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+                              savedInstanceState: Bundle?): View? {
         // load data from bundle
         (savedInstanceState ?: arguments)?.let { bundle ->
             currentTask = bundle.getInt("currentTask", 0)
         }
 
-        _binding = ObjectivesExamFragmentBinding.inflate(inflater, container, false)
-        return binding.root
+        return inflater.inflate(R.layout.objectives_exam_fragment, container, false)
     }
 
     override fun onStart() {
@@ -64,85 +55,75 @@ class ObjectivesExamDialog : DaggerDialogFragment() {
         bundle.putInt("currentTask", currentTask)
     }
 
-    @Synchronized
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    @Synchronized
     fun updateGui() {
-        if (_binding == null) return
         objective?.let { objective ->
             val task: ExamTask = objective.tasks[currentTask] as ExamTask
-            binding.examName.setText(task.task)
-            binding.examQuestion.setText(task.question)
+            objectives_exam_name.setText(task.task)
+            objectives_exam_question.setText(task.question)
             // Options
-            binding.examOptions.removeAllViews()
+            objectives_exam_options.removeAllViews()
             task.options.forEach {
-                context?.let { context ->
-                    val cb = it.generate(context)
-                    if (task.answered) {
-                        cb.isEnabled = false
-                        if (it.isCorrect)
-                            cb.isChecked = true
-                    }
-                    binding.examOptions.addView(cb)
+                val cb = it.generate(context)
+                if (task.answered) {
+                    cb.isEnabled = false
+                    if (it.isCorrect)
+                        cb.isChecked = true
                 }
+                objectives_exam_options.addView(cb)
             }
             // Hints
-            binding.examHints.removeAllViews()
+            objectives_exam_hints.removeAllViews()
             for (h in task.hints) {
-                context?.let { binding.examHints.addView(h.generate(it)) }
+                objectives_exam_hints.addView(h.generate(context))
             }
             // Disabled to
-            binding.examDisabledto.text = rh.gs(R.string.answerdisabledto, dateUtil.timeString(task.disabledTo))
-            binding.examDisabledto.visibility = if (task.isEnabledAnswer()) View.GONE else View.VISIBLE
+            objectives_exam_disabledto.text = resourceHelper.gs(R.string.answerdisabledto, dateUtil.timeString(task.disabledTo))
+            objectives_exam_disabledto.visibility = if (task.isEnabledAnswer) View.GONE else View.VISIBLE
             // Buttons
-            binding.examVerify.isEnabled = !task.answered && task.isEnabledAnswer()
-            binding.examVerify.setOnClickListener {
+            objectives_exam_verify.isEnabled = !task.answered && task.isEnabledAnswer
+            objectives_exam_verify.setOnClickListener {
                 var result = true
                 for (o in task.options) {
-                    val option: Option = o
+                    val option: Option = o as Option
                     result = result && option.evaluate()
                 }
                 task.answered = result
                 if (!result) {
-                    task.disabledTo = dateUtil.now() + T.hours(1).msecs()
-                    context?.let { it1 -> ToastUtils.showToastInUiThread(it1, R.string.wronganswer) }
+                    task.disabledTo = DateUtil.now() + T.hours(1).msecs()
+                    ToastUtils.showToastInUiThread(context, R.string.wronganswer)
                 } else task.disabledTo = 0
                 updateGui()
                 rxBus.send(EventObjectivesUpdateGui())
             }
-            binding.close.setOnClickListener { dismiss() }
-            binding.examReset.setOnClickListener {
+            close.setOnClickListener { dismiss() }
+            objectives_exam_reset.setOnClickListener {
                 task.answered = false
                 //task.disabledTo = 0
                 updateGui()
                 rxBus.send(EventObjectivesUpdateGui())
             }
-            binding.backButton.isEnabled = currentTask != 0
-            binding.backButton.setOnClickListener {
+            objectives_back_button.isEnabled = currentTask != 0
+            objectives_back_button.setOnClickListener {
                 currentTask--
                 updateGui()
             }
-            binding.nextButton.isEnabled = currentTask != objective.tasks.size - 1
-            binding.nextButton.setOnClickListener {
+            objectives_next_button.isEnabled = currentTask != objective.tasks.size - 1
+            objectives_next_button.setOnClickListener {
                 currentTask++
                 updateGui()
             }
 
-            binding.nextUnansweredButton.isEnabled = !objective.isCompleted
-            binding.nextUnansweredButton.setOnClickListener {
+            objectives_next_unanswered_button.isEnabled = !objective.isCompleted
+            objectives_next_unanswered_button.setOnClickListener {
                 for (i in (currentTask + 1) until objective.tasks.size) {
-                    if (!objective.tasks[i].isCompleted()) {
+                    if (!objective.tasks[i].isCompleted) {
                         currentTask = i
                         updateGui()
                         return@setOnClickListener
                     }
                 }
                 for (i in 0..currentTask) {
-                    if (!objective.tasks[i].isCompleted()) {
+                    if (!objective.tasks[i].isCompleted) {
                         currentTask = i
                         updateGui()
                         return@setOnClickListener

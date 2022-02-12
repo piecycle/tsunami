@@ -1,7 +1,11 @@
 package info.nightscout.androidaps.interaction.actions;
 
+
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridPagerAdapter;
+import android.support.wearable.view.GridViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +16,12 @@ import java.text.DecimalFormat;
 import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.data.ListenerService;
 import info.nightscout.androidaps.interaction.utils.PlusMinusEditText;
-import info.nightscout.shared.SafeParse;
+import info.nightscout.androidaps.interaction.utils.SafeParse;
 
 /**
  * Created by adrian on 09/02/17.
  */
+
 
 public class CPPActivity extends ViewSelectorActivity {
 
@@ -41,14 +46,22 @@ public class CPPActivity extends ViewSelectorActivity {
 
         if (timeshift < 0) timeshift += 24;
 
-        setAdapter(new MyGridViewPagerAdapter());
+        setContentView(R.layout.grid_layout);
+        final Resources res = getResources();
+        final GridViewPager pager = findViewById(R.id.pager);
+
+        pager.setAdapter(new MyGridViewPagerAdapter());
+        DotsPageIndicator dotsPageIndicator = findViewById(R.id.page_indicator);
+        dotsPageIndicator.setPager(pager);
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
         finish();
     }
+
 
     private class MyGridViewPagerAdapter extends GridPagerAdapter {
         @Override
@@ -73,7 +86,6 @@ public class CPPActivity extends ViewSelectorActivity {
                 editTimeshift = new PlusMinusEditText(view, R.id.amountfield, R.id.plusbutton, R.id.minusbutton, def, 0d, 23d, 1d, new DecimalFormat("0"), true, true);
                 setLabelToPlusMinusView(view, getString(R.string.action_timeshift));
                 container.addView(view);
-                view.requestFocus();
                 return view;
             } else if (col == 1) {
                 final View view = getInflatedPlusMinusView(container);
@@ -99,7 +111,7 @@ public class CPPActivity extends ViewSelectorActivity {
                         String actionstring = "cppset " + SafeParse.stringToInt(editTimeshift.editText.getText().toString())
                                 + " " + SafeParse.stringToInt(editPercentage.editText.getText().toString());
                         ListenerService.initiateAction(CPPActivity.this, actionstring);
-                        finishAffinity();
+                        finish();
                     }
                 });
                 container.addView(view);
@@ -118,6 +130,7 @@ public class CPPActivity extends ViewSelectorActivity {
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
+
 
     }
 }

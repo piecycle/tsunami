@@ -1,9 +1,7 @@
 package info.nightscout.androidaps.dialogs
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
-import android.os.HandlerThread
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +11,7 @@ import dagger.android.support.DaggerDialogFragment
 import info.nightscout.androidaps.activities.ErrorHelperActivity
 import info.nightscout.androidaps.core.R
 import info.nightscout.androidaps.core.databinding.DialogErrorBinding
-import info.nightscout.androidaps.database.entities.UserEntry.Action
-import info.nightscout.androidaps.database.entities.UserEntry.Sources
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.androidaps.logging.UserEntryLogger
+import info.nightscout.androidaps.logging.AAPSLogger
 import info.nightscout.androidaps.services.AlarmSoundServiceHelper
 import info.nightscout.androidaps.utils.T
 import javax.inject.Inject
@@ -25,15 +20,13 @@ class ErrorDialog : DaggerDialogFragment() {
 
     @Inject lateinit var alarmSoundServiceHelper: AlarmSoundServiceHelper
     @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var uel: UserEntryLogger
-    @Inject lateinit var ctx: Context
 
     var helperActivity: ErrorHelperActivity? = null
     var status: String = ""
     var title: String = ""
     var sound: Int = 0
 
-    private val handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
+    private var loopHandler = Handler()
 
     private var _binding: DialogErrorBinding? = null
 
@@ -63,17 +56,17 @@ class ErrorDialog : DaggerDialogFragment() {
 
         binding.title.text = title
         binding.ok.setOnClickListener {
-            uel.log(Action.ERROR_DIALOG_OK, Sources.Unknown)
+            aapsLogger.debug("USER ENTRY: Error dialog ok button pressed")
             dismiss()
         }
         binding.mute.setOnClickListener {
-            uel.log(Action.ERROR_DIALOG_MUTE, Sources.Unknown)
+            aapsLogger.debug("USER ENTRY: Error dialog mute button pressed")
             stopAlarm()
         }
         binding.mute5min.setOnClickListener {
-            uel.log(Action.ERROR_DIALOG_MUTE_5MIN, Sources.Unknown)
+            aapsLogger.debug("USER ENTRY: Error dialog mute 5 min button pressed")
             stopAlarm()
-            handler.postDelayed(this::startAlarm, T.mins(5).msecs())
+            loopHandler.postDelayed(this::startAlarm, T.mins(5).msecs())
         }
         startAlarm()
     }
@@ -103,15 +96,15 @@ class ErrorDialog : DaggerDialogFragment() {
     override fun dismiss() {
         super.dismissAllowingStateLoss()
         helperActivity?.finish()
-        handler.removeCallbacksAndMessages(null)
+        loopHandler.removeCallbacksAndMessages(null)
         stopAlarm()
     }
 
     private fun startAlarm() {
         if (sound != 0)
-            alarmSoundServiceHelper.startAlarm(ctx, sound)
+            context?.let { context -> alarmSoundServiceHelper.startAlarm(context, sound) }
     }
 
     private fun stopAlarm() =
-        alarmSoundServiceHelper.stopService(ctx)
+        context?.let { context -> alarmSoundServiceHelper.stopService(context) }
 }

@@ -5,7 +5,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import info.nightscout.androidaps.utils.locale.LocaleHelper
 
 open class DialogAppCompatActivity : DaggerAppCompatActivity() {
-    override fun attachBaseContext(newBase: Context) {
+    public override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.wrap(newBase))
     }
 }

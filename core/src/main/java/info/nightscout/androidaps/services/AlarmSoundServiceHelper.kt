@@ -4,32 +4,30 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import android.os.IBinder
-import info.nightscout.androidaps.activities.ErrorHelperActivity
-import info.nightscout.androidaps.interfaces.NotificationHolder
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.shared.logging.LTag
+import androidx.annotation.RequiresApi
+import info.nightscout.androidaps.interfaces.NotificationHolderInterface
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /*
     This code replaces  following
     val alarm = Intent(context, AlarmSoundService::class.java)
-    alarm.putExtra("soundId", n.soundId)
+    alarm.putExtra("soundid", n.soundId)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(alarm) else context.startService(alarm)
 
     it fails randomly with error
     Context.startForegroundService() did not then call Service.startForeground(): ServiceRecord{e317f7e u0 info.nightscout.nsclient/info.nightscout.androidaps.services.AlarmSoundService}
 
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Singleton
 class AlarmSoundServiceHelper @Inject constructor(
-    private val aapsLogger: AAPSLogger,
-    private val notificationHolder: NotificationHolder
+    private val notificationHolder: NotificationHolderInterface
 ) {
 
     fun startAlarm(context: Context, sound: Int) {
-        aapsLogger.debug(LTag.CORE, "Starting alarm")
         val connection = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
                 // The binder of the service that returns the instance that is created.
@@ -63,14 +61,13 @@ class AlarmSoundServiceHelper @Inject constructor(
     }
 
     fun stopService(context: Context) {
-        aapsLogger.debug(LTag.CORE, "Stopping alarm")
         val alarm = Intent(context, AlarmSoundService::class.java)
         context.stopService(alarm)
     }
 
     private fun getServiceIntent(context: Context, sound: Int): Intent {
         val alarm = Intent(context, AlarmSoundService::class.java)
-        alarm.putExtra(ErrorHelperActivity.SOUND_ID, sound)
+        alarm.putExtra("soundid", sound)
         return alarm
     }
 }

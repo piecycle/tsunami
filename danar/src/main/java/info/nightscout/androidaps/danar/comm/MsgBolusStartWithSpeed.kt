@@ -2,7 +2,7 @@ package info.nightscout.androidaps.danar.comm
 
 import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.interfaces.Constraint
-import info.nightscout.shared.logging.LTag
+import info.nightscout.androidaps.logging.LTag
 
 class MsgBolusStartWithSpeed(
     injector: HasAndroidInjector,

@@ -7,18 +7,18 @@ import android.os.SystemClock
 import android.text.Spanned
 import androidx.fragment.app.FragmentActivity
 import info.nightscout.androidaps.core.R
-import info.nightscout.androidaps.extensions.runOnUiThread
+import info.nightscout.androidaps.utils.extensions.runOnUiThread
 
 object OKDialog {
 
     @SuppressLint("InflateParams")
     fun show(context: Context, title: String, message: String, runnable: Runnable? = null) {
         var okClicked = false
-        var notEmptyTitle = title
-        if (notEmptyTitle.isEmpty()) notEmptyTitle = context.getString(R.string.message)
+        var notEmptytitle = title
+        if (notEmptytitle.isEmpty()) notEmptytitle = context.getString(R.string.message)
 
         AlertDialogHelper.Builder(context)
-            .setCustomTitle(AlertDialogHelper.buildCustomTitle(context, notEmptyTitle))
+            .setCustomTitle(AlertDialogHelper.buildCustomTitle(context, notEmptytitle))
             .setMessage(message)
             .setPositiveButton(context.getString(R.string.ok)) { dialog: DialogInterface, _: Int ->
                 if (okClicked) return@setPositiveButton
@@ -36,11 +36,11 @@ object OKDialog {
     @SuppressLint("InflateParams")
     fun show(activity: FragmentActivity, title: String, message: Spanned, runnable: Runnable? = null) {
         var okClicked = false
-        var notEmptyTitle = title
-        if (notEmptyTitle.isEmpty()) notEmptyTitle = activity.getString(R.string.message)
+        var notEmptytitle = title
+        if (notEmptytitle.isEmpty()) notEmptytitle = activity.getString(R.string.message)
 
         AlertDialogHelper.Builder(activity)
-            .setCustomTitle(AlertDialogHelper.buildCustomTitle(activity, notEmptyTitle))
+            .setCustomTitle(AlertDialogHelper.buildCustomTitle(activity, notEmptytitle))
             .setMessage(message)
             .setPositiveButton(activity.getString(R.string.ok)) { dialog: DialogInterface, _: Int ->
                 if (okClicked) return@setPositiveButton
@@ -55,10 +55,12 @@ object OKDialog {
             .setCanceledOnTouchOutside(false)
     }
 
+    @JvmStatic
     fun showConfirmation(activity: FragmentActivity, message: String, ok: Runnable?) {
         showConfirmation(activity, activity.getString(R.string.confirmation), message, ok, null)
     }
 
+    @JvmStatic
     fun showConfirmation(activity: FragmentActivity, message: Spanned, ok: Runnable?) {
         showConfirmation(activity, activity.getString(R.string.confirmation), message, ok, null)
     }
@@ -151,11 +153,15 @@ object OKDialog {
             .setCanceledOnTouchOutside(false)
     }
 
+    @JvmStatic
+    @JvmOverloads
     fun showConfirmation(context: Context, message: String, ok: Runnable?, cancel: Runnable? = null) {
         showConfirmation(context, context.getString(R.string.confirmation), message, ok, cancel)
     }
 
     @SuppressLint("InflateParams")
+    @JvmStatic
+    @JvmOverloads
     fun showConfirmation(context: Context, title: String, message: String, ok: Runnable?, cancel: Runnable? = null) {
         var okClicked = false
         AlertDialogHelper.Builder(context)
@@ -184,6 +190,8 @@ object OKDialog {
     }
 
     @SuppressLint("InflateParams")
+    @JvmStatic
+    @JvmOverloads
     fun showConfirmation(context: Context, title: String, message: String, ok: DialogInterface.OnClickListener?, cancel: DialogInterface.OnClickListener? = null) {
         var okClicked = false
         AlertDialogHelper.Builder(context)

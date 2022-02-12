@@ -2,6 +2,7 @@ package info.nightscout.androidaps.utils.textValidator;
 
 import android.content.Context;
 import android.text.TextWatcher;
+import android.widget.EditText;
 
 import info.nightscout.androidaps.utils.textValidator.validators.Validator;
 
@@ -13,18 +14,19 @@ public interface EditTextValidator {
      * Add a validator to this FormEditText. The validator will be added in the
      * queue of the current validators.
      *
+     * @param theValidator
      * @throws IllegalArgumentException if the validator is null
      */
     void addValidator(Validator theValidator)
             throws IllegalArgumentException;
 
     /**
-     * This should be used with { #addTextChangedListener(TextWatcher)}. It
+     * This should be used with {@link #addTextChangedListener(TextWatcher)}. It
      * fixes the non-hiding error popup behaviour.
      */
     TextWatcher getTextWatcher();
 
-    @SuppressWarnings("unused") boolean isEmptyAllowed();
+    boolean isEmptyAllowed();
 
     /**
      * Resets the {@link Validator}s
@@ -33,7 +35,7 @@ public interface EditTextValidator {
 
     /**
      * Calling *testValidity()* will cause the EditText to go through
-     * customValidators and call {#Validator.isValid(EditText)}
+     * customValidators and call {@link #Validator.isValid(EditText)}
      * Same as {@link #testValidity(boolean)} with first parameter true
      *
      * @return true if the validity passes false otherwise.
@@ -42,7 +44,7 @@ public interface EditTextValidator {
 
     /**
      * Calling *testValidity()* will cause the EditText to go through
-     * customValidators and call {#Validator.isValid(EditText)}
+     * customValidators and call {@link #Validator.isValid(EditText)}
      *
      * @param showUIError determines if this call should show the UI error.
      * @return true if the validity passes false otherwise.

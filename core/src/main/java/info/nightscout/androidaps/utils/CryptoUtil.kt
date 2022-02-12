@@ -1,7 +1,7 @@
 package info.nightscout.androidaps.utils
 
-import info.nightscout.shared.logging.AAPSLogger
-import info.nightscout.androidaps.extensions.toHex
+import info.nightscout.androidaps.logging.AAPSLogger
+import info.nightscout.androidaps.utils.extensions.toHex
 import org.spongycastle.util.encoders.Base64
 import java.nio.ByteBuffer
 import java.security.MessageDigest
@@ -17,7 +17,6 @@ import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Suppress("SpellCheckingInspection")
 @Singleton
 class CryptoUtil @Inject constructor(
     val aapsLogger: AAPSLogger
@@ -40,7 +39,7 @@ class CryptoUtil @Inject constructor(
         return hashRaw.toHex()
     }
 
-    fun hmac256(str: String, secret: String): String {
+    fun hmac256(str: String, secret: String): String? {
         val sha256HMAC = Mac.getInstance("HmacSHA256")
         val secretKey = SecretKeySpec(secret.toByteArray(), "HmacSHA256")
         sha256HMAC.init(secretKey)
@@ -69,7 +68,7 @@ class CryptoUtil @Inject constructor(
             secureRandom.nextBytes(iv)
             val cipherEnc: Cipher = Cipher.getInstance("AES/GCM/NoPadding")
             cipherEnc.init(Cipher.ENCRYPT_MODE, prepCipherKey(passPhrase, salt), GCMParameterSpec(TAG_LENGTH_BIT, iv))
-            encrypted = cipherEnc.doFinal(rawData.toByteArray()) ?: return null
+            encrypted = cipherEnc.doFinal(rawData.toByteArray())
             val byteBuffer: ByteBuffer = ByteBuffer.allocate(1 + iv.size + encrypted.size)
             byteBuffer.put(iv.size.toByte())
             byteBuffer.put(iv)
