@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 22,
-    "identityHash": "09121464fb795b3c37bb1c2c2c3ea481",
+    "identityHash": "786cadc518bcb813dde23ef56e8c3983",
     "entities": [
       {
         "tableName": "apsResults",
@@ -166,6 +166,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_apsResults_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -174,6 +175,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_apsResults_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -341,6 +343,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -349,6 +352,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -357,6 +361,7 @@
             "columnNames": [
               "temporaryId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_temporaryId` ON `${TABLE_NAME}` (`temporaryId`)"
           },
           {
@@ -365,6 +370,7 @@
             "columnNames": [
               "pumpId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_pumpId` ON `${TABLE_NAME}` (`pumpId`)"
           },
           {
@@ -373,6 +379,7 @@
             "columnNames": [
               "pumpSerial"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_pumpSerial` ON `${TABLE_NAME}` (`pumpSerial`)"
           },
           {
@@ -381,6 +388,7 @@
             "columnNames": [
               "pumpType"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_pumpType` ON `${TABLE_NAME}` (`pumpType`)"
           },
           {
@@ -389,6 +397,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -397,6 +406,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_boluses_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -696,6 +706,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_bolusCalculatorResults_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -704,6 +715,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_bolusCalculatorResults_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           },
           {
@@ -712,6 +724,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_bolusCalculatorResults_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -720,6 +733,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_bolusCalculatorResults_isValid` ON `${TABLE_NAME}` (`isValid`)"
           }
         ],
@@ -863,6 +877,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_carbs_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -871,6 +886,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_carbs_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -879,6 +895,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_carbs_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -887,6 +904,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_carbs_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -895,6 +913,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_carbs_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -1104,6 +1123,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_effectiveProfileSwitches_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -1112,6 +1132,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_effectiveProfileSwitches_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -1120,6 +1141,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_effectiveProfileSwitches_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           },
           {
@@ -1128,6 +1150,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_effectiveProfileSwitches_isValid` ON `${TABLE_NAME}` (`isValid`)"
           }
         ],
@@ -1271,6 +1294,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -1279,6 +1303,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -1287,6 +1312,7 @@
             "columnNames": [
               "endId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_endId` ON `${TABLE_NAME}` (`endId`)"
           },
           {
@@ -1295,6 +1321,7 @@
             "columnNames": [
               "pumpSerial"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_pumpSerial` ON `${TABLE_NAME}` (`pumpSerial`)"
           },
           {
@@ -1303,6 +1330,7 @@
             "columnNames": [
               "pumpId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_pumpId` ON `${TABLE_NAME}` (`pumpId`)"
           },
           {
@@ -1311,6 +1339,7 @@
             "columnNames": [
               "pumpType"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_pumpType` ON `${TABLE_NAME}` (`pumpType`)"
           },
           {
@@ -1319,6 +1348,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -1327,6 +1357,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_extendedBoluses_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -1482,6 +1513,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_glucoseValues_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -1490,6 +1522,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_glucoseValues_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -1498,6 +1531,7 @@
             "columnNames": [
               "sourceSensor"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_glucoseValues_sourceSensor` ON `${TABLE_NAME}` (`sourceSensor`)"
           },
           {
@@ -1506,6 +1540,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_glucoseValues_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -1514,6 +1549,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_glucoseValues_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -1711,6 +1747,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_profileSwitches_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -1719,6 +1756,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_profileSwitches_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           },
           {
@@ -1727,6 +1765,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_profileSwitches_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -1735,6 +1774,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_profileSwitches_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -1743,6 +1783,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_profileSwitches_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           }
         ],
@@ -1892,6 +1933,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -1900,6 +1942,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -1908,6 +1951,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -1916,6 +1960,7 @@
             "columnNames": [
               "pumpType"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_pumpType` ON `${TABLE_NAME}` (`pumpType`)"
           },
           {
@@ -1924,6 +1969,7 @@
             "columnNames": [
               "endId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_endId` ON `${TABLE_NAME}` (`endId`)"
           },
           {
@@ -1932,6 +1978,7 @@
             "columnNames": [
               "pumpSerial"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_pumpSerial` ON `${TABLE_NAME}` (`pumpSerial`)"
           },
           {
@@ -1940,6 +1987,7 @@
             "columnNames": [
               "temporaryId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_temporaryId` ON `${TABLE_NAME}` (`temporaryId`)"
           },
           {
@@ -1948,6 +1996,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -1956,6 +2005,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryBasals_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -2105,6 +2155,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryTargets_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -2113,6 +2164,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryTargets_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -2121,6 +2173,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryTargets_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -2129,6 +2182,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryTargets_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -2137,6 +2191,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_temporaryTargets_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -2304,6 +2359,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_therapyEvents_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -2312,6 +2368,7 @@
             "columnNames": [
               "type"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_therapyEvents_type` ON `${TABLE_NAME}` (`type`)"
           },
           {
@@ -2320,6 +2377,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_therapyEvents_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -2328,6 +2386,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_therapyEvents_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -2336,6 +2395,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_therapyEvents_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -2344,6 +2404,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_therapyEvents_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -2493,6 +2554,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -2501,6 +2563,7 @@
             "columnNames": [
               "pumpId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_pumpId` ON `${TABLE_NAME}` (`pumpId`)"
           },
           {
@@ -2509,6 +2572,7 @@
             "columnNames": [
               "pumpType"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_pumpType` ON `${TABLE_NAME}` (`pumpType`)"
           },
           {
@@ -2517,6 +2581,7 @@
             "columnNames": [
               "pumpSerial"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_pumpSerial` ON `${TABLE_NAME}` (`pumpSerial`)"
           },
           {
@@ -2525,6 +2590,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -2533,6 +2599,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -2541,6 +2608,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_totalDailyDoses_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -2672,6 +2740,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_apsResultLinks_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -2680,6 +2749,7 @@
             "columnNames": [
               "apsResultId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_apsResultLinks_apsResultId` ON `${TABLE_NAME}` (`apsResultId`)"
           },
           {
@@ -2688,6 +2758,7 @@
             "columnNames": [
               "smbId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_apsResultLinks_smbId` ON `${TABLE_NAME}` (`smbId`)"
           },
           {
@@ -2696,6 +2767,7 @@
             "columnNames": [
               "tbrId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_apsResultLinks_tbrId` ON `${TABLE_NAME}` (`tbrId`)"
           }
         ],
@@ -2854,6 +2926,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_multiwaveBolusLinks_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -2862,6 +2935,7 @@
             "columnNames": [
               "bolusId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_multiwaveBolusLinks_bolusId` ON `${TABLE_NAME}` (`bolusId`)"
           },
           {
@@ -2870,6 +2944,7 @@
             "columnNames": [
               "extendedBolusId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_multiwaveBolusLinks_extendedBolusId` ON `${TABLE_NAME}` (`extendedBolusId`)"
           }
         ],
@@ -3069,6 +3144,7 @@
             "columnNames": [
               "source"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_userEntry_source` ON `${TABLE_NAME}` (`source`)"
           },
           {
@@ -3077,6 +3153,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_userEntry_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -3238,6 +3315,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_foods_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -3246,6 +3324,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_foods_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -3254,6 +3333,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_foods_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -3262,6 +3342,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_foods_isValid` ON `${TABLE_NAME}` (`isValid`)"
           }
         ],
@@ -3405,6 +3486,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_deviceStatus_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -3413,6 +3495,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_deviceStatus_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -3421,6 +3504,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_deviceStatus_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -3546,6 +3630,7 @@
             "columnNames": [
               "id"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_offlineEvents_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
@@ -3554,6 +3639,7 @@
             "columnNames": [
               "isValid"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_offlineEvents_isValid` ON `${TABLE_NAME}` (`isValid`)"
           },
           {
@@ -3562,6 +3648,7 @@
             "columnNames": [
               "nightscoutId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_offlineEvents_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
           },
           {
@@ -3570,6 +3657,7 @@
             "columnNames": [
               "referenceId"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_offlineEvents_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
           },
           {
@@ -3578,6 +3666,7 @@
             "columnNames": [
               "timestamp"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_offlineEvents_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
@@ -3594,12 +3683,186 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "tsunami",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `version` INTEGER NOT NULL, `dateCreated` INTEGER NOT NULL, `isValid` INTEGER NOT NULL, `referenceId` INTEGER, `timestamp` INTEGER NOT NULL, `utcOffset` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `tsunamiMode` INTEGER NOT NULL, `nightscoutSystemId` TEXT, `nightscoutId` TEXT, `pumpType` TEXT, `pumpSerial` TEXT, `temporaryId` INTEGER, `pumpId` INTEGER, `startId` INTEGER, `endId` INTEGER, FOREIGN KEY(`referenceId`) REFERENCES `tsunami`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateCreated",
+            "columnName": "dateCreated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isValid",
+            "columnName": "isValid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "referenceId",
+            "columnName": "referenceId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "utcOffset",
+            "columnName": "utcOffset",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tsunamiMode",
+            "columnName": "tsunamiMode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.nightscoutSystemId",
+            "columnName": "nightscoutSystemId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.nightscoutId",
+            "columnName": "nightscoutId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.pumpType",
+            "columnName": "pumpType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.pumpSerial",
+            "columnName": "pumpSerial",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.temporaryId",
+            "columnName": "temporaryId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.pumpId",
+            "columnName": "pumpId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.startId",
+            "columnName": "startId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.endId",
+            "columnName": "endId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_tsunami_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_id` ON `${TABLE_NAME}` (`id`)"
+          },
+          {
+            "name": "index_tsunami_isValid",
+            "unique": false,
+            "columnNames": [
+              "isValid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_isValid` ON `${TABLE_NAME}` (`isValid`)"
+          },
+          {
+            "name": "index_tsunami_nightscoutId",
+            "unique": false,
+            "columnNames": [
+              "nightscoutId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
+          },
+          {
+            "name": "index_tsunami_referenceId",
+            "unique": false,
+            "columnNames": [
+              "referenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
+          },
+          {
+            "name": "index_tsunami_timestamp",
+            "unique": false,
+            "columnNames": [
+              "timestamp"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "tsunami",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "referenceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '09121464fb795b3c37bb1c2c2c3ea481')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '786cadc518bcb813dde23ef56e8c3983')"
     ]
   }
 }

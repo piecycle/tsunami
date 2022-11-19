@@ -1,4 +1,5 @@
 package info.nightscout.androidaps.plugins.aps.tsunami
+/*
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -165,3 +166,4 @@ class TsunamiFragment : DaggerFragment() {
         binding.swipeRefresh.isRefreshing = false
     }
 }
+*/
