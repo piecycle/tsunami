@@ -18,7 +18,7 @@ abstract class APSModule {
     @ContributesAndroidInjector abstract fun loggerCallbackInjector(): LoggerCallback
     @ContributesAndroidInjector abstract fun determineBasalResultSMBInjector(): DetermineBasalResultSMB
     @ContributesAndroidInjector abstract fun determineBasalResultAMAInjector(): DetermineBasalResultAMA
-    @ContributesAndroidInjector abstract fun determineBasalResultUAMInjector(): DetermineBasalResultTAE
+    //@ContributesAndroidInjector abstract fun determineBasalResultUAMInjector(): DetermineBasalResultTAE
     @ContributesAndroidInjector abstract fun determineBasalAdapterAMAJSInjector(): DetermineBasalAdapterAMAJS
     @ContributesAndroidInjector abstract fun determineBasalAdapterSMBJSInjector(): DetermineBasalAdapterSMBJS
     @ContributesAndroidInjector abstract fun determineBasalAdapterTAEJSInjector(): DetermineBasalAdapterTAEJS
