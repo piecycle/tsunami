@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.SparseArray
 import android.view.*
 import androidx.core.util.forEach
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
@@ -40,7 +42,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class BGSourceFragment : DaggerFragment() {
+class BGSourceFragment : DaggerFragment(), MenuProvider {
 
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var fabricPrivacy: FabricPrivacy
@@ -68,7 +70,7 @@ class BGSourceFragment : DaggerFragment() {
             actionHelper = ActionModeHelper(rh, activity, this)
             actionHelper.setUpdateListHandler { binding.recyclerview.adapter?.notifyDataSetChanged() }
             actionHelper.setOnRemoveHandler { handler -> removeSelected(handler) }
-            setHasOptionsMenu(true)
+            requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,13 +108,8 @@ class BGSourceFragment : DaggerFragment() {
         super.onPause()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         actionHelper.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
         actionHelper.onPrepareOptionsMenu(menu)
     }
 
@@ -123,8 +120,9 @@ class BGSourceFragment : DaggerFragment() {
         _binding = null
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
-        actionHelper.onOptionsItemSelected(item)
+    override fun onMenuItemSelected(item: MenuItem) =
+        if (actionHelper.onOptionsItemSelected(item)) true
+        else super.onContextItemSelected(item)
 
     inner class RecyclerViewAdapter internal constructor(private var glucoseValues: List<GlucoseValue>) : RecyclerView.Adapter<RecyclerViewAdapter.GlucoseValuesViewHolder>() {
 
@@ -200,6 +198,7 @@ class BGSourceFragment : DaggerFragment() {
                         R.string.poctech            -> Sources.PocTech
                         R.string.tomato             -> Sources.Tomato
                         R.string.glunovo            -> Sources.Glunovo
+                        R.string.intelligo            -> Sources.Intelligo
                         R.string.xdrip              -> Sources.Xdrip
                         R.string.aidex              -> Sources.Aidex
                         else                        -> Sources.Unknown

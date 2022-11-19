@@ -147,7 +147,7 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
     private final InsightDbHelper insightDbHelper;
     private final PumpSync pumpSync;
 
-    public static final String ALERT_CHANNEL_ID = "AndroidAPS-InsightAlert";
+    public static final String ALERT_CHANNEL_ID = "AAPS-InsightAlert";
 
     private final PumpDescription pumpDescription;
     private InsightAlertService alertService;
@@ -590,7 +590,7 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
                 EventOverviewBolusProgress.Treatment t = new EventOverviewBolusProgress.Treatment(0, 0, detailedBolusInfo.getBolusType() == DetailedBolusInfo.BolusType.SMB, detailedBolusInfo.getId());
                 final EventOverviewBolusProgress bolusingEvent = EventOverviewBolusProgress.INSTANCE;
                 bolusingEvent.setT(t);
-                bolusingEvent.setStatus(rh.gs(R.string.insight_delivered, 0d, insulin));
+                bolusingEvent.setStatus(rh.gs(R.string.bolus_delivered, 0d, insulin));
                 bolusingEvent.setPercent(0);
                 rxBus.send(bolusingEvent);
                 int trials = 0;
@@ -629,14 +629,14 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
                         trials = -1;
                         int percentBefore = bolusingEvent.getPercent();
                         bolusingEvent.setPercent((int) (100D / activeBolus.getInitialAmount() * (activeBolus.getInitialAmount() - activeBolus.getRemainingAmount())));
-                        bolusingEvent.setStatus(rh.gs(R.string.insight_delivered, activeBolus.getInitialAmount() - activeBolus.getRemainingAmount(), activeBolus.getInitialAmount()));
+                        bolusingEvent.setStatus(rh.gs(R.string.bolus_delivered, activeBolus.getInitialAmount() - activeBolus.getRemainingAmount(), activeBolus.getInitialAmount()));
                         if (percentBefore != bolusingEvent.getPercent())
                             rxBus.send(bolusingEvent);
                     } else {
                         synchronized ($bolusLock) {
                             if (bolusCancelled || trials == -1 || trials++ >= 5) {
                                 if (!bolusCancelled) {
-                                    bolusingEvent.setStatus(rh.gs(R.string.insight_delivered, insulin, insulin));
+                                    bolusingEvent.setStatus(rh.gs(R.string.bolus_delivered, insulin, insulin));
                                     bolusingEvent.setPercent(100);
                                     rxBus.send(bolusingEvent);
                                 }
@@ -1173,7 +1173,7 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
         } catch (Exception e) {
             aapsLogger.error("Exception while reading history", e);
         }
-        new Handler(Looper.getMainLooper()).post(() -> rxBus.send(new EventRefreshOverview("LocalInsightPlugin::readHistory", false)));
+        rxBus.send(new EventRefreshOverview("LocalInsightPlugin::readHistory", false));
     }
 
     private void processHistoryEvents(String serial, List<HistoryEvent> historyEvents) {
@@ -1612,7 +1612,7 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
     public void onStateChanged(InsightState state) {
         if (state == InsightState.CONNECTED) {
             statusLoaded = false;
-            new Handler(Looper.getMainLooper()).post(() -> rxBus.send(new EventDismissNotification(Notification.INSIGHT_TIMEOUT_DURING_HANDSHAKE)));
+            rxBus.send(new EventDismissNotification(Notification.INSIGHT_TIMEOUT_DURING_HANDSHAKE));
         } else if (state == InsightState.NOT_PAIRED) {
             connectionService.withdrawConnectionRequest(this);
             statusLoaded = false;
@@ -1625,9 +1625,9 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
             activeTBR = null;
             activeBoluses = null;
             tbrOverNotificationBlock = null;
-            new Handler(Looper.getMainLooper()).post(() -> rxBus.send(new EventRefreshOverview("LocalInsightPlugin::onStateChanged", false)));
+            rxBus.send(new EventRefreshOverview("LocalInsightPlugin::onStateChanged", false));
         }
-        new Handler(Looper.getMainLooper()).post(() -> rxBus.send(new EventLocalInsightUpdateGUI()));
+        rxBus.send(new EventLocalInsightUpdateGUI());
     }
 
     @Override
@@ -1638,7 +1638,7 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Constrai
     @Override
     public void onTimeoutDuringHandshake() {
         Notification notification = new Notification(Notification.INSIGHT_TIMEOUT_DURING_HANDSHAKE, rh.gs(R.string.timeout_during_handshake), Notification.URGENT);
-        new Handler(Looper.getMainLooper()).post(() -> rxBus.send(new EventNewNotification(notification)));
+        rxBus.send(new EventNewNotification(notification));
     }
 
     @Override
