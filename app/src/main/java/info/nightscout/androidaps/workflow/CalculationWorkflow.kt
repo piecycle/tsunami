@@ -60,13 +60,14 @@ class CalculationWorkflow @Inject constructor(
     private val overviewData: OverviewData
         get() = (iobCobCalculator as IobCobCalculatorPlugin).overviewData
 
-    enum class ProgressData(val pass: Int, val percentOfTotal: Int) {
+    enum class ProgressData(private val pass: Int, val percentOfTotal: Int) {
         PREPARE_BASAL_DATA(0, 5),
         PREPARE_TEMPORARY_TARGET_DATA(1, 5),
         PREPARE_TREATMENTS_DATA(2, 5),
-        IOB_COB_OREF(3, 70),
+        IOB_COB_OREF(3, 69),
         PREPARE_IOB_AUTOSENS_DATA(4, 10),
-        PREPARE_TSUNAMI_DATA(5, 5);
+        DRAW(5, 1),
+        PREPARE_TSUNAMI_DATA(6, 5);
 
         fun finalPercent(progress: Int): Int {
             var total = 0

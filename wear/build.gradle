@@ -43,7 +43,7 @@ def generateGitBuild = { ->
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 23
@@ -70,14 +70,14 @@ android {
             versionName version + "-pumpcontrol"
         }
         nsclient {
-            applicationId "info.nightscout.nsclient"
+            applicationId "info.nightscout.aapsclient"
             dimension "standard"
-            versionName version + "-nsclient"
+            versionName version + "-aapsclient"
         }
         nsclient2 {
-            applicationId "info.nightscout.nsclient2"
+            applicationId "info.nightscout.aapsclient2"
             dimension "standard"
-            versionName version + "-nsclient"
+            versionName version + "-aapsclient"
         }
     }
     namespace 'info.nightscout.androidaps'
@@ -101,7 +101,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
     implementation "androidx.preference:preference-ktx:$preferencektx_version"
     implementation 'androidx.wear:wear:1.2.0'
-    implementation "androidx.wear.tiles:tiles:1.0.1"
+    implementation 'androidx.wear.tiles:tiles:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     compileOnly "com.google.android.wearable:wearable:$wearable_version"

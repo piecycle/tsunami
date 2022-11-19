@@ -209,7 +209,7 @@ public class InsightConnectionService extends DaggerService implements Connectio
     }
 
     public synchronized boolean isPaired() {
-        return pairingDataStorage.isPaired();
+        return pairingDataStorage != null && pairingDataStorage.isPaired();
     }
 
     public synchronized <T extends AppLayerMessage> MessageRequest<T> requestMessage(T message) {
@@ -267,7 +267,7 @@ public class InsightConnectionService extends DaggerService implements Connectio
         }
         pairingDataStorage = new PairingDataStorage(this);
         state = pairingDataStorage.isPaired() ? InsightState.DISCONNECTED : InsightState.NOT_PAIRED;
-        wakeLock = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AndroidAPS:InsightConnectionService");
+        wakeLock = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AAPS:InsightConnectionService");
     }
 
     private void setState(InsightState state) {
