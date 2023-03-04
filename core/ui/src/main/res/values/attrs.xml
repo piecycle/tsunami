@@ -139,6 +139,7 @@
     <attr name="icQuickWizardColor" format="reference|color" />
     <attr name="icCalibrationColor" format="reference|color" />
     <attr name="icTreatmentColor" format="reference|color" />
+    <attr name="icTsunamiColor" format="reference|color" />
     <!-- IOB -->
     <attr name="iobColor" format="reference|color" />
     <!-- Basal -->

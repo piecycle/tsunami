@@ -17,6 +17,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
+    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/test_dependencies.gradle"
@@ -107,6 +108,8 @@ dependencies {
     implementation 'androidx.wear:wear:1.2.0'
     implementation 'androidx.wear.tiles:tiles:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-ktx:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     compileOnly "com.google.android.wearable:wearable:$wearable_version"
     implementation "com.google.android.support:wearable:$wearable_version"

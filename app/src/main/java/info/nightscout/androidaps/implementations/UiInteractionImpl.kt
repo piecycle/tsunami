@@ -37,6 +37,7 @@ import info.nightscout.ui.dialogs.ProfileViewerDialog
 import info.nightscout.ui.dialogs.TempBasalDialog
 import info.nightscout.ui.dialogs.TempTargetDialog
 import info.nightscout.ui.dialogs.TreatmentDialog
+import info.nightscout.ui.dialogs.TsunamiDialog
 import info.nightscout.ui.dialogs.WizardDialog
 import info.nightscout.ui.services.AlarmSoundService
 import info.nightscout.ui.services.AlarmSoundServiceHelper
@@ -108,6 +109,11 @@ class UiInteractionImpl @Inject constructor(
 
     override fun runInsulinDialog(fragmentManager: FragmentManager) {
         InsulinDialog()
+            .show(fragmentManager, "InsulinDialog")
+    }
+
+    override fun runTsunamiDialog(fragmentManager: FragmentManager) {
+        TsunamiDialog()
             .show(fragmentManager, "InsulinDialog")
     }
 

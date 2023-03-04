@@ -160,6 +160,7 @@
         <item name="icQuickWizardColor">@color/colorQuickWizardButton</item>
         <item name="icCalibrationColor">@color/colorCalibrationButton</item>
         <item name="icTreatmentColor">@color/colorTreatmentButton</item>
+        <item name="icTsunamiColor">@color/colorTsunamiButton</item>
         <!-- IOB -->
         <item name="iobColor">@color/iob</item>
         <!-- Basal -->

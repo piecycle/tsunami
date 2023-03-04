@@ -5,6 +5,7 @@ plugins {
     id 'kotlinx-serialization'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
+    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
@@ -41,4 +42,6 @@ dependencies {
     api "io.reactivex.rxjava3:rxjava:$rxjava_version"
     api "io.reactivex.rxjava3:rxkotlin:$rxkotlin_version"
     api "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+    implementation 'androidx.core:core-ktx:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

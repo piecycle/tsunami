@@ -3,26 +3,6 @@ package info.nightscout.database.impl
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import info.nightscout.database.impl.daos.APSResultDao
-import info.nightscout.database.impl.daos.APSResultLinkDao
-import info.nightscout.database.impl.daos.BolusCalculatorResultDao
-import info.nightscout.database.impl.daos.BolusDao
-import info.nightscout.database.impl.daos.CarbsDao
-import info.nightscout.database.impl.daos.DeviceStatusDao
-import info.nightscout.database.impl.daos.EffectiveProfileSwitchDao
-import info.nightscout.database.impl.daos.ExtendedBolusDao
-import info.nightscout.database.impl.daos.FoodDao
-import info.nightscout.database.impl.daos.GlucoseValueDao
-import info.nightscout.database.impl.daos.MultiwaveBolusLinkDao
-import info.nightscout.database.impl.daos.OfflineEventDao
-import info.nightscout.database.impl.daos.PreferenceChangeDao
-import info.nightscout.database.impl.daos.ProfileSwitchDao
-import info.nightscout.database.impl.daos.TemporaryBasalDao
-import info.nightscout.database.impl.daos.TemporaryTargetDao
-import info.nightscout.database.impl.daos.TherapyEventDao
-import info.nightscout.database.impl.daos.TotalDailyDoseDao
-import info.nightscout.database.impl.daos.UserEntryDao
-import info.nightscout.database.impl.daos.VersionChangeDao
 import info.nightscout.database.entities.APSResult
 import info.nightscout.database.entities.APSResultLink
 import info.nightscout.database.entities.Bolus
@@ -41,8 +21,30 @@ import info.nightscout.database.entities.TemporaryBasal
 import info.nightscout.database.entities.TemporaryTarget
 import info.nightscout.database.entities.TherapyEvent
 import info.nightscout.database.entities.TotalDailyDose
+import info.nightscout.database.entities.Tsunami
 import info.nightscout.database.entities.UserEntry
 import info.nightscout.database.entities.VersionChange
+import info.nightscout.database.impl.daos.APSResultDao
+import info.nightscout.database.impl.daos.APSResultLinkDao
+import info.nightscout.database.impl.daos.BolusCalculatorResultDao
+import info.nightscout.database.impl.daos.BolusDao
+import info.nightscout.database.impl.daos.CarbsDao
+import info.nightscout.database.impl.daos.DeviceStatusDao
+import info.nightscout.database.impl.daos.EffectiveProfileSwitchDao
+import info.nightscout.database.impl.daos.ExtendedBolusDao
+import info.nightscout.database.impl.daos.FoodDao
+import info.nightscout.database.impl.daos.GlucoseValueDao
+import info.nightscout.database.impl.daos.MultiwaveBolusLinkDao
+import info.nightscout.database.impl.daos.OfflineEventDao
+import info.nightscout.database.impl.daos.PreferenceChangeDao
+import info.nightscout.database.impl.daos.ProfileSwitchDao
+import info.nightscout.database.impl.daos.TemporaryBasalDao
+import info.nightscout.database.impl.daos.TemporaryTargetDao
+import info.nightscout.database.impl.daos.TherapyEventDao
+import info.nightscout.database.impl.daos.TotalDailyDoseDao
+import info.nightscout.database.impl.daos.TsunamiDao
+import info.nightscout.database.impl.daos.UserEntryDao
+import info.nightscout.database.impl.daos.VersionChangeDao
 
 const val DATABASE_VERSION = 23
 
@@ -51,7 +53,7 @@ const val DATABASE_VERSION = 23
         EffectiveProfileSwitch::class, ExtendedBolus::class, GlucoseValue::class, ProfileSwitch::class,
         TemporaryBasal::class, TemporaryTarget::class, TherapyEvent::class, TotalDailyDose::class, APSResultLink::class,
         MultiwaveBolusLink::class, PreferenceChange::class, VersionChange::class, UserEntry::class,
-        Food::class, DeviceStatus::class, OfflineEvent::class],
+        Food::class, DeviceStatus::class, OfflineEvent::class, Tsunami::class],
           exportSchema = true)
 @TypeConverters(Converters::class)
 internal abstract class AppDatabase : RoomDatabase() {
@@ -95,5 +97,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract val deviceStatusDao: DeviceStatusDao
 
     abstract val offlineEventDao: OfflineEventDao
+
+    abstract val tsunamiDao: TsunamiDao
 
 }

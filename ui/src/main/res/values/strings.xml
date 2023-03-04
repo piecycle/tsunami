@@ -175,4 +175,9 @@
     <string name="app_default">Application default</string>
     <string name="a11y_drag_and_drop_handle">drag and drop handle</string>
 
+    <!-- Tsunami button -->
+    <string name="prebolus">Prebolus</string>
+    <string name="tsunami_duration">Tsunami duration</string>
+    <string name="cancel_tsunami">Cancel Tsunami mode.</string>
+    <string name="tsunami_label">Tsunami</string>
 </resources>

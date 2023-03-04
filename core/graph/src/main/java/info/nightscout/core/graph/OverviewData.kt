@@ -15,6 +15,7 @@ import info.nightscout.core.graph.data.Scale
 import info.nightscout.core.graph.data.ScaledDataPoint
 import info.nightscout.database.entities.GlucoseValue
 import info.nightscout.database.entities.TemporaryTarget
+import info.nightscout.database.entities.Tsunami
 import info.nightscout.interfaces.aps.AutosensData
 import info.nightscout.interfaces.aps.AutosensDataStore
 import info.nightscout.interfaces.iob.CobInfo
@@ -85,6 +86,12 @@ interface OverviewData {
     val temporaryTarget: TemporaryTarget?
 
     /*
+    * TSUNAMI
+    */
+
+    val tsunami: Tsunami?
+
+    /*
      * SENSITIVITY
      */
     fun lastAutosensData(iobCobCalculator: IobCobCalculator): AutosensData?
@@ -105,6 +112,8 @@ interface OverviewData {
     var absoluteBasalGraphSeries: LineGraphSeries<ScaledDataPoint>
 
     var temporaryTargetSeries: LineGraphSeries<DataPoint>
+    //MP graph test
+    var tsunamiSeries: LineGraphSeries<DataPoint>
 
     var maxIAValue: Double
     val actScale: Scale

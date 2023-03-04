@@ -16,6 +16,7 @@ import info.nightscout.database.entities.TemporaryBasal
 import info.nightscout.database.entities.TemporaryTarget
 import info.nightscout.database.entities.TherapyEvent
 import info.nightscout.database.entities.TotalDailyDose
+import info.nightscout.database.entities.Tsunami
 import info.nightscout.database.entities.UserEntry
 import info.nightscout.database.entities.data.NewEntries
 import info.nightscout.database.entities.embedments.InterfaceIDs
@@ -101,6 +102,7 @@ import kotlin.math.roundToInt
         //database.foodDao.deleteOlderThan(than)
         removed.add(Pair("DeviceStatus", database.deviceStatusDao.deleteOlderThan(than)))
         removed.add(Pair("OfflineEvent", database.offlineEventDao.deleteOlderThan(than)))
+        removed.add(Pair("Tsunami", database.tsunamiDao.deleteOlderThan(than)))
 
         if (deleteTrackedChanges) {
             removed.add(Pair("GlucoseValue", database.glucoseValueDao.deleteTrackedChanges()))
@@ -119,6 +121,7 @@ import kotlin.math.roundToInt
             removed.add(Pair("ApsResult", database.apsResultDao.deleteTrackedChanges()))
             //database.foodDao.deleteHistory()
             removed.add(Pair("OfflineEvent", database.offlineEventDao.deleteTrackedChanges()))
+            removed.add(Pair("Tsunami", database.tsunamiDao.deleteTrackedChanges()))
         }
         val ret = StringBuilder()
         removed
@@ -915,7 +918,18 @@ import kotlin.math.roundToInt
         therapyEvents = database.therapyEventDao.getNewEntriesSince(since, until, limit, offset),
         totalDailyDoses = database.totalDailyDoseDao.getNewEntriesSince(since, until, limit, offset),
         versionChanges = database.versionChangeDao.getNewEntriesSince(since, until, limit, offset),
+        tsunami = database.tsunamiDao.getNewEntriesSince(since, until, limit, offset),
     )
+
+    // Tsunami
+    fun getTsunamiModeActiveAt(timestamp: Long): Single<ValueWrapper<Tsunami>> =
+        database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
+            .subscribeOn(Schedulers.io())
+            .toWrappedSingle()
+    //MP Tsunami graph
+    fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>> =
+        database.tsunamiDao.getTsunamiDataFromTime(timestamp)
+            .subscribeOn(Schedulers.io())
 }
 
 @Suppress("USELESS_CAST")

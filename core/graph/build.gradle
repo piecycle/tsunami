@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
+    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
@@ -21,6 +22,8 @@ dependencies {
     implementation project(':core:ui')
 
     api "com.google.android.material:material:$material_version"
+    implementation 'androidx.core:core-ktx:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 android {

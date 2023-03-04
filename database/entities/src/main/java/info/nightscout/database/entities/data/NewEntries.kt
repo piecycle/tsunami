@@ -16,6 +16,7 @@ import info.nightscout.database.entities.TemporaryBasal
 import info.nightscout.database.entities.TemporaryTarget
 import info.nightscout.database.entities.TherapyEvent
 import info.nightscout.database.entities.TotalDailyDose
+import info.nightscout.database.entities.Tsunami
 import info.nightscout.database.entities.VersionChange
 
 data class NewEntries(
@@ -35,5 +36,6 @@ data class NewEntries(
     val temporaryTarget: List<TemporaryTarget>,
     val therapyEvents: List<TherapyEvent>,
     val totalDailyDoses: List<TotalDailyDose>,
-    val versionChanges: List<VersionChange>
+    val versionChanges: List<VersionChange>,
+    val tsunami: List<Tsunami>
 )

@@ -282,4 +282,7 @@
     <color name="ic_pod_management_rl_stats">@color/rl_board_shape</color>
     <color name="ic_pod_management_rl_stats_outline">@color/rl_icon_outline</color>
 
+    <!-- Tsunami Dark Theme -->
+    <color name="colorTsunamiButton">#00D38D</color>
+    <color name="tsunamiMint">#00D38D</color>
 </resources>

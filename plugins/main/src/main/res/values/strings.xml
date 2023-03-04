@@ -200,6 +200,7 @@
     <string name="key_statuslights_overview_advanced" translatable="false">statuslights_overview_advanced</string>
     <string name="key_keep_screen_on" translatable="false">keep_screen_on</string>
     <string name="key_short_tabtitles" translatable="false">short_tabtitles</string>
+    <string name="key_show_tsunami_button" translatable="false">show_tsunami_button</string>
 
     <string name="key_show_statuslights" translatable="false">show_statuslights</string>
     <string name="show_statuslights">Show status lights on home screen</string>

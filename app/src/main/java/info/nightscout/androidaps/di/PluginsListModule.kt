@@ -7,7 +7,6 @@ import dagger.multibindings.IntoMap
 import info.nightscout.androidaps.danaRKorean.DanaRKoreanPlugin
 import info.nightscout.androidaps.danaRv2.DanaRv2Plugin
 import info.nightscout.androidaps.danar.DanaRPlugin
-import info.nightscout.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import info.nightscout.androidaps.plugins.pump.eopatch.EopatchPumpPlugin
 import info.nightscout.androidaps.plugins.pump.insight.LocalInsightPlugin
 import info.nightscout.androidaps.plugins.pump.medtronic.MedtronicPumpPlugin
@@ -25,6 +24,7 @@ import info.nightscout.plugins.aps.loop.LoopPlugin
 import info.nightscout.plugins.aps.openAPSAMA.OpenAPSAMAPlugin
 import info.nightscout.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
 import info.nightscout.plugins.aps.openAPSSMBDynamicISF.OpenAPSSMBDynamicISFPlugin
+import info.nightscout.plugins.aps.tsunami.TsunamiPlugin
 import info.nightscout.plugins.constraints.bgQualityCheck.BgQualityCheckPlugin
 import info.nightscout.plugins.constraints.objectives.ObjectivesPlugin
 import info.nightscout.plugins.constraints.safety.SafetyPlugin
@@ -42,6 +42,7 @@ import info.nightscout.plugins.profile.ProfilePlugin
 import info.nightscout.plugins.sync.dataBroadcaster.DataBroadcastPlugin
 import info.nightscout.plugins.sync.nsclient.NSClientPlugin
 import info.nightscout.plugins.sync.nsclientV3.NSClientV3Plugin
+import info.nightscout.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import info.nightscout.plugins.sync.tidepool.TidepoolPlugin
 import info.nightscout.plugins.sync.xdrip.XdripPlugin
 import info.nightscout.pump.combo.ComboPlugin
@@ -238,6 +239,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(222)
     abstract fun bindOpenAPSSMBAutoISFPlugin(plugin: OpenAPSSMBDynamicISFPlugin): PluginBase
+
+    @Binds
+    @APS
+    @IntoMap
+    @IntKey(225)
+    abstract fun bindTsunamiPlugin(plugin: TsunamiPlugin): PluginBase
 
     @Binds
     @AllConfigs

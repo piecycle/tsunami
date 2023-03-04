@@ -90,6 +90,7 @@ import info.nightscout.rx.events.EventRefreshOverview
 import info.nightscout.rx.events.EventScale
 import info.nightscout.rx.events.EventTempBasalChange
 import info.nightscout.rx.events.EventTempTargetChange
+import info.nightscout.rx.events.EventTsunamiModeChange
 import info.nightscout.rx.events.EventUpdateOverviewCalcProgress
 import info.nightscout.rx.events.EventUpdateOverviewGraph
 import info.nightscout.rx.events.EventUpdateOverviewIobCob
@@ -104,7 +105,7 @@ import info.nightscout.shared.sharedPreferences.SP
 import info.nightscout.shared.utils.DateUtil
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
-import java.util.Locale
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.abs
@@ -145,6 +146,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var automation: Automation
     @Inject lateinit var bgQualityCheck: BgQualityCheck
     @Inject lateinit var uiInteraction: UiInteraction
+    //@Inject lateinit var tsunamiPlugin: TsunamiPlugin
 
     private val disposable = CompositeDisposable()
 
@@ -224,6 +226,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         binding.buttonsLayout.calibrationButton.setOnClickListener(this)
         binding.buttonsLayout.cgmButton.setOnClickListener(this)
         binding.buttonsLayout.insulinButton.setOnClickListener(this)
+        binding.buttonsLayout.tsunamiButton.setOnClickListener(this)
         binding.buttonsLayout.carbsButton.setOnClickListener(this)
         binding.buttonsLayout.quickWizardButton.setOnClickListener(this)
         binding.buttonsLayout.quickWizardButton.setOnLongClickListener(this)
@@ -322,6 +325,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             .toObservable(EventTempBasalChange::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({ updateTemporaryBasal() }, fabricPrivacy::logException)
+        disposable += rxBus
+            .toObservable(EventTsunamiModeChange::class.java)
+            .observeOn(aapsSchedulers.io)
+            .subscribe({ updateTsunamiButton() }, fabricPrivacy::logException)
 
         refreshLoop = Runnable {
             refreshAll()
@@ -350,6 +357,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         processAps()
         updateProfile()
         updateTemporaryTarget()
+        updateTsunamiButton()
     }
 
     @Synchronized
@@ -378,6 +386,11 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     activity,
                     ProtectionCheck.Protection.BOLUS,
                     UIRunnable { if (isAdded) uiInteraction.runInsulinDialog(childFragmentManager) })
+
+                R.id.tsunami_button      -> protectionCheck.queryProtection(
+                    activity,
+                    ProtectionCheck.Protection.BOLUS,
+                    UIRunnable { if (isAdded) uiInteraction.runTsunamiDialog(childFragmentManager) })
 
                 R.id.quick_wizard_button -> protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable { if (isAdded) onClickQuickWizard() })
                 R.id.carbs_button        -> protectionCheck.queryProtection(
@@ -574,6 +587,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 && sp.getBoolean(R.string.key_show_wizard_button, true)).toVisibility()
             binding.buttonsLayout.insulinButton.visibility = (!loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null
                 && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
+            //MP Tsunami button
+            binding.buttonsLayout.tsunamiButton.visibility = ((activePlugin.activeAPS as PluginBase).name == "Tsunami" && (activePlugin.activeAPS as PluginBase).isEnabled() && !loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
+            //val tsunamiIsActiveAPS = tsunamiPlugin.isEnabled()
+            //binding.buttonsLayout.tsunamiButton.visibility = (tsunamiIsActiveAPS && !loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
 
             // **** Calibration & CGM buttons ****
             val xDripIsBgSource = xDrip.isEnabled()
@@ -991,6 +1008,36 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    fun updateTsunamiButton() {
+        val tsunamiMode = overviewData.tsunami
+        if (tsunamiMode != null) {
+            val remaining = tsunamiMode.duration + tsunamiMode.timestamp - dateUtil.now()
+            if (tsunamiMode.tsunamiMode == 2 && remaining > 0) {
+                setRibbon(
+                    binding.buttonsLayout.tsunamiButton,
+                    info.nightscout.core.ui.R.attr.ribbonTextWarningColor,
+                    info.nightscout.core.ui.R.attr.ribbonWarningColor,
+                    dateUtil.untilString(tsunamiMode.end, rh)
+                )
+            } else {
+                setRibbon(
+                    binding.buttonsLayout.tsunamiButton,
+                    info.nightscout.core.ui.R.attr.icTsunamiColor,
+                    info.nightscout.core.ui.R.attr.ribbonDefaultColor,
+                    "TSUNAMI"
+                )
+            }
+        } else {
+            setRibbon(
+                binding.buttonsLayout.tsunamiButton,
+                info.nightscout.core.ui.R.attr.icTsunamiColor,
+                info.nightscout.core.ui.R.attr.ribbonDefaultColor,
+                "TSUNAMI"
+            )
+        }
+    }
+
     private fun setRibbon(view: TextView, attrResText: Int, attrResBack: Int, text: String) {
         with(view) {
             setText(text)
@@ -1005,7 +1052,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val pump = activePlugin.activePump
         val graphData = GraphData(injector, binding.graphsLayout.bgGraph, overviewData)
         val menuChartSettings = overviewMenus.setting
-        if (menuChartSettings.isEmpty()) return
+        if (menuChartSettings.isEmpty())
+        //MP Tsunami graph
+            if (menuChartSettings[0][OverviewMenus.CharType.TSU.ordinal])
+                graphData.addTsunamiArea()
         graphData.addInRangeArea(overviewData.fromTime, overviewData.endTime, defaultValueHelper.determineLowLine(), defaultValueHelper.determineHighLine())
         graphData.addBgReadings(menuChartSettings[0][OverviewMenus.CharType.PRE.ordinal], context)
         graphData.addBucketedData()

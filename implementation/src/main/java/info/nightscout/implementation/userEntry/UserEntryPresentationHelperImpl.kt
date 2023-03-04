@@ -38,6 +38,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
         ColorGroup.Careportal       -> info.nightscout.core.ui.R.color.high
         ColorGroup.Pump             -> info.nightscout.core.ui.R.color.loopDisconnected
         ColorGroup.Aaps             -> info.nightscout.core.ui.R.color.defaultText
+        ColorGroup.Tsunami          -> info.nightscout.core.ui.R.color.tsunamiMint
         else                        -> info.nightscout.core.ui.R.color.defaultText
     }
 
@@ -53,6 +54,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
         Sources.LoopDialog          -> R.drawable.ic_loop_closed
         Sources.TempBasalDialog     -> R.drawable.ic_actions_start_temp_basal
         Sources.CalibrationDialog   -> R.drawable.ic_calibration
+        Sources.TsunamiDialog       -> R.drawable.ic_tsunami
         Sources.FillDialog          -> R.drawable.ic_cp_pump_cannula
         Sources.BgCheck             -> R.drawable.ic_cp_bgcheck
         Sources.SensorInsert        -> R.drawable.ic_cp_cgm_insert
@@ -112,6 +114,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
 
     override fun actionToColoredString(action: Action): Spanned = when (action) {
         Action.TREATMENT -> HtmlHelper.fromHtml(coloredAction(Action.BOLUS) + " + " + coloredAction(Action.CARBS))
+        Action.TSUNAMI_BOLUS -> HtmlHelper.fromHtml(coloredAction(Action.TSUNAMI) + " + " + coloredAction(Action.BOLUS))
         else             -> HtmlHelper.fromHtml(coloredAction(action))
     }
 

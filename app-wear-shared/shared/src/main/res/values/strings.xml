@@ -4,6 +4,12 @@
     <string name="key_insulin_button_increment_2" translatable="false">insulin_button_increment_2</string>
     <string name="key_insulin_button_increment_3" translatable="false">insulin_button_increment_3</string>
 
+    <!-- Tsunami dialog -->
+    <string name="key_tsunami_button_insulin_increment_1" translatable="false">tsunami_button_insulin_increment_1</string>
+    <string name="key_tsunami_button_insulin_increment_2" translatable="false">tsunami_button_insulin_increment_2</string>
+    <string name="key_tsunami_button_insulin_increment_3" translatable="false">tsunami_button_insulin_increment_3</string>
+    <string name="key_tsunami_default_duration" translatable="false">tsunami_default_duration</string>
+
     <!--    DateUtil-->
     <string name="minago">%1$d m ago</string>
     <string name="minago_long">%1$d minutes ago</string>

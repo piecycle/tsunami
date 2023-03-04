@@ -24,6 +24,7 @@ import info.nightscout.core.main.R
 import info.nightscout.database.ValueWrapper
 import info.nightscout.database.entities.GlucoseValue
 import info.nightscout.database.entities.TemporaryTarget
+import info.nightscout.database.entities.Tsunami
 import info.nightscout.database.impl.AppRepository
 import info.nightscout.interfaces.aps.AutosensData
 import info.nightscout.interfaces.aps.AutosensDataStore
@@ -39,7 +40,7 @@ import info.nightscout.shared.interfaces.ResourceHelper
 import info.nightscout.shared.sharedPreferences.SP
 import info.nightscout.shared.utils.DateUtil
 import info.nightscout.shared.utils.T
-import java.util.Calendar
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -69,6 +70,7 @@ class OverviewDataImpl @Inject constructor(
         predictionsGraphSeries = PointsWithLabelGraphSeries()
         baseBasalGraphSeries = LineGraphSeries()
         tempBasalGraphSeries = LineGraphSeries()
+        tsunamiSeries = LineGraphSeries()
         basalLineGraphSeries = LineGraphSeries()
         absoluteBasalGraphSeries = LineGraphSeries()
         activitySeries = FixedLineGraphSeries()
@@ -246,6 +248,17 @@ class OverviewDataImpl @Inject constructor(
             }
 
     /*
+    * TSUNAMI
+    */
+
+    override val tsunami: Tsunami?
+        get() =
+            repository.getTsunamiModeActiveAt(dateUtil.now()).blockingGet().let { tsunami ->
+                if (tsunami is ValueWrapper.Existing) tsunami.value
+                else null
+            }
+
+    /*
      * SENSITIVITY
      */
 
@@ -271,6 +284,8 @@ class OverviewDataImpl @Inject constructor(
     override var absoluteBasalGraphSeries: LineGraphSeries<ScaledDataPoint> = LineGraphSeries()
 
     override var temporaryTargetSeries: LineGraphSeries<DataPoint> = LineGraphSeries()
+
+    override var tsunamiSeries: LineGraphSeries<DataPoint> = LineGraphSeries()
 
     override var maxIAValue = 0.0
     override val actScale = Scale()

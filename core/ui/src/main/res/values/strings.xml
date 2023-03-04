@@ -625,4 +625,10 @@
     <string name="cleanup_db_confirm_sync">Do you want to cleanup the database?\nIt will remove tracked changes and historic data older than 3 months.\nDoing it will speedup full synchronization dramatically.</string>
     <string name="cleared_entries">Cleared entries</string>
 
+    <!-- Tsunami -->
+    <string name="overview_tsunami_label">Tsunami</string>
+    <!-- Tsunami (for TranslatorImpl.kt) -->
+    <string name="uel_tsunami">TSUNAMI</string>
+    <string name="uel_tsunami_bolus">TSUNAMI+BOLUS</string>
+    <string name="uel_cancel_tsunami">CANCEL TSUNAMI</string>
 </resources>

@@ -6,5 +6,7 @@ data class GlucoseStatus(
     val delta: Double = 0.0,
     val shortAvgDelta: Double = 0.0,
     val longAvgDelta: Double = 0.0,
-    val date: Long = 0L
+    val date: Long = 0L,
+    //*** Tsunami ***
+    var deltaScore: Double = 0.0,
 )

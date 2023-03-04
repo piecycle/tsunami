@@ -1,5 +1,6 @@
 package info.nightscout.database.impl
 
+import info.nightscout.database.entities.interfaces.DBEntry
 import info.nightscout.database.impl.daos.APSResultDao
 import info.nightscout.database.impl.daos.APSResultLinkDao
 import info.nightscout.database.impl.daos.BolusCalculatorResultDao
@@ -18,6 +19,7 @@ import info.nightscout.database.impl.daos.TemporaryBasalDao
 import info.nightscout.database.impl.daos.TemporaryTargetDao
 import info.nightscout.database.impl.daos.TherapyEventDao
 import info.nightscout.database.impl.daos.TotalDailyDoseDao
+import info.nightscout.database.impl.daos.TsunamiDao
 import info.nightscout.database.impl.daos.UserEntryDao
 import info.nightscout.database.impl.daos.VersionChangeDao
 import info.nightscout.database.impl.daos.delegated.DelegatedAPSResultDao
@@ -38,9 +40,9 @@ import info.nightscout.database.impl.daos.delegated.DelegatedTemporaryBasalDao
 import info.nightscout.database.impl.daos.delegated.DelegatedTemporaryTargetDao
 import info.nightscout.database.impl.daos.delegated.DelegatedTherapyEventDao
 import info.nightscout.database.impl.daos.delegated.DelegatedTotalDailyDoseDao
+import info.nightscout.database.impl.daos.delegated.DelegatedTsunamiDao
 import info.nightscout.database.impl.daos.delegated.DelegatedUserEntryDao
 import info.nightscout.database.impl.daos.delegated.DelegatedVersionChangeDao
-import info.nightscout.database.entities.interfaces.DBEntry
 
 internal class DelegatedAppDatabase(val changes: MutableList<DBEntry>, val database: AppDatabase) {
 
@@ -64,5 +66,6 @@ internal class DelegatedAppDatabase(val changes: MutableList<DBEntry>, val datab
     val foodDao: FoodDao = DelegatedFoodDao(changes, database.foodDao)
     val deviceStatusDao: DeviceStatusDao = DelegatedDeviceStatusDao(changes, database.deviceStatusDao)
     val offlineEventDao: OfflineEventDao = DelegatedOfflineEventDao(changes, database.offlineEventDao)
+    val tsunamiDao: TsunamiDao = DelegatedTsunamiDao(changes, database.tsunamiDao)
     fun clearAllTables() = database.clearAllTables()
 }

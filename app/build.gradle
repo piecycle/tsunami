@@ -8,6 +8,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.vanniktech.dependency.graph.generator'
+    id 'org.jetbrains.kotlin.android'
 
 }
 
@@ -111,7 +112,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         versionCode 1500
-        version "3.1.0.3-dev-h"
+        version "3.1.0.3-dev-h-Tsunami_3.3"
         buildConfigField "String", "VERSION", '"' + version + '"'
         buildConfigField "String", "BUILDVERSION", '"' + generateGitBuild() + '-' + generateDate() + '"'
         buildConfigField "String", "REMOTE", '"' + generateGitRemote() + '"'
@@ -177,6 +178,8 @@ allprojects {
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     wearApp project(':wear')
 
     // in order to use internet's versions you'd need to enable Jetifier again
