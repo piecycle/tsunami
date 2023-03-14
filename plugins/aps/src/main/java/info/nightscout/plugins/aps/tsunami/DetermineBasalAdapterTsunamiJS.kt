@@ -44,7 +44,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
+class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
 
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var constraintChecker: Constraints
@@ -98,7 +98,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             ScriptableObject.defineClass(scope, LoggerCallback::class.java)
             val myLogger = rhino.newObject(scope, "LoggerCallback", null)
             scope.put("console2", scope, myLogger)
-            rhino.evaluateString(scope, readFile("openAPSAMA/loggerhelper.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("OpenAPSAMA/loggerhelper.js"), "JavaScript", 0, null)
 
             //set module parent
             rhino.evaluateString(scope, "var module = {\"parent\":Boolean(1)};", "JavaScript", 0, null)
@@ -106,8 +106,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             rhino.evaluateString(scope, "require = function() {return round_basal;};", "JavaScript", 0, null)
 
             //generate functions "determine_basal" and "setTempBasal"
-            rhino.evaluateString(scope, readFile("tsunami/determine-basal.js"), "JavaScript", 0, null)
-            rhino.evaluateString(scope, readFile("openAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
+            rhino.evaluateString(scope, readFile("Tsunami/determine-basal.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("OpenAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
             val determineBasalObj = scope["determine_basal", scope]
             val setTempBasalFunctionsObj = scope["tempBasalFunctions", scope]
 
@@ -209,12 +209,6 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.profile.put("half_basal_exercise_target", SMBDefaults.half_basal_exercise_target)
         this.profile.put("maxCOB", SMBDefaults.maxCOB)
         this.profile.put("skip_neutral_temps", pump.setNeutralTempAtFullHour())
-        // min_5m_carbimpact is not used within SMB determinebasal
-        //if (mealData.usedMinCarbsImpact > 0) {
-        //    mProfile.put("min_5m_carbimpact", mealData.usedMinCarbsImpact);
-        //} else {
-        //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, TAEDefaults.min_5m_carbimpact));
-        //}
         this.profile.put("remainingCarbsCap", SMBDefaults.remainingCarbsCap)
         this.profile.put("enableUAM", uamAllowed)
         this.profile.put("A52_risk_enable", SMBDefaults.A52_risk_enable)
