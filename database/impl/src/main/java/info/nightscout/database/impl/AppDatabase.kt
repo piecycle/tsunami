@@ -46,7 +46,7 @@ import info.nightscout.database.impl.daos.TsunamiDao
 import info.nightscout.database.impl.daos.UserEntryDao
 import info.nightscout.database.impl.daos.VersionChangeDao
 
-const val DATABASE_VERSION = 23
+const val DATABASE_VERSION = 24
 
 @Database(version = DATABASE_VERSION,
           entities = [APSResult::class, Bolus::class, BolusCalculatorResult::class, Carbs::class,
