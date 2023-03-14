@@ -73,20 +73,10 @@ class PrepareTsunamiDataWorker(
             time += 5 * 60 * 1000L
         }
         // final points
-        /*
         val tsuEnabled = repository.getTsunamiModeActiveAt(System.currentTimeMillis()).blockingGet()
         if (tsuEnabled is ValueWrapper.Existing) {
             tsunamiArray.add(DataPoint((tsuEnabled.value.timestamp + tsuEnabled.value.duration).toDouble(), upperLimit)) //MP upperLimit must not exceed chart height, else background will be invisible!
             tsunamiArray.add(DataPoint((tsuEnabled.value.timestamp + tsuEnabled.value.duration).toDouble(), 0.0))
-        }
-         */
-        //test
-        val tsuEnabled = repository.getTsunamiModeActiveAt(endTime).blockingGet()
-        if (tsuEnabled is ValueWrapper.Existing) {
-            tsunamiArray.add(DataPoint(endTime.toDouble(), upperLimit)) //MP upperLimit must not exceed chart height, else background will be invisible!
-            tsunamiArray.add(DataPoint(endTime.toDouble(), 0.0))
-        } else {
-            tsunamiArray.add(DataPoint(endTime.toDouble(), 0.0))
         }
         // create series
         data.overviewData.tsunamiSeries = LineGraphSeries(Array(tsunamiArray.size) { i -> tsunamiArray[i] }).also {
