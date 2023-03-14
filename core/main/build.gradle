@@ -5,7 +5,6 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
-    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
@@ -33,9 +32,7 @@ dependencies {
     api "com.google.dagger:dagger-android-support:$dagger_version"
 
     //WorkManager
-    api "androidx.work:work-runtime-ktx:$work_version"
-    implementation 'androidx.core:core-ktx:+'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // DataWorkerStorage
+    api "androidx.work:work-runtime-ktx:$work_version" // DataWorkerStorage
 }
 
 android {
