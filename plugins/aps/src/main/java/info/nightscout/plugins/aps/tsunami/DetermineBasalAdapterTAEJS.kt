@@ -98,7 +98,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             ScriptableObject.defineClass(scope, LoggerCallback::class.java)
             val myLogger = rhino.newObject(scope, "LoggerCallback", null)
             scope.put("console2", scope, myLogger)
-            rhino.evaluateString(scope, readFile("openAPSAMA/loggerhelper.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("OpenAPSAMA/loggerhelper.js"), "JavaScript", 0, null)
 
             //set module parent
             rhino.evaluateString(scope, "var module = {\"parent\":Boolean(1)};", "JavaScript", 0, null)
@@ -106,8 +106,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             rhino.evaluateString(scope, "require = function() {return round_basal;};", "JavaScript", 0, null)
 
             //generate functions "determine_basal" and "setTempBasal"
-            rhino.evaluateString(scope, readFile("tsunami/determine-basal.js"), "JavaScript", 0, null)
-            rhino.evaluateString(scope, readFile("openAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
+            rhino.evaluateString(scope, readFile("Tsunami/determine-basal.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("OpenAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
             val determineBasalObj = scope["determine_basal", scope]
             val setTempBasalFunctionsObj = scope["tempBasalFunctions", scope]
 
