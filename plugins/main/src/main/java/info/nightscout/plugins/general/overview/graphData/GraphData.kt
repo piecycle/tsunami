@@ -75,6 +75,10 @@ class GraphData(
 
     //MP Tsunami graph
     fun addTsunamiArea() {
+        maxY = if (overviewData.bgReadingsArray.isEmpty()) {
+            if (units == GlucoseUnit.MGDL) 180.0 else 10.0
+        } else overviewData.maxBgValue
+        minY = 0.0
         addSeries(overviewData.tsunamiSeries)
     }
 

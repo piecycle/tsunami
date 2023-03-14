@@ -12,6 +12,7 @@ import info.nightscout.workflow.PrepareIobAutosensGraphDataWorker
 import info.nightscout.workflow.PreparePredictionsWorker
 import info.nightscout.workflow.PrepareTemporaryTargetDataWorker
 import info.nightscout.workflow.PrepareTreatmentsDataWorker
+import info.nightscout.workflow.PrepareTsunamiDataWorker
 import info.nightscout.workflow.UpdateGraphWorker
 import info.nightscout.workflow.UpdateIobCobSensWorker
 import info.nightscout.workflow.UpdateWidgetWorker
@@ -27,6 +28,7 @@ abstract class WorkflowModule {
     @ContributesAndroidInjector abstract fun prepareIobAutosensDataWorkerInjector(): PrepareIobAutosensGraphDataWorker
     @ContributesAndroidInjector abstract fun prepareBasalDataWorkerInjector(): PrepareBasalDataWorker
     @ContributesAndroidInjector abstract fun prepareTemporaryTargetDataWorkerInjector(): PrepareTemporaryTargetDataWorker
+    @ContributesAndroidInjector abstract fun prepareTsunamiDataWorkerInjector(): PrepareTsunamiDataWorker
     @ContributesAndroidInjector abstract fun prepareTreatmentsDataWorkerInjector(): PrepareTreatmentsDataWorker
     @ContributesAndroidInjector abstract fun loadIobCobResultsWorkerInjector(): UpdateIobCobSensWorker
     @ContributesAndroidInjector abstract fun preparePredictionsWorkerInjector(): PreparePredictionsWorker

@@ -117,7 +117,7 @@ android {
         buildConfigField "String", "REMOTE", '"' + generateGitRemote() + '"'
         buildConfigField "String", "HEAD", '"' + generateGitBuild() + '"'
         buildConfigField "String", "COMMITTED", '"' + allCommitted() + '"'
-
+        compileSdkPreview = "UpsideDownCake"
     }
 
     flavorDimensions "standard"

@@ -206,7 +206,6 @@
     <string name="key_wave_activity_target" translatable="false">wave_activity_target</string>
     <string name="wave_activity_target_title">Activity target (Wave) [%]</string>
     <string name="wave_activity_target_summary">Percentage of current IA to maintain in case of small delta values (constant activity mode for Wave).</string>
-    <string name="overview_show_tsunami">Tsunami</string>
     <!-- tsunamiDialog.kt & pref_tsunami.xml -->
     <string name="tsunami_button_insulin_increment_button_message">Amount of insulin to add when button is pressed</string>
     <string name="tsunami_button_insulin_increment_1">1st tsunami bolus increment [U]</string>

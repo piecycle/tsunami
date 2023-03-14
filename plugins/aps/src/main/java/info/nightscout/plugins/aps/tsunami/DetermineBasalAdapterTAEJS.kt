@@ -98,7 +98,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             ScriptableObject.defineClass(scope, LoggerCallback::class.java)
             val myLogger = rhino.newObject(scope, "LoggerCallback", null)
             scope.put("console2", scope, myLogger)
-            rhino.evaluateString(scope, readFile("OpenAPSAMA/loggerhelper.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("openAPSAMA/loggerhelper.js"), "JavaScript", 0, null)
 
             //set module parent
             rhino.evaluateString(scope, "var module = {\"parent\":Boolean(1)};", "JavaScript", 0, null)
@@ -106,8 +106,8 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             rhino.evaluateString(scope, "require = function() {return round_basal;};", "JavaScript", 0, null)
 
             //generate functions "determine_basal" and "setTempBasal"
-            rhino.evaluateString(scope, readFile("Tsunami/determine-basal.js"), "JavaScript", 0, null)
-            rhino.evaluateString(scope, readFile("OpenAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
+            rhino.evaluateString(scope, readFile("tsunami/determine-basal.js"), "JavaScript", 0, null)
+            rhino.evaluateString(scope, readFile("openAPSSMB/basal-set-temp.js"), "setTempBasal.js", 0, null)
             val determineBasalObj = scope["determine_basal", scope]
             val setTempBasalFunctionsObj = scope["tempBasalFunctions", scope]
 
@@ -297,7 +297,7 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         }
 
         var futureActivity = 0.0
-        var activityPredTime: Long
+        val activityPredTime: Long
         val activityPredTime_PD = 65L //MP activity prediction time for pharmacodynamic model; fixed to 65 min (approx. peak time of 1 U bolus)
         if (insulinID != 105 && insulinID != 205) { //MP if not using PD insulin models
             activityPredTime = activityPredTime_PK
@@ -309,14 +309,14 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
             futureActivity += iob.activity
         }
 
-        var sensorlag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
+        val sensorlag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
         var sensorLagActivity = 0.0
         for (i in -4..0) {
             val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorlag - i), profile)
             sensorLagActivity += iob.activity
         }
 
-        var activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
+        val activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
         var historicActivity = 0.0
         for (i in -2..2) {
             val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activity_historic - i), profile)
@@ -349,12 +349,12 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.profile.put("waveActivityTarget", SafeParse.stringToDouble(sp.getString(R.string.key_wave_activity_target, "50")))
 
         // Register glucose_status variables
-        mGlucoseStatus.put("futureActivity", futureActivity);
-        mGlucoseStatus.put("activityPredTime", activityPredTime);
+        mGlucoseStatus.put("futureActivity", futureActivity)
+        mGlucoseStatus.put("activityPredTime", activityPredTime)
         mGlucoseStatus.put("sensorLagActivity", sensorLagActivity)
         mGlucoseStatus.put("historicActivity", historicActivity)
         mGlucoseStatus.put("currentActivity", currentActivity)
-        mGlucoseStatus.put("deltaScore", glucoseStatus.deltaScore);
+        mGlucoseStatus.put("deltaScore", glucoseStatus.deltaScore)
 
         // Register meal_data variables
         this.mealData.put("lastBolus", repository.getLastBolusRecordWrapped().blockingGet()) //TODO: New way of getting the last bolus size - check if this works as expected

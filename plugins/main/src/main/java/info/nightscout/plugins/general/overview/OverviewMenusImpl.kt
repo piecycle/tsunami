@@ -15,6 +15,8 @@ import info.nightscout.core.utils.fabric.FabricPrivacy
 import info.nightscout.interfaces.Config
 import info.nightscout.interfaces.aps.Loop
 import info.nightscout.interfaces.overview.OverviewMenus
+import info.nightscout.interfaces.plugin.ActivePlugin
+import info.nightscout.interfaces.plugin.PluginBase
 import info.nightscout.plugins.R
 import info.nightscout.rx.bus.RxBus
 import info.nightscout.rx.events.EventRefreshOverview
@@ -33,7 +35,8 @@ class OverviewMenusImpl @Inject constructor(
     private val rxBus: RxBus,
     private val config: Config,
     private val loop: Loop,
-    private val fabricPrivacy: FabricPrivacy
+    private val fabricPrivacy: FabricPrivacy,
+    private val activePlugin: ActivePlugin
 ) : OverviewMenus {
 
     enum class CharTypeData(@StringRes val nameId: Int, @AttrRes val attrId: Int, @AttrRes val attrTextId: Int, val primary: Boolean, val secondary: Boolean, @StringRes val shortnameId: Int) {
@@ -47,6 +50,7 @@ class OverviewMenusImpl @Inject constructor(
         BGI(R.string.overview_show_bgi, info.nightscout.core.ui.R.attr.bgiColor, info.nightscout.core.ui.R.attr.menuTextColor, primary = false, secondary = true, shortnameId = R.string.bgi_shortname),
         SEN(R.string.overview_show_sensitivity, info.nightscout.core.ui.R.attr.ratioColor, info.nightscout.core.ui.R.attr.menuTextColorInverse, primary = false, secondary = true, shortnameId = R.string.sensitivity_shortname),
         ACT(R.string.overview_show_activity, info.nightscout.core.ui.R.attr.activityColor, info.nightscout.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.activity_shortname),
+        TSU(R.string.overview_show_tsunami, info.nightscout.core.ui.R.attr.icTsunamiColor, info.nightscout.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.tsunami_shortname),
         DEVSLOPE(R.string.overview_show_deviation_slope, info.nightscout.core.ui.R.attr.devSlopePosColor, info.nightscout.core.ui.R.attr.menuTextColor, primary = false, secondary = true, shortnameId = R.string.devslope_shortname)
     }
 
@@ -97,6 +101,7 @@ class OverviewMenusImpl @Inject constructor(
     override fun setupChartMenu(context: Context, chartButton: ImageButton) {
         val settingsCopy = setting
         val numOfGraphs = settingsCopy.size // 1 main + x secondary
+        val tsunamiIsActiveAPS = ((activePlugin.activeAPS as PluginBase).name == "Tsunami")
 
         chartButton.setOnClickListener { v: View ->
             val predictionsAvailable: Boolean = when {
@@ -127,6 +132,7 @@ class OverviewMenusImpl @Inject constructor(
                     var insert = true
                     if (m == CharTypeData.PRE) insert = predictionsAvailable
                     if (m == CharTypeData.DEVSLOPE) insert = config.isDev()
+                    if (m == CharTypeData.TSU) insert = tsunamiIsActiveAPS
                     if (used.contains(m.ordinal)) insert = false
                     for (g2 in g + 1 until numOfGraphs) {
                         if (settingsCopy[g2][m.ordinal]) insert = false

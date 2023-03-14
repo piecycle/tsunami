@@ -112,7 +112,7 @@ interface OverviewData {
     var absoluteBasalGraphSeries: LineGraphSeries<ScaledDataPoint>
 
     var temporaryTargetSeries: LineGraphSeries<DataPoint>
-    //MP graph test
+    //MP Tsunami graph
     var tsunamiSeries: LineGraphSeries<DataPoint>
 
     var maxIAValue: Double

@@ -55,6 +55,7 @@ android {
         versionCode 2
         versionName "1.0.3"
         buildConfigField "String", "BUILDVERSION", generateGitBuild()
+        compileSdkPreview = "UpsideDownCake"
     }
 
     buildFeatures {

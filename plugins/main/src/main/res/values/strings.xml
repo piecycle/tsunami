@@ -394,4 +394,7 @@
     <string name="target">target</string>
     <string name="rate_duration">Rate: %1$.2fU/h (%2$.2f%%) \nDuration %3$d min</string>
 
+    <!-- Tsunami OverviewMenusImpl.kt -->
+    <string name="overview_show_tsunami">Tsunami</string>
+    <string name="tsunami_shortname">TSU</string>
 </resources>

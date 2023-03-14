@@ -329,7 +329,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             .toObservable(EventTsunamiModeChange::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({ updateTsunamiButton() }, fabricPrivacy::logException)
-
         refreshLoop = Runnable {
             refreshAll()
             handler.postDelayed(refreshLoop, 60 * 1000L)
@@ -587,8 +586,9 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 && sp.getBoolean(R.string.key_show_wizard_button, true)).toVisibility()
             binding.buttonsLayout.insulinButton.visibility = (!loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null
                 && sp.getBoolean(R.string.key_show_insulin_button, true)).toVisibility()
-            //MP Tsunami button
-            binding.buttonsLayout.tsunamiButton.visibility = ((activePlugin.activeAPS as PluginBase).name == "Tsunami" && (activePlugin.activeAPS as PluginBase).isEnabled() && !loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
+            //MP Tsunami button visibility if Tsunami is selected as APS
+            val tsunamiIsActiveAPS = ((activePlugin.activeAPS as PluginBase).name == "Tsunami")
+            binding.buttonsLayout.tsunamiButton.visibility = (tsunamiIsActiveAPS && !loop.isDisconnected&& pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
             //val tsunamiIsActiveAPS = tsunamiPlugin.isEnabled()
             //binding.buttonsLayout.tsunamiButton.visibility = (tsunamiIsActiveAPS && !loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
 
@@ -1011,15 +1011,25 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @SuppressLint("SetTextI18n")
     fun updateTsunamiButton() {
         val tsunamiMode = overviewData.tsunami
-        if (tsunamiMode != null) {
-            val remaining = tsunamiMode.duration + tsunamiMode.timestamp - dateUtil.now()
-            if (tsunamiMode.tsunamiMode == 2 && remaining > 0) {
-                setRibbon(
-                    binding.buttonsLayout.tsunamiButton,
-                    info.nightscout.core.ui.R.attr.ribbonTextWarningColor,
-                    info.nightscout.core.ui.R.attr.ribbonWarningColor,
-                    dateUtil.untilString(tsunamiMode.end, rh)
-                )
+        runOnUiThread {
+            _binding ?: return@runOnUiThread
+            if (tsunamiMode != null) {
+                val remaining = tsunamiMode.duration + tsunamiMode.timestamp - dateUtil.now()
+                if (tsunamiMode.tsunamiMode == 2 && remaining > 0) {
+                    setRibbon(
+                        binding.buttonsLayout.tsunamiButton,
+                        info.nightscout.core.ui.R.attr.ribbonTextWarningColor,
+                        info.nightscout.core.ui.R.attr.ribbonWarningColor,
+                        dateUtil.untilString(tsunamiMode.end, rh)
+                    )
+                } else {
+                    setRibbon(
+                        binding.buttonsLayout.tsunamiButton,
+                        info.nightscout.core.ui.R.attr.icTsunamiColor,
+                        info.nightscout.core.ui.R.attr.ribbonDefaultColor,
+                        "TSUNAMI"
+                    )
+                }
             } else {
                 setRibbon(
                     binding.buttonsLayout.tsunamiButton,
@@ -1028,13 +1038,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     "TSUNAMI"
                 )
             }
-        } else {
-            setRibbon(
-                binding.buttonsLayout.tsunamiButton,
-                info.nightscout.core.ui.R.attr.icTsunamiColor,
-                info.nightscout.core.ui.R.attr.ribbonDefaultColor,
-                "TSUNAMI"
-            )
         }
     }
 
@@ -1052,11 +1055,11 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val pump = activePlugin.activePump
         val graphData = GraphData(injector, binding.graphsLayout.bgGraph, overviewData)
         val menuChartSettings = overviewMenus.setting
-        if (menuChartSettings.isEmpty())
-        //MP Tsunami graph
-            if (menuChartSettings[0][OverviewMenus.CharType.TSU.ordinal])
-                graphData.addTsunamiArea()
+        if (menuChartSettings.isEmpty()) return
         graphData.addInRangeArea(overviewData.fromTime, overviewData.endTime, defaultValueHelper.determineLowLine(), defaultValueHelper.determineHighLine())
+        //MP Tsunami graph
+        if (menuChartSettings[0][OverviewMenus.CharType.TSU.ordinal])
+            graphData.addTsunamiArea()
         graphData.addBgReadings(menuChartSettings[0][OverviewMenus.CharType.PRE.ordinal], context)
         graphData.addBucketedData()
         graphData.addTreatments(context)

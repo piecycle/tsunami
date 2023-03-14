@@ -41,6 +41,7 @@ import info.nightscout.workflow.PrepareIobAutosensGraphDataWorker
 import info.nightscout.workflow.PreparePredictionsWorker
 import info.nightscout.workflow.PrepareTemporaryTargetDataWorker
 import info.nightscout.workflow.PrepareTreatmentsDataWorker
+import info.nightscout.workflow.PrepareTsunamiDataWorker
 import info.nightscout.workflow.UpdateGraphWorker
 import info.nightscout.workflow.UpdateIobCobSensWorker
 import info.nightscout.workflow.UpdateWidgetWorker
@@ -195,6 +196,16 @@ class CalculationWorkflowImpl @Inject constructor(
             .then(
                 OneTimeWorkRequest.Builder(PrepareIobAutosensGraphDataWorker::class.java)
                     .setInputData(dataWorkerStorage.storeInputData(PrepareIobAutosensGraphDataWorker.PrepareIobAutosensData(iobCobCalculator, overviewData)))
+                    .build()
+            )
+            .then(
+                OneTimeWorkRequest.Builder(PrepareTsunamiDataWorker::class.java)
+                    .setInputData(dataWorkerStorage.storeInputData(PrepareTsunamiDataWorker.PrepareTsunamiData(overviewData)))
+                    .build()
+            )
+            .then(
+                OneTimeWorkRequest.Builder(UpdateGraphWorker::class.java)
+                    .setInputData(Data.Builder().putString(JOB, job).putInt(PASS, CalculationWorkflow.ProgressData.DRAW_TSUNAMI_DATA.pass).build())
                     .build()
             )
             .then(

@@ -12,6 +12,7 @@ import info.nightscout.database.entities.ProfileSwitch
 import info.nightscout.database.entities.TemporaryBasal
 import info.nightscout.database.entities.TemporaryTarget
 import info.nightscout.database.entities.TherapyEvent
+import info.nightscout.database.entities.Tsunami
 import info.nightscout.database.impl.AppRepository
 import info.nightscout.interfaces.ui.UiInteraction
 import info.nightscout.rx.bus.RxBus
@@ -26,6 +27,7 @@ import info.nightscout.rx.events.EventTempBasalChange
 import info.nightscout.rx.events.EventTempTargetChange
 import info.nightscout.rx.events.EventTherapyEventChange
 import info.nightscout.rx.events.EventTreatmentChange
+import info.nightscout.rx.events.EventTsunamiModeChange
 import info.nightscout.rx.logging.AAPSLogger
 import info.nightscout.rx.logging.LTag
 import io.reactivex.rxjava3.disposables.Disposable
@@ -92,6 +94,11 @@ class CompatDBHelper @Inject constructor(
             it.filterIsInstance<TemporaryTarget>().firstOrNull()?.let { tt ->
                 aapsLogger.debug(LTag.DATABASE, "Firing EventTempTargetChange $tt")
                 rxBus.send(EventTempTargetChange())
+            }
+            it.filterIsInstance<Tsunami>().firstOrNull()?.let { ts ->
+                aapsLogger.debug(LTag.DATABASE, "Firing EventTsunamiModeChange $ts")
+                rxBus.send(EventTsunamiModeChange())
+                rxBus.send(EventNewHistoryData(ts.timestamp, false)) //MP required to refresh graph & instantly plot tsunami duration
             }
             it.filterIsInstance<TherapyEvent>().firstOrNull()?.let { te ->
                 aapsLogger.debug(LTag.DATABASE, "Firing EventTherapyEventChange $te")
