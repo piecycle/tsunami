@@ -16,6 +16,8 @@ import info.nightscout.automation.AutomationPlugin
 import info.nightscout.configuration.configBuilder.ConfigBuilderPlugin
 import info.nightscout.configuration.maintenance.MaintenancePlugin
 import info.nightscout.insulin.InsulinLyumjevPlugin
+import info.nightscout.insulin.InsulinLyumjevU100PDPlugin
+import info.nightscout.insulin.InsulinLyumjevU200PDPlugin
 import info.nightscout.insulin.InsulinOrefFreePeakPlugin
 import info.nightscout.insulin.InsulinOrefRapidActingPlugin
 import info.nightscout.insulin.InsulinOrefUltraRapidActingPlugin
@@ -113,6 +115,20 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(42)
     abstract fun bindInsulinLyumjevPlugin(plugin: InsulinLyumjevPlugin): PluginBase
+
+    //MP Added Lyumjev U100 strings
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(43)
+    abstract fun bindInsulinLyumjevU100PDPlugin(plugin: InsulinLyumjevU100PDPlugin): PluginBase
+
+    //MP Added Lyumjev U200 strings
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(44)
+    abstract fun bindInsulinLyumjevU200PDPlugin(plugin: InsulinLyumjevU200PDPlugin): PluginBase
 
     @Binds
     @AllConfigs

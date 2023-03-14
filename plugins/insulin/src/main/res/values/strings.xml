@@ -18,5 +18,11 @@
     <string name="fast_acting_insulin_comment">Novorapid, Novolog, Humalog</string>
     <string name="ultra_fast_acting_insulin_comment">Fiasp</string>
 
-
+    <!-- Tsunami PD models -->
+    <string name="lyumjev_U100_PD">Lyumjev U100 (Tsunami)</string>
+    <string name="lyumjev_U200_PD">Lyumjev U200 (Tsunami)</string>
+    <string name="description_insulin_lyumjev_U100_PD">Glucodynamic model for Lyumjev U100 (standard concentration); This model automatically adjusts the duration of insulin action (DIA).</string>
+    <string name="description_insulin_lyumjev_U200_PD">Glucodynamic model for Lyumjev U200 (2 x
+        concentrated); This model automatically adjusts the duration of insulin action (DIA).
+        YOU MUST HALVE YOUR BASALS AND DOUBLE YOUR ISFS BEFORE USE!</string>
 </resources>
