@@ -8,12 +8,14 @@ fun GlucoseStatus.log(): String = "Glucose: " + DecimalFormatter.to0Decimal(gluc
     "Noise: " + DecimalFormatter.to0Decimal(noise) + " " +
     "Delta: " + DecimalFormatter.to0Decimal(delta) + " mg/dl" +
     "Short avg. delta: " + " " + DecimalFormatter.to2Decimal(shortAvgDelta) + " mg/dl " +
-    "Long avg. delta: " + DecimalFormatter.to2Decimal(longAvgDelta) + " mg/dl"
+    "Long avg. delta: " + DecimalFormatter.to2Decimal(longAvgDelta) + " mg/dl" +
+    "deltaScore: " + DecimalFormatter.to2Decimal(deltaScore) + " mg/dl"
 
 fun GlucoseStatus.asRounded() = copy(
     glucose = Round.roundTo(glucose, 0.1),
     noise = Round.roundTo(noise, 0.01),
     delta = Round.roundTo(delta, 0.01),
     shortAvgDelta = Round.roundTo(shortAvgDelta, 0.01),
-    longAvgDelta = Round.roundTo(longAvgDelta, 0.01)
+    longAvgDelta = Round.roundTo(longAvgDelta, 0.01),
+    deltaScore = Round.roundTo(deltaScore, 0.01),
 )
