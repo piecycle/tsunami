@@ -8,7 +8,6 @@ apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
 apply from: "${project.rootDir}/core/main/android_module_dependencies.gradle"
 apply from: "${project.rootDir}/core/main/test_dependencies.gradle"
 apply from: "${project.rootDir}/core/main/jacoco_global.gradle"
-apply plugin: 'org.jetbrains.kotlin.android'
 
 dependencies {
     implementation project(':core:libraries')
@@ -19,8 +18,6 @@ dependencies {
     implementation(project(":pump:combov2:comboctl"))
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinx_datetime_version")
-    implementation 'androidx.core:core-ktx:+'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // This is necessary to avoid errors like these which otherwise come up often at runtime:
     // "WARNING: Failed to transform class kotlinx/datetime/TimeZone$Companion
     // java.lang.NoClassDefFoundError: kotlinx/serialization/KSerializer"

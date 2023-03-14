@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
-    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
@@ -37,8 +36,6 @@ dependencies {
     api "com.google.code.gson:gson:$gson_version"
 
     api "androidx.room:room-runtime:$room_version"
-    implementation 'androidx.core:core-ktx:+'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt "androidx.room:room-compiler:$room_version"
     /* Database schema export */
     kapt "androidx.room:room-compiler:$room_version"

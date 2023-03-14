@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
-    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
@@ -29,6 +28,4 @@ dependencies {
 
     // Protection
     api 'androidx.biometric:biometric:1.1.0'
-    implementation 'androidx.core:core-ktx:+'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-allopen'
     id 'com.hiya.jacoco-android'
-    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "${project.rootDir}/core/main/android_dependencies.gradle"
@@ -26,7 +25,5 @@ dependencies {
     implementation project(':pump:pump-common')
     implementation project(':pump:pump-core')
     implementation project(':pump:rileylink')
-    implementation 'androidx.core:core-ktx:+'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation project(':database:impl')
 }
