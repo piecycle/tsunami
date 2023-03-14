@@ -322,6 +322,10 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         historicActivity = Round.roundTo(historicActivity, 0.0001)
         currentActivity = Round.roundTo(currentActivity, 0.0001)
 
+        //Calculate deltaScore
+        //TODO: Improve meal detection system!
+        val deltaScore: Double = Round.roundTo(glucoseStatus.shortAvgDelta/4, 0.01)
+
         // Register profile variables
         this.profile.put("tsunamiModeID", tsunamiModeID)
         this.profile.put("peaktime", activityPredTime_PK)
@@ -348,7 +352,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         mGlucoseStatus.put("sensorLagActivity", sensorLagActivity)
         mGlucoseStatus.put("historicActivity", historicActivity)
         mGlucoseStatus.put("currentActivity", currentActivity)
-        mGlucoseStatus.put("deltaScore", glucoseStatus.deltaScore)
+        mGlucoseStatus.put("deltaScore", deltaScore)
 
         // Register meal_data variables
         this.mealData.put("lastBolus", repository.getLastBolusRecordWrapped().blockingGet()) //TODO: New way of getting the last bolus size - check if this works as expected
