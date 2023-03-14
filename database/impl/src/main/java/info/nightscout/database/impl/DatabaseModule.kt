@@ -29,6 +29,7 @@ open class DatabaseModule {
             .addMigrations(migration20to21)
             .addMigrations(migration21to22)
             .addMigrations(migration22to23)
+            .addMigrations(migration23to24)
             .addCallback(object : Callback() {
                 override fun onOpen(db: SupportSQLiteDatabase) {
                     super.onOpen(db)
@@ -84,6 +85,20 @@ open class DatabaseModule {
     private val migration22to23 = object : Migration(22,23) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("ALTER TABLE `deviceStatus` ADD COLUMN `isCharging` INTEGER")
+            // Custom indexes must be dropped on migration to pass room schema checking after upgrade
+            dropCustomIndexes(database)
+        }
+    }
+
+    //MP Tsunami database migration
+    private val migration23to24 = object : Migration(23,24) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `tsunami` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `version` INTEGER NOT NULL, `dateCreated` INTEGER NOT NULL, `isValid` INTEGER NOT NULL, `referenceId` INTEGER, `timestamp` INTEGER NOT NULL, `utcOffset` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `tsunamiMode` INTEGER NOT NULL, `nightscoutSystemId` TEXT, `nightscoutId` TEXT, `pumpType` TEXT, `pumpSerial` TEXT, `temporaryId` INTEGER, `pumpId` INTEGER, `startId` INTEGER, `endId` INTEGER, FOREIGN KEY(`referenceId`) REFERENCES `tsunami`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_id` ON `tsunami` (`id`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_isValid` ON `tsunami` (`isValid`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_nightscoutId` ON `tsunami` (`nightscoutId`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_referenceId` ON `tsunami` (`referenceId`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_timestamp` ON `tsunami` (`timestamp`)")
             // Custom indexes must be dropped on migration to pass room schema checking after upgrade
             dropCustomIndexes(database)
         }
