@@ -308,7 +308,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     */
     
     // General variable definitions
-    var activity_controller = false; //MP TAE main switch; controls whether TAE (true) or oref1 (false) is used
+    var activity_controller = false; //MP Tsunami main switch; controls whether Tsunami (true) or oref1 (false) is used
     var deltaScore = Math.min(1, Math.max(glucose_status.deltaScore, 0)); //MP Modifies insulinReqPCT; deltaScore grows larger the largest the previous deltas were, until it reaches 1
 
     // Specific variable definitions & determination of loop mode
@@ -323,7 +323,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     if (profile.tsunamiActive) {
         tsuMode = 2;
         deltaReductionPCT = 1;
-        SMBcap = profile.tsuSMBCap; //MP: User-set may SMB size for TAE.
+        SMBcap = profile.tsuSMBCap; //MP: User-set may SMB size for Tsunami.
         if (profile.tsuSMBCapScaling) {
         SMBcap = SMBcap * Math.min(profile.percentage / 100, 1.3); //SMBcap grows and shrinks with profile percentage;
         }
@@ -334,7 +334,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     } else if (profile.enableWaveMode) {
         tsuMode = 1;
         deltaReductionPCT = 0.5;
-        SMBcap = profile.waveSMBCap; //MP: User-set may SMB size for TAE.
+        SMBcap = profile.waveSMBCap; //MP: User-set may SMB size for Tsunami.
         if (profile.waveSMBCapScaling) {
         SMBcap = SMBcap * Math.min(profile.percentage / 100, 1.3); //SMBcap grows and shrinks with profile percentage;
         }
@@ -352,7 +352,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         } else {
             referenceTimer = new Date().getHours() - startTime; //MP Transformed timer, counting from 0 until (23 - startTime);
         }
-        endTime = 24 - (startTime - endTime); //MP transformed end hour, represents total duration of TAE in h
+        endTime = 24 - (startTime - endTime); //MP transformed end hour, represents total duration of Tsunami in h
         startTime = 0; //MP set starting hour to 0 and transform the rest;
     } else {
         referenceTimer = new Date().getHours();
@@ -381,7 +381,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     }
 
     /*
-     ** Insulin requirement calculation by TAE START
+     ** Insulin requirement calculation by Tsunami START
      */
     // MP Variable definitions
     var tp;
@@ -436,7 +436,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     }
     iterations -= 1; //MP Minus 1 as the iterations are overcounted by 1 in the while loop
 
-    //MP If the usual bg correction equation yields a higher insulin requirement than TAE,
+    //MP If the usual bg correction equation yields a higher insulin requirement than Tsunami,
     var bg_correction = (bg - target_bg) / sens;
     if (bg_correction > iob_data.iob && bg_correction > tsunami_insreq) {
         tsunami_insreq = bg_correction;
@@ -446,11 +446,11 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     //MP deltaScore and BG score
     insulinReqPCT = round(insulinReqPCT * deltaScore, 3); //MP Modify insulinReqPCT in dependence of previous delta values
     var bgScore_upper_threshold = 140; //MP BG above which no penalty will be given
-    var bgScore_lower_threshold = 80; //MP BG below which tae will not deliver SMBs
+    var bgScore_lower_threshold = 80; //MP BG below which Tsunami will not deliver SMBs
     var bgScore = round(Math.min((bg - bgScore_lower_threshold) / (bgScore_upper_threshold - bgScore_lower_threshold), 1), 3); //MP Penalty at low or near-target bg values. Modifies SMBcap.
     SMBcap = round(SMBcap * bgScore, 2);
 
-    //MP Enable TAE SMB sizing if the safety conditions are all met
+    //MP Enable Tsunami SMB sizing if the safety conditions are all met
     if (referenceTimer >= startTime &&
         referenceTimer <= endTime &&
         glucose_status.delta >= 0 &&
@@ -460,7 +460,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         act_curr > 0 &&
         tsunami_insreq + iob_data.iob >= (bg - target_bg) / profile_sens &&
         (profile.tsunamiActive || profile.enableWaveMode)) {
-        activity_controller = true; //MP Enable TAE
+        activity_controller = true; //MP Enable Tsunami
         //MP Reporting messages
         if (profile.tsunamiActive) {
                 console.log("------------------------------");
@@ -497,7 +497,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         }
         console.log("------------------------------");
     } else {
-        //MP Reporting if TAE is bypassed
+        //MP Reporting if Tsunami is bypassed
         if (profile.tsunamiActive || !profile.enableWaveMode) {
                 console.log("------------------------------");
                 console.log("TSUNAMI STATUS");
@@ -507,7 +507,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
                 console.log("TSUNAMI / WAVE STATUS");
                 console.log("------------------------------");
         }
-        console.log("TAE bypassed - reasons:");
+        console.log("Tsunami bypassed - reasons:");
         if (referenceTimer < startTime || referenceTimer > endTime) {
             console.log("Outside active hours.");
         }
@@ -1165,7 +1165,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             }
         }
     }
-    //MP Disable the block below if tae is active - BG predictions are mostly wrong during UAM and can result in persistent highs - other safety features are in place
+    //MP Disable the block below if Tsunami is active - BG predictions are mostly wrong during UAM and can result in persistent highs - other safety features are in place
     if (!activity_controller) {
         if (enableSMB && minGuardBG < threshold) {
             console.error("minGuardBG", convert_bg(minGuardBG, profile), "projected below", convert_bg(threshold, profile), "- disabling SMB");
@@ -1206,8 +1206,8 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         rT.reason += "IOB " + iob_data.iob + " < " + round(-profile.current_basal * 20 / 60, 2);
         rT.reason += " and minDelta " + convert_bg(minDelta, profile) + " > " + "expectedDelta " + convert_bg(expectedDelta, profile) + "; ";
         // predictive low glucose suspend mode: BG is / is projected to be < threshold
-        //MP Disable the block below if tae is active - BG predictions are mostly wrong during UAM and can result in persistent highs - other safety features are in place
-    } else if (!activity_controller && (bg < threshold || minGuardBG < threshold)) { //MP modified to include !activity_controller - default behaviour if tae is off
+        //MP Disable the block below if Tsunami is active - BG predictions are mostly wrong during UAM and can result in persistent highs - other safety features are in place
+    } else if (!activity_controller && (bg < threshold || minGuardBG < threshold)) { //MP modified to include !activity_controller - default behaviour if Tsunami is off
         rT.reason += "minGuardBG " + convert_bg(minGuardBG, profile) + "<" + convert_bg(threshold, profile);
         bgUndershoot = target_bg - minGuardBG;
         worstCaseInsulinReq = bgUndershoot / sens;
@@ -1217,7 +1217,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
         durationReq = Math.min(120, Math.max(30, durationReq));
         console.log("Checkpoint 3A");
         return tempBasalFunctions.setTempBasal(0, durationReq, profile, rT, currenttemp);
-    } else if (activity_controller && bg < threshold) { //MP added to have default behaviour also if tae is on, but prediction condition was removed
+    } else if (activity_controller && bg < threshold) { //MP added to have default behaviour also if Tsunami is on, but prediction condition was removed
         rT.reason += "minGuardBG " + convert_bg(minGuardBG, profile) + "<" + convert_bg(threshold, profile);
         bgUndershoot = target_bg - minGuardBG;
         worstCaseInsulinReq = bgUndershoot / sens;
@@ -1240,7 +1240,7 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
     var insulinReq;
     var rate;
     var insulinScheduled;
-    if (!activity_controller) { //MP Bypass oref1 block below if TAE is active
+    if (!activity_controller) { //MP Bypass oref1 block below if Tsunami is active
         if (eventualBG < min_bg) { // if eventual BG is below target:
             rT.reason += "Eventual BG " + convert_bg(eventualBG, profile) + " < " + convert_bg(min_bg, profile);
             // if 5m or 30m avg BG is rising faster than expected delta

@@ -44,7 +44,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
+class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
 
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var constraintChecker: Constraints
@@ -209,12 +209,6 @@ class DetermineBasalAdapterTAEJS internal constructor(private val scriptReader: 
         this.profile.put("half_basal_exercise_target", SMBDefaults.half_basal_exercise_target)
         this.profile.put("maxCOB", SMBDefaults.maxCOB)
         this.profile.put("skip_neutral_temps", pump.setNeutralTempAtFullHour())
-        // min_5m_carbimpact is not used within SMB determinebasal
-        //if (mealData.usedMinCarbsImpact > 0) {
-        //    mProfile.put("min_5m_carbimpact", mealData.usedMinCarbsImpact);
-        //} else {
-        //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, TAEDefaults.min_5m_carbimpact));
-        //}
         this.profile.put("remainingCarbsCap", SMBDefaults.remainingCarbsCap)
         this.profile.put("enableUAM", uamAllowed)
         this.profile.put("A52_risk_enable", SMBDefaults.A52_risk_enable)

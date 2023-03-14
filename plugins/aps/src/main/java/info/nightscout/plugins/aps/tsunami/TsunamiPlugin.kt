@@ -76,5 +76,5 @@ class TsunamiPlugin @Inject constructor(
 
     override fun specialEnableCondition(): Boolean = config.isEngineeringMode() && config.isDev()
 
-    override fun provideDetermineBasalAdapter(): DetermineBasalAdapter = DetermineBasalAdapterTAEJS(ScriptReader(context), injector)
+    override fun provideDetermineBasalAdapter(): DetermineBasalAdapter = DetermineBasalAdapterTsunamiJS(ScriptReader(context), injector)
 }
