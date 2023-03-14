@@ -46,9 +46,7 @@ class GlucoseStatusProviderImpl @Inject constructor(
                 delta = 0.0,
                 shortAvgDelta = 0.0,
                 longAvgDelta = 0.0,
-                date = nowDate,
-                //*** Tsunami ***
-                deltaScore = 0.0
+                date = nowDate
             ).asRounded()
         }
         val lastDeltas = ArrayList<Double>()
@@ -96,11 +94,6 @@ class GlucoseStatusProviderImpl @Inject constructor(
         } else {
             average(lastDeltas)
         }
-
-        //*** Tsunami ***
-        //TODO: Improve meal detection system
-        var deltaScore = shortAverageDelta / 4.0
-
         return GlucoseStatus(
             glucose = now.recalculated,
             date = nowDate,
@@ -108,7 +101,6 @@ class GlucoseStatusProviderImpl @Inject constructor(
             shortAvgDelta = shortAverageDelta,
             delta = delta,
             longAvgDelta = average(longDeltas),
-            deltaScore = deltaScore
         ).also { aapsLogger.debug(LTag.GLUCOSE, it.log()) }.asRounded()
     }
 
