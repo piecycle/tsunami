@@ -7,7 +7,6 @@ import dagger.multibindings.IntoMap
 import info.nightscout.androidaps.danaRKorean.DanaRKoreanPlugin
 import info.nightscout.androidaps.danaRv2.DanaRv2Plugin
 import info.nightscout.androidaps.danar.DanaRPlugin
-import info.nightscout.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import info.nightscout.androidaps.plugins.pump.eopatch.EopatchPumpPlugin
 import info.nightscout.androidaps.plugins.pump.insight.LocalInsightPlugin
 import info.nightscout.androidaps.plugins.pump.medtronic.MedtronicPumpPlugin
@@ -17,6 +16,8 @@ import info.nightscout.automation.AutomationPlugin
 import info.nightscout.configuration.configBuilder.ConfigBuilderPlugin
 import info.nightscout.configuration.maintenance.MaintenancePlugin
 import info.nightscout.insulin.InsulinLyumjevPlugin
+import info.nightscout.insulin.InsulinLyumjevU100PDPlugin
+import info.nightscout.insulin.InsulinLyumjevU200PDPlugin
 import info.nightscout.insulin.InsulinOrefFreePeakPlugin
 import info.nightscout.insulin.InsulinOrefRapidActingPlugin
 import info.nightscout.insulin.InsulinOrefUltraRapidActingPlugin
@@ -42,6 +43,7 @@ import info.nightscout.plugins.profile.ProfilePlugin
 import info.nightscout.plugins.sync.dataBroadcaster.DataBroadcastPlugin
 import info.nightscout.plugins.sync.nsclient.NSClientPlugin
 import info.nightscout.plugins.sync.nsclientV3.NSClientV3Plugin
+import info.nightscout.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import info.nightscout.plugins.sync.tidepool.TidepoolPlugin
 import info.nightscout.plugins.sync.xdrip.XdripPlugin
 import info.nightscout.pump.combo.ComboPlugin
@@ -112,6 +114,20 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(42)
     abstract fun bindInsulinLyumjevPlugin(plugin: InsulinLyumjevPlugin): PluginBase
+
+    //MP Added Lyumjev U100 strings
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(43)
+    abstract fun bindInsulinLyumjevU100PDPlugin(plugin: InsulinLyumjevU100PDPlugin): PluginBase
+
+    //MP Added Lyumjev U200 strings
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(44)
+    abstract fun bindInsulinLyumjevU200PDPlugin(plugin: InsulinLyumjevU200PDPlugin): PluginBase
 
     @Binds
     @AllConfigs
