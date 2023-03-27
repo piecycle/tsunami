@@ -332,7 +332,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         this.profile.put("insulinID", insulinID)
         this.profile.put("tsuSMBCap", SafeParse.stringToDouble(sp.getString(R.string.key_tsunami_smbcap, "1")))
         this.profile.put("tsuInsReqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinReqPCT, "65")))
-        this.profile.put("percentage", profile.percentage)
+        this.profile.put("percentage", profile.getOriginalPercentage())
         this.profile.put("dia", profile.dia)
         this.profile.put("tsunamiActive", tsunamiActive)
         this.profile.put("enableWaveMode", sp.getBoolean(R.string.key_enable_wave_mode, false))

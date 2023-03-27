@@ -347,6 +347,11 @@ sealed class ProfileSealed(
         return result
     }
 
+    override fun getOriginalPercentage(): Int {
+        if (this is EPS) return value.originalPercentage
+        return pct
+    }
+
     override fun getBasalValues(): Array<ProfileValue> = getValues(basalBlocks, percentage / 100.0)
     override fun getIcsValues(): Array<ProfileValue> = getValues(icBlocks, 100.0 / percentage)
 
