@@ -112,6 +112,7 @@ interface Profile {
     fun getMaxDailyBasal(): Double
     fun baseBasalSum(): Double
     fun percentageBasalSum(): Double
+    fun getOriginalPercentage(): Int
 
     fun getBasalValues(): Array<ProfileValue>
     fun getIcsValues(): Array<ProfileValue>
