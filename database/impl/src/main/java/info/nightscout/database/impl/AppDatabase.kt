@@ -46,6 +46,7 @@ import info.nightscout.database.entities.UserEntry
 import info.nightscout.database.entities.Tsunami
 import info.nightscout.database.entities.VersionChange
 import info.nightscout.database.impl.daos.HeartRateDao
+import info.nightscout.database.impl.daos.TsunamiDao
 import java.io.Closeable
 
 const val DATABASE_VERSION = 25

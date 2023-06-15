@@ -1,6 +1,5 @@
 package info.nightscout.database.impl
 
-import info.nightscout.database.entities.interfaces.DBEntry
 import info.nightscout.database.impl.daos.APSResultDao
 import info.nightscout.database.impl.daos.APSResultLinkDao
 import info.nightscout.database.impl.daos.BolusCalculatorResultDao
