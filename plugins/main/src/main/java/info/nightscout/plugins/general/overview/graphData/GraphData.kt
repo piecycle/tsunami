@@ -267,5 +267,14 @@ class GraphData(
         // draw it
         graph.onDataChanged(false, false)
     }
-}
 
+    fun addHeartRate(useForScale: Boolean, scale: Double) {
+        val maxHR = overviewData.heartRateGraphSeries.highestValueY
+        if (useForScale) {
+            minY = 0.0
+            maxY = maxHR
+        }
+        addSeries(overviewData.heartRateGraphSeries)
+        overviewData.heartRateScale.multiplier = maxY * scale / maxHR
+    }
+}

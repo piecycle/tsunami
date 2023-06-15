@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 24,
-    "identityHash": "032721117c5aff71e79a6e5c21c4aff6",
+    "identityHash": "a3ee37800b6cda170d0ea64799ed7876",
     "entities": [
       {
         "tableName": "apsResults",
@@ -3691,12 +3691,42 @@
         ]
       },
       {
-        "tableName": "tsunami",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `version` INTEGER NOT NULL, `dateCreated` INTEGER NOT NULL, `isValid` INTEGER NOT NULL, `referenceId` INTEGER, `timestamp` INTEGER NOT NULL, `utcOffset` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `tsunamiMode` INTEGER NOT NULL, `nightscoutSystemId` TEXT, `nightscoutId` TEXT, `pumpType` TEXT, `pumpSerial` TEXT, `temporaryId` INTEGER, `pumpId` INTEGER, `startId` INTEGER, `endId` INTEGER, FOREIGN KEY(`referenceId`) REFERENCES `tsunami`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "heartRate",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `duration` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `beatsPerMinute` REAL NOT NULL, `device` TEXT NOT NULL, `utcOffset` INTEGER NOT NULL, `version` INTEGER NOT NULL, `dateCreated` INTEGER NOT NULL, `isValid` INTEGER NOT NULL, `referenceId` INTEGER, `nightscoutSystemId` TEXT, `nightscoutId` TEXT, `pumpType` TEXT, `pumpSerial` TEXT, `temporaryId` INTEGER, `pumpId` INTEGER, `startId` INTEGER, `endId` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beatsPerMinute",
+            "columnName": "beatsPerMinute",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "device",
+            "columnName": "device",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "utcOffset",
+            "columnName": "utcOffset",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -3723,30 +3753,6 @@
             "columnName": "referenceId",
             "affinity": "INTEGER",
             "notNull": false
-          },
-          {
-            "fieldPath": "timestamp",
-            "columnName": "timestamp",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "utcOffset",
-            "columnName": "utcOffset",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "duration",
-            "columnName": "duration",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "tsunamiMode",
-            "columnName": "tsunamiMode",
-            "affinity": "INTEGER",
-            "notNull": true
           },
           {
             "fieldPath": "interfaceIDs_backing.nightscoutSystemId",
@@ -3805,70 +3811,31 @@
         },
         "indices": [
           {
-            "name": "index_tsunami_id",
+            "name": "index_heartRate_id",
             "unique": false,
             "columnNames": [
               "id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_id` ON `${TABLE_NAME}` (`id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_heartRate_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
-            "name": "index_tsunami_isValid",
-            "unique": false,
-            "columnNames": [
-              "isValid"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_isValid` ON `${TABLE_NAME}` (`isValid`)"
-          },
-          {
-            "name": "index_tsunami_nightscoutId",
-            "unique": false,
-            "columnNames": [
-              "nightscoutId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
-          },
-          {
-            "name": "index_tsunami_referenceId",
-            "unique": false,
-            "columnNames": [
-              "referenceId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
-          },
-          {
-            "name": "index_tsunami_timestamp",
+            "name": "index_heartRate_timestamp",
             "unique": false,
             "columnNames": [
               "timestamp"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_heartRate_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
           }
         ],
-        "foreignKeys": [
-          {
-            "table": "tsunami",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "referenceId"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '032721117c5aff71e79a6e5c21c4aff6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a3ee37800b6cda170d0ea64799ed7876')"
     ]
   }
 }

@@ -16,7 +16,8 @@ interface OverviewMenus {
         SEN,
         ACT,
         DEVSLOPE,
-        TSU
+        HR,
+        TSU,
     }
 
     val setting: List<Array<Boolean>>
