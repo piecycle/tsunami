@@ -97,11 +97,7 @@
     <string name="sms_read_status_failed">Error en llegir estat</string>
     <string name="sms_profile_switch_created">Canvi de perfil creat</string>
     <string name="sms_wrong_tbr_duration">La durada d\'una TBR ha de ser múltiple de %1$d minuts i més gran que 0.</string>
-    <string name="xdrip_status_detailed_iob_title">Mostrar detalls IOB</string>
-    <string name="xdrip_status_detailed_iob_summary">Mostrar IOB de bolus i de basal per separat al rellotge</string>
     <string name="disabled_loop">Llaç desactivat</string>
-    <string name="xdrip_status_show_bgi_title">Mostrar glucèmia</string>
-    <string name="xdrip_status_show_bgi_summary">Afegir glucèmia a línia d\'estat</string>
     <!-- Food-->
     <string name="food_short">Aliments</string>
     <string name="description_food">Mostra els valors preestablerts per alimentació definits a Nightscout</string>
@@ -254,23 +250,6 @@
     <string name="skin">Tema</string>
     <!--    Iob-->
     <string name="send_logfiles">Enviar logs del dia als desenvolupadors. Situació inesperada.</string>
-    <!--    Wear-->
-    <string name="wear_shortname">WEAR</string>
-    <string name="no_success">no funciona - si us plau comproveu al mòbil</string>
-    <string name="wear_settings">Configuració de Wear</string>
-    <string name="wearcontrol_title">Control des de rellotge</string>
-    <string name="wearcontrol_summary">Marcar objectius temporals i introduir tractaments des del rellotge.</string>
-    <string name="wear_wizard_settings_summary">Càlculs inclosos al resultat de l\'assistent:</string>
-    <string name="wear_display_settings">Configuració pantalla</string>
-    <string name="wear_general_settings">Configuració general</string>
-    <string name="wear_detailed_delta_title">Mostrar delta detallat</string>
-    <string name="wear_detailed_delta_summary">Mostrar delta amb un decimal més</string>
-    <string name="wear_notifysmb_title">Avís d\'SMB</string>
-    <string name="wear_notifysmb_summary">Mostrar SMB al rellotge com un bolus estàndard.</string>
-    <string name="wear_predictions_summary">Mostrar prediccions al rellotge.</string>
-    <string name="wear_predictions_title">Prediccions</string>
-    <string name="resend_all_data">Reenviar totes les dades</string>
-    <string name="open_settings_on_wear">Obrir Configuració a Wear</string>
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">Va mostrant avisos amb un petit resum del que el llaç està fent</string>
     <string name="old_data">DADES ANTIGUES</string>

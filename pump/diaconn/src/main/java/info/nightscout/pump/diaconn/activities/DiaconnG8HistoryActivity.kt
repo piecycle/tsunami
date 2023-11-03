@@ -9,24 +9,24 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import info.nightscout.core.ui.activities.TranslatedDaggerAppCompatActivity
-import info.nightscout.core.utils.fabric.FabricPrivacy
-import info.nightscout.interfaces.plugin.ActivePlugin
-import info.nightscout.interfaces.profile.ProfileFunction
-import info.nightscout.interfaces.queue.Callback
-import info.nightscout.interfaces.queue.CommandQueue
-import info.nightscout.interfaces.utils.DecimalFormatter
+import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.queue.Callback
+import app.aaps.core.interfaces.queue.CommandQueue
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.rx.AapsSchedulers
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged
+import app.aaps.core.interfaces.utils.DateUtil
+import app.aaps.core.interfaces.utils.DecimalFormatter
+import app.aaps.core.interfaces.utils.T
+import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
+import app.aaps.core.ui.activities.TranslatedDaggerAppCompatActivity
 import info.nightscout.pump.diaconn.R
 import info.nightscout.pump.diaconn.common.RecordTypes
 import info.nightscout.pump.diaconn.database.DiaconnHistoryRecord
 import info.nightscout.pump.diaconn.database.DiaconnHistoryRecordDao
 import info.nightscout.pump.diaconn.databinding.DiaconnG8HistoryActivityBinding
-import info.nightscout.rx.AapsSchedulers
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.rx.events.EventPumpStatusChanged
-import info.nightscout.shared.interfaces.ResourceHelper
-import info.nightscout.shared.utils.DateUtil
-import info.nightscout.shared.utils.T
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import javax.inject.Inject
@@ -42,6 +42,7 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var rh: ResourceHelper
+    @Inject lateinit var decimalFormatter: DecimalFormatter
 
     private val disposable = CompositeDisposable()
 
@@ -74,6 +75,10 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
         binding = DiaconnG8HistoryActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        title = rh.gs(app.aaps.core.ui.R.string.pump_history)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         binding.recyclerview.setHasFixedSize(true)
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
         binding.recyclerview.adapter = RecyclerViewAdapter(historyList)
@@ -88,7 +93,7 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
         typeList.add(TypeList(RecordTypes.RECORD_TYPE_DAILY, rh.gs(R.string.diaconn_g8_history_dailyinsulin)))
         typeList.add(TypeList(RecordTypes.RECORD_TYPE_REFILL, rh.gs(R.string.diaconn_g8_history_refill)))
         typeList.add(TypeList(RecordTypes.RECORD_TYPE_SUSPEND, rh.gs(R.string.diaconn_g8_history_suspend)))
-        binding.typeList.setAdapter(ArrayAdapter(this, info.nightscout.core.ui.R.layout.spinner_centered, typeList))
+        binding.typeList.setAdapter(ArrayAdapter(this, app.aaps.core.ui.R.layout.spinner_centered, typeList))
 
         binding.reload.setOnClickListener {
             val selected = typeList.firstOrNull { it.name == binding.typeList.text.toString() } ?: return@setOnClickListener
@@ -122,13 +127,13 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
         override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
             val record = historyList[position]
             holder.time.text = dateUtil.dateAndTimeString(record.timestamp)
-            holder.value.text = DecimalFormatter.to2Decimal(record.value)
+            holder.value.text = decimalFormatter.to2Decimal(record.value)
             holder.stringValue.text = record.stringValue
             holder.bolusType.text = record.bolusType
-            holder.duration.text = DecimalFormatter.to0Decimal(record.duration.toDouble())
+            holder.duration.text = decimalFormatter.to0Decimal(record.duration.toDouble())
             holder.alarm.text = record.alarm
             when (showingType) {
-                RecordTypes.RECORD_TYPE_ALARM     -> {
+                RecordTypes.RECORD_TYPE_ALARM   -> {
                     holder.time.visibility = View.VISIBLE
                     holder.value.visibility = View.VISIBLE
                     holder.stringValue.visibility = View.VISIBLE
@@ -140,7 +145,7 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
                     holder.alarm.visibility = View.VISIBLE
                 }
 
-                RecordTypes.RECORD_TYPE_BOLUS     -> {
+                RecordTypes.RECORD_TYPE_BOLUS   -> {
                     holder.time.visibility = View.VISIBLE
                     holder.value.visibility = View.VISIBLE
                     holder.stringValue.visibility = View.VISIBLE
@@ -152,10 +157,10 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
                     holder.alarm.visibility = View.GONE
                 }
 
-                RecordTypes.RECORD_TYPE_DAILY     -> {
-                    holder.dailyBasal.text = rh.gs(info.nightscout.interfaces.R.string.format_insulin_units, record.dailyBasal)
-                    holder.dailyBolus.text = rh.gs(info.nightscout.interfaces.R.string.format_insulin_units, record.dailyBolus)
-                    holder.dailyTotal.text = rh.gs(info.nightscout.interfaces.R.string.format_insulin_units, record.dailyBolus + record.dailyBasal)
+                RecordTypes.RECORD_TYPE_DAILY   -> {
+                    holder.dailyBasal.text = rh.gs(app.aaps.core.ui.R.string.format_insulin_units, record.dailyBasal)
+                    holder.dailyBolus.text = rh.gs(app.aaps.core.ui.R.string.format_insulin_units, record.dailyBolus)
+                    holder.dailyTotal.text = rh.gs(app.aaps.core.ui.R.string.format_insulin_units, record.dailyBolus + record.dailyBasal)
                     holder.time.text = dateUtil.dateString(record.timestamp)
                     holder.time.visibility = View.VISIBLE
                     holder.value.visibility = View.GONE
@@ -168,7 +173,8 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
                     holder.alarm.visibility = View.GONE
                 }
 
-                RecordTypes.RECORD_TYPE_BASALHOUR -> {
+                RecordTypes.RECORD_TYPE_BASALHOUR,
+                RecordTypes.RECORD_TYPE_REFILL  -> {
                     holder.time.visibility = View.VISIBLE
                     holder.value.visibility = View.VISIBLE
                     holder.stringValue.visibility = View.VISIBLE
@@ -180,19 +186,7 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
                     holder.alarm.visibility = View.GONE
                 }
 
-                RecordTypes.RECORD_TYPE_REFILL    -> {
-                    holder.time.visibility = View.VISIBLE
-                    holder.value.visibility = View.VISIBLE
-                    holder.stringValue.visibility = View.VISIBLE
-                    holder.bolusType.visibility = View.GONE
-                    holder.duration.visibility = View.GONE
-                    holder.dailyBasal.visibility = View.GONE
-                    holder.dailyBolus.visibility = View.GONE
-                    holder.dailyTotal.visibility = View.GONE
-                    holder.alarm.visibility = View.GONE
-                }
-
-                RecordTypes.RECORD_TYPE_TB        -> {
+                RecordTypes.RECORD_TYPE_TB      -> {
                     holder.time.visibility = View.VISIBLE
                     holder.value.visibility = View.VISIBLE
                     holder.stringValue.visibility = View.VISIBLE
@@ -204,7 +198,7 @@ class DiaconnG8HistoryActivity : TranslatedDaggerAppCompatActivity() {
                     holder.alarm.visibility = View.GONE
                 }
 
-                RecordTypes.RECORD_TYPE_SUSPEND   -> {
+                RecordTypes.RECORD_TYPE_SUSPEND -> {
                     holder.time.visibility = View.VISIBLE
                     holder.value.visibility = View.GONE
                     holder.stringValue.visibility = View.VISIBLE

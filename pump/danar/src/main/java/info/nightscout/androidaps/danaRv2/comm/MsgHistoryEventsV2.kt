@@ -1,15 +1,16 @@
 package info.nightscout.androidaps.danaRv2.comm
 
+import app.aaps.core.interfaces.logging.LTag
+import app.aaps.core.interfaces.pump.defs.PumpType
+import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged
+import app.aaps.core.interfaces.utils.T
 import dagger.android.HasAndroidInjector
 import info.nightscout.androidaps.danar.comm.MessageBase
-import info.nightscout.interfaces.pump.defs.PumpType
 import info.nightscout.pump.dana.DanaPump
-import info.nightscout.rx.events.EventPumpStatusChanged
-import info.nightscout.rx.logging.LTag
-import info.nightscout.shared.utils.T
+import info.nightscout.pump.dana.R
 import java.util.GregorianCalendar
 
-class MsgHistoryEventsV2 constructor(
+class MsgHistoryEventsV2(
     injector: HasAndroidInjector,
     var from: Long = 0
 ) : MessageBase(injector) {
@@ -48,7 +49,7 @@ class MsgHistoryEventsV2 constructor(
             aapsLogger.debug(LTag.PUMPCOMM, "Last record received")
 
             val array: Array<ByteArray> = messageBuffer.toTypedArray()
-            val sorted = array.sortedArrayWith { s1: ByteArray, s2: ByteArray -> (dateTime(s1) - dateTime(s2)).toInt() }
+            val sorted = array.sortedArrayWith { s1: ByteArray, s2: ByteArray -> dateTime(s1).compareTo(dateTime(s2)) }
             for (message in sorted) processMessage(message)
             danaPump.historyDoneReceived = true
         } else messageBuffer.add(bytes)
@@ -278,6 +279,6 @@ class MsgHistoryEventsV2 constructor(
             }
         }
         if (datetime > danaPump.lastEventTimeLoaded) danaPump.lastEventTimeLoaded = datetime
-        rxBus.send(EventPumpStatusChanged(rh.gs(info.nightscout.pump.dana.R.string.processinghistory) + ": " + status))
+        rxBus.send(EventPumpStatusChanged(rh.gs(R.string.processinghistory) + ": " + status))
     }
 }

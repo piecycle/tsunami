@@ -24,6 +24,10 @@
     <string name="smscommunicator_otp_reset_header">Resetovat autentikátory</string>
     <string name="smscommunicator_otp_install_info">Na každém sledovacím telefonu nainstalujte Authentikátor, který podporuje tokeny TOTP RFC 6238. Nejoblíbenější bezplatné aplikace jsou:\n • Authy\n • Google Authenticator\n • LastPass Authenticator\n • FreeOTP Authenticator</string>
     <string name="smscommunicator_otp_reset_warning">Obnovením autentikátoru uděláte všechny již poskytnuté autentikátory neplatné. Budete je muset znovu nastavit!</string>
+    <string name="smscommunicator_otp_verification_ok">OK</string>
+    <string name="smscommunicator_otp_verification_ivalid_size">NEPLATNÁ DÉLKA!</string>
+    <string name="smscommunicator_otp_verification_wrong_pin">CHYBNÝ PIN</string>
+    <string name="smscommunicator_otp_verification_wrong_otp">CHYBNÉ OTP</string>
     <string name="sms_wrong_code">Nesprávný kód. Příkaz zrušen.</string>
     <string name="sms_timeout_while_waiting">Vypršel časový limit při čekání na dokončení předchozí komunikace s pumpou</string>
     <string name="smscommunicator_allowednumbers">Povolená tel. čísla</string>
@@ -104,11 +108,7 @@
     <string name="sms_profile_switch_created">Přepnutí profilu vytvořeno</string>
     <string name="sms_wrong_tbr_duration">Trvání dočasného bazálu musí být násobkem %1$d minut a musí být větší než 0.</string>
     <string name="a11y_otp_qr_code">QR kód pro nastavení jednorázového hesla</string>
-    <string name="xdrip_status_detailed_iob_title">Zobrazit detailní IOB</string>
-    <string name="xdrip_status_detailed_iob_summary">Rozepsat IOB do bolusového a bazálního na hodinkách</string>
     <string name="disabled_loop">Smyčka zakázána</string>
-    <string name="xdrip_status_show_bgi_title">Zobrazovat BGI</string>
-    <string name="xdrip_status_show_bgi_summary">Přidat BGI do stavové řádky</string>
     <!-- Food-->
     <string name="food_short">Jídlo</string>
     <string name="description_food">Zobrazení jídel definovaných v NS</string>
@@ -243,6 +243,7 @@
     <string name="short_tabtitles">Krátké názvy modulů</string>
     <string name="overview_show_notes_field_in_dialogs_title">Zobrazovat kolonku poznámky v dialozích ošetření</string>
     <string name="deliverpartofboluswizard">Kalkulátor provede výpočet, ale dodána je pouze tato část inzulínu. Výhodné při používání SMB algoritmu.</string>
+    <string name="deliver_part_of_boluswizard_reset_time">Vydat celý bolus (100%), pokud je glykémie starší než</string>
     <string name="enable_bolus_advisor">Povolit poradce s bolusem</string>
     <string name="enable_bolus_advisor_summary">Při vysoké glykémii použijte připomenutí, abyste začali jíst později, namísto výsledku z kalkulátoru („prebolus“)</string>
     <string name="enablesuperbolus">Povolit superbolus</string>
@@ -284,66 +285,7 @@
     <string name="cannula_usage">použití:</string>
     <!--    Iob-->
     <string name="send_logfiles">Odešlete dnešní soubory protokolů vývojářům spolu s tímto časem. Neočekávaná situace.</string>
-    <!--    Wear-->
-    <string name="wear_shortname">WEAR</string>
-    <string name="description_wear">Zobrazování stavu a řízení AAPS z hodinek s WearOS.</string>
-    <string name="no_watch_connected">(Žádné hodinky nejsou připojeny)</string>
-    <string name="pump_status">Stav pumpy</string>
-    <string name="loop_status">Stav smyčky</string>
-    <string name="wizard_result">Kalkulátor: \nInzulín: %1$.2fU\nSacharidy: %2$dg</string>
-    <string name="quick_wizard_not_available">Vybraný rychlý bolus již není k dispozici, obnovte prosím dlaždici</string>
-    <string name="quick_wizard_message">Rychlý bolus: %1$s\nInzulín: %2$.2fU\nSacharidy: %3$dg</string>
-    <string name="wear_action_tempt_preset_error">Dočasný cíl neznámá předvolba: %1$s</string>
-    <string name="wear_action_tempt_cancel_message">Zrušení běžícího dočasného cíle?</string>
-    <string name="wear_action_tempt_unit_error">Různé jednotky používané na hodinkách a telefonu!</string>
-    <string name="wear_action_tempt_zero_message">Nulový dočasný cíl - zrušení běžícího dočasného cíle?</string>
-    <string name="wear_action_tempt_min_bg_error">Minimální glykémie mimo rozsah!</string>
-    <string name="wear_action_tempt_max_bg_error">Maximální glykémie mimo rozsah!</string>
-    <string name="wear_action_tempt_manual_range_message">Doč. cíl:\nMin: %1$s\nMax: %2$s\nTrvání: %3$s</string>
-    <string name="wear_action_tempt_manual_message">Doč. cíl:\nCíl: %1$s\nTrvání: %2$s</string>
-    <string name="wear_action_tempt_preset_message">Doč. cíl:\nDůvod: %1$s\nCíl: %2$s\nTrvání: %3$s</string>
-    <string name="no_success">neúspěšně - zkontrolujte mobil</string>
-    <string name="wear_settings">Nastavení hodinek</string>
-    <string name="wearcontrol_title">Řízení z hodinek Wear</string>
-    <string name="wearcontrol_summary">Nastavování dočasných cílů a vkládání ošetření na hodinkách Wear.</string>
-    <string name="wear_wizard_settings_summary">Kalkulace použité ve výsledku wizardu:</string>
-    <string name="wear_display_settings">Nastavení zobrazení</string>
-    <string name="wear_general_settings">Základní nastavení</string>
-    <string name="wear_detailed_delta_title">Zobrazovat detailní změny</string>
-    <string name="wear_detailed_delta_summary">Zobrazovat rozdíl s jedním desetinným místem navíc</string>
-    <string name="wear_notifysmb_title">Oznámení při SMB</string>
-    <string name="wear_notifysmb_summary">Ukazovat SMB na hodinkách jako normální bolus.</string>
-    <string name="wear_predictions_summary">Zobrazovat predikce na hodinkách.</string>
-    <string name="wear_predictions_title">Predikce</string>
-    <string name="resend_all_data">Znovu poslat všechna data</string>
-    <string name="open_settings_on_wear">Otevřít nastavení na hodinkách Wear</string>
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">Zobrazení průběžného oznámení v Androidu s krátkým přehledem, co smyčka právě dělá</string>
     <string name="old_data">ZASTARALÉ</string>
-    <string name="pump_fetching_data">pokus o načtení dat z pumpy.</string>
-    <string name="pump_old_data">CDD: Stále stará data! Nelze načíst z pumpy.</string>
-    <string name="grams_short">g</string>
-    <string name="hour_short">h</string>
-    <string name="no_active_profile">Není nastaven žádný aktivní profil!</string>
-    <string name="profile_message">Profil:\n\nPosunutí: %1$d\nProcento: %2$d%%\"</string>
-    <string name="tdd_line">%1$.2fU %1$.0f%%</string>
-    <string name="no_profile">Není vybrán žádný profil</string>
-    <string name="aps_only">Použít pouze v APS módu!</string>
-    <string name="last_aps_result_na">Poslední výsledek není k dispozici!</string>
-    <string name="loop_status_closed">UZAVŘENÁ SMYČKA</string>
-    <string name="loop_status_open">OTEVŘENÁ SMYČKA</string>
-    <string name="loop_status_disabled">SMYČKA ZAKÁZÁNA</string>
-    <string name="aps">APS</string>
-    <string name="last_run">Poslední spuštění</string>
-    <string name="last_enact">Poslední provedení</string>
-    <string name="today">Dnes</string>
-    <string name="weighted">vážený</string>
-    <string name="target_only_aps_mode">Cíle se použijí pouze v režimu APS!</string>
-    <string name="no_history">Žádné údaje o historii!</string>
-    <string name="units_short">U</string>
-    <string name="temp_target">Dočasný cíl</string>
-    <string name="until">až do</string>
-    <string name="default_range">VÝCHOZÍ ROZSAH</string>
-    <string name="target">cíl</string>
-    <string name="rate_duration">Rychlost: %1$.2fU/h (%2$.2f%%) \nTrvání %3$d min</string>
 </resources>

@@ -41,7 +41,7 @@
     <string name="temptargetcomparedmgdl">Geçici Hedef %1$s %2$.0f %3$s</string>
     <string name="temptargetcomparedmmol">Geçici Hedef %1$s %2$.1f %3$s</string>
     <string name="percentagecompared">Profil yüzdesi %1$s %2$d</string>
-    <string name="iobcompared">Aktif insülin %1$s %2$.1f</string>
+    <string name="iobcompared">AİNS %1$s %2$.1f</string>
     <string name="or">Veya</string>
     <string name="xor">Özel veya</string>
     <string name="atspecifiedtime">%1$s\'de</string>
@@ -63,13 +63,6 @@
     <string name="time_range">Zaman aralığı</string>
     <string name="timerange_value">%1$s ile %2$s arasında</string>
     <string name="between">Arasında </string>
-    <string name="weekday_sunday_short">Pzr</string>
-    <string name="weekday_saturday_short">Cts</string>
-    <string name="weekday_friday_short">Cum</string>
-    <string name="weekday_thursday_short">Prş</string>
-    <string name="weekday_wednesday_short">Çrş</string>
-    <string name="weekday_tuesday_short">Salı</string>
-    <string name="weekday_monday_short">Pzt</string>
     <string name="delete_short">SİL</string>
     <string name="add_short">EKLE</string>
     <string name="copy_short">KOPYALA</string>
@@ -92,7 +85,9 @@
     <string name="lastboluscompared">Son bolus zamanı %1$s %2$s dakika önce</string>
     <string name="triggercoblabel">AKRB</string>
     <string name="cobcompared">AKRB %1$s %2$.0f</string>
-    <string name="iob_u">IOB [U]:</string>
+    <string name="triggerHeartRate">Nabız</string>
+    <string name="triggerHeartRateDesc">KA %1$s %2$.0f</string>
+    <string name="iob_u">AİNS [U]:</string>
     <string name="distance_short">Mesafe [m]:</string>
     <string name="recurringTime">Yinelenen zaman</string>
     <string name="every">Her</string>
@@ -117,14 +112,6 @@
     <string name="run_automations">Otomasyonları çalıştır</string>
     <string name="add_automation">Kural ekle</string>
     <string name="stop_processing">İşlemeyi durdur</string>
-    <!-- WeekdayPicker -->
-    <string name="monday_short">Pzt</string>
-    <string name="tuesday_short">Sal</string>
-    <string name="wednesday_short">Çar</string>
-    <string name="thursday_short">Per</string>
-    <string name="friday_short">Cum</string>
-    <string name="saturday_short">Cmt</string>
-    <string name="sunday_short">Paz</string>
     <!--    Reminders-->
     <string name="time_to_eat">Yemek zamanı!\nBolus sihirbazını çalıştırın ve hesaplamayı tekrar yapın.</string>
     <string name="time_to_bolus">Bolus zamanı!\nBolus sihirbazını çalıştırın ve yeniden hesaplama yapın.</string>

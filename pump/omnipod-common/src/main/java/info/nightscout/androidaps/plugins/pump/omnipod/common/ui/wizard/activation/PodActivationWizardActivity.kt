@@ -2,9 +2,9 @@ package info.nightscout.androidaps.plugins.pump.omnipod.common.ui.wizard.activat
 
 import android.os.Bundle
 import androidx.annotation.IdRes
+import app.aaps.core.utils.extensions.safeGetSerializableExtra
 import info.nightscout.androidaps.plugins.pump.omnipod.common.R
 import info.nightscout.androidaps.plugins.pump.omnipod.common.ui.wizard.common.activity.OmnipodWizardActivityBase
-import info.nightscout.core.utils.extensions.safeGetSerializableExtra
 
 abstract class PodActivationWizardActivity : OmnipodWizardActivityBase() {
     companion object {
@@ -25,6 +25,10 @@ abstract class PodActivationWizardActivity : OmnipodWizardActivityBase() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.omnipod_common_pod_activation_wizard_activity)
+
+        title = getString(R.string.omnipod_common_pod_management_button_activate_pod)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         startDestination = savedInstanceState?.getInt(KEY_START_DESTINATION, R.id.startPodActivationFragment)
             ?: if (intent.safeGetSerializableExtra(KEY_TYPE, Type::class.java) == Type.LONG) {

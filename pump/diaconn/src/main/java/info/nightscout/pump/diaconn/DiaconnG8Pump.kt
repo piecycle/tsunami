@@ -1,13 +1,13 @@
 package info.nightscout.pump.diaconn
 
-import info.nightscout.interfaces.profile.Profile
-import info.nightscout.interfaces.pump.PumpSync
-import info.nightscout.interfaces.utils.DecimalFormatter
-import info.nightscout.rx.events.EventOverviewBolusProgress
-import info.nightscout.rx.logging.AAPSLogger
-import info.nightscout.rx.logging.LTag
-import info.nightscout.shared.utils.DateUtil
-import info.nightscout.shared.utils.T
+import app.aaps.core.interfaces.logging.AAPSLogger
+import app.aaps.core.interfaces.logging.LTag
+import app.aaps.core.interfaces.profile.Profile
+import app.aaps.core.interfaces.pump.PumpSync
+import app.aaps.core.interfaces.rx.events.EventOverviewBolusProgress
+import app.aaps.core.interfaces.utils.DateUtil
+import app.aaps.core.interfaces.utils.DecimalFormatter
+import app.aaps.core.interfaces.utils.T
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.max
@@ -17,24 +17,27 @@ import kotlin.math.roundToInt
 @Singleton
 class DiaconnG8Pump @Inject constructor(
     private val aapsLogger: AAPSLogger,
-    private val dateUtil: DateUtil
+    private val dateUtil: DateUtil,
+    private val decimalFormatter: DecimalFormatter
 ) {
 
     var isPumpLogUploadFailed: Boolean = false
 
     //var bleResultInfo: Pair<Int?, Boolean> = Pair(null, false)
     var bolusConfirmMessage: Byte = 0
+
     var isReadyToBolus: Boolean = false
     var maxBolusePerDay: Double = 0.0
     var pumpIncarnationNum: Int = 65536
     var isPumpVersionGe2_63: Boolean = false // is pumpVersion higher then 2.63
-    var insulinWarningGrade: Int =0
-    var insulinWarningProcess: Int =0
-    var insulinWarningRemain: Int =0
+    var isPumpVersionGe3_53: Boolean = false // is pumpVersion higher then 3.42
+    var insulinWarningGrade: Int = 0
+    var insulinWarningProcess: Int = 0
+    var insulinWarningRemain: Int = 0
     var batteryWaningGrade: Int = 0
     var batteryWaningProcess: Int = 0
     var batteryWaningRemain: Int = 0
-    var injectionBlockType: Int =0
+    var injectionBlockType: Int = 0
     var injectionBlockRemainAmount: Double = 0.0
     var injectionBlockProcess: Int = 0
     var injectionBlockGrade: Int = 0
@@ -48,6 +51,7 @@ class DiaconnG8Pump @Inject constructor(
     fun setPumpTime(value: Long) {
         pumpTime = value
     }
+
     fun getPumpTime() = pumpTime
 
     // Status
@@ -68,13 +72,7 @@ class DiaconnG8Pump @Inject constructor(
     var tempBasalStart: Long = 0
     var tempBasalDuration: Long = 0 // in milliseconds
     var tempBasalAbsoluteRate: Double = 0.0
-    var tempBasalPercent: Int = 0
 
-    var tempBasalTotalSec: Long
-        set(durationInSec) {
-            tempBasalDuration = T.secs(durationInSec).msecs()
-        }
-        get() = T.msecs(tempBasalDuration).mins()
     var isTempBasalInProgress: Boolean
         get() = tempBasalStart != 0L && dateUtil.now() in tempBasalStart..tempBasalStart + tempBasalDuration
         set(isRunning) {
@@ -126,7 +124,7 @@ class DiaconnG8Pump @Inject constructor(
                 extendedBolusAmount = 0.0
             }
         }
-    val extendedBolusPassedMinutes:Int
+    val extendedBolusPassedMinutes: Int
         get() = T.msecs(max(0, dateUtil.now() - extendedBolusStart)).mins().toInt()
     val extendedBolusRemainingMinutes: Int
         get() = max(T.msecs(extendedBolusStart + extendedBolusDuration - dateUtil.now()).mins().toInt(), 0)
@@ -141,9 +139,9 @@ class DiaconnG8Pump @Inject constructor(
 
     fun extendedBolusToString(): String {
         if (!isExtendedInProgress) return ""
-        //return "E "+ DecimalFormatter.to2Decimal(extendedBolusDeliveredSoFar) +"/" + DecimalFormatter.to2Decimal(extendedBolusAbsoluteRate) + "U/h @" +
+        //return "E "+ decimalFormatter.to2Decimal(extendedBolusDeliveredSoFar) +"/" + decimalFormatter.to2Decimal(extendedBolusAbsoluteRate) + "U/h @" +
         //     " " + extendedBolusPassedMinutes + "/" + extendedBolusMinutes + "'"
-        return "E "+ DecimalFormatter.to2Decimal(extendedBolusAbsoluteRate) + "U/h @" +
+        return "E " + decimalFormatter.to2Decimal(extendedBolusAbsoluteRate) + "U/h @" +
             dateUtil.timeString(extendedBolusStart) +
             " " + extendedBolusPassedMinutes + "/" + extendedBolusDurationInMinutes + "'"
     }
@@ -159,8 +157,8 @@ class DiaconnG8Pump @Inject constructor(
             extendedBolusAmount = eb.amount
         }
     }
+
     // Profile
-    var units = 0
     var activeProfile = 0
     var pumpProfiles: Array<Array<Double>>? = null
 
@@ -171,7 +169,7 @@ class DiaconnG8Pump @Inject constructor(
     // User settings
     var setUserOptionType = 0 // ALARM:0, LCD:1, LANG:2, BOLUS_SPEED:3
     var beepAndAlarm = 0
-    var alarmIntesity = 0
+    var alarmIntensity = 0
     var lcdOnTimeSec = 0
     var selectedLanguage = 0
     var bolusSpeed = 0
@@ -179,7 +177,6 @@ class DiaconnG8Pump @Inject constructor(
     var resultErrorCode: Int = 0 // last start bolus erroCode
 
     // Bolus settings
-    var historyDoneReceived: Boolean = false // true when last history message is received
     var bolusingTreatment: EventOverviewBolusProgress.Treatment? = null // actually delivered treatment
     var bolusAmountToBeDelivered = 0.0 // amount to be delivered
     var bolusProgressLastTimeStamp: Long = 0 // timestamp of last bolus progress message
@@ -187,17 +184,13 @@ class DiaconnG8Pump @Inject constructor(
     var bolusStopForced = false // bolus forced to stop by user
     var bolusDone = false // success end
 
-    // LGS Status
-    var lgsStatus: Int = 0     // LGS Status(1=LGS_ON, 2=LGS_OFF)
-    var lgsTime:Int = 0        // LGS Setting time (0~255 min)
-    var lgsElapsedTime:Int = 0 // LGS Passed Time (0~255 min)
-
     val pumpUid: String
-        get() = "$country-$productType-$makeYear-${makeMonth.toString().padStart(2,'0')}-${makeDay.toString().padStart(2, '0')}-${lotNo.toString().padStart(3,'0')}-${serialNo.toString().padStart(5,'0')}"
+        get() = "$country-$productType-$makeYear-${makeMonth.toString().padStart(2, '0')}-${makeDay.toString().padStart(2, '0')}-${lotNo.toString().padStart(3, '0')}-${
+            serialNo.toString().padStart(5, '0')
+        }"
 
     val pumpVersion: String
         get() = "$majorVersion.$minorVersion"
-
 
     fun buildDiaconnG8ProfileRecord(nsProfile: Profile): Array<Double> {
         val record = Array(24) { 0.0 }
@@ -219,7 +212,7 @@ class DiaconnG8Pump @Inject constructor(
     }
 
     // G8 pump
-    var result:Int = 0 // 조회결과
+    var result: Int = 0 // 조회결과
 
     // 1. pump setting info
     var systemRemainInsulin = 0.0 // 인슐린 잔량
@@ -258,7 +251,6 @@ class DiaconnG8Pump @Inject constructor(
     var pumpWrappingCount = 0 // wrapping 카운트(0~255)
     var apslastLogNum = 0 // 앱에서 처리한 마지막 로그 번호.
     var apsWrappingCount = 0 // 앱에서 처리한 마지막 로그 번호.
-    var isProgressPumpLogSync = false // 로그 동기화 진행 여부
     var isPlatformUploadStarted = false // 플랫폼 로그 동기화 진행 여부
 
     // 6. bolus speed status.
@@ -270,7 +262,6 @@ class DiaconnG8Pump @Inject constructor(
     var tbTime = 0 // 임시기저 시간
     var tbInjectRateRatio = 0 // 임시기저 주입량/률  1000(0.00U)~1600(6.00U), 50000(0%)~50250(250%), 50000이상이면 주입률로 판정
     var tbElapsedTime = 0 // 임시기저 경과 시간(0~1425분)
-    var tbInjectAbsoluteValue = 0.0 // 임시기저 주입량/률  1000(0.00U)~2500(15.00U)
 
     // 8. Basal status
     var baseStatus = 0 // 주입상태
@@ -363,7 +354,13 @@ class DiaconnG8Pump @Inject constructor(
 
     var otpNumber = 0
 
+    var bolusingSetAmount = 0.0
+    var bolusingInjAmount = 0.0
+    var bolusingSpeed = 0
+    var bolusingInjProgress = 0
+
     companion object {
+
         // User settings
         const val ALARM = 0
         const val LCD = 1

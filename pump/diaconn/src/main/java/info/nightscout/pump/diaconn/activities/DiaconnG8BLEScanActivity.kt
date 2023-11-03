@@ -23,15 +23,15 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
-import info.nightscout.core.ui.activities.TranslatedDaggerAppCompatActivity
-import info.nightscout.core.ui.toast.ToastUtils
-import info.nightscout.core.utils.extensions.safeEnable
-import info.nightscout.interfaces.pump.BlePreCheck
+import app.aaps.core.interfaces.pump.BlePreCheck
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.sharedPreferences.SP
+import app.aaps.core.ui.activities.TranslatedDaggerAppCompatActivity
+import app.aaps.core.ui.toast.ToastUtils
+import app.aaps.core.utils.extensions.safeEnable
 import info.nightscout.pump.diaconn.R
 import info.nightscout.pump.diaconn.databinding.DiaconnG8BlescannerActivityBinding
 import info.nightscout.pump.diaconn.events.EventDiaconnG8DeviceChange
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.shared.sharedPreferences.SP
 import java.util.UUID
 import javax.inject.Inject
 
@@ -57,6 +57,10 @@ class DiaconnG8BLEScanActivity : TranslatedDaggerAppCompatActivity() {
         setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        title = getString(R.string.diaconn_pairing)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         blePreCheck.prerequisitesCheck(this)
 
         listAdapter = ListAdapter()
@@ -72,7 +76,7 @@ class DiaconnG8BLEScanActivity : TranslatedDaggerAppCompatActivity() {
             bluetoothAdapter?.safeEnable()
             startScan()
         } else {
-            ToastUtils.errorToast(context, context.getString(info.nightscout.core.ui.R.string.need_connect_permission))
+            ToastUtils.errorToast(context, context.getString(app.aaps.core.ui.R.string.need_connect_permission))
         }
     }
 
@@ -111,7 +115,7 @@ class DiaconnG8BLEScanActivity : TranslatedDaggerAppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED
         ) {
-            ToastUtils.errorToast(context, context.getString(info.nightscout.core.ui.R.string.need_connect_permission))
+            ToastUtils.errorToast(context, context.getString(app.aaps.core.ui.R.string.need_connect_permission))
             return
         }
         if (device == null || device.name == null || device.name == "") {

@@ -24,6 +24,10 @@
     <string name="smscommunicator_otp_reset_header">Resetuj uwierzytelnianie</string>
     <string name="smscommunicator_otp_install_info">Na każdym telefonie śledzącym zainstalować aplikację uwierzytelniania obsługującą tokeny TOTP RFC 6238 Popularne darmowe aplikacje:\n • Authy\n • Google Authenticator\n • LastPass Authenticator\n • FreeOTP Authenticator</string>
     <string name="smscommunicator_otp_reset_warning">Resetowanie uwierzytelniania powoduje, że wszystkie już ustawione uwierzytelnienia stają się niepoprawne (przestają działać). Trzeba będzie je jeszcze raz skonfigurować!</string>
+    <string name="smscommunicator_otp_verification_ok">OK</string>
+    <string name="smscommunicator_otp_verification_ivalid_size">ZŁY ROZMIAR!</string>
+    <string name="smscommunicator_otp_verification_wrong_pin">ZŁY PIN</string>
+    <string name="smscommunicator_otp_verification_wrong_otp">ZŁY OTP</string>
     <string name="sms_wrong_code">Zły kod. Polecenie anulowano.</string>
     <string name="sms_timeout_while_waiting">Przekroczono limit czasu oczekiwania na zakończenie poprzedniej komunikacji z pompą</string>
     <string name="smscommunicator_allowednumbers">Dozwolone numery telefonów</string>
@@ -104,11 +108,7 @@
     <string name="sms_profile_switch_created">Zmiana profilu wykonana</string>
     <string name="sms_wrong_tbr_duration">Czas trwania TBR musi być wielokrotnością %1$d minut i większy niż 0.</string>
     <string name="a11y_otp_qr_code">Kod QR do konfiguracji haseł jednorazowych</string>
-    <string name="xdrip_status_detailed_iob_title">Pokaż szczegóły IOB</string>
-    <string name="xdrip_status_detailed_iob_summary">Rozłóż IOB na bolus i IOB bazy na zegarku</string>
     <string name="disabled_loop">Pętla wyłączona</string>
-    <string name="xdrip_status_show_bgi_title">Pokaż BGI</string>
-    <string name="xdrip_status_show_bgi_summary">Dodaj BGI do Linii Statusu</string>
     <!-- Food-->
     <string name="food_short">Posiłek</string>
     <string name="description_food">Wyświetla dane posiłków zdefiniowanych w Nightscout</string>
@@ -243,6 +243,7 @@
     <string name="short_tabtitles">Skrócone tytuły kart</string>
     <string name="overview_show_notes_field_in_dialogs_title">Pokaż pole uwag w oknie leczenia</string>
     <string name="deliverpartofboluswizard">Kreator bolusa wykonuje obliczenia, ale tylko ta część obliczonej dawki insuliny jest dostarczana. Pomocne z algorytmem SMB.</string>
+    <string name="deliver_part_of_boluswizard_reset_time">Dostarcz pełen bolus (100%), jeśli glikemia jest starsza niż</string>
     <string name="enable_bolus_advisor">Włącz doradcę bolusa</string>
     <string name="enable_bolus_advisor_summary">Użyj przypomnienia, aby rozpocząć jedzenie później podczas wysokiej glikemii (\"pre-bolus\")</string>
     <string name="enablesuperbolus">Zezwalaj na superbolus w kalkulatorze</string>
@@ -253,6 +254,7 @@
     <!--    OverviewMenu-->
     <string name="overview_show_predictions">Prognozy poziomu</string>
     <string name="overview_show_treatments">Zabiegi</string>
+    <string name="overview_show_heartRate">Tętno</string>
     <string name="overview_show_deviation_slope">Krzywa odchylenie</string>
     <string name="overview_show_activity">Aktywność</string>
     <string name="overview_show_bgi">Wpływ na glikemię (BGI)</string>
@@ -270,6 +272,7 @@
     <string name="abs_insulin_shortname">ABS</string>
     <string name="devslope_shortname">KRZOD</string>
     <string name="treatments_shortname">TREAT</string>
+    <string name="heartRate_shortname">HR</string>
     <string name="sensitivity_shortname">SENS</string>
     <string name="graph_scale">Skala wykresu</string>
     <string name="graph_menu_divider_header">Wykres</string>
@@ -282,65 +285,7 @@
     <string name="cannula_usage">użytkowanie:</string>
     <!--    Iob-->
     <string name="send_logfiles">Wyślij dzisiejsze pliki logów razem z datą i czasem do programistów. Nieoczekiwana sytuacja.</string>
-    <!--    Wear-->
-    <string name="wear_shortname">WEAR</string>
-    <string name="description_wear">Monitoruj i steruj AAPS używając zegarka z WearOS.</string>
-    <string name="no_watch_connected">(Brak połączonego zegarka)</string>
-    <string name="pump_status">Status pompy</string>
-    <string name="loop_status">Status pętli</string>
-    <string name="wizard_result">Kalkulator:\nInsulina: %1$.2fU\nWęgle: %2$dg</string>
-    <string name="quick_wizard_not_available">Wybrany szybki bolus nie jest już dostępny, odśwież swój kafelek</string>
-    <string name="quick_wizard_message">Szybki bolus: %1$s\nInsulina: %2$.2fU\nWęgle: %3$dg</string>
-    <string name="wear_action_tempt_preset_error">Nieznane ustawienie celu tymczasowego: %1$s</string>
-    <string name="wear_action_tempt_cancel_message">Anulować bieżący cel tymczasowy?</string>
-    <string name="wear_action_tempt_unit_error">Różne jednostki używane na zegarku i telefonie!</string>
-    <string name="wear_action_tempt_zero_message">Zerowy cel tymczasowy - anulować bieżący cel tymczasowy?</string>
-    <string name="wear_action_tempt_min_bg_error">Min-BG poza zakresem!</string>
-    <string name="wear_action_tempt_max_bg_error">Max-BG poza zakresem!</string>
-    <string name="wear_action_tempt_manual_range_message">Cel tymczasowy:\nMin: %1$s\nMax: %2$s\nCzas trwania: %3$s</string>
-    <string name="wear_action_tempt_manual_message">Cel tymczasowy:\nCel: %1$s\nCzas trwania: %2$s</string>
-    <string name="wear_action_tempt_preset_message">Cel tymczasowy:\nPowód: %1$s\nCel: %2$s\nCzas trwania: %3$s</string>
-    <string name="no_success">nie udało się - proszę sprawdzić telefon</string>
-    <string name="wear_settings">Ustawienia Wear</string>
-    <string name="wearcontrol_title">Sterowanie z zegarka</string>
-    <string name="wearcontrol_summary">Ustawiaj wartości docelowe i wprowadzaj leczenie z zegarka.</string>
-    <string name="wear_wizard_settings_summary">Obliczenia uwzględnione w wynikach kreatora:</string>
-    <string name="wear_display_settings">Ustawienia wyświetlania</string>
-    <string name="wear_general_settings">Ustawienia ogólne</string>
-    <string name="wear_detailed_delta_title">Pokaż szczegółowe delta</string>
-    <string name="wear_detailed_delta_summary">Pokaż deltę z jednym więcej miejscem dziesiętnym</string>
-    <string name="wear_notifysmb_title">Powiadom na SMB</string>
-    <string name="wear_notifysmb_summary">Pokaż SMB na zegarku jak bolus standardowy.</string>
-    <string name="wear_predictions_summary">Pokaż prognozę poziomu na zegarku.</string>
-    <string name="wear_predictions_title">Prognozy</string>
-    <string name="resend_all_data">Prześlij ponownie wszystkie dane</string>
-    <string name="open_settings_on_wear">Otwórz ustawienia dla Wear</string>
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">Wyświetla bieżące powiadomienia z krótkim omówieniem działania pętli</string>
     <string name="old_data">NIEAKTUALNE DANE</string>
-    <string name="pump_fetching_data">próbuję pobrać dane z pompy.</string>
-    <string name="pump_old_data">TDD: Nadal stare dane! Nie można załadować z pompy.</string>
-    <string name="grams_short">g</string>
-    <string name="hour_short">h</string>
-    <string name="no_active_profile">Nie ustawiono aktywnego profilu!</string>
-    <string name="tdd_line">%1$.2fU %1$.0f%%</string>
-    <string name="no_profile">Nie załadowano profilu</string>
-    <string name="aps_only">Stosuje się tylko w trybie APS!</string>
-    <string name="last_aps_result_na">Ostatni wynik niedostępny!</string>
-    <string name="loop_status_closed">ZAMKNIĘTA PĘTLA</string>
-    <string name="loop_status_open">OTWARTA PĘTLA</string>
-    <string name="loop_status_disabled">PĘTLA WYŁĄCZONA</string>
-    <string name="aps">APS</string>
-    <string name="last_run">Ostatnie uruchomienie</string>
-    <string name="last_enact">Ostatnie działanie</string>
-    <string name="today">Dziś</string>
-    <string name="weighted">ważone</string>
-    <string name="target_only_aps_mode">Cele mają zastosowanie tylko w trybie APS!</string>
-    <string name="no_history">Brak danych historycznych!</string>
-    <string name="units_short">U</string>
-    <string name="temp_target">Cel tymczasowy</string>
-    <string name="until">do</string>
-    <string name="default_range">ZAKRES DOMYŚLNY</string>
-    <string name="target">cel</string>
-    <string name="rate_duration">Dawka: %1$.2fU/h (%2$.2f%%) \nCzas trwania %3$d min</string>
 </resources>

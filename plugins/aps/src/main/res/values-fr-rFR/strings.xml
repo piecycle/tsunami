@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dynisf_adjust_sensitivity">Ajuster la sensibilité et la glycémie</string>
     <string name="DynISFAdjust_title" formatted="false">Facteur d\'ajustement Si dynamique %</string>
     <string name="DynISFAdjust_summary" formatted="false">Facteur d\'ajustement pour Si dynamique. Définissez plus de 100 % pour des corrections plus agressives et moins de 100 % pour des corrections moins agressives.</string>
     <string name="high_temptarget_raises_sensitivity_title">Cible temp. haute élève la sensibilité</string>
@@ -70,9 +69,9 @@
     <string name="enable_smb_with_temp_target_summary">Activer les SMB lorsqu\'il y a une cible temporaire active (repas imminent, exercise)</string>
     <string name="enable_smb_with_high_temp_target">Activer les SMB avec cibles temp hautes</string>
     <string name="enable_smb_with_high_temp_target_summary">Activer les SMB quand il y a une cible temp haute active (exercise, au dessus de 100 mg/dl ou 5.5 mmol/l)</string>
-    <string name="smb_max_minutes_summary">Max minutes de basal pour limiter le SMB</string>
+    <string name="smb_max_minutes_summary">Max minutes de basal comme limite des SMB</string>
     <string name="uam_smb_max_minutes">SMB RNS minutes max</string>
-    <string name="uam_smb_max_minutes_summary">Minutes de basal max pour limiter les SMB des RNS</string>
+    <string name="uam_smb_max_minutes_summary">Minutes de basal max comme limite des SMB pendant les RNS</string>
     <string name="carbs_req_threshold">Glucides minimum requis pour suggestion</string>
     <string name="carbs_req_threshold_summary">Quantité de glucides minimum en g pour afficher une alerte de suggestion de glucides. Les suggestions inférieures ne déclencheront pas de notification.</string>
     <string name="lgs_threshold_summary">Valeur glycémique au-dessous de laquelle l\'injection de l\'insuline est suspendu. La valeur par défaut utilise le modèle standard de la cible. L\'utilisateur peut choisir entre 60mg/dl (3.3mmol/l) et 100mg/dl (5.5mmol/l). Les valeurs au-dessous de 65/3.6 déclenchent l\'utilisation du modèle standard</string>
@@ -83,6 +82,7 @@
     <string name="smb_disabled_in_preferences">SMB désactivé dans les préférences</string>
     <string name="uam_disabled_in_preferences">Repas Non Signalé (RNS) désactivé dans les préférences</string>
     <string name="autosens_disabled_in_preferences">Autosens désactivé dans les préférences</string>
+    <string name="autosens_disabled_in_dyn_isf">Autosens désactivé dans DynISF</string>
     <!--    Verify if needed in safety-->
     <string name="limiting_iob">Limiter l’IA %1$.1f U en raison de la %2$s</string>
     <string name="maxvalueinpreferences">valeur Max dans les préférences</string>
@@ -114,4 +114,5 @@
     <string name="loop_smb_set_by_pump_label">SMB défini par la pompe</string>
     <string name="loop_open_mode_min_change">Changement minimum [%]</string>
     <string name="loop_open_mode_min_change_summary" formatted="false">Le fonctionnement de la Boucle demandera une confirmation uniquement si le changement est supérieur à cette valeur en %. Par défaut, la valeur est 20%</string>
+    <string name="fallback_smb_no_tdd">Revenir à SMB. Pas assez de données DTQ.</string>
 </resources>

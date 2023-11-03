@@ -1,12 +1,14 @@
 package info.nightscout.androidaps.plugins.pump.omnipod.dash.driver.comm.session
 
+import app.aaps.core.interfaces.logging.AAPSLogger
+import app.aaps.core.interfaces.logging.LTag
+import app.aaps.core.utils.toHex
 import info.nightscout.androidaps.plugins.pump.omnipod.dash.driver.comm.exceptions.MessageIOException
-import info.nightscout.core.utils.toHex
-import info.nightscout.rx.logging.AAPSLogger
-import info.nightscout.rx.logging.LTag
 import java.nio.ByteBuffer
 
+@Suppress("unused")
 enum class EapCode(val code: Byte) {
+
     REQUEST(1),
     RESPONSE(2),
     SUCCESS(3),
@@ -20,7 +22,7 @@ enum class EapCode(val code: Byte) {
     }
 }
 
-data class EapMessage(
+class EapMessage(
     val code: EapCode,
     val identifier: Byte,
     val subType: Byte = 0,
@@ -38,7 +40,7 @@ data class EapMessage(
         }
         val totalSize = HEADER_SIZE + attrSize
 
-        var bb = ByteBuffer
+        val bb = ByteBuffer
             .allocate(totalSize)
             .put(code.code)
             .put(identifier)
@@ -57,7 +59,7 @@ data class EapMessage(
 
         private const val HEADER_SIZE = 8
         private const val SUBTYPE_AKA_CHALLENGE = 1.toByte()
-        const val SUBTYPE_SYNCRONIZATION_FAILURE = 4.toByte()
+        const val SUBTYPE_SYNCHRONIZATION_FAILURE = 4.toByte()
 
         private const val AKA_PACKET_TYPE = 0x17.toByte()
 

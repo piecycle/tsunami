@@ -51,6 +51,7 @@
     <string name="extended_bolus">Bolus étendu</string>
     <string name="paused">En pause</string>
     <string name="tdd_total">DTQ Total</string>
+    <string name="tdd_old_data">Données anciennes</string>
     <string name="goingtodeliver">%1$.2f U vont être injectées</string>
     <string name="waitingforpump">Attente connection pompe</string>
     <string name="androidaps_start">AAPS démarré</string>
@@ -121,7 +122,7 @@
     <string name="loopsuspended">La Boucle est suspendue</string>
     <string name="trend_arrow">Flèche de tendance</string>
     <string name="a11y_autosens_label">Auto sens</string>
-    <string name="required">requis</string>
+    <string name="required">req</string>
     <string name="a11y_arrow_double_down">en baisse rapide</string>
     <string name="a11y_arrow_single_down">en baisse</string>
     <string name="a11y_arrow_forty_five_down">en baisse lente</string>
@@ -167,6 +168,8 @@
     <string name="virtualpump_uploadstatus_title">Télécharger l\'état de la pompe sur NS ou Tidepool</string>
     <string name="suspendloop_label">Boucle désactivée/suspendue</string>
     <string name="iob_label">Insuline Active (IA)</string>
+    <string name="loopstatus_targets">CIBLES:</string>
+    <string name="loopstatus_OAPS_result">RÉSULTATS OAPS:</string>
     <!--    Protection-->
     <string name="wrongpassword">Mot de passe incorrect</string>
     <string name="wrongpin">Code PIN incorrect</string>
@@ -376,6 +379,9 @@
     <string name="carbs_g">GLUCIDES %1$d g</string>
     <string name="extended_bolus_u_min">BOLUS ÉTENDU %1$.2f U %2$d min</string>
     <string name="load_events">CHARGER LES ÉVÉNEMENTS</string>
+    <string name="clear_alarms">SUPPRIMER LES ALARMES</string>
+    <string name="deactivate">DÉSACTIVER</string>
+    <string name="update_time">METTRE À JOUR L\'HEURE</string>
     <string name="load_history">CHARGER L\'HISTORIQUE %1$d</string>
     <string name="load_tdds">CHARGER les DTQ</string>
     <string name="set_profile">DÉFINIR LE PROFIL</string>
@@ -421,6 +427,7 @@
     <string name="autotune_ic_warning">Le profil sélectionné %1$d valeurs de G/I. Autotune va utiliser la moyenne %2$.2f g/U</string>
     <string name="autotune_isf_warning">Le profil sélectionné a %1$d valeurs de SI. Autotune va utiliser la moyenne %2$.1f %3$s/U</string>
     <string name="autotune_error">Erreur dans les données d\'entrée, essayez de relancer le calcul ou réduire le nombre de jours</string>
+    <string name="autotune_error_more_days">Erreur dans les données de saisie, augmenter le nombre de jours</string>
     <string name="autotune_warning_during_run">Le calcul Autotune a commencé, veuillez patienter</string>
     <string name="autotune_warning_after_run">Vérifiez attentivement les résultats avant de les utiliser!</string>
     <string name="autotune_partial_result">Résultat partiel jour %1$d / %2$d calculé</string>
@@ -451,12 +458,15 @@
     <string name="bolus_advisor">Assistant bolus</string>
     <string name="bolus_advisor_message">Vous avez une glycémie élevée. Au lieu de manger maintenant, il est recommandé d\'attendre une meilleure glycémie. Voulez-vous faire un bolus de correction maintenant et avoir une alerte quand il sera temps de manger ? Dans ce cas, aucun glucide ne sera enregistré et vous devrez utiliser l\'assistant à nouveau lorsque nous vous le rappelons.</string>
     <string name="cobvsiob">GA vs IA</string>
-    <string name="slowabsorptiondetected"><![CDATA[<font color=\'%1$s\'>!!!!! Absorption lente des glucides détectée : %2$d%% du temps. Vérifiez de nouveau votre calcul. Les GA (Glucides Actifs) peuvent être surestimés et alors plus d\'insuline pourrait être délivré !!!!!</font>]]></string>
+    <string name="slowabsorptiondetected"><![CDATA[<font color=\'%1$s\'>!!!!! Absorption lente des glucides détectée dans %2$d%% des cas. Vérifiez de nouveau votre calcul. Les GA (Glucides Actifs) peuvent être surestimés et alors trop d\'insuline pourrait être injectée !!!!!</font>]]></string>
     <string name="partialboluswizard">Injecter ce pourcentage du bolus calculé par l’assistant [%]</string>
+    <string name="partialboluswizard_reset_time">Durée limite après la dernière Gly reçue au. delà de laquelle le % de bolus n\'est plus appliqué [min]</string>
     <string name="bolus_constraint_applied_warn">Contrainte de Bolus appliquée : %1$.2f U vers %2$.2f U</string>
     <string name="bolus_recorded_only">Les bolus seront seulement enregistrés (pas délivrés par la pompe)</string>
     <string name="advisoralarm">Alerter quand il est temps de manger</string>
     <string name="no_action_selected">Aucune action sélectionnée, rien ne se passera</string>
+    <string name="carb_equal_zero_no_action">Glucides = 0. Aucune action !</string>
+    <string name="wizard_no_insulin_required">Aucune insuline requise !</string>
     <string name="wizard_no_actual_bg">Pas de glycémie récente pour calculer !</string>
     <string name="wizard_no_active_profile">Aucun profil activé !</string>
     <string name="wizard_no_cob">GA inconnu! glycémie manquante ou démarrage récent de l\'application ?</string>
@@ -575,4 +585,23 @@
     <string name="cleanup_db_confirm">Voulez-vous nettoyer la base de données ?\nCela supprimera les modifications suivies et les données historiques de plus de 3 mois.</string>
     <string name="cleanup_db_confirm_sync">Voulez-vous nettoyer la base de données ?\nCela supprimera les modifications suivies et les données historiques de plus de 3 mois.\nCela accélérera la synchronisation complète de manière spectaculaire.</string>
     <string name="cleared_entries">Entrées effacées</string>
+    <!--    Weekday-->
+    <string name="weekday_sunday_short">Dim</string>
+    <string name="weekday_saturday_short">Sam</string>
+    <string name="weekday_friday_short">Ven</string>
+    <string name="weekday_thursday_short">Jeu</string>
+    <string name="weekday_wednesday_short">Mer</string>
+    <string name="weekday_tuesday_short">Mar</string>
+    <string name="weekday_monday_short">Lun</string>
+    <!-- WeekdayPicker -->
+    <string name="monday_short">L</string>
+    <string name="tuesday_short">M</string>
+    <string name="wednesday_short">M</string>
+    <string name="thursday_short">J</string>
+    <string name="friday_short">V</string>
+    <string name="saturday_short">S</string>
+    <string name="sunday_short">D</string>
+    <!--    DecimalFormatterImpl -->
+    <string name="format_insulin_units1">%1$.1f U</string>
+    <string name="format_insulin_units">%1$.2f U</string>
 </resources>

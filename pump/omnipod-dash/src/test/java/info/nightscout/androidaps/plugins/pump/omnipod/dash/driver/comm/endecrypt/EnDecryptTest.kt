@@ -1,13 +1,13 @@
 package info.nightscout.androidaps.plugins.pump.omnipod.dash.driver.comm.endecrypt
 
+import app.aaps.core.utils.toHex
+import app.aaps.shared.tests.AAPSLoggerTest
+import com.google.common.truth.Truth.assertThat
 import info.nightscout.androidaps.plugins.pump.omnipod.dash.driver.comm.message.MessagePacket
-import info.nightscout.core.utils.toHex
-import info.nightscout.rx.logging.AAPSLoggerTest
-import org.junit.Assert
 import org.junit.jupiter.api.Test
 import org.spongycastle.util.encoders.Hex
 
-class EnDecryptTest {
+@Suppress("SpellCheckingInspection") class EnDecryptTest {
 
     @Test
     fun decrypt() {
@@ -32,7 +32,7 @@ class EnDecryptTest {
         val msg = MessagePacket.parse(encryptedMessage)
         val decryptedMsg = enDecrypt.decrypt(msg)
 
-        Assert.assertEquals(decrypted.toHex(), decryptedMsg.payload.toHex())
+        assertThat(decryptedMsg.payload.toHex()).isEqualTo(decrypted.toHex())
     }
 
     @Test
@@ -56,6 +56,6 @@ class EnDecryptTest {
 
         val encrypted = enDecrypt.encrypt(msg)
 
-        Assert.assertEquals(encryptedMessage.toHex(), encrypted.asByteArray().toHex())
+        assertThat(encrypted.asByteArray().toHex()).isEqualTo(encryptedMessage.toHex())
     }
 }

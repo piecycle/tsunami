@@ -10,7 +10,7 @@
     <string name="hypott_label">Hipo laikinas tikslas</string>
     <string name="hypott_whenhypott">Kokia yra pagrindinė priežastis nustatyti Hipo laikiną tikslą?</string>
     <string name="hypott_wrongbasal">Hipoglikemijų dėl neteisingai nustatytos bazės korekcija.</string>
-    <string name="hypott_preventoversmb">Kad būtų išvengta per didelių AndroidAPS korekcijų, kai glikemija pradeda staigiai kilti suvalgius greitai veikiančių angliavandenių hipoglikemijos metu.</string>
+    <string name="hypott_preventoversmb">Kad būtų išvengta per didelių AAPS korekcijų, kai glikemija pradeda staigiai kilti suvalgius greitai veikiančių angliavandenių hipoglikemijos metu.</string>
     <string name="hypott_exercise">Tam, kad būtų koreguojama hipoglikemija, įvykusi dėl fizinio aktyvumo.</string>
     <string name="hypott_0basal">Tam, kad būtų išvengta glikemijos kritimo kai jau nustatyta 0% laikina bazė.</string>
     <string name="hypott_hint1">https://wiki.aaps.app/en/latest/Usage/temptarget.html</string>
@@ -120,7 +120,7 @@
     <string name="sensitivity_adjust">Jautrumo įskiepiai leidžia AndroidAPS prisitaikyti prie laikinų ar trumpalaikių jautrumo insulinui pokyčių (pavyzdžiui, hormoninių pokyčių ar absorbcijos problemų infuzijos vietoje).</string>
     <string name="sensitivity_edit">Jautrumo įskiepiai pateikia bazės, IA ir JIF pakeitimų pasiūlymus, kuriais remiantis galima redaguoti profilį.</string>
     <string name="sensitivity_cannula">Pažymėjus kateterio keitimą, Autosens santykis vėl bus grąžintas į 100%.</string>
-    <string name="sensitivity_time">Kai kurios įskiepio parinktys turi konfigūruojamus laiko intervalus, kuriuos gali nustatyti vartotojas.</string>
+    <string name="sensitivity_time">Kai kurios įskiepio parinktys turi konfigūruojamus laiko intervalus, kuriuos gali nustatyti naudotojas.</string>
     <string name="sensitivity_hint1">https://wiki.aaps.app/en/latest/Configuration/Sensitivity-detection-and-COB.html</string>
     <string name="sensitivity_hint2">https://wiki.aaps.app/en/latest/Usage/Open-APS-features.html#autosens</string>
     <string name="wrongcarbs_label">Angliavandenių įvedimo klaidos</string>
@@ -148,6 +148,7 @@
     <string name="cob3_longer">Nustačius 150% profilį, sistemos apskaičiuotas angliavandenių įsisavinimo laikas pailgėja</string>
     <string name="cob3_shorter">Nustačius 150% profilį, sistemos apskaičiuotas angliavandenių įsisavinimo laikas sutrumpėja</string>
     <string name="cob3_no_effect">Nustačius 150% profilį, sistemos apskaičiuotas angliavandenių įsisavinimo laikas nepakinta</string>
+    <string name="cob_hint1">https://wiki.aaps.app/en/latest/Usage/COB-calculation.html#how-does-aaps-calculate-the-cob-value</string>
     <string name="iob_value">AIO keičia nustatyta laikina valandinė bazė.</string>
     <string name="iob_hightemp">Padidinta laikina bazė nebus nustatyta, jei glikemija yra žemiau numatyto tikslo.</string>
     <string name="iob_negiob">Jei ilgą laiką stebima neigiama AIO reikšmė ir nėra fizinio aktyvumo, tai rodo, kad Jūsų nustatymai yra per „agresyvūs“ ir Jums reikia mažiau insulino.</string>
@@ -169,7 +170,7 @@
     <string name="nsclient_howcanyou">Kaip galite stebėti AndroidAPS (pavyzdžiui, Jūsų vaiko) nuotoliniu būdu?</string>
     <string name="nsclient_nightscout">Nuotoliniu būdu stebėti AndroidAPS galite per AAPSClient, Nightscout programėlę bei Nightscout svetainę.</string>
     <string name="nsclient_dexcomfollow">Kitos programėlės (pvz. Dexcom follow, Xdrip follow) leidžia sekti kai kuriuos parametrus (pvz. glikemiją) nuotoliniu būdu, tačiau naudoja kitus algoritmus, todėl gali pateikti neteisingas AIO ir AAO reikšmes.</string>
-    <string name="nsclient_data">Norint nuotoliniu būdu stebėti AndroidAPS, abu prietaisai turi turėti interneto prieigą (per Wi-Fi arba mobilius duomenis).</string>
+    <string name="nsclient_data">Norint nuotoliniu būdu stebėti AndroidAPS, abu prietaisai turi turėti interneto prieigą (per Wi-Fi arba mobiliuosius duomenis).</string>
     <string name="nsclient_fullcontrol">AAPSClient naudojamas nuotoliniam stebėjimui ir pilnai AndroidAPS kontrolei.</string>
     <string name="nsclient_hint1">https://wiki.aaps.app/en/latest/Children/Children.html</string>
     <string name="isf_label_exam">Jautrumo insulinui faktorius (JIF)</string>

@@ -24,6 +24,10 @@
     <string name="smscommunicator_otp_reset_header">איפוס מאמתים</string>
     <string name="smscommunicator_otp_install_info">בכל אחד מהטלפונים העוקבים, התקינו יישום מאמת התומך באסימוני RFC 6238 TOTP. יישומים פופולריים בחינם הם:\n • Authy\n • Google Authenticator\n • LastPass Authenticator\n • FreeOTP Authenticator</string>
     <string name="smscommunicator_otp_reset_warning">אתחול המאמת הופך את כל המאמתים הקיימים לבלתי חוקיים. יש להגדיר אותם מחדש!</string>
+    <string name="smscommunicator_otp_verification_ok">אישור</string>
+    <string name="smscommunicator_otp_verification_ivalid_size">אורך לא תקין!</string>
+    <string name="smscommunicator_otp_verification_wrong_pin">קוד שגוי</string>
+    <string name="smscommunicator_otp_verification_wrong_otp">קוד חד פעמי שגוי</string>
     <string name="sms_wrong_code">קוד שגוי. הפקודה בוטלה.</string>
     <string name="sms_timeout_while_waiting">בהמתנה עד לסיום תקשורת קודמת עם המשאבה</string>
     <string name="smscommunicator_allowednumbers">מספרי טלפון מורשים</string>
@@ -104,11 +108,7 @@
     <string name="sms_profile_switch_created">נוצרה החלפת פרופיל</string>
     <string name="sms_wrong_tbr_duration">משך הבזאלי הזמני חייב להיות כפולה של %1$d דקות ויותר מ-0.</string>
     <string name="a11y_otp_qr_code">ברקוד QR ליצירת סיסמה חד פעמית</string>
-    <string name="xdrip_status_detailed_iob_title">הצגת IOB מפורט</string>
-    <string name="xdrip_status_detailed_iob_summary">לחלק את ה IOB לבולוס ובזאלי במסך השעון</string>
     <string name="disabled_loop">לולאה כבויה</string>
-    <string name="xdrip_status_show_bgi_title">הצג השפעת רמת הסוכר</string>
-    <string name="xdrip_status_show_bgi_summary">הוסף השפעת הסוכר לשורת הסטטוס</string>
     <!-- Food-->
     <string name="food_short">מזון</string>
     <string name="description_food">מציג את ההגדרות הקבועות מראש עבור מזון המוגדר ב-Nightscout</string>
@@ -141,6 +141,7 @@
     <string name="error_in_basal_values">שגיאה בערכי המינון הבזאלי</string>
     <string name="error_in_target_values">שגיאה בערכי המטרה</string>
     <string name="error_in_isf_values">שגיאה בערכי יחס התיקון</string>
+    <string name="profile_name_contains_dot">ישנם שמות פרופיל המכילים נקודות.\nשמות כאלו אינם נתמכים ע\"י Nightscout \n הפרופילים לא הועלו ל-Nightscout.</string>
     <string name="invalid_profile_not_accepted">הפרופיל הבלתי חוקי %1$s מ-Nightscout לא מאושר</string>
     <string name="view">תצוגה</string>
     <string name="errors">שגיאות</string>
@@ -242,6 +243,7 @@
     <string name="short_tabtitles">קצר את כותרות הלשוניות</string>
     <string name="overview_show_notes_field_in_dialogs_title">הצגת שדות הערות בתיבות דו-שיח של טיפול</string>
     <string name="deliverpartofboluswizard">אשף הבולוס מבצע חישוב אך רק חלק זה של האינסולין המחושב מוזרק. שימושי בשימוש עם אלגוריתם SMB.</string>
+    <string name="deliver_part_of_boluswizard_reset_time">הוזרק 100% מהבולוס, אם ערך הסוכר בדם ישן </string>
     <string name="enable_bolus_advisor">אפשר את יועץ הבולוסים</string>
     <string name="enable_bolus_advisor_summary">מציג תזכורת לאכול אחר כך במקום להזריק את המינון שהומלץ ע\"י האשף בעת היפרגליקמיה (\"בולוס מקדים\")</string>
     <string name="enablesuperbolus">אפשר סופר בולוס באשף</string>
@@ -284,65 +286,7 @@
     <string name="cannula_usage">שימוש:</string>
     <!--    Iob-->
     <string name="send_logfiles">שלח קובצי יומן של היום למפתחים יחד עם זמן זה. מצב לא צפוי.</string>
-    <!--    Wear-->
-    <string name="wear_shortname">WEAR</string>
-    <string name="description_wear">ניטור ושליטה ב-AndroidAPS באמצעות שעון WearOS.</string>
-    <string name="no_watch_connected">(השעון לא מחובר)</string>
-    <string name="pump_status">סטטוס המשאבה</string>
-    <string name="loop_status">סטטוס הלולאה</string>
-    <string name="wizard_result">מחשבון: %1$s\n אינס\': %2$.2f יח\'\nפחמ\': %3$d גר\'</string>
-    <string name="quick_wizard_not_available">האשף המהיר שנבחר אינו זמין, נא לרענן את האריח</string>
-    <string name="quick_wizard_message">אשף מהיר: %1$s\n אינס\': %2$.2f יח\'\nפחמ\': %3$d גר\'</string>
-    <string name="wear_action_tempt_preset_error">תצורה לא ידועה של מטרה זמנית: %1$s</string>
-    <string name="wear_action_tempt_cancel_message">מבטל ערך מטרה זמני נוכחי</string>
-    <string name="wear_action_tempt_unit_error">יחידות המידה שונות בין הטלפון והשעון!</string>
-    <string name="wear_action_tempt_zero_message">Zero-Temp-Target - בוטל, הפעלת ערכי מטרה זמניים?</string>
-    <string name="wear_action_tempt_min_bg_error">ערך הסוכר המינימלי מחוץ לטווח!</string>
-    <string name="wear_action_tempt_max_bg_error">ערך הסוכר המקסימלי מחוץ לטווח!</string>
-    <string name="wear_action_tempt_manual_range_message">ע\' מטרה זמני:\nמינ\': %1$s\nמקס\': %2$s\nמשך: %3$s</string>
-    <string name="wear_action_tempt_manual_message">ע\' מטרה זמני:\nמטרה: %1$s\n משך: %2$s</string>
-    <string name="wear_action_tempt_preset_message">ע\' מטרה זמני:\nסיבה: %1$s\nמטרה: %2$s\nמשך: %3$s</string>
-    <string name="no_success">נכשל - נא לבדוק את הטלפון</string>
-    <string name="wear_settings">הגדרות Wear</string>
-    <string name="wearcontrol_title">שליטה מהשעון</string>
-    <string name="wearcontrol_summary">הגדירו ערכי מטרה זמניים וציינו טיפולים מהשעון.</string>
-    <string name="wear_wizard_settings_summary">חישובים הכלולים בתוצאת האשף:</string>
-    <string name="wear_display_settings">הגדרות תצוגה</string>
-    <string name="wear_general_settings">הגדרות כלליות</string>
-    <string name="wear_detailed_delta_title">הצגת דלתא מפורטת</string>
-    <string name="wear_detailed_delta_summary">הצגת דלתא עם עוד נק\' עשרונית אחת</string>
-    <string name="wear_notifysmb_title">דיווח על SMB</string>
-    <string name="wear_notifysmb_summary">הצג SMB על השעון כמו בולוס סטנדרטי.</string>
-    <string name="wear_predictions_summary">הראה את התחזיות על לוח השעון.</string>
-    <string name="wear_predictions_title">חיזוי</string>
-    <string name="resend_all_data">שלח מחדש את כל הנתונים</string>
-    <string name="open_settings_on_wear">פתיחת הגדרות Wear</string>
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">מציג הודעה קבועה עם סקירה קצרה של מה שהלולאה שלכם עושה</string>
     <string name="old_data">נתונים ישנים</string>
-    <string name="pump_fetching_data">מנסה לטעון נתונים מהמשאבה.</string>
-    <string name="pump_old_data">סטטיסטיקות (TDD): נתונים ישנים! לא ניתן לטעון מהמשאבה.</string>
-    <string name="grams_short">גר\'</string>
-    <string name="hour_short">ש\'</string>
-    <string name="no_active_profile">לא הופעלה החלפת פרופיל!</string>
-    <string name="tdd_line">%1$.2fיח\' %1$.0f%</string>
-    <string name="no_profile">לא נטען פרופיל</string>
-    <string name="aps_only">חל רק במצב APS!</string>
-    <string name="last_aps_result_na">התוצאה האחרונה לא זמינה!</string>
-    <string name="loop_status_closed">לולאה סגורה</string>
-    <string name="loop_status_open">לולאה פתוחה</string>
-    <string name="loop_status_disabled">לולאה מושבתת</string>
-    <string name="aps">APS</string>
-    <string name="last_run">ההפעלה האחרונה</string>
-    <string name="last_enact">נקבעו לאחרונה</string>
-    <string name="today">היום</string>
-    <string name="weighted">משוקלל</string>
-    <string name="target_only_aps_mode">ערכי מטרה חלים רק במצב APS!</string>
-    <string name="no_history">אין נתוני עבר!</string>
-    <string name="units_short">יח\'</string>
-    <string name="temp_target">ערכי מטרה זמניים</string>
-    <string name="until">עד</string>
-    <string name="default_range">טווח ברירת מחדל</string>
-    <string name="target">מטרה</string>
-    <string name="rate_duration">מינון: %1$.2fיח\'\\ש\' (%2$.2f%) \nל-%3$d דק\'</string>
 </resources>

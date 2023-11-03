@@ -51,6 +51,7 @@
     <string name="extended_bolus">Prodloužený bolus</string>
     <string name="paused">Pozastaveno</string>
     <string name="tdd_total">CDD celkem</string>
+    <string name="tdd_old_data">Stará data</string>
     <string name="goingtodeliver">Podávání %1$.2f U inzulínu</string>
     <string name="waitingforpump">Čekání na pumpu</string>
     <string name="androidaps_start">AAPS spuštěno</string>
@@ -167,6 +168,8 @@
     <string name="virtualpump_uploadstatus_title">Nahrávat stav pumpy do NS nebo Tidepoolu</string>
     <string name="suspendloop_label">Zakázaná/pozastavená smyčka</string>
     <string name="iob_label">Aktivní inzulín (IOB)</string>
+    <string name="loopstatus_targets">CÍL:</string>
+    <string name="loopstatus_OAPS_result">VÝSLEDEK OAPS:</string>
     <!--    Protection-->
     <string name="wrongpassword">Chybné heslo</string>
     <string name="wrongpin">Nesprávný PIN</string>
@@ -376,6 +379,9 @@
     <string name="carbs_g">SACHARIDY %1$d g</string>
     <string name="extended_bolus_u_min">ROZLOŽENÝ BOLUS %1$.2f U %2$d min</string>
     <string name="load_events">NAČÍST UDÁLOSTI</string>
+    <string name="clear_alarms">SMAZAT ALARMY</string>
+    <string name="deactivate">DEAKTIVOVAT</string>
+    <string name="update_time">AKTUALIZOVAT ČAS</string>
     <string name="load_history">NAČÍST HISTORII %1$d</string>
     <string name="load_tdds">NAČÍST CDD</string>
     <string name="set_profile">NASTAVIT PROFIL</string>
@@ -421,6 +427,7 @@
     <string name="autotune_ic_warning">Vybraný profil má %1$d hodnot IC. Autotune bude používat %2$.2f g/U</string>
     <string name="autotune_isf_warning">Vybraný profil má %1$d hodnot ISF. Autotune bude používat %2$.1f %3$s/U</string>
     <string name="autotune_error">Chyba vstupních dat, zkuste autotune spustit znovu nebo snížit počet dní</string>
+    <string name="autotune_error_more_days">Chyba ve vstupních datech, zvýšit počet dní</string>
     <string name="autotune_warning_during_run">Autotune spuštěno, prosím buďte trpěliví</string>
     <string name="autotune_warning_after_run">Před použitím výsledky pečlivě zkontrolujte!</string>
     <string name="autotune_partial_result">Částečný výsledek - vyladěn den %1$d / %2$d</string>
@@ -453,10 +460,13 @@
     <string name="cobvsiob">COB vs. IOB</string>
     <string name="slowabsorptiondetected"><![CDATA[<font color=\'%1$s\'>!!!!! Detekována pomalá absorbce sacharidů: %2$d%% času. Překontrolujte kalkulaci. COB může být nadhodnocené, a proto může být započítáno více inzulínu !!!!!</font>]]></string>
     <string name="partialboluswizard">Podat tuto část z výsledku kalkulace [%]</string>
+    <string name="partialboluswizard_reset_time">Časový limit staré glykémie [min]</string>
     <string name="bolus_constraint_applied_warn">Použito omezení bolusu: %1$.2f U na %2$.2f U</string>
     <string name="bolus_recorded_only">Bolus nebude pumpou vydán, pouze zaznamenán</string>
     <string name="advisoralarm">Spustit alarm, když je čas na jídlo</string>
     <string name="no_action_selected">Žádná akce nevybrána, nic se neprovede</string>
+    <string name="carb_equal_zero_no_action">Sacharidy = 0. Žádná akce!</string>
+    <string name="wizard_no_insulin_required">Není vyžadován žádný inzulín!</string>
     <string name="wizard_no_actual_bg">Žádná aktuální glykémie k výpočtu!</string>
     <string name="wizard_no_active_profile">Není nastaven žádný aktivní profil!</string>
     <string name="wizard_no_cob">Neznámý COB! Chybějící glykémie nebo nedávný restart aplikace?</string>
@@ -581,4 +591,23 @@
     <string name="cleanup_db_confirm">Chcete vyčistit databázi?\nOdstraní sledované změny a historická data starší než 3 měsíce.</string>
     <string name="cleanup_db_confirm_sync">Chcete vyčistit databázi?\nOdstraní sledované změny a historická data starší než 3 měsíce.\nVýrazně to urychlí plnou synchronizaci.</string>
     <string name="cleared_entries">Vymazané záznamy</string>
+    <!--    Weekday-->
+    <string name="weekday_sunday_short">Ne</string>
+    <string name="weekday_saturday_short">So</string>
+    <string name="weekday_friday_short">Pá</string>
+    <string name="weekday_thursday_short">Čt</string>
+    <string name="weekday_wednesday_short">St</string>
+    <string name="weekday_tuesday_short">Út</string>
+    <string name="weekday_monday_short">Po</string>
+    <!-- WeekdayPicker -->
+    <string name="monday_short">Po</string>
+    <string name="tuesday_short">Út</string>
+    <string name="wednesday_short">St</string>
+    <string name="thursday_short">Čt</string>
+    <string name="friday_short">Pá</string>
+    <string name="saturday_short">So</string>
+    <string name="sunday_short">Ne</string>
+    <!--    DecimalFormatterImpl -->
+    <string name="format_insulin_units1">%1$.1f U</string>
+    <string name="format_insulin_units">%1$.2f U</string>
 </resources>

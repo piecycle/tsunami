@@ -1,5 +1,6 @@
 package info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.communication.action
 
+import app.aaps.core.interfaces.logging.AAPSLogger
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.communication.message.MessageBlock
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.communication.message.OmnipodMessage
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.communication.message.command.AssignAddressCommand
@@ -11,8 +12,8 @@ import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.exception.Ill
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.exception.IllegalVersionResponseTypeException
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.manager.ErosPodStateManager
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.rileylink.manager.OmnipodRileyLinkCommunicationManager
-import info.nightscout.rx.logging.AAPSLogger
 import org.joda.time.DateTimeZone
+import java.security.SecureRandom
 import java.util.Random
 
 class AssignAddressAction(
@@ -55,7 +56,7 @@ class AssignAddressAction(
 
     companion object {
 
-        private val random: Random = Random()
+        private val random: Random = SecureRandom()
         private fun generateRandomAddress(): Int =
             // Create random address with 20 bits to match PDM, could easily use 24 bits instead
             0x1f000000 or (random.nextInt() and 0x000fffff)

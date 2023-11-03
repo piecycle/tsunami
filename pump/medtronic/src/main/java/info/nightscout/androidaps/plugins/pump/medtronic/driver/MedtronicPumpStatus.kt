@@ -1,6 +1,10 @@
 package info.nightscout.androidaps.plugins.pump.medtronic.driver
 
-import info.nightscout.androidaps.annotations.OpenForTesting
+import app.aaps.annotations.OpenForTesting
+import app.aaps.core.interfaces.pump.defs.PumpType
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.sharedPreferences.SP
 import info.nightscout.androidaps.plugins.pump.common.events.EventRileyLinkDeviceStatusChange
 import info.nightscout.androidaps.plugins.pump.common.hw.rileylink.RileyLinkUtil
 import info.nightscout.androidaps.plugins.pump.common.hw.rileylink.data.RLHistoryItem
@@ -9,13 +13,9 @@ import info.nightscout.androidaps.plugins.pump.medtronic.defs.BasalProfileStatus
 import info.nightscout.androidaps.plugins.pump.medtronic.defs.BatteryType
 import info.nightscout.androidaps.plugins.pump.medtronic.defs.MedtronicDeviceType
 import info.nightscout.androidaps.plugins.pump.medtronic.util.MedtronicConst
-import info.nightscout.interfaces.pump.defs.PumpType
 import info.nightscout.pump.common.data.PumpStatus
+import info.nightscout.pump.common.defs.PumpDeviceState
 import info.nightscout.pump.common.sync.PumpDbEntryTBR
-import info.nightscout.pump.core.defs.PumpDeviceState
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.shared.interfaces.ResourceHelper
-import info.nightscout.shared.sharedPreferences.SP
 import java.util.Calendar
 import java.util.GregorianCalendar
 import javax.inject.Inject
@@ -26,10 +26,11 @@ import javax.inject.Singleton
  */
 @Singleton
 @OpenForTesting
-class MedtronicPumpStatus @Inject constructor(private val rh: ResourceHelper,
-                                              private val sp: SP,
-                                              private val rxBus: RxBus,
-                                              private val rileyLinkUtil: RileyLinkUtil
+class MedtronicPumpStatus @Inject constructor(
+    private val rh: ResourceHelper,
+    private val sp: SP,
+    private val rxBus: RxBus,
+    private val rileyLinkUtil: RileyLinkUtil
 ) : PumpStatus(PumpType.MEDTRONIC_522_722) {
 
     var errorDescription: String? = null
@@ -108,15 +109,13 @@ class MedtronicPumpStatus @Inject constructor(private val rh: ResourceHelper,
     // Battery type
     private var batteryTypeByDescMap: MutableMap<String, BatteryType?> = HashMap()
 
-    fun getBatteryTypeByDescription(batteryTypeStr: String?): BatteryType? {
+    fun getBatteryTypeByDescription(batteryTypeStr: String?): BatteryType {
         if (batteryTypeByDescMap.isEmpty()) {
             for (value in BatteryType.values()) {
                 batteryTypeByDescMap[rh.gs(value.description)] = value
             }
         }
-        return if (batteryTypeByDescMap.containsKey(batteryTypeStr)) {
-            batteryTypeByDescMap[batteryTypeStr]
-        } else BatteryType.None
+        return batteryTypeByDescMap[batteryTypeStr] ?: BatteryType.None
     }
 
     override val errorInfo: String

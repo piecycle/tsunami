@@ -1,16 +1,14 @@
 package info.nightscout.androidaps.plugins.pump.omnipod.eros.manager
 
-import info.nightscout.androidaps.TestBase
+import app.aaps.core.interfaces.sharedPreferences.SP
+import app.aaps.shared.tests.TestBase
+import com.google.common.truth.Truth.assertThat
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.definition.FirmwareVersion
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.driver.definition.PodProgressStatus
-import info.nightscout.rx.TestAapsSchedulers
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.shared.sharedPreferences.SP
 import org.joda.time.DateTime
 import org.joda.time.DateTimeUtils
 import org.joda.time.DateTimeZone
 import org.joda.time.Duration
-import org.junit.Assert
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
@@ -18,8 +16,6 @@ import org.mockito.Mock
 class AapsErosPodStateManagerTest : TestBase() {
 
     @Mock lateinit var sp: SP
-
-    private val rxBus = RxBus(TestAapsSchedulers(), aapsLogger)
 
     @Test fun times() {
         val timeZone = DateTimeZone.UTC
@@ -32,11 +28,10 @@ class AapsErosPodStateManagerTest : TestBase() {
             0, 0, FirmwareVersion(1, 1, 1),
             FirmwareVersion(2, 2, 2), timeZone, PodProgressStatus.ABOVE_FIFTY_UNITS
         )
-        Assert.assertEquals(now, podStateManager.time)
-        Assert.assertEquals(
+        assertThat(podStateManager.time).isEqualTo(now)
+        assertThat(podStateManager.scheduleOffset).isEqualTo(
             Duration.standardHours(1)
-                .plus(Duration.standardMinutes(2).plus(Duration.standardSeconds(3))),
-            podStateManager.scheduleOffset
+                .plus(Duration.standardMinutes(2).plus(Duration.standardSeconds(3)))
         )
     }
 
@@ -56,11 +51,10 @@ class AapsErosPodStateManagerTest : TestBase() {
 
         // The system time zone has been updated, but the pod session state's time zone hasn't
         // So the pods time should not have been changed
-        Assert.assertEquals(now, podStateManager.time)
-        Assert.assertEquals(
+        assertThat(podStateManager.time).isEqualTo(now)
+        assertThat(podStateManager.scheduleOffset).isEqualTo(
             Duration.standardHours(1)
-                .plus(Duration.standardMinutes(2).plus(Duration.standardSeconds(3))),
-            podStateManager.scheduleOffset
+                .plus(Duration.standardMinutes(2).plus(Duration.standardSeconds(3)))
         )
     }
 
@@ -81,11 +75,10 @@ class AapsErosPodStateManagerTest : TestBase() {
 
         // Both the system time zone have been updated
         // So the pods time should have been changed (to +2 hours)
-        Assert.assertEquals(now.withZone(newTimeZone), podStateManager.time)
-        Assert.assertEquals(
+        assertThat(podStateManager.time).isEqualTo(now.withZone(newTimeZone))
+        assertThat(podStateManager.scheduleOffset).isEqualTo(
             Duration.standardHours(3)
-                .plus(Duration.standardMinutes(2).plus(Duration.standardSeconds(3))),
-            podStateManager.scheduleOffset
+                .plus(Duration.standardMinutes(2).plus(Duration.standardSeconds(3)))
         )
     }
 

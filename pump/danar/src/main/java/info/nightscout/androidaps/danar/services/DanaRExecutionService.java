@@ -8,7 +8,21 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import dagger.android.HasAndroidInjector;
+import app.aaps.core.interfaces.configuration.Constants;
+import app.aaps.core.interfaces.logging.LTag;
+import app.aaps.core.interfaces.notifications.Notification;
+import app.aaps.core.interfaces.profile.Profile;
+import app.aaps.core.interfaces.profile.ProfileFunction;
+import app.aaps.core.interfaces.pump.BolusProgressData;
+import app.aaps.core.interfaces.pump.PumpEnactResult;
+import app.aaps.core.interfaces.pump.defs.PumpType;
+import app.aaps.core.interfaces.queue.Callback;
+import app.aaps.core.interfaces.queue.Command;
+import app.aaps.core.interfaces.queue.CommandQueue;
+import app.aaps.core.interfaces.rx.events.EventInitializationChanged;
+import app.aaps.core.interfaces.rx.events.EventOverviewBolusProgress;
+import app.aaps.core.interfaces.rx.events.EventProfileSwitchChanged;
+import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged;
 import info.nightscout.androidaps.danaRKorean.DanaRKoreanPlugin;
 import info.nightscout.androidaps.danar.DanaRPlugin;
 import info.nightscout.androidaps.danar.SerialIOThread;
@@ -40,44 +54,17 @@ import info.nightscout.androidaps.danar.comm.MsgStatus;
 import info.nightscout.androidaps.danar.comm.MsgStatusBasic;
 import info.nightscout.androidaps.danar.comm.MsgStatusBolusExtended;
 import info.nightscout.androidaps.danar.comm.MsgStatusTempBasal;
-import info.nightscout.interfaces.Constants;
-import info.nightscout.interfaces.notifications.Notification;
-import info.nightscout.interfaces.profile.Profile;
-import info.nightscout.interfaces.profile.ProfileFunction;
-import info.nightscout.interfaces.pump.BolusProgressData;
-import info.nightscout.interfaces.pump.PumpEnactResult;
-import info.nightscout.interfaces.pump.PumpSync;
-import info.nightscout.interfaces.pump.defs.PumpType;
-import info.nightscout.interfaces.queue.Callback;
-import info.nightscout.interfaces.queue.Command;
-import info.nightscout.interfaces.queue.CommandQueue;
-import info.nightscout.pump.dana.DanaPump;
 import info.nightscout.pump.dana.events.EventDanaRNewStatus;
-import info.nightscout.rx.bus.RxBus;
-import info.nightscout.rx.events.EventInitializationChanged;
-import info.nightscout.rx.events.EventOverviewBolusProgress;
-import info.nightscout.rx.events.EventProfileSwitchChanged;
-import info.nightscout.rx.events.EventPumpStatusChanged;
-import info.nightscout.rx.logging.AAPSLogger;
-import info.nightscout.rx.logging.LTag;
-import info.nightscout.shared.interfaces.ResourceHelper;
-import info.nightscout.shared.sharedPreferences.SP;
 
 public class DanaRExecutionService extends AbstractDanaRExecutionService {
-    @Inject AAPSLogger aapsLogger;
-    @Inject RxBus rxBus;
-    @Inject ResourceHelper rh;
-    @Inject DanaPump danaPump;
     @Inject DanaRPlugin danaRPlugin;
     @Inject DanaRKoreanPlugin danaRKoreanPlugin;
     @Inject CommandQueue commandQueue;
     @Inject MessageHashTableR messageHashTableR;
     @Inject ProfileFunction profileFunction;
-    @Inject PumpSync pumpSync;
-    @Inject SP sp;
-    @Inject HasAndroidInjector injector;
 
     public DanaRExecutionService() {
+        // non params constructor must exist
     }
 
     @Override
@@ -108,7 +95,6 @@ public class DanaRExecutionService extends AbstractDanaRExecutionService {
             try {
                 mRfcommSocket.connect();
             } catch (IOException e) {
-                //log.error("Unhandled exception", e);
                 if (e.getMessage().contains("socket closed")) {
                     aapsLogger.error("Unhandled exception", e);
                 }
@@ -343,7 +329,7 @@ public class DanaRExecutionService extends AbstractDanaRExecutionService {
                                 aapsLogger.debug(LTag.PUMP, "Bolus amount in history too old: " + dateUtil.dateAndTimeString(danaPump.getLastBolusTime()));
                             }
                             synchronized (o) {
-                                o.notify();
+                                o.notifyAll();
                             }
                         }
                     });
@@ -354,7 +340,7 @@ public class DanaRExecutionService extends AbstractDanaRExecutionService {
                     }
                 }
             } else {
-                commandQueue.readStatus(rh.gs(info.nightscout.core.ui.R.string.bolus_ok), null);
+                commandQueue.readStatus(rh.gs(app.aaps.core.ui.R.string.bolus_ok), null);
             }
         }
         return !start.getFailed();
