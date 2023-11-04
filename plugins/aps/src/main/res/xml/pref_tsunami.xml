@@ -8,7 +8,7 @@
         android:title="@string/tsunami"
         app:initialExpandedChildrenCount="0">
 
-        <info.nightscout.core.validators.ValidatingEditTextPreference
+        <app.aaps.core.validators.ValidatingEditTextPreference
             android:defaultValue="1"
             android:dialogMessage="@string/openapsma_max_basal_summary"
             android:inputType="numberDecimal"
@@ -18,7 +18,7 @@
             validate:floatminNumber="0.1"
             validate:testType="floatNumericRange" />
 
-        <info.nightscout.core.validators.ValidatingEditTextPreference
+        <app.aaps.core.validators.ValidatingEditTextPreference
             android:defaultValue="3"
             android:dialogMessage="@string/openapssmb_max_iob_summary"
             android:inputType="numberDecimal"
@@ -32,7 +32,7 @@
             android:key="tsunami_mode_settings"
             android:title="@string/tsunami_mode_settings_title">
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="1"
                 android:dialogMessage="@string/tsunami_smbcap_summary"
                 android:inputType="numberDecimal"
@@ -46,7 +46,7 @@
                 android:key="@string/key_tsu_SMB_scaling"
                 android:summary="@string/tsu_SMB_scaling_summary"
                 android:title="@string/tsu_SMB_scaling_title" />
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="0.5"
                 android:dialogMessage="@string/tsunami_button_insulin_increment_button_message"
                 android:inputType="numberDecimal|numberDecimal|numberSigned"
@@ -59,7 +59,7 @@
                 validate:floatminNumber="-5.0"
                 validate:testType="floatNumericRange" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="1.0"
                 android:dialogMessage="@string/tsunami_button_insulin_increment_button_message"
                 android:inputType="numberDecimal|numberSigned"
@@ -72,7 +72,7 @@
                 validate:floatminNumber="-5.0"
                 validate:testType="floatNumericRange" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="2.0"
                 android:dialogMessage="@string/tsunami_button_insulin_increment_button_message"
                 android:inputType="numberDecimal|numberSigned"
@@ -85,7 +85,7 @@
                 validate:floatminNumber="-5.0"
                 validate:testType="floatNumericRange" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="0"
                 android:dialogMessage="@string/tsunami_default_duration_message"
                 android:inputType="numberSigned"
@@ -104,7 +104,7 @@
                 <Preference android:summary="@string/advanced_tsunami_disclaimer">
                 </Preference>
 
-                <info.nightscout.core.validators.ValidatingEditTextPreference
+                <app.aaps.core.validators.ValidatingEditTextPreference
                     android:key="@string/key_tsu_activity_target"
                     android:title="@string/tsu_activity_target_title"
                     android:dialogMessage="@string/tsu_activity_target_summary"
@@ -115,7 +115,7 @@
                     validate:testType="floatNumericRange" />
             </PreferenceCategory>
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="65"
                 android:dialogMessage="@string/insulinReqPCT_summary"
                 android:inputType="numberDecimal"
@@ -136,7 +136,7 @@
                 android:summary="@string/enable_wave_mode_summary"
                 android:title="@string/enable_wave_mode_title" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:dependency="@string/key_enable_wave_mode"
                 android:defaultValue="11"
                 android:dialogMessage="@string/wave_start_summary"
@@ -151,7 +151,7 @@
                 validate:floatminNumber="0"
                 validate:testType="floatNumericRange" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:dependency="@string/key_enable_wave_mode"
                 android:defaultValue="21"
                 android:dialogMessage="@string/wave_end_summary"
@@ -173,7 +173,7 @@
                 android:summary="@string/use_wave_smbcap_summary"
                 android:title="@string/use_wave_smbcap_title" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:dependency="@string/key_use_wave_smbcap"
                 android:defaultValue="0.5"
                 android:dialogMessage="@string/wave_smbcap_message"
@@ -201,7 +201,7 @@
                 <Preference android:summary="@string/advanced_wave_disclaimer">
                 </Preference>
 
-                <info.nightscout.core.validators.ValidatingEditTextPreference
+                <app.aaps.core.validators.ValidatingEditTextPreference
                     android:dependency="@string/key_enable_wave_mode"
                     android:key="@string/key_wave_activity_target"
                     android:title="@string/wave_activity_target_title"
@@ -212,7 +212,7 @@
                     android:inputType="numberDecimal"
                     validate:testType="floatNumericRange" />
 
-                <info.nightscout.core.validators.ValidatingEditTextPreference
+                <app.aaps.core.validators.ValidatingEditTextPreference
                     android:dependency="@string/key_enable_wave_mode"
                     android:defaultValue="65"
                     android:dialogMessage="@string/wave_insulinReqPCT_message"
@@ -272,7 +272,7 @@
             android:summary="@string/enable_smb_after_carbs_summary"
             android:title="@string/enable_smb_after_carbs" />
 
-        <info.nightscout.core.validators.ValidatingEditTextPreference
+        <app.aaps.core.validators.ValidatingEditTextPreference
             android:defaultValue="3"
             android:digits="0123456789"
             android:inputType="number"
@@ -285,7 +285,7 @@
             validate:minNumber="1"
             validate:testType="numericRange" />
 
-        <info.nightscout.core.validators.ValidatingEditTextPreference
+        <app.aaps.core.validators.ValidatingEditTextPreference
             android:defaultValue="30"
             android:digits="0123456789"
             android:entries="@array/smbMaxMinutes"
@@ -297,7 +297,7 @@
             validate:minNumber="15"
             validate:testType="numericRange" />
 
-        <info.nightscout.core.validators.ValidatingEditTextPreference
+        <app.aaps.core.validators.ValidatingEditTextPreference
             android:defaultValue="30"
             android:dialogMessage="@string/uam_smb_max_minutes"
             android:digits="0123456789"
@@ -343,7 +343,7 @@
             android:summary="@string/low_temptarget_lowers_sensitivity_summary"
             android:title="@string/low_temptarget_lowers_sensitivity_title" />
 
-        <info.nightscout.core.validators.ValidatingEditTextPreference
+        <app.aaps.core.validators.ValidatingEditTextPreference
             android:defaultValue="1"
             android:dialogMessage="@string/carbs_req_threshold_summary"
             android:digits="0123456789"
@@ -374,7 +374,7 @@
                 android:summary="@string/always_use_short_avg_summary"
                 android:title="@string/always_use_short_avg" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="3"
                 android:dialogMessage="@string/openapsama_max_daily_safety_multiplier_summary"
                 android:digits="0123456789.,"
@@ -387,7 +387,7 @@
                 validate:minNumber="1"
                 validate:testType="numericRange" />
 
-            <info.nightscout.core.validators.ValidatingEditTextPreference
+            <app.aaps.core.validators.ValidatingEditTextPreference
                 android:defaultValue="4"
                 android:dialogMessage="@string/openapsama_current_basal_safety_multiplier_summary"
                 android:digits="0123456789.,"
