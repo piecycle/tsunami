@@ -21,10 +21,10 @@ interface CalculationWorkflow {
         DRAW_TT(4, 1),
         IOB_COB_OREF(5, 75),
         PREPARE_IOB_AUTOSENS_DATA(6, 5),
-        DRAW_IOB(7, 1),
-        DRAW_FINAL(8, 1),
-        PREPARE_TSUNAMI_DATA(9, 1),
-        DRAW_TSUNAMI_DATA(10, 1);
+        PREPARE_TSUNAMI_DATA(7, 1), //MP order here has to match order in CalculationWorkflowImpl.kt
+        DRAW_TSUNAMI_DATA(8, 1), //MP order here has to match order in CalculationWorkflowImpl.kt
+        DRAW_IOB(9, 1),
+        DRAW_FINAL(10, 1);
 
         fun finalPercent(progress: Int): Int {
             var total = 0
