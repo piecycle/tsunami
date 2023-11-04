@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import app.aaps.database.entities.interfaces.DBEntry
 import app.aaps.database.entities.interfaces.DBEntryWithTime
-import java.util.TimeZone
+import java.util.*
 
 @Entity(
     tableName = TABLE_USER_ENTRY,
@@ -111,6 +111,9 @@ data class UserEntry(
         EXIT_AAPS(ColorGroup.Aaps),
         PLUGIN_ENABLED(ColorGroup.Aaps),
         PLUGIN_DISABLED(ColorGroup.Aaps),
+        TSUNAMI (ColorGroup.Tsunami),
+        CANCEL_TSUNAMI (ColorGroup.Tsunami),
+        TSUNAMI_BOLUS (ColorGroup.Tsunami),
         UNKNOWN(ColorGroup.Aaps)
         ;
 
@@ -133,6 +136,7 @@ data class UserEntry(
         TempBasalDialog,
         CalibrationDialog,
         FillDialog,
+        TsunamiDialog,
         BgCheck,
         SensorInsert,
         BatteryChange,
@@ -207,6 +211,7 @@ data class UserEntry(
         Loop,
         Careportal,
         Pump,
-        Aaps
+        Aaps,
+        Tsunami
     }
 }

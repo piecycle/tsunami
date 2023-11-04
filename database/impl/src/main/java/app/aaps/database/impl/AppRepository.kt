@@ -2,22 +2,7 @@ package app.aaps.database.impl
 
 import androidx.annotation.OpenForTesting
 import app.aaps.database.ValueWrapper
-import app.aaps.database.entities.Bolus
-import app.aaps.database.entities.BolusCalculatorResult
-import app.aaps.database.entities.Carbs
-import app.aaps.database.entities.DeviceStatus
-import app.aaps.database.entities.EffectiveProfileSwitch
-import app.aaps.database.entities.ExtendedBolus
-import app.aaps.database.entities.Food
-import app.aaps.database.entities.GlucoseValue
-import app.aaps.database.entities.HeartRate
-import app.aaps.database.entities.OfflineEvent
-import app.aaps.database.entities.ProfileSwitch
-import app.aaps.database.entities.TemporaryBasal
-import app.aaps.database.entities.TemporaryTarget
-import app.aaps.database.entities.TherapyEvent
-import app.aaps.database.entities.TotalDailyDose
-import app.aaps.database.entities.UserEntry
+import app.aaps.database.entities.*
 import app.aaps.database.entities.data.NewEntries
 import app.aaps.database.entities.embedments.InterfaceIDs
 import app.aaps.database.entities.interfaces.DBEntry
@@ -104,6 +89,7 @@ class AppRepository @Inject internal constructor(
         removed.add(Pair("DeviceStatus", database.deviceStatusDao.deleteOlderThan(than)))
         removed.add(Pair("OfflineEvent", database.offlineEventDao.deleteOlderThan(than)))
         removed.add(Pair("HeartRate", database.heartRateDao.deleteOlderThan(than)))
+        removed.add(Pair("Tsunami", database.tsunamiDao.deleteOlderThan(than)))
 
         if (deleteTrackedChanges) {
             removed.add(Pair("CHANGES GlucoseValue", database.glucoseValueDao.deleteTrackedChanges()))
@@ -123,6 +109,7 @@ class AppRepository @Inject internal constructor(
             // keep food database.foodDao.deleteHistory()
             removed.add(Pair("CHANGES OfflineEvent", database.offlineEventDao.deleteTrackedChanges()))
             removed.add(Pair("CHANGES HeartRate", database.heartRateDao.deleteTrackedChanges()))
+            removed.add(Pair("Tsunami", database.tsunamiDao.deleteTrackedChanges()))
         }
         val ret = StringBuilder()
         removed
@@ -872,7 +859,19 @@ class AppRepository @Inject internal constructor(
         totalDailyDoses = database.totalDailyDoseDao.getNewEntriesSince(since, until, limit, offset),
         versionChanges = database.versionChangeDao.getNewEntriesSince(since, until, limit, offset),
         heartRates = database.heartRateDao.getNewEntriesSince(since, until, limit, offset),
-    )
+        tsunami = database.tsunamiDao.getNewEntriesSince(since, until, limit, offset),
+        )
+
+    // Tsunami
+    fun getTsunamiModeActiveAt(timestamp: Long): Single<ValueWrapper<Tsunami>> =
+        database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
+            .subscribeOn(Schedulers.io())
+            .toWrappedSingle()
+    //MP Tsunami graph
+    fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>> =
+        database.tsunamiDao.getTsunamiDataFromTime(timestamp)
+            .subscribeOn(Schedulers.io())
+
 }
 
 @Suppress("USELESS_CAST")

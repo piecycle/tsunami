@@ -1,43 +1,37 @@
-package info.nightscout.plugins.aps.tsunami
+package app.aaps.plugins.aps.tsunami
 
+import app.aaps.core.interfaces.aps.DetermineBasalAdapter
+import app.aaps.core.interfaces.aps.SMBDefaults
+import app.aaps.core.interfaces.constraints.ConstraintsChecker
+import app.aaps.core.interfaces.db.GlucoseUnit
+import app.aaps.core.interfaces.iob.GlucoseStatus
+import app.aaps.core.interfaces.iob.IobCobCalculator
+import app.aaps.core.interfaces.iob.IobTotal
+import app.aaps.core.interfaces.iob.MealData
+import app.aaps.core.interfaces.logging.AAPSLogger
+import app.aaps.core.interfaces.logging.LTag
+import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.profile.Profile
+import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.sharedPreferences.SP
+import app.aaps.core.interfaces.utils.Round
+import app.aaps.core.interfaces.utils.SafeParse
+import app.aaps.core.main.extensions.convertedToAbsolute
+import app.aaps.core.main.extensions.getPassedDurationToTimeInMinutes
+import app.aaps.core.main.extensions.plannedRemainingMinutes
+import app.aaps.database.ValueWrapper
+import app.aaps.database.impl.AppRepository
+import app.aaps.plugins.aps.R
+import app.aaps.plugins.aps.logger.LoggerCallback
+import app.aaps.plugins.aps.openAPSSMB.DetermineBasalResultSMB
+import app.aaps.plugins.aps.utils.ScriptReader
 import dagger.android.HasAndroidInjector
-import info.nightscout.core.extensions.convertedToAbsolute
-import info.nightscout.core.extensions.getPassedDurationToTimeInMinutes
-import info.nightscout.core.extensions.plannedRemainingMinutes
-import info.nightscout.database.ValueWrapper
-import info.nightscout.database.impl.AppRepository
-import info.nightscout.interfaces.GlucoseUnit
-import info.nightscout.interfaces.aps.DetermineBasalAdapter
-import info.nightscout.interfaces.aps.SMBDefaults
-import info.nightscout.interfaces.constraints.Constraints
-import info.nightscout.interfaces.iob.GlucoseStatus
-import info.nightscout.interfaces.iob.IobCobCalculator
-import info.nightscout.interfaces.iob.IobTotal
-import info.nightscout.interfaces.iob.MealData
-import info.nightscout.interfaces.plugin.ActivePlugin
-import info.nightscout.interfaces.profile.Profile
-import info.nightscout.interfaces.profile.ProfileFunction
-import info.nightscout.interfaces.utils.Round
-import info.nightscout.plugins.aps.R
-import info.nightscout.plugins.aps.logger.LoggerCallback
-import info.nightscout.plugins.aps.openAPSSMB.DetermineBasalResultSMB
-import info.nightscout.plugins.aps.utils.ScriptReader
-import info.nightscout.rx.logging.AAPSLogger
-import info.nightscout.rx.logging.LTag
-import info.nightscout.shared.SafeParse
-import info.nightscout.shared.interfaces.ResourceHelper
-import info.nightscout.shared.sharedPreferences.SP
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import org.mozilla.javascript.Context
+import org.mozilla.javascript.*
 import org.mozilla.javascript.Function
-import org.mozilla.javascript.NativeJSON
-import org.mozilla.javascript.NativeObject
-import org.mozilla.javascript.RhinoException
-import org.mozilla.javascript.Scriptable
-import org.mozilla.javascript.ScriptableObject
-import org.mozilla.javascript.Undefined
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import java.nio.charset.StandardCharsets
@@ -47,7 +41,7 @@ import javax.inject.Inject
 class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
 
     @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var constraintChecker: Constraints
+    @Inject lateinit var constraintChecker: ConstraintsChecker
     @Inject lateinit var sp: SP
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var profileFunction: ProfileFunction
@@ -181,7 +175,12 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         microBolusAllowed: Boolean,
         uamAllowed: Boolean,
         advancedFiltering: Boolean,
-        flatBGsDetected: Boolean
+        flatBGsDetected: Boolean,
+        tdd1D: Double?,
+        tdd7D: Double?,
+        tddLast24H: Double?,
+        tddLast4H: Double?,
+        tddLast8to4H: Double?
     ) {
         val pump = activePlugin.activePump
         val pumpBolusStep = pump.pumpDescription.bolusStep
@@ -226,7 +225,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         this.profile.put("carbsReqThreshold", sp.getInt(R.string.key_carbsReqThreshold, SMBDefaults.carbsReqThreshold))
         this.profile.put("current_basal", basalRate)
         this.profile.put("temptargetSet", tempTargetSet)
-        this.profile.put("autosens_max", SafeParse.stringToDouble(sp.getString(info.nightscout.core.utils.R.string.key_openapsama_autosens_max, "1.2")))
+        this.profile.put("autosens_max", SafeParse.stringToDouble(sp.getString(app.aaps.core.utils.R.string.key_openapsama_autosens_max, "1.2")))
         if (profileFunction.getUnits() == GlucoseUnit.MMOL) {
             this.profile.put("out_units", "mmol/L")
         }
@@ -332,7 +331,8 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         this.profile.put("insulinID", insulinID)
         this.profile.put("tsuSMBCap", SafeParse.stringToDouble(sp.getString(R.string.key_tsunami_smbcap, "1")))
         this.profile.put("tsuInsReqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinReqPCT, "65")))
-        this.profile.put("percentage", profile.getOriginalPercentage())
+        val effective = repository.getEffectiveProfileSwitchActiveAt(now).blockingGet()
+        this.profile.put("percentage", if (effective is ValueWrapper.Existing) effective.value.originalPercentage else 100)
         this.profile.put("dia", profile.dia)
         this.profile.put("tsunamiActive", tsunamiActive)
         this.profile.put("enableWaveMode", sp.getBoolean(R.string.key_enable_wave_mode, false))

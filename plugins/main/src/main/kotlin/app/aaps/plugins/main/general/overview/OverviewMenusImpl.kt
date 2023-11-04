@@ -14,6 +14,8 @@ import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.overview.OverviewMenus
+import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventRefreshOverview
@@ -33,7 +35,8 @@ class OverviewMenusImpl @Inject constructor(
     private val rxBus: RxBus,
     private val config: Config,
     private val loop: Loop,
-    private val fabricPrivacy: FabricPrivacy
+    private val fabricPrivacy: FabricPrivacy,
+    private val activePlugin: ActivePlugin
 ) : OverviewMenus {
 
     enum class CharTypeData(
@@ -122,6 +125,14 @@ class OverviewMenusImpl @Inject constructor(
             secondary = false,
             shortnameId = R.string.activity_shortname
         ),
+        TSU(
+            R.string.overview_show_tsunami,
+            app.aaps.core.ui.R.attr.icTsunamiColor,
+            app.aaps.core.ui.R.attr.menuTextColor,
+            primary = true,
+            secondary = false,
+            shortnameId = R.string.tsunami_shortname),
+
         DEVSLOPE(
             R.string.overview_show_deviation_slope,
             app.aaps.core.ui.R.attr.devSlopePosColor,
@@ -188,6 +199,7 @@ class OverviewMenusImpl @Inject constructor(
     override fun setupChartMenu(context: Context, chartButton: ImageButton) {
         val settingsCopy = setting
         val numOfGraphs = settingsCopy.size // 1 main + x secondary
+        val tsunamiIsActiveAPS = ((activePlugin.activeAPS as PluginBase).name == "Tsunami")
 
         chartButton.setOnClickListener { v: View ->
             val predictionsAvailable: Boolean = when {
@@ -218,6 +230,7 @@ class OverviewMenusImpl @Inject constructor(
                     var insert = true
                     if (m == CharTypeData.PRE) insert = predictionsAvailable
                     if (m == CharTypeData.DEVSLOPE) insert = config.isDev()
+                    if (m == CharTypeData.TSU) insert = tsunamiIsActiveAPS
                     if (used.contains(m.ordinal)) insert = false
                     for (g2 in g + 1 until numOfGraphs) {
                         if (settingsCopy[g2][m.ordinal]) insert = false

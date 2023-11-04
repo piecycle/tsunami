@@ -38,6 +38,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
         ColorGroup.Careportal       -> app.aaps.core.ui.R.color.high
         ColorGroup.Pump             -> app.aaps.core.ui.R.color.loopDisconnected
         ColorGroup.Aaps             -> app.aaps.core.ui.R.color.defaultText
+        ColorGroup.Tsunami          -> app.aaps.core.ui.R.color.tsunamiMint
         else                        -> app.aaps.core.ui.R.color.defaultText
     }
 
@@ -110,10 +111,12 @@ class UserEntryPresentationHelperImpl @Inject constructor(
         Sources.Aaps                -> R.drawable.ic_aaps
         Sources.GarminDevice        -> app.aaps.core.ui.R.drawable.ic_generic_icon
         Sources.Unknown             -> app.aaps.core.ui.R.drawable.ic_generic_icon
+        Sources.TsunamiDialog       -> R.drawable.ic_tsunami
     }
 
     override fun actionToColoredString(action: Action): Spanned = when (action) {
         Action.TREATMENT -> HtmlHelper.fromHtml(coloredAction(Action.BOLUS) + " + " + coloredAction(Action.CARBS))
+        Action.TSUNAMI_BOLUS -> HtmlHelper.fromHtml(coloredAction(Action.TSUNAMI) + " + " + coloredAction(Action.BOLUS))
         else             -> HtmlHelper.fromHtml(coloredAction(action))
     }
 

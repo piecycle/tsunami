@@ -8,6 +8,7 @@ import app.aaps.plugins.aps.openAPSSMB.DetermineBasalResultSMB
 import app.aaps.plugins.aps.openAPSSMBDynamicISF.DetermineBasalAdapterSMBDynamicISFJS
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import app.aaps.plugins.aps.tsunami.DetermineBasalAdapterTsunamiJS
 
 @Module
 @Suppress("unused")
@@ -19,4 +20,6 @@ abstract class AlgModule {
     @ContributesAndroidInjector abstract fun determineBasalAdapterAMAJSInjector(): DetermineBasalAdapterAMAJS
     @ContributesAndroidInjector abstract fun determineBasalAdapterSMBJSInjector(): DetermineBasalAdapterSMBJS
     @ContributesAndroidInjector abstract fun determineBasalAdapterSMBAutoISFJSInjector(): DetermineBasalAdapterSMBDynamicISFJS
+    @ContributesAndroidInjector abstract fun determineBasalAdapterTsunamiJSInjector(): DetermineBasalAdapterTsunamiJS
+
 }

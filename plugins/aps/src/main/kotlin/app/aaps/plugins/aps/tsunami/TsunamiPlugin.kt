@@ -1,27 +1,28 @@
-package info.nightscout.plugins.aps.tsunami
+package app.aaps.plugins.aps.tsunami
 
 import android.content.Context
+import app.aaps.annotations.OpenForTesting
+import app.aaps.core.interfaces.aps.DetermineBasalAdapter
+import app.aaps.core.interfaces.bgQualityCheck.BgQualityCheck
+import app.aaps.core.interfaces.configuration.Config
+import app.aaps.core.interfaces.constraints.ConstraintsChecker
+import app.aaps.core.interfaces.iob.GlucoseStatusProvider
+import app.aaps.core.interfaces.iob.IobCobCalculator
+import app.aaps.core.interfaces.logging.AAPSLogger
+import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.profiling.Profiler
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.sharedPreferences.SP
+import app.aaps.core.interfaces.stats.TddCalculator
+import app.aaps.core.interfaces.utils.DateUtil
+import app.aaps.core.interfaces.utils.HardLimits
+import app.aaps.database.impl.AppRepository
+import app.aaps.plugins.aps.R
+import app.aaps.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
+import app.aaps.plugins.aps.utils.ScriptReader
 import dagger.android.HasAndroidInjector
-import info.nightscout.androidaps.annotations.OpenForTesting
-import info.nightscout.database.impl.AppRepository
-import info.nightscout.interfaces.Config
-import info.nightscout.interfaces.aps.DetermineBasalAdapter
-import info.nightscout.interfaces.bgQualityCheck.BgQualityCheck
-import info.nightscout.interfaces.constraints.Constraints
-import info.nightscout.interfaces.iob.GlucoseStatusProvider
-import info.nightscout.interfaces.iob.IobCobCalculator
-import info.nightscout.interfaces.plugin.ActivePlugin
-import info.nightscout.interfaces.profile.ProfileFunction
-import info.nightscout.interfaces.profiling.Profiler
-import info.nightscout.interfaces.utils.HardLimits
-import info.nightscout.plugins.aps.R
-import info.nightscout.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
-import info.nightscout.plugins.aps.utils.ScriptReader
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.rx.logging.AAPSLogger
-import info.nightscout.shared.interfaces.ResourceHelper
-import info.nightscout.shared.sharedPreferences.SP
-import info.nightscout.shared.utils.DateUtil
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,7 +32,7 @@ class TsunamiPlugin @Inject constructor(
     injector: HasAndroidInjector,
     aapsLogger: AAPSLogger,
     rxBus: RxBus,
-    constraintChecker: Constraints,
+    constraintChecker: ConstraintsChecker,
     rh: ResourceHelper,
     profileFunction: ProfileFunction,
     context: Context,
@@ -43,8 +44,9 @@ class TsunamiPlugin @Inject constructor(
     dateUtil: DateUtil,
     repository: AppRepository,
     glucoseStatusProvider: GlucoseStatusProvider,
-    private val config: Config,
-    private val bgQualityCheck: BgQualityCheck
+    bgQualityCheck: BgQualityCheck,
+    tddCalculator: TddCalculator,
+    private val config: Config
 ) : OpenAPSSMBPlugin(
     injector,
     aapsLogger,
@@ -61,7 +63,8 @@ class TsunamiPlugin @Inject constructor(
     dateUtil,
     repository,
     glucoseStatusProvider,
-    bgQualityCheck
+    bgQualityCheck,
+    tddCalculator
 ) {
 
     init {

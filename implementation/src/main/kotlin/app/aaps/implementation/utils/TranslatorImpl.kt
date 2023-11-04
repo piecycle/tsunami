@@ -102,6 +102,9 @@ class TranslatorImpl @Inject internal constructor(
         Action.PLUGIN_DISABLED                 -> rh.gs(app.aaps.core.ui.R.string.uel_plugin_disabled)
         Action.LOOP_CHANGE                     -> rh.gs(app.aaps.core.ui.R.string.uel_loop_change)
         Action.LOOP_REMOVED                    -> rh.gs(app.aaps.core.ui.R.string.uel_loop_removed)
+        Action.TSUNAMI                         -> rh.gs(app.aaps.core.ui.R.string.uel_tsunami)
+        Action.TSUNAMI_BOLUS                   -> rh.gs(app.aaps.core.ui.R.string.uel_tsunami)
+        Action.CANCEL_TSUNAMI                  -> rh.gs(app.aaps.core.ui.R.string.uel_cancel_tsunami)
         Action.UNKNOWN                         -> rh.gs(app.aaps.core.ui.R.string.unknown)
     }
 

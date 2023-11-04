@@ -1,22 +1,22 @@
-package info.nightscout.workflow
+package app.aaps.workflow
 
 import android.content.Context
 import android.graphics.Color
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import app.aaps.core.interfaces.aps.Loop
+import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.main.events.EventIobCalculationProgress
+import app.aaps.core.main.graph.OverviewData
+import app.aaps.core.main.utils.worker.LoggingWorker
+import app.aaps.core.main.workflow.CalculationWorkflow
+import app.aaps.core.utils.receivers.DataWorkerStorage
+import app.aaps.database.ValueWrapper
+import app.aaps.database.impl.AppRepository
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import info.nightscout.core.events.EventIobCalculationProgress
-import info.nightscout.core.graph.OverviewData
-import info.nightscout.core.utils.receivers.DataWorkerStorage
-import info.nightscout.core.utils.worker.LoggingWorker
-import info.nightscout.core.workflow.CalculationWorkflow
-import info.nightscout.database.ValueWrapper
-import info.nightscout.database.impl.AppRepository
-import info.nightscout.interfaces.aps.Loop
-import info.nightscout.interfaces.profile.ProfileFunction
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.shared.interfaces.ResourceHelper
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlin.math.max
@@ -70,8 +70,11 @@ class PrepareTsunamiDataWorker(
                 tsunamiArray.add(DataPoint(time.toDouble()/*/(1000*60*60)*/, currentTsunami))
             }
             lastTsunami = currentTsunami
-            time += 5 * 60 * 1000L
+            time += /*5 * */ 60 * 1000L //MP: Doing it in steps of 5 minutes might lead to little pyramids at the end of a tsunami mode box, because the final points are drawn with ms precision.
         }
+
+
+
         // final points
         val tsuEnabled = repository.getTsunamiModeActiveAt(System.currentTimeMillis()).blockingGet()
         if (tsuEnabled is ValueWrapper.Existing) {

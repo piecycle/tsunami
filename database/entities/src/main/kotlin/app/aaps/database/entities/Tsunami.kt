@@ -1,14 +1,10 @@
-package info.nightscout.database.entities
+package app.aaps.database.entities
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import info.nightscout.database.entities.embedments.InterfaceIDs
-import info.nightscout.database.entities.interfaces.DBEntryWithTimeAndDuration
-import info.nightscout.database.entities.interfaces.TraceableDBEntry
-import java.util.TimeZone
+import androidx.room.*
+import app.aaps.database.entities.embedments.InterfaceIDs
+import app.aaps.database.entities.interfaces.DBEntryWithTimeAndDuration
+import app.aaps.database.entities.interfaces.TraceableDBEntry
+import java.util.*
 
 @Entity(
     tableName = TABLE_TSUNAMI,

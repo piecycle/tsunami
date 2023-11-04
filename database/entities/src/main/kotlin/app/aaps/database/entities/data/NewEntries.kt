@@ -1,20 +1,6 @@
 package app.aaps.database.entities.data
 
-import app.aaps.database.entities.BolusCalculatorResult
-import app.aaps.database.entities.Carbs
-import app.aaps.database.entities.EffectiveProfileSwitch
-import app.aaps.database.entities.ExtendedBolus
-import app.aaps.database.entities.GlucoseValue
-import app.aaps.database.entities.HeartRate
-import app.aaps.database.entities.MultiwaveBolusLink
-import app.aaps.database.entities.OfflineEvent
-import app.aaps.database.entities.PreferenceChange
-import app.aaps.database.entities.ProfileSwitch
-import app.aaps.database.entities.TemporaryBasal
-import app.aaps.database.entities.TemporaryTarget
-import app.aaps.database.entities.TherapyEvent
-import app.aaps.database.entities.TotalDailyDose
-import app.aaps.database.entities.VersionChange
+import app.aaps.database.entities.*
 
 data class NewEntries(
     val apsResults: List<app.aaps.database.entities.APSResult>,
@@ -35,4 +21,5 @@ data class NewEntries(
     val totalDailyDoses: List<TotalDailyDose>,
     val versionChanges: List<VersionChange>,
     val heartRates: List<HeartRate>,
+    val tsunami: List<Tsunami>
 )

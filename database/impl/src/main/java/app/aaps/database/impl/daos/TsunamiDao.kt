@@ -1,13 +1,12 @@
-package info.nightscout.database.impl.daos
+package app.aaps.database.impl.daos
 
 import androidx.room.Dao
 import androidx.room.Query
-import info.nightscout.database.entities.TABLE_TSUNAMI
-import info.nightscout.database.entities.Tsunami
+import app.aaps.database.entities.TABLE_TSUNAMI
+import app.aaps.database.entities.Tsunami
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
-@Suppress("FunctionName")
 @Dao
 internal interface TsunamiDao : TraceableDao<Tsunami> {
 
@@ -59,5 +58,5 @@ internal interface TsunamiDao : TraceableDao<Tsunami> {
     fun getCurrentFromHistoric(referenceId: Long): Maybe<Tsunami>
 
     @Query("SELECT * FROM $TABLE_TSUNAMI WHERE dateCreated > :since AND dateCreated <= :until LIMIT :limit OFFSET :offset")
-    suspend fun getNewEntriesSince(since: Long, until: Long, limit: Int, offset: Int): List<Tsunami>
+    fun getNewEntriesSince(since: Long, until: Long, limit: Int, offset: Int): List<Tsunami>
 }

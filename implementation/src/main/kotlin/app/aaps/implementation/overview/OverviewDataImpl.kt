@@ -36,6 +36,7 @@ import app.aaps.core.main.iob.round
 import app.aaps.database.ValueWrapper
 import app.aaps.database.entities.GlucoseValue
 import app.aaps.database.entities.TemporaryTarget
+import app.aaps.database.entities.Tsunami
 import app.aaps.database.impl.AppRepository
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -72,6 +73,7 @@ class OverviewDataImpl @Inject constructor(
         predictionsGraphSeries = PointsWithLabelGraphSeries()
         baseBasalGraphSeries = LineGraphSeries()
         tempBasalGraphSeries = LineGraphSeries()
+        tsunamiSeries = LineGraphSeries()
         basalLineGraphSeries = LineGraphSeries()
         absoluteBasalGraphSeries = LineGraphSeries()
         temporaryTargetSeries = LineGraphSeries()
@@ -264,6 +266,17 @@ class OverviewDataImpl @Inject constructor(
             }
 
     /*
+    * TSUNAMI
+    */
+
+    override val tsunami: Tsunami?
+        get() =
+            repository.getTsunamiModeActiveAt(dateUtil.now()).blockingGet().let { tsunami ->
+                if (tsunami is ValueWrapper.Existing) tsunami.value
+                else null
+            }
+
+    /*
      * SENSITIVITY
      */
 
@@ -289,6 +302,8 @@ class OverviewDataImpl @Inject constructor(
     override var absoluteBasalGraphSeries: LineGraphSeries<ScaledDataPoint> = LineGraphSeries()
 
     override var temporaryTargetSeries: LineGraphSeries<DataPoint> = LineGraphSeries()
+
+    override var tsunamiSeries: LineGraphSeries<DataPoint> = LineGraphSeries()
 
     override var maxIAValue = 0.0
     override val actScale = Scale()

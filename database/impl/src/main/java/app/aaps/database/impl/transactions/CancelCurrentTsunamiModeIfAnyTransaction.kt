@@ -1,7 +1,7 @@
-package info.nightscout.database.impl.transactions
+package app.aaps.database.impl.transactions
 
-import info.nightscout.database.entities.Tsunami
-import info.nightscout.database.entities.interfaces.end
+import app.aaps.database.entities.Tsunami
+import app.aaps.database.entities.interfaces.end
 
 class CancelCurrentTsunamiModeIfAnyTransaction(
     val timestamp: Long

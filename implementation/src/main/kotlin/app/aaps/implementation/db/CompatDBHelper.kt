@@ -30,7 +30,9 @@ import app.aaps.database.entities.ProfileSwitch
 import app.aaps.database.entities.TemporaryBasal
 import app.aaps.database.entities.TemporaryTarget
 import app.aaps.database.entities.TherapyEvent
+import app.aaps.database.entities.Tsunami
 import app.aaps.database.impl.AppRepository
+import app.aaps.core.interfaces.rx.events.EventTsunamiModeChange
 import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -100,6 +102,11 @@ class CompatDBHelper @Inject constructor(
             it.filterIsInstance<TemporaryTarget>().firstOrNull()?.let { tt ->
                 aapsLogger.debug(LTag.DATABASE, "Firing EventTempTargetChange $tt")
                 rxBus.send(EventTempTargetChange())
+            }
+            it.filterIsInstance<Tsunami>().firstOrNull()?.let { ts ->
+                aapsLogger.debug(LTag.DATABASE, "Firing EventTsunamiModeChange $ts")
+                rxBus.send(EventTsunamiModeChange())
+                rxBus.send(EventNewHistoryData(ts.timestamp, false)) //MP required to refresh graph & instantly plot tsunami duration
             }
             it.filterIsInstance<TherapyEvent>().firstOrNull()?.let { te ->
                 aapsLogger.debug(LTag.DATABASE, "Firing EventTherapyEventChange $te")

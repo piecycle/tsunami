@@ -18,6 +18,7 @@ import app.aaps.core.main.graph.data.Scale
 import app.aaps.core.main.graph.data.ScaledDataPoint
 import app.aaps.database.entities.GlucoseValue
 import app.aaps.database.entities.TemporaryTarget
+import app.aaps.database.entities.Tsunami
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
@@ -94,6 +95,11 @@ interface OverviewData {
     val temporaryTarget: TemporaryTarget?
 
     /*
+    * TSUNAMI
+    */
+    val tsunami: Tsunami?
+
+    /*
      * SENSITIVITY
      */
     fun lastAutosensData(iobCobCalculator: IobCobCalculator): AutosensData?
@@ -114,6 +120,8 @@ interface OverviewData {
     var absoluteBasalGraphSeries: LineGraphSeries<ScaledDataPoint>
 
     var temporaryTargetSeries: LineGraphSeries<DataPoint>
+    //MP Tsunami graph
+    var tsunamiSeries: LineGraphSeries<DataPoint>
 
     var maxIAValue: Double
     val actScale: Scale

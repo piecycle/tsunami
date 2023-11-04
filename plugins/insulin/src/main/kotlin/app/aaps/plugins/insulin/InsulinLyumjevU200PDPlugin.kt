@@ -1,14 +1,14 @@
-package info.nightscout.insulin
+package app.aaps.plugins.insulin
 
+import app.aaps.core.interfaces.configuration.Config
+import app.aaps.core.interfaces.insulin.Insulin
+import app.aaps.core.interfaces.logging.AAPSLogger
+import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.ui.UiInteraction
+import app.aaps.core.interfaces.utils.HardLimits
 import dagger.android.HasAndroidInjector
-import info.nightscout.interfaces.Config
-import info.nightscout.interfaces.insulin.Insulin
-import info.nightscout.interfaces.profile.ProfileFunction
-import info.nightscout.interfaces.ui.UiInteraction
-import info.nightscout.interfaces.utils.HardLimits
-import info.nightscout.rx.bus.RxBus
-import info.nightscout.rx.logging.AAPSLogger
-import info.nightscout.shared.interfaces.ResourceHelper
 import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton

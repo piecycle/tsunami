@@ -114,6 +114,20 @@ open class DatabaseModule {
         }
     }
 
+    //MP Tsunami database migration
+    private val migration24to25 = object : Migration(24,25) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `tsunami` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `version` INTEGER NOT NULL, `dateCreated` INTEGER NOT NULL, `isValid` INTEGER NOT NULL, `referenceId` INTEGER, `timestamp` INTEGER NOT NULL, `utcOffset` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `tsunamiMode` INTEGER NOT NULL, `nightscoutSystemId` TEXT, `nightscoutId` TEXT, `pumpType` TEXT, `pumpSerial` TEXT, `temporaryId` INTEGER, `pumpId` INTEGER, `startId` INTEGER, `endId` INTEGER, FOREIGN KEY(`referenceId`) REFERENCES `tsunami`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_id` ON `tsunami` (`id`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_isValid` ON `tsunami` (`isValid`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_nightscoutId` ON `tsunami` (`nightscoutId`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_referenceId` ON `tsunami` (`referenceId`)")
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_tsunami_timestamp` ON `tsunami` (`timestamp`)")
+            // Custom indexes must be dropped on migration to pass room schema checking after upgrade
+            dropCustomIndexes(database)
+        }
+    }
+
     /** List of all migrations for easy reply in tests. */
     @VisibleForTesting
     internal val migrations = arrayOf(migration20to21, migration21to22, migration22to23, migration23to24)

@@ -185,6 +185,16 @@ class CalculationWorkflowImpl @Inject constructor(
                     .build()
             )
             .then(
+                OneTimeWorkRequest.Builder(PrepareTsunamiDataWorker::class.java)
+                    .setInputData(dataWorkerStorage.storeInputData(PrepareTsunamiDataWorker.PrepareTsunamiData(overviewData)))
+                    .build()
+            )
+            .then(
+                OneTimeWorkRequest.Builder(UpdateGraphWorker::class.java)
+                    .setInputData(Data.Builder().putString(JOB, job).putInt(PASS, CalculationWorkflow.ProgressData.DRAW_TSUNAMI_DATA.pass).build())
+                    .build()
+            )
+            .then(
                 runIf = job == MAIN_CALCULATION,
                 OneTimeWorkRequest.Builder(UpdateGraphWorker::class.java)
                     .setInputData(Data.Builder().putString(JOB, job).putInt(PASS, CalculationWorkflow.ProgressData.DRAW_IOB.pass).build())
