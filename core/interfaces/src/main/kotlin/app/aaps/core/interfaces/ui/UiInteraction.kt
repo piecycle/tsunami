@@ -5,7 +5,6 @@ import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentManager
 import app.aaps.core.interfaces.nsclient.NSAlarm
-import dagger.android.HasAndroidInjector
 
 /**
  * Interface to use activities located in different modules
@@ -23,7 +22,23 @@ interface UiInteraction {
     val myPreferenceFragment: Class<*>
     val quickWizardListActivity: Class<*>
 
-    val prefGeneral: Int
+    companion object {
+
+        const val PLUGIN_NAME = "PluginName"
+
+        /**
+         * Preference from [Preferences]
+         */
+        const val PREFERENCE = "Preference"
+    }
+
+    enum class Preferences { PROTECTION }
+
+    /**
+     * Arrays for preferences
+     */
+    val unitsEntries: Array<CharSequence>
+    val unitsValues: Array<CharSequence>
 
     /**
      * Show ErrorHelperActivity and start alarm
@@ -74,7 +89,7 @@ interface UiInteraction {
     fun addNotificationValidFor(id: Int, text: String, level: Int, validMinutes: Int)
     fun addNotificationWithSound(id: Int, text: String, level: Int, @RawRes soundId: Int?)
     fun addNotificationValidTo(id: Int, date: Long, text: String, level: Int, validTo: Long)
-    fun addNotificationWithAction(injector: HasAndroidInjector, nsAlarm: NSAlarm)
+    fun addNotificationWithAction(nsAlarm: NSAlarm)
     fun addNotificationWithAction(id: Int, text: String, level: Int, buttonText: Int, action: Runnable, @RawRes soundId: Int? = null, date: Long = System.currentTimeMillis())
     fun showToastAndNotification(ctx: Context?, string: String?, @RawRes soundID: Int)
 

@@ -66,6 +66,7 @@
     <string name="omnipod_common_overview_reservoir_value">Zbývá %1$.2f U</string>
     <string name="omnipod_common_overview_reservoir_value_over50">Zbývá více než 50 U</string>
     <string name="omnipod_common_overview_errors">Chyby</string>
+    <string name="omnipod_common_uncertain">neznámé</string>
     <!-- Omnipod - Wizard Base -->
     <string name="omnipod_common_wizard_button_cancel">Zrušit</string>
     <string name="omnipod_common_wizard_button_finish">Konec</string>
@@ -124,6 +125,7 @@
     <string name="omnipod_common_pod_status_waiting_for_activation">Probíhá nastavování (čeká se na aktivaci Podu)</string>
     <string name="omnipod_common_pod_status_waiting_for_cannula_insertion">Probíhá nastavování (čeká se na aplikaci kanyly)</string>
     <string name="omnipod_common_pod_status_running">Běží</string>
+    <string name="omnipod_common_pod_status_normal">Normální</string>
     <string name="omnipod_common_pod_status_suspended">Pozastaveno</string>
     <string name="omnipod_common_pod_status_pod_fault">Chyba Podu</string>
     <string name="omnipod_common_pod_status_activation_time_exceeded">Byl překročen čas aktivace</string>
@@ -175,6 +177,7 @@
     <string name="omnipod_common_ok">OK</string>
     <string name="omnipod_common_cancel">Zrušit</string>
     <string name="omnipod_common_warning">Varování</string>
+    <string name="omnipod_common_disable_suspend_alerts">Vypnout varování pozastavení</string>
     <!-- Omnipod - Times -->
     <string name="omnipod_common_moments_ago">před chvílí</string>
     <string name="omnipod_common_less_than_a_minute_ago">Před méně než minutou</string>

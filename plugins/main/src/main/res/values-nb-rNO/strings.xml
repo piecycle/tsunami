@@ -34,8 +34,8 @@
     <string name="smscommunicator_allowednumbers_summary">+XXXXXXXXXX;+YYYYYYYYYY</string>
     <string name="smscommunicator_bolus_reply_with_code">For å levere bolus på %1$.2fE, svar med kode %2$s</string>
     <string name="smscommunicator_meal_bolus_reply_with_code">For å levere måltidsbolus på %1$.2fE, svar med kode %2$s</string>
-    <string name="smscommunicator_temptarget_with_code">For å sette midl. mål på %1$s, svar med kode %2$s</string>
-    <string name="smscommunicator_temptarget_cancel">For å avbryte midl. mål, svar med kode %1$s</string>
+    <string name="smscommunicator_temptarget_with_code">For å sette midlertidig mål på %1$s, svar med kode %2$s</string>
+    <string name="smscommunicator_temptarget_cancel">For å avbryte midlertidig mål, svar med kode %1$s</string>
     <string name="smscommunicator_stops_ns_with_code">For å deaktivere fjernstyring via SMS-meldinger, svar med kode %1$s.\n\nHusk at du vil kunne reaktivere den igjen kun fra AAPS hovedtelefon.</string>
     <string name="smscommunicator_stopped_sms">Fjernstyring via SMS-meldinger er stanset. For å reaktivere, bruk AAPS på hovedtelefonen.</string>
     <string name="smscommunicator_calibration_reply_with_code">For å sende kalibrering %1$.2f, svar med kode %2$s</string>
@@ -46,8 +46,8 @@
     <string name="smscommunicator_bolus_delivered">Bolus %1$.2f E ble levert</string>
     <string name="smscommunicator_meal_bolus_delivered">Måltidsbolus på %1$.2f E er levert</string>
     <string name="smscommunicator_meal_bolus_delivered_tt">Mål %1$s i %2$d minutter</string>
-    <string name="smscommunicator_tt_set">Midl. mål på %1$s i %2$d minutter ble lagret</string>
-    <string name="smscommunicator_tt_canceled">Midl. mål ble fjernet</string>
+    <string name="smscommunicator_tt_set">Midlertidig mål på %1$s i %2$d minutter ble lagret</string>
+    <string name="smscommunicator_tt_canceled">Midlertidig mål ble fjernet</string>
     <string name="smscommunicator_remote_commands_allowed">Tillat fjernstyring via SMS-meldinger</string>
     <string name="smscommunicator_loop_has_been_disabled">Loop har blitt deaktivert</string>
     <string name="smscommunicator_loop_has_been_enabled">Loop har blitt aktivert</string>
@@ -153,6 +153,8 @@
     <string name="dia_short">DIA</string>
     <string name="target_short">MÅL</string>
     <string name="basal_short">BAS</string>
+    <string name="isf_dynamic_label">Algoritmen din kan gi dynamisk beregning av ISF. Verdiene nedenfor brukes bare som en reserveløsning i tilfelle av manglende data</string>
+    <string name="ic_dynamic_label">Algoritmen din kan gi dynamisk beregning av IK. Verdiene nedenfor brukes bare som en reserveløsning i tilfelle av manglende data</string>
     <!-- Actions -->
     <string name="actions">Handlinger</string>
     <string name="description_actions">Hurtigknapper for rask tilgang til ofte brukte funksjoner</string>
@@ -169,13 +171,13 @@
     <string name="pb_label">Pumpebatteri</string>
     <string name="cannula">Kanyle</string>
     <string name="ebstopsloop">Bruk av forlenget bolusfunksjon vil deaktivere lukket loop i perioden med forlenget bolus. Vil du virkelig dette?</string>
-    <string name="statuslights_cannula_age">kanyle alder</string>
+    <string name="statuslights_cannula_age">kanylealder</string>
     <string name="statuslights_patch_pump_age">pumpealder</string>
     <string name="patch_pump">Pumpe</string>
     <!-- Overview -->
     <string name="show_statuslights">Vis statusindikatorer på hjem-skjermen</string>
-    <string name="statuslights_cage_warning">Terskel for advarsel om alder på slangesett [t]</string>
-    <string name="statuslights_cage_critical">Terskel for kritisk alder på slangesett [t]</string>
+    <string name="statuslights_cage_warning">Terskel for advarsel om alder på kanyle [t]</string>
+    <string name="statuslights_cage_critical">Terskel for kritisk alder på kanyle [t]</string>
     <string name="statuslights_iage_warning">Terskel for advarsel, alder på insulin [t]</string>
     <string name="statuslights_iage_critical">Terskel for kritisk alder på insulin [t]</string>
     <string name="statuslights_sage_warning">Terskel for advarsel, alder på sensor [t]</string>
@@ -189,7 +191,20 @@
     <string name="statuslights_bat_warning">Terskel for advarsel, batterinivå for pumpe [%]</string>
     <string name="statuslights_bat_critical">Terskel for kritisk batterinivå for pumpe [%]</string>
     <string name="statuslights_copy_ns">Kopier innstillingene fra NS</string>
+    <string name="graph_scale_6h">6t</string>
+    <string name="graph_scale_12h">12t</string>
+    <string name="graph_scale_18h">18t</string>
+    <string name="graph_scale_24h">24t</string>
+    <string name="graph_long_scale_6h">6 timer</string>
+    <string name="graph_long_scale_12h">12 timer</string>
+    <string name="graph_long_scale_18h">18 timer</string>
+    <string name="graph_long_scale_24h">24 timer</string>
     <string name="a11y_graph">graf</string>
+    <string name="a11y_graph_scale">velg graf-skala</string>
+    <string name="a11y_graph_scale_6h">graf-skala 6 timer</string>
+    <string name="a11y_graph_scale_12h">graf-skala 12 timer</string>
+    <string name="a11y_graph_scale_18h">graf-skala 18 timer</string>
+    <string name="a11y_graph_scale_24h">graf-skala 24 timer</string>
     <string name="a11y_insulin_label">insulin</string>
     <string name="chart_menu">Diagram meny</string>
     <string name="a11y_bg_quality">blodsukkermålingens kvalitet</string>
@@ -211,7 +226,7 @@
     <string name="change_your_input">Endre dine inndata!</string>
     <string name="openaps">OpenAPS</string>
     <string name="uploader">Opplaster-batteri</string>
-    <string name="data_status">BS data status</string>
+    <string name="data_status">Status BS-data</string>
     <string name="quickwizard_settings">Innstillinger for hurtigknapp</string>
     <string name="keep_screen_on_title">Hold skjermen påslått</string>
     <string name="keep_screen_on_summary">Forhindre Android fra å slå av skjermen. Mobilen vil bruke mye batteri hvis den ikke kobles til strømledning.</string>
@@ -241,7 +256,7 @@
     <string name="low_mark">Lav verdi</string>
     <string name="high_mark">Høy verdi</string>
     <string name="short_tabtitles">Korte navn i menyfaner</string>
-    <string name="overview_show_notes_field_in_dialogs_title">Vis merknadsfelt i dialogvindu for boluskalkulator</string>
+    <string name="overview_show_notes_field_in_dialogs_title">Vis merknadsfelt i dialogvindu for behandlinger, sensorbytte, profilbytte og BS-kontroll</string>
     <string name="deliverpartofboluswizard">Boluskalkulator utfører beregninger, men bare denne del av beregnet insulin leveres. Nyttig ved bruk av SMB-algoritmen.</string>
     <string name="deliver_part_of_boluswizard_reset_time">Gi full bolus (100 %) dersom blodsukker er eldre enn</string>
     <string name="enable_bolus_advisor">Aktiver bolusveileder</string>
@@ -258,24 +273,27 @@
     <string name="overview_show_deviation_slope">Avvikskurve</string>
     <string name="overview_show_activity">Insulinaktivitet</string>
     <string name="overview_show_bgi">BS-påvirkning (BGI)</string>
-    <string name="overview_show_sensitivity">Sensitivitet</string>
+    <string name="overview_show_sensitivity">Sensitivitetsendring</string>
     <string name="overview_show_deviations">Avvik</string>
     <string name="overview_show_cob">Aktive KH (COB)</string>
     <string name="overview_show_iob">Aktivt insulin (IOB)</string>
     <string name="overview_show_basals">Basaler</string>
     <string name="overview_show_abs_insulin">Absolutt insulinmengde</string>
+    <string name="overview_show_variable_sens">Variabel sensitivitet</string>
     <string name="prediction_shortname">PROGN</string>
     <string name="basal_shortname">BAS</string>
     <string name="deviation_shortname">AVVIK</string>
     <string name="activity_shortname">AKT</string>
-    <string name="bgi_shortname">-BGI</string>
+    <string name="bgi_shortname">BGI</string>
     <string name="abs_insulin_shortname">ABS</string>
     <string name="devslope_shortname">DEVSLOPE</string>
     <string name="treatments_shortname">BEH</string>
-    <string name="heartRate_shortname">HR</string>
-    <string name="sensitivity_shortname">SENS</string>
+    <string name="heartRate_shortname">PULS</string>
+    <string name="sensitivity_shortname">SENS%</string>
+    <string name="variable_sensitivity_shortname">VSENS</string>
     <string name="graph_scale">Graf-skala</string>
     <string name="graph_menu_divider_header">Graf</string>
+    <string name="temp_basal_overview_short_name">M:</string>
     <!-- Skins -->
     <string name="classic_description">Opprinnelig visningstema</string>
     <string name="lowres_description">Tema for lav oppløsning</string>
@@ -288,4 +306,7 @@
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">Viser en konstant melding med en kort oppsummering av hva loop gjør</string>
     <string name="old_data">GAMLE DATA</string>
+    <string name="overview_show_steps">Skritt</string>
+    <string name="steps_shortname">SKRITT</string>
+    <string name="simple_mode_enabled">Enkel modus aktivert</string>
 </resources>

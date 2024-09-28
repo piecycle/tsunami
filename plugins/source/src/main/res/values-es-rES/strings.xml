@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Source -->
-    <string name="ns_client_bg">NSClient Glucosa</string>
+    <string name="ns_client_bg">NSClient BG</string>
     <string name="ns_client_bg_short">NS BG</string>
     <string name="description_source_ns_client">Recibir los datos de glucosa de Nightscout</string>
     <string name="source_xdrip">xDrip+ BG</string>
@@ -36,4 +36,5 @@
     <string name="dexcom_log_ns_sensor_change_title">Registro de cambio de sensor en Nightscout</string>
     <string name="dexcom_log_ns_sensor_change_summary">Crear evento \"Cambio de sensor\" en Nightscout automáticamente al iniciar el sensor</string>
     <string name="direction">dirección</string>
+    <string name="bg_generation_interval_minutes">Intervalo de generación de BG en minutos</string>
 </resources>

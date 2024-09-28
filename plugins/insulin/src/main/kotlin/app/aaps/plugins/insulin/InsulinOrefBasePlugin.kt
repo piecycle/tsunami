@@ -1,14 +1,17 @@
 package app.aaps.plugins.insulin
 
+import app.aaps.core.data.iob.Iob
+import app.aaps.core.data.model.BS
+import app.aaps.core.data.model.ICfg
+import app.aaps.core.data.plugin.PluginType
+import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.insulin.Insulin
-import app.aaps.core.interfaces.iob.Iob
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.notifications.Notification
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.plugin.PluginDescription
-import app.aaps.core.interfaces.plugin.PluginType
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
@@ -29,7 +32,6 @@ import kotlin.math.pow
  *
  */
 abstract class InsulinOrefBasePlugin(
-    injector: HasAndroidInjector,
     rh: ResourceHelper,
     val profileFunction: ProfileFunction,
     val rxBus: RxBus,
@@ -45,7 +47,7 @@ abstract class InsulinOrefBasePlugin(
         .shortName(R.string.insulin_shortname)
         .visibleByDefault(false)
         .neverVisible(config.NSCLIENT),
-    aapsLogger, rh, injector
+    aapsLogger, rh
 ), Insulin {
 
     private var lastWarned: Long = 0
@@ -77,7 +79,7 @@ abstract class InsulinOrefBasePlugin(
         }
 
     @Inject lateinit var activePlugin: ActivePlugin //MP for Tsunami PD models
-    override fun iobCalcForTreatment(bolus: Bolus, time: Long, dia: Double): Iob {
+    override fun iobCalcForTreatment(bolus: BS, time: Long, dia: Double): Iob {
         assert(dia != 0.0)
         assert(peak != 0)
         val insulinInterface = activePlugin.activeInsulin //MP for Tsunami PD models
@@ -143,8 +145,8 @@ abstract class InsulinOrefBasePlugin(
         return result
     }
 
-    override val insulinConfiguration: InsulinConfiguration
-        get() = InsulinConfiguration(friendlyName, (dia * 1000.0 * 3600.0).toLong(), T.mins(peak.toLong()).msecs())
+    override val iCfg: ICfg
+        get() = ICfg(friendlyName, (dia * 1000.0 * 3600.0).toLong(), T.mins(peak.toLong()).msecs())
 
     override val comment
         get(): String {

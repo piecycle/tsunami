@@ -1,7 +1,20 @@
 package app.aaps.workflow.di
 
-import app.aaps.core.main.workflow.CalculationWorkflow
-import app.aaps.workflow.*
+import app.aaps.core.interfaces.workflow.CalculationWorkflow
+import app.aaps.workflow.CalculationWorkflowImpl
+import app.aaps.workflow.DummyWorker
+import app.aaps.workflow.InvokeLoopWorker
+import app.aaps.workflow.LoadBgDataWorker
+import app.aaps.workflow.PrepareBasalDataWorker
+import app.aaps.workflow.PrepareBgDataWorker
+import app.aaps.workflow.PrepareBucketedDataWorker
+import app.aaps.workflow.PrepareIobAutosensGraphDataWorker
+import app.aaps.workflow.PreparePredictionsWorker
+import app.aaps.workflow.PrepareTemporaryTargetDataWorker
+import app.aaps.workflow.PrepareTreatmentsDataWorker
+import app.aaps.workflow.UpdateGraphWorker
+import app.aaps.workflow.UpdateIobCobSensWorker
+import app.aaps.workflow.UpdateWidgetWorker
 import app.aaps.workflow.iob.IobCobOref1Worker
 import app.aaps.workflow.iob.IobCobOrefWorker
 import dagger.Binds
