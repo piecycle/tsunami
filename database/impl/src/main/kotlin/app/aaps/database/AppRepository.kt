@@ -17,6 +17,7 @@ import app.aaps.database.entities.TemporaryBasal
 import app.aaps.database.entities.TemporaryTarget
 import app.aaps.database.entities.TherapyEvent
 import app.aaps.database.entities.TotalDailyDose
+import app.aaps.database.entities.Tsunami
 import app.aaps.database.entities.UserEntry
 import app.aaps.database.entities.data.NewEntries
 import app.aaps.database.entities.embedments.InterfaceIDs
@@ -105,6 +106,7 @@ class AppRepository @Inject internal constructor(
         removed.add(Pair("OfflineEvent", database.offlineEventDao.deleteOlderThan(than)))
         removed.add(Pair("HeartRate", database.heartRateDao.deleteOlderThan(than)))
         removed.add(Pair("StepsCount", database.stepsCountDao.deleteOlderThan(than)))
+        removed.add(Pair("Tsunami", database.tsunamiDao.deleteOlderThan(than)))
 
         if (deleteTrackedChanges) {
             removed.add(Pair("CHANGES APSResult", database.apsResultDao.deleteTrackedChanges()))
@@ -124,6 +126,7 @@ class AppRepository @Inject internal constructor(
             removed.add(Pair("CHANGES OfflineEvent", database.offlineEventDao.deleteTrackedChanges()))
             removed.add(Pair("CHANGES HeartRate", database.heartRateDao.deleteTrackedChanges()))
             removed.add(Pair("CHANGES StepsCount", database.stepsCountDao.deleteTrackedChanges()))
+            removed.add(Pair("Tsunami", database.tsunamiDao.deleteTrackedChanges()))
         }
         val ret = StringBuilder()
         removed
@@ -791,7 +794,20 @@ class AppRepository @Inject internal constructor(
         versionChanges = database.versionChangeDao.getNewEntriesSince(since, until, limit, offset),
         heartRates = database.heartRateDao.getNewEntriesSince(since, until, limit, offset),
         stepsCount = database.stepsCountDao.getNewEntriesSince(since, until, limit, offset),
+        tsunami = database.tsunamiDao.getNewEntriesSince(since, until, limit, offset),
     )
+    // Tsunami
+    fun getTsunamiModeActiveAt(timestamp: Long): Int? =
+        database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
+
+    //fun getTsunamiModeActiveAt(timestamp: Long): Single<ValueWrapper<Tsunami>> =
+    //    database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
+    //        .subscribeOn(Schedulers.io())
+    //        .toWrappedSingle()
+    //MP Tsunami graph
+    fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>> =
+        database.tsunamiDao.getTsunamiDataFromTime(timestamp)
+            .subscribeOn(Schedulers.io())
 
     fun getApsResultCloseTo(timestamp: Long): Maybe<APSResult> =
         database.apsResultDao.getApsResult(timestamp - 5 * 60 * 1000, timestamp)

@@ -87,6 +87,9 @@ enum class Action(val colorGroup: ColorGroup) {
     EXIT_AAPS(ColorGroup.Aaps),
     PLUGIN_ENABLED(ColorGroup.Aaps),
     PLUGIN_DISABLED(ColorGroup.Aaps),
+    TSUNAMI (ColorGroup.Tsunami),
+    CANCEL_TSUNAMI (ColorGroup.Tsunami),
+    TSUNAMI_BOLUS (ColorGroup.Tsunami),
     UNKNOWN(ColorGroup.Aaps)
     ;
 
@@ -104,6 +107,7 @@ enum class Action(val colorGroup: ColorGroup) {
         Loop,
         Careportal,
         Pump,
-        Aaps
+        Aaps,
+        Tsunami
     }
 }

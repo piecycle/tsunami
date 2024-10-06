@@ -1,8 +1,8 @@
-package app.aaps.database.impl.daos.delegated
+package app.aaps.database.daos.delegated
 
+import app.aaps.database.daos.TsunamiDao
 import app.aaps.database.entities.Tsunami
 import app.aaps.database.entities.interfaces.DBEntry
-import app.aaps.database.impl.daos.TsunamiDao
 
 internal class DelegatedTsunamiDao(changes: MutableList<DBEntry>, private val dao: TsunamiDao) : DelegatedDao(changes), TsunamiDao by dao {
 

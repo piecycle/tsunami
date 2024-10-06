@@ -59,6 +59,7 @@ interface APSResult {
         UNKNOWN,
         AMA,
         SMB,
-        AUTO_ISF
+        AUTO_ISF,
+        TSUNAMI
     }
 }

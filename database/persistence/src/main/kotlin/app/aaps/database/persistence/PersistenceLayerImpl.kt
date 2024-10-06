@@ -1778,4 +1778,8 @@ class PersistenceLayerImpl @Inject constructor(
                 }
                 transactionResult
             }
+
+    // Tsunami
+    override fun getTsunamiModeActiveAt(timestamp: Long): Int? =
+        repository.getTsunamiModeActiveAt(timestamp)
 }

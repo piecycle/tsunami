@@ -1,4 +1,4 @@
-package app.aaps.database.impl.transactions
+package app.aaps.database.transactions
 
 import app.aaps.database.entities.Tsunami
 import app.aaps.database.entities.interfaces.end

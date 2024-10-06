@@ -19,8 +19,6 @@ import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.HardLimits
 import app.aaps.core.interfaces.utils.T
 import app.aaps.database.entities.Bolus
-import app.aaps.database.entities.embedments.InsulinConfiguration
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 import kotlin.math.exp
 import kotlin.math.pow

@@ -32,12 +32,13 @@ import app.aaps.core.main.utils.extensions.formatColor
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.core.utils.HtmlHelper
+import app.aaps.database.AppRepository
 import app.aaps.database.ValueWrapper
 import app.aaps.database.entities.UserEntry
 import app.aaps.database.entities.ValueWithUnit
 import app.aaps.database.impl.AppRepository
 import app.aaps.database.impl.transactions.CancelCurrentTsunamiModeIfAnyTransaction
-import app.aaps.database.impl.transactions.TsunamiModeSwitchTransaction
+import app.aaps.database.transactions.TsunamiModeSwitchTransaction
 import app.aaps.ui.R
 import app.aaps.ui.databinding.DialogTsunamiBinding
 import app.aaps.ui.extensions.toSignedString

@@ -18,6 +18,7 @@ import app.aaps.database.daos.TemporaryBasalDao
 import app.aaps.database.daos.TemporaryTargetDao
 import app.aaps.database.daos.TherapyEventDao
 import app.aaps.database.daos.TotalDailyDoseDao
+import app.aaps.database.daos.TsunamiDao
 import app.aaps.database.daos.UserEntryDao
 import app.aaps.database.daos.VersionChangeDao
 import app.aaps.database.daos.delegated.DelegatedAPSResultDao
@@ -38,6 +39,7 @@ import app.aaps.database.daos.delegated.DelegatedTemporaryBasalDao
 import app.aaps.database.daos.delegated.DelegatedTemporaryTargetDao
 import app.aaps.database.daos.delegated.DelegatedTherapyEventDao
 import app.aaps.database.daos.delegated.DelegatedTotalDailyDoseDao
+import app.aaps.database.daos.delegated.DelegatedTsunamiDao
 import app.aaps.database.daos.delegated.DelegatedUserEntryDao
 import app.aaps.database.daos.delegated.DelegatedVersionChangeDao
 import app.aaps.database.entities.interfaces.DBEntry
@@ -64,5 +66,6 @@ internal class DelegatedAppDatabase(val changes: MutableList<DBEntry>, val datab
     val offlineEventDao: OfflineEventDao = DelegatedOfflineEventDao(changes, database.offlineEventDao)
     val heartRateDao: HeartRateDao = DelegatedHeartRateDao(changes, database.heartRateDao)
     val stepsCountDao: StepsCountDao = DelegatedStepsCountDao(changes, database.stepsCountDao)
+    val tsunamiDao: TsunamiDao = DelegatedTsunamiDao(changes, database.tsunamiDao)
     fun clearAllTables() = database.clearAllTables()
 }

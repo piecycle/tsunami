@@ -16,6 +16,7 @@ import app.aaps.database.entities.TemporaryBasal
 import app.aaps.database.entities.TemporaryTarget
 import app.aaps.database.entities.TherapyEvent
 import app.aaps.database.entities.TotalDailyDose
+import app.aaps.database.entities.Tsunami
 import app.aaps.database.entities.VersionChange
 
 data class NewEntries(
@@ -36,4 +37,5 @@ data class NewEntries(
     val versionChanges: List<VersionChange>,
     val heartRates: List<HeartRate>,
     val stepsCount: List<StepsCount>,
+    val tsunami: List<Tsunami>,
 )

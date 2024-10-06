@@ -1,4 +1,4 @@
-package app.aaps.database.impl.daos
+package app.aaps.database.daos
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -26,7 +26,7 @@ internal interface TsunamiDao : TraceableDao<Tsunami> {
     fun getTsunamiMode(): Maybe<Tsunami>
 
     @Query("SELECT * FROM $TABLE_TSUNAMI WHERE timestamp <= :timestamp AND (timestamp + duration) > :timestamp AND referenceId IS NULL AND isValid = 1 ORDER BY timestamp DESC LIMIT 1")
-    fun getTsunamiModeActiveAt(timestamp: Long): Maybe<Tsunami>
+    fun getTsunamiModeActiveAt(timestamp: Long): Int?
 //MP graph test
     @Query("SELECT * FROM $TABLE_TSUNAMI WHERE timestamp >= :timestamp AND isValid = 1 AND referenceId IS NULL ORDER BY timestamp ASC")
     fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>>

@@ -1383,4 +1383,6 @@ interface PersistenceLayer {
      */
     fun insertOrUpdateApsResult(apsResult: APSResult): Single<TransactionResult<APSResult>>
 
+    //Tsunami
+    fun getTsunamiModeActiveAt(timestamp: Long): Int?
 }

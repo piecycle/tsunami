@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context="app.aaps.ui.dialogs.TsunamiDialog">
+    tools:context=".dialogs.TsunamiDialog">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
 
         <RelativeLayout
             style="@style/StyleDialogHeader"
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center">

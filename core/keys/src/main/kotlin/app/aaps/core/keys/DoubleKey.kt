@@ -47,4 +47,12 @@ enum class DoubleKey(
     ApsAutoIsfSmbDeliveryRatioMax("openapsama_smb_delivery_ratio_max", 0.5, 0.5, 1.0, defaultedBySM = true),
     ApsAutoIsfSmbMaxRangeExtension("openapsama_smb_max_range_extension", 1.0, 1.0, 5.0, defaultedBySM = true),
 
+    //Tsunami
+    TsuSMBCap("key_tsunami_smbcap", 1.0, 0.1, 3.0, defaultedBySM = true, calculatedBySM = true),
+    TsuButtonIncrement1("key_tsunami_button_insulin_increment_1", 0.5, -5.0, 5.0, defaultedBySM = true),
+    TsuButtonIncrement2("key_tsunami_button_insulin_increment_2", 1.0, -5.0, 5.0, defaultedBySM = true),
+    TsuButtonIncrement3("key_tsunami_button_insulin_increment_3", 2.0, -5.0, 5.0, defaultedBySM = true),
+    WaveStart("key_wave_start", 11.0, 0.0, 23.0, defaultedBySM = true, dependency = BooleanKey.EnableWave),
+    WaveEnd("key_wave_end", 21.0, 0.0, 23.0, defaultedBySM = true, dependency = BooleanKey.EnableWave),
+    WaveSMBCap("key_wave_smbcap", 0.5, 0.0, 2.0, defaultedBySM = true, dependency = BooleanKey.UseWaveSMBCap),
 }

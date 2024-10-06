@@ -65,4 +65,12 @@ enum class IntKey(
     GarminLocalHttpPort("communication_http_port", 28891, 1001, 65535, defaultedBySM = true, hideParentScreenIfHidden = true),
     NsClientAlarmStaleData("ns_alarm_stale_data_value", 16, 15, 120),
     NsClientUrgentAlarmStaleData("ns_alarm_urgent_stale_data_value", 31, 30, 180),
+
+    //Tsunami
+    TsuDefaultDuration("key_tsunami_default_duration", 0, 0, 300, defaultedBySM = true),
+    TsuActivityTarget("key_tsu_activity_target", 75, 50, 100, defaultedBySM = true),
+    TsuInsReqPCT("key_insulinReqPCT", 65, 50, 100, defaultedBySM = true),
+    WaveActivityTarget("key_wave_activity_target", 70, 50, 100, defaultedBySM = true, dependency = BooleanKey.EnableWave),
+    WaveInsReqPCT("key_wave_insulinReqPCT", 65, 30, 100, defaultedBySM = true, dependency = BooleanKey.EnableWave),
+
 }
