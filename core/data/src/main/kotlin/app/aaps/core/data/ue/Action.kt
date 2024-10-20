@@ -89,6 +89,7 @@ enum class Action(val colorGroup: ColorGroup) {
     PLUGIN_DISABLED(ColorGroup.Aaps),
     TSUNAMI (ColorGroup.Tsunami),
     CANCEL_TSUNAMI (ColorGroup.Tsunami),
+    CANCEL_TSUNAMI_BOLUS (ColorGroup.Tsunami),
     TSUNAMI_BOLUS (ColorGroup.Tsunami),
     UNKNOWN(ColorGroup.Aaps)
     ;

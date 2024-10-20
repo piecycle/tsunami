@@ -54,5 +54,5 @@ enum class DoubleKey(
     TsuButtonIncrement3("key_tsunami_button_insulin_increment_3", 2.0, -5.0, 5.0, defaultedBySM = true),
     WaveStart("key_wave_start", 11.0, 0.0, 23.0, defaultedBySM = true, dependency = BooleanKey.EnableWave),
     WaveEnd("key_wave_end", 21.0, 0.0, 23.0, defaultedBySM = true, dependency = BooleanKey.EnableWave),
-    WaveSMBCap("key_wave_smbcap", 0.5, 0.0, 2.0, defaultedBySM = true, dependency = BooleanKey.UseWaveSMBCap),
+    WaveSMBCap("key_wave_smbcap", 0.5, 0.0, 2.0, defaultedBySM = true, dependency = BooleanKey.WaveUseSMBCap),
 }

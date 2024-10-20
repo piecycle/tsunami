@@ -44,6 +44,7 @@ interface APSResult {
     var currentTemp: CurrentTemp?
     var oapsProfile: OapsProfile?
     var oapsProfileAutoIsf: OapsProfileAutoIsf?
+    var oapsProfileTsunami: OapsProfileTsunami?
     var mealData: MealData?
 
     val iob: IobTotal? get() = iobData?.get(0)

@@ -17,6 +17,7 @@ import app.aaps.core.data.model.SC
 import app.aaps.core.data.model.TB
 import app.aaps.core.data.model.TDD
 import app.aaps.core.data.model.TE
+import app.aaps.core.data.model.TSU
 import app.aaps.core.data.model.TT
 import app.aaps.core.data.model.UE
 import app.aaps.core.data.pump.defs.PumpType
@@ -36,6 +37,7 @@ import app.aaps.database.persistence.converters.fromDb
 import app.aaps.database.persistence.converters.toDb
 import app.aaps.database.transactions.CancelCurrentOfflineEventIfAnyTransaction
 import app.aaps.database.transactions.CancelCurrentTemporaryTargetIfAnyTransaction
+import app.aaps.database.transactions.CancelCurrentTsunamiModeIfAnyTransaction
 import app.aaps.database.transactions.CgmSourceTransaction
 import app.aaps.database.transactions.CutCarbsTransaction
 import app.aaps.database.transactions.InsertAndCancelCurrentOfflineEventTransaction
@@ -86,6 +88,7 @@ import app.aaps.database.transactions.SyncPumpExtendedBolusTransaction
 import app.aaps.database.transactions.SyncPumpTemporaryBasalTransaction
 import app.aaps.database.transactions.SyncPumpTotalDailyDoseTransaction
 import app.aaps.database.transactions.SyncTemporaryBasalWithTempIdTransaction
+import app.aaps.database.transactions.TsunamiModeSwitchTransaction
 import app.aaps.database.transactions.UpdateNsIdBolusCalculatorResultTransaction
 import app.aaps.database.transactions.UpdateNsIdBolusTransaction
 import app.aaps.database.transactions.UpdateNsIdCarbsTransaction
@@ -1780,6 +1783,52 @@ class PersistenceLayerImpl @Inject constructor(
             }
 
     // Tsunami
+    /* MP Deprecated
     override fun getTsunamiModeActiveAt(timestamp: Long): Int? =
         repository.getTsunamiModeActiveAt(timestamp)
+    */
+    override fun getTsunamiActiveAt(timestamp: Long): TSU? =
+        repository.getTsunamiActiveAt(timestamp).blockingGet()?.fromDb()
+
+    override fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>)
+        : Single<PersistenceLayer.TransactionResult<TSU>> =
+        repository.runTransactionForResult(TsunamiModeSwitchTransaction(tsu.toDb()))
+            .doOnError { aapsLogger.error(LTag.DATABASE, "Error while saving Tsunami mode.", it) }
+            .map { result ->
+                val transactionResult = PersistenceLayer.TransactionResult<TSU>()
+                result.inserted.forEach {
+                    log(
+                        action = action,
+                        source = source,
+                        note = note,
+                        listValues = listValues
+                        )
+                    aapsLogger.debug(LTag.DATABASE, "Inserted Tsunami from ${source.name} $it")
+                    transactionResult.inserted.add(it.fromDb())
+                }
+                result.updated.forEach {
+                    aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
+                    transactionResult.updated.add(it.fromDb())
+                }
+                transactionResult
+            }
+
+    override fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>)
+        : Single<PersistenceLayer.TransactionResult<TSU>> =
+        repository.runTransactionForResult(CancelCurrentTsunamiModeIfAnyTransaction(timestamp))
+            .doOnError { aapsLogger.error(LTag.DATABASE, "Error while updating Tsunami mode.", it) }
+            .map { result ->
+                val transactionResult = PersistenceLayer.TransactionResult<TSU>()
+                result.updated.forEach {
+                    log(
+                        action = action,
+                        source = source,
+                        note = note,
+                        listValues = listValues
+                    )
+                    aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
+                    transactionResult.updated.add(it.fromDb())
+                }
+                transactionResult
+            }
 }

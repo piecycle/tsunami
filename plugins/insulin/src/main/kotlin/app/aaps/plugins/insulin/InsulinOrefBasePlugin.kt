@@ -17,8 +17,6 @@ import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.HardLimits
-import app.aaps.core.interfaces.utils.T
-import app.aaps.database.entities.Bolus
 import javax.inject.Inject
 import kotlin.math.exp
 import kotlin.math.pow
@@ -87,9 +85,9 @@ abstract class InsulinOrefBasePlugin(
             val bolusTime = bolus.timestamp
             val t = (time - bolusTime) / 1000.0 / 60.0
             if (t < 8 * 60 && (insulinID == 105 || insulinID == 205)) { //MP: use pharmacodynamic model if PD model is selected insulin (ID 105 or 205)
-                val PDresult = pdModelIobCalculation(bolus, insulinID, t)
-                result.iobContrib = PDresult.iobContrib
-                result.activityContrib = PDresult.activityContrib
+                val pdResult = pdModelIobCalculation(bolus, insulinID, t)
+                result.iobContrib = pdResult.iobContrib
+                result.activityContrib = pdResult.activityContrib
             } else { // MP: If the pharmacodynamic models are not used (IDs 105 & 205), use the traditional PK-based insulin model instead;
                 val td = dia * 60 //getDIA() always >= MIN_DIA
                 val tp = peak.toDouble()
@@ -106,7 +104,7 @@ abstract class InsulinOrefBasePlugin(
         return result
     }
 
-    fun pdModelIobCalculation(bolus: Bolus, insulinID: Int, t: Double): Iob {
+    fun pdModelIobCalculation(bolus: BS, insulinID: Int, t: Double): Iob {
         //MP Model for estimation of PD-based peak time: (a0 + a1*X)/(1+b1*X), where X = bolus size
         val a0 = 61.33 //MP Units = min
         val a1 = 12.27
@@ -118,12 +116,12 @@ abstract class InsulinOrefBasePlugin(
         } else {
             tp = (a0 + a1 * bolus.amount) / (1 + b1 * bolus.amount) //MP Units = min
         }
-        val tp_model = tp.pow(2.0) * 2 //MP The peak time in the model is defined as half of the square root of this variable - thus the tp entered into the model must be transformed first
+        val tpModel = tp.pow(2.0) * 2 //MP The peak time in the model is defined as half of the square root of this variable - thus the tp entered into the model must be transformed first
         /**
          *
          * MP - UAM Tsunami PD model U100 vs U200
          *
-         * InsActinvity calculation below: The same formula is used for both, U100 and U200
+         * Insulin Activity calculation below: The same formula is used for both, U100 and U200
          * insulin as the concentration effect is already included in the peak time calculation.
          * If peak time is kept constant and only the dose is doubled, the general shape of the
          * curve doesn't change and hence the equation does not need adjusting. Unless a global
@@ -133,12 +131,12 @@ abstract class InsulinOrefBasePlugin(
          * The user must keep in mind that the displayed IOB is only half of the actual IOB.
          *
          */
-        result.activityContrib = (2 * bolus.amount / tp_model) * t * exp(-t.pow(2.0) / tp_model)
+        result.activityContrib = (2 * bolus.amount / tpModel) * t * exp(-t.pow(2.0) / tpModel)
 
         //MP New IOB formula - integrated version of the above activity curve
         val lowerLimit = t //MP lower integration limit, in min
         val upperLimit = 8.0 * 60 //MP upper integration limit, in min
-        result.iobContrib = bolus.amount * (exp(-lowerLimit.pow(2.0)/tp_model) - exp(-upperLimit.pow(2.0)/tp_model))
+        result.iobContrib = bolus.amount * (exp(-lowerLimit.pow(2.0)/tpModel) - exp(-upperLimit.pow(2.0)/tpModel))
 
         return result
     }

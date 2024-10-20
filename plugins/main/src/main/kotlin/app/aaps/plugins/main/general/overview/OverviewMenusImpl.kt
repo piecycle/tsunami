@@ -21,12 +21,12 @@ import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.gridlayout.widget.GridLayout
+import app.aaps.core.interfaces.aps.APSResult
 import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.overview.OverviewMenus
 import app.aaps.core.interfaces.plugin.ActivePlugin
-import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventRefreshOverview
@@ -61,7 +61,6 @@ class OverviewMenusImpl @Inject constructor(
         @StringRes val shortnameId: Int,
         val enabledByDefault: Boolean = false
     ) {
-
         PRE(R.string.overview_show_predictions, app.aaps.core.ui.R.attr.predictionColor, app.aaps.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.prediction_shortname, enabledByDefault = true),
         TREAT(R.string.overview_show_treatments, app.aaps.core.ui.R.attr.cobColor, app.aaps.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.treatments_shortname, enabledByDefault = true),
         BAS(R.string.overview_show_basals, app.aaps.core.ui.R.attr.basal, app.aaps.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.basal_shortname, enabledByDefault = true),
@@ -76,7 +75,7 @@ class OverviewMenusImpl @Inject constructor(
         DEVSLOPE(R.string.overview_show_deviation_slope, app.aaps.core.ui.R.attr.devSlopePosColor, app.aaps.core.ui.R.attr.menuTextColor, primary = false, secondary = true, shortnameId = R.string.devslope_shortname),
         HR(R.string.overview_show_heartRate, app.aaps.core.ui.R.attr.heartRateColor, app.aaps.core.ui.R.attr.menuTextColor, primary = false, secondary = true, shortnameId = R.string.heartRate_shortname),
         STEPS(R.string.overview_show_steps, app.aaps.core.ui.R.attr.stepsColor, app.aaps.core.ui.R.attr.menuTextColor, primary = false, secondary = true, shortnameId = R.string.steps_shortname),
-        TSU(R.string.overview_show_tsunami, app.aaps.core.ui.R.attr.icTsunamiColor, app.aaps.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.tsunami_shortname),
+        TSU(R.string.overview_show_tsunami, app.aaps.core.ui.R.attr.icTsunamiColor, app.aaps.core.ui.R.attr.menuTextColor, primary = true, secondary = false, shortnameId = R.string.tsunami_shortname)
     }
 
     companion object {
@@ -109,11 +108,11 @@ class OverviewMenusImpl @Inject constructor(
                             it.removeAt(i)
                     }
                 }
-            else
+            else //MP List below was extended by a "false" in each row as CharType in OverviewMenus.kt has been extended by 'TSU' entry for Tsunami (15 entries in total)
                 listOf(
-                    arrayOf(true, true, true, false, false, false, false, false, false, false, false, false, false, false),
-                    arrayOf(false, false, false, false, true, false, false, false, false, false, false, false, false, false),
-                    arrayOf(false, false, false, false, false, true, false, false, false, false, false, false, false, false)
+                    arrayOf(true, true, true, false, false, false, false, false, false, false, false, false, false, false, false),
+                    arrayOf(false, false, false, false, true, false, false, false, false, false, false, false, false, false, false),
+                    arrayOf(false, false, false, false, false, true, false, false, false, false, false, false, false, false, false)
                 )
 
     @Synchronized
@@ -147,7 +146,6 @@ class OverviewMenusImpl @Inject constructor(
             rh.gd(R.drawable.ic_arrow_drop_down_white_24dp)?.also { it.setTint(rh.gac(scaleButton.context, app.aaps.core.ui.R.attr.defaultTextColor))},
             null
         )
-        val tsunamiIsActiveAPS = ((activePlugin.activeAPS as PluginBase).name == "Tsunami")
         chartButton.setOnClickListener { v: View ->
             var itemRow = 0
             val predictionsAvailable: Boolean = when {
@@ -197,6 +195,7 @@ class OverviewMenusImpl @Inject constructor(
             itemRow++
 
             // insert secondary items
+            val tsunamiIsActiveAPS = (activePlugin.activeAPS.algorithm == APSResult.Algorithm.TSUNAMI)
             CharTypeData.entries.forEach { m ->
                 var insert = true
                 if (m == CharTypeData.DEVSLOPE) insert = config.isDev()

@@ -797,14 +797,14 @@ class AppRepository @Inject internal constructor(
         tsunami = database.tsunamiDao.getNewEntriesSince(since, until, limit, offset),
     )
     // Tsunami
+    /* MP Deprecated
     fun getTsunamiModeActiveAt(timestamp: Long): Int? =
         database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
+    */
+    fun getTsunamiActiveAt(timestamp: Long): Maybe<Tsunami> =
+        database.tsunamiDao.getTsunamiActiveAt(timestamp)
+            .subscribeOn(Schedulers.io())
 
-    //fun getTsunamiModeActiveAt(timestamp: Long): Single<ValueWrapper<Tsunami>> =
-    //    database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
-    //        .subscribeOn(Schedulers.io())
-    //        .toWrappedSingle()
-    //MP Tsunami graph
     fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>> =
         database.tsunamiDao.getTsunamiDataFromTime(timestamp)
             .subscribeOn(Schedulers.io())

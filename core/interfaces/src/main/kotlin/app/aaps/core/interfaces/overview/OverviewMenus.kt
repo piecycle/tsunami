@@ -18,7 +18,7 @@ interface OverviewMenus {
         ACT,
         DEVSLOPE,
         HR,
-        STEPS
+        STEPS,
         TSU,
     }
 

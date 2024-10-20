@@ -29,6 +29,7 @@ import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
+import app.aaps.core.interfaces.aps.APSResult
 import app.aaps.core.interfaces.aps.IobTotal
 import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.automation.Automation
@@ -68,6 +69,7 @@ import app.aaps.core.interfaces.rx.events.EventRefreshOverview
 import app.aaps.core.interfaces.rx.events.EventScale
 import app.aaps.core.interfaces.rx.events.EventTempBasalChange
 import app.aaps.core.interfaces.rx.events.EventTempTargetChange
+import app.aaps.core.interfaces.rx.events.EventTsunamiModeChange
 import app.aaps.core.interfaces.rx.events.EventUpdateOverviewCalcProgress
 import app.aaps.core.interfaces.rx.events.EventUpdateOverviewGraph
 import app.aaps.core.interfaces.rx.events.EventUpdateOverviewIobCob
@@ -599,9 +601,8 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 && preferences.get(BooleanKey.OverviewShowWizardButton)).toVisibility()
             binding.buttonsLayout.insulinButton.visibility = (profile != null && preferences.get(BooleanKey.OverviewShowInsulinButton)).toVisibility()
             //MP Tsunami button visibility if Tsunami is selected as APS
-            val tsunamiIsActiveAPS = ((activePlugin.activeAPS as PluginBase).name == "Tsunami")
-            //MP check later: This line replaces the sp.get... statement;   preferences.get(BooleanKey.OverviewShowTreatmentButton)).toVisibility()
-            binding.buttonsLayout.tsunamiButton.visibility = (tsunamiIsActiveAPS && !loop.isDisconnected&& pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
+            val tsunamiIsActiveAPS = (activePlugin.activeAPS.algorithm == APSResult.Algorithm.TSUNAMI)
+            binding.buttonsLayout.tsunamiButton.visibility = (tsunamiIsActiveAPS && !loop.isDisconnected&& pump.isInitialized() && !pump.isSuspended() && profile != null && !preferences.get(BooleanKey.HideTsunamiButton)).toVisibility()
             if (loop.isDisconnected || !pump.isInitialized() || pump.isSuspended()) {
                 setRibbon(
                     binding.buttonsLayout.insulinButton,
@@ -617,10 +618,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     rh.gs(app.aaps.core.ui.R.string.overview_insulin_label)
                 )
             }
-            //MP Tsunami button visibility if Tsunami is selected as APS
-            val tsunamiIsActiveAPS = ((activePlugin.activeAPS as PluginBase).name == "Tsunami")
-            binding.buttonsLayout.tsunamiButton.visibility = (tsunamiIsActiveAPS && !loop.isDisconnected&& pump.isInitialized() && !pump.isSuspended() && profile != null && sp.getBoolean(R.string.key_show_tsunami_button, true)).toVisibility()
-
 
             // **** Calibration & CGM buttons ****
             val xDripIsBgSource = xDripSource.isEnabled()
@@ -1047,11 +1044,11 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
     @SuppressLint("SetTextI18n")
     fun updateTsunamiButton() {
-        val tsunamiMode = overviewData.tsunami
+        val tsunamiMode = persistenceLayer.getTsunamiActiveAt(dateUtil.now())
         runOnUiThread {
             _binding ?: return@runOnUiThread
             if (tsunamiMode != null) {
-                val remaining = tsunamiMode.duration + tsunamiMode.timestamp - dateUtil.now()
+                val remaining = tsunamiMode.end - dateUtil.now()
                 if (tsunamiMode.tsunamiMode == 2 && remaining > 0) {
                     setRibbon(
                         binding.buttonsLayout.tsunamiButton,

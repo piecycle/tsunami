@@ -32,48 +32,6 @@ data class Tsunami(
     override var interfaceIDs_backing: InterfaceIDs? = InterfaceIDs(),
     override var timestamp: Long,
     override var utcOffset: Long = TimeZone.getDefault().getOffset(timestamp).toLong(),
-    //var reason: Reason,
-    //var highTarget: Double, // in mgdl
-    //var lowTarget: Double, // in mgdl
     override var duration: Long, // in millis
     var tsunamiMode: Int
-) : TraceableDBEntry, DBEntryWithTimeAndDuration {
-
-    fun contentEqualsTo(other: Tsunami): Boolean =
-        timestamp == other.timestamp &&
-            utcOffset == other.utcOffset &&
-            //reason == other.reason &&
-            //highTarget == other.highTarget &&
-            //lowTarget == other.lowTarget &&
-            duration == other.duration &&
-            isValid == other.isValid
-
-    //fun isRecordDeleted(other: Tsunami): Boolean =
-    //    isValid && !other.isValid
-
-    fun onlyNsIdAdded(previous: Tsunami): Boolean =
-        previous.id != id &&
-            contentEqualsTo(previous) &&
-            previous.interfaceIDs.nightscoutId == null &&
-            interfaceIDs.nightscoutId != null
-/*
-    enum class Reason(val text: String) {
-        @SerializedName("Custom")
-        CUSTOM("Custom"),
-        @SerializedName("Hypo")
-        HYPOGLYCEMIA("Hypo"),
-        @SerializedName("Activity")
-        ACTIVITY("Activity"),
-        @SerializedName("Eating Soon")
-        EATING_SOON("Eating Soon"),
-        @SerializedName("Automation")
-        AUTOMATION("Automation"),
-        @SerializedName("Wear")
-        WEAR("Wear")
-        ;
-
-        companion object {
-            fun fromString(reason: String?) = values().firstOrNull { it.text == reason } ?: CUSTOM
-        }
-    }*/
-}
+) : TraceableDBEntry, DBEntryWithTimeAndDuration

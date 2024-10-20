@@ -11,6 +11,10 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
 import app.aaps.annotations.OpenForTesting
+import app.aaps.core.data.aps.SMBDefaults
+import app.aaps.core.data.model.GlucoseUnit
+import app.aaps.core.data.plugin.PluginType
+import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.aps.APS
 import app.aaps.core.interfaces.aps.APSResult
 import app.aaps.core.interfaces.aps.AutosensResult
@@ -63,7 +67,6 @@ import app.aaps.core.validators.preferences.AdaptiveIntPreference
 import app.aaps.core.validators.preferences.AdaptiveIntentPreference
 import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
 import app.aaps.core.validators.preferences.AdaptiveUnitPreference
-import app.aaps.database.entities.data.GlucoseUnit
 import app.aaps.plugins.aps.OpenAPSFragment
 import app.aaps.plugins.aps.R
 import app.aaps.plugins.aps.events.EventOpenAPSUpdateGui
@@ -76,7 +79,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.floor
 import kotlin.math.ln
-import kotlin.time.Duration.Companion.hours
 
 @OpenForTesting
 @Singleton
@@ -118,8 +120,6 @@ open class TsunamiPlugin @Inject constructor(
     aapsLogger, rh
 ), APS, PluginConstraints {
 
-//.description(R.string.description_tsunami)
-    //remove above comment
 override fun onStart() {
     super.onStart()
     var count = 0
@@ -391,11 +391,12 @@ override fun onStart() {
         val activityPredTimePK = TimeUnit.MILLISECONDS.toMinutes(insulin.peak.toLong()) //MP act. pred. time for PK ins. models; target time = insulin peak time
 
         // Get the ID of the currently used insulin preset
+
         val insulinID = insulin.id.value
 
         // wave active hours redefinition (allowing end times < start times)
-        var waveStart : Double = preferences.get(DoubleKey.WaveStart) ?: 0.0
-        var waveEnd : Double = preferences.get(DoubleKey.WaveEnd) ?: 0.0
+        var waveStart : Double = preferences.get(DoubleKey.WaveStart)
+        var waveEnd : Double = preferences.get(DoubleKey.WaveEnd)
         var referenceTimer: Double = MidnightUtils.secondsFromMidnight() / 3600.0 //MP current time in hours
         if (waveEnd < waveStart) {
             if (referenceTimer < waveStart) {
@@ -409,7 +410,7 @@ override fun onStart() {
 
         // Determine which mode will be active (0 = default; 1 = wave; 2 = tsunami)
         val enableWave : Boolean = preferences.get(BooleanKey.EnableWave)
-        val tsunamiModeID = persistenceLayer.getTsunamiModeActiveAt(now) ?: if (referenceTimer in waveStart..waveEnd && enableWave) {
+        val tsunamiModeID = persistenceLayer.getTsunamiActiveAt(now)?.tsunamiMode ?: if (referenceTimer in waveStart..waveEnd && enableWave) {
             1 //MP Tsunami inactive but conditions for wave are met --> use Wave
         } else {
             0 //MP Tsunami inactive and conditions for wave are not met --> use oref1
@@ -422,7 +423,7 @@ override fun onStart() {
         var deltaReductionPCT : Double = 0.0
         if (tsunamiModeID == 2) { //MP: 2 = Tsunami
             deltaReductionPCT = 1.0
-            SMBcap = preferences.get(DoubleKey.TsuSMBCap) ?: 0.0 //MP: User-set max SMB size for Tsunami.
+            SMBcap = preferences.get(DoubleKey.TsuSMBCap) //MP: User-set max SMB size for Tsunami.
             if (preferences.get(BooleanKey.TsuSMBscaling)) {
                 SMBcap = (SMBcap * Math.min(profile.percentage.toDouble(), 130.0)/100.0) //SMBcap grows and shrinks with profile percentage;
             }
@@ -476,7 +477,6 @@ override fun onStart() {
         historicActivity = Round.roundTo(historicActivity, 0.0001)
         currentActivity = Round.roundTo(currentActivity, 0.0001)
 
-        persistenceLayer.getEffectiveProfileSwitchActiveAt(now).originalPercentage ?: 100,
         //Calculate deltaScore
         //TODO: Improve meal detection system!
         val deltaScore: Double = Round.roundTo(glucoseStatus.shortAvgDelta/4, 0.01)
@@ -536,7 +536,7 @@ override fun onStart() {
             waveStart = waveStart,
             waveEnd = waveEnd,
             referenceTimer = referenceTimer,
-            waveUseSMBCap = preferences.get(BooleanKey.UseWaveSMBCap),
+            waveUseSMBCap = preferences.get(BooleanKey.WaveUseSMBCap),
             SMBcap = SMBcap,
             insulinReqPCT = insulinReqPCT,
             activityTarget = activityTarget,
@@ -553,7 +553,7 @@ override fun onStart() {
             historicActivity = historicActivity,
             currentActivity = currentActivity,
             deltaScore = deltaScore,
-            lastBolus = persistenceLayer.getNewestBolus() ?: 0.0
+            lastBolus = persistenceLayer.getNewestBolus()?.amount ?: 0.0
         )
         val microBolusAllowed = constraintsChecker.isSMBModeEnabled(ConstraintObject(tempBasalFallback.not(), aapsLogger)).also { inputConstraints.copyReasons(it) }.value()
         val flatBGsDetected = bgQualityCheck.state == BgQualityCheck.State.FLAT
@@ -588,7 +588,7 @@ override fun onStart() {
             determineBasalResult.iobData = iobArray
             determineBasalResult.glucoseStatus = glucoseStatus
             determineBasalResult.currentTemp = currentTemp
-            determineBasalResult.oapsProfile = oapsProfile
+            determineBasalResult.oapsProfileTsunami = oapsProfile
             determineBasalResult.mealData = mealData
             lastAPSResult = determineBasalResult
             lastAPSRun = now
@@ -694,7 +694,6 @@ override fun onStart() {
                 title = rh.gs(R.string.tsunami_mode_settings_title)
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.TsuSMBCap, dialogMessage = R.string.tsunami_smbcap_summary, title = R.string.tsunami_smbcap_title))
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.TsuSMBscaling, summary = R.string.tsu_SMB_scaling_summary, title = R.string.tsu_SMB_scaling_title))
-
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.TsuButtonIncrement1, dialogMessage = R.string.tsunami_button_insulin_increment_button_message, title = R.string.tsunami_button_insulin_increment_1))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.TsuButtonIncrement2, dialogMessage = R.string.tsunami_button_insulin_increment_button_message, title = R.string.tsunami_button_insulin_increment_2))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.TsuButtonIncrement3, dialogMessage = R.string.tsunami_button_insulin_increment_button_message, title = R.string.tsunami_button_insulin_increment_3))
@@ -711,6 +710,7 @@ override fun onStart() {
                 key = "wave_mode_settings"
                 title = rh.gs(R.string.wave_mode_settings_title)
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.EnableWave, summary = R.string.enable_wave_mode_summary, title = R.string.enable_wave_mode_title))
+                addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.HideTsunamiButton, summary = R.string.tsu_hide_tsunami_button_summary, title = R.string.tsu_hide_tsunami_button_title))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.WaveStart, dialogMessage = R.string.wave_start_summary, title = R.string.wave_start_title))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.WaveEnd, dialogMessage = R.string.wave_end_summary, title = R.string.wave_end_title))
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.WaveUseSMBCap, summary = R.string.use_wave_smbcap_summary, title = R.string.use_wave_smbcap_title))

@@ -280,6 +280,10 @@
     <string name="wave_insulinReqPCT_message">Reduces the calculated insulin required to the specified percentage for delivery. Example: If calculated insulin required is 1 U and fraction size is 50%, at most 0.5 U will be delivered if no other constraints (e.g. SMB caps) apply.</string>
     <string name="wave_insulinReqPCT_title">Wave mode insulin delivery percentage [%]</string>
     <string name="key_tsu_SMB_scaling" translatable="false">tsu_SMB_scaling</string>
+
+    <string name="tsu_hide_tsunami_button_title">Hide Tsunami button</string>
+    <string name="tsu_hide_tsunami_button_summary">For users wishing to use wave mode only.</string>
+
     <string name="tsu_SMB_scaling_title">Enable SMB cap scaling</string>
     <string name="tsu_SMB_scaling_summary">Scales Tsunami SMB cap with the current profile percentage (max: 130%).</string>
     <string name="key_wave_SMB_scaling" translatable="false">wave_SMB_scaling</string>

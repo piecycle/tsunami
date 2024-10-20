@@ -90,8 +90,15 @@ import kotlin.math.max
             if (units == GlucoseUnit.MGDL) 180.0 else 10.0
         } else overviewData.maxBgValue
         minY = 0.0
-        addSeries(overviewData.tsunamiSeries)
+        addSeries(overviewData.tsunamiSeries as LineGraphSeries<DataPoint>)
     }
+
+    /*
+        fun addTherapyEvents() {
+        maxY = maxOf(maxY, overviewData.maxTherapyEventValue)
+        addSeries(overviewData.therapyEventSeries as PointsWithLabelGraphSeries<DataPointWithLabelInterface>)
+    }
+     */
 
     fun addBasals() {
         overviewData.basalScale.multiplier = 1.0 // get unscaled Y-values for max calculation

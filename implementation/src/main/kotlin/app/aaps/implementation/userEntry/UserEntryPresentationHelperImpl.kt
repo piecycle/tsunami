@@ -122,6 +122,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
     override fun actionToColoredString(action: Action): Spanned = when (action) {
         Action.TREATMENT -> HtmlHelper.fromHtml(coloredAction(Action.BOLUS) + " + " + coloredAction(Action.CARBS))
         Action.TSUNAMI_BOLUS -> HtmlHelper.fromHtml(coloredAction(Action.TSUNAMI) + " + " + coloredAction(Action.BOLUS))
+        Action.CANCEL_TSUNAMI_BOLUS -> HtmlHelper.fromHtml(coloredAction(Action.CANCEL_TSUNAMI) + " + " + coloredAction(Action.BOLUS))
         else             -> HtmlHelper.fromHtml(coloredAction(action))
     }
 

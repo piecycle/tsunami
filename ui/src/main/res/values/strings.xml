@@ -176,7 +176,6 @@
     </string-array>
 
     <!-- Tsunami button -->
-    <string name="prebolus">Prebolus</string>
     <string name="tsunami_duration">Tsunami duration</string>
     <string name="cancel_tsunami">Cancel Tsunami mode.</string>
     <string name="tsunami_label">Tsunami</string>

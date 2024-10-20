@@ -4,22 +4,18 @@ import android.content.Context
 import android.graphics.Color
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import app.aaps.core.graph.data.LineGraphSeries
 import app.aaps.core.interfaces.aps.Loop
+import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.overview.OverviewData
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventIobCalculationProgress
 import app.aaps.core.interfaces.workflow.CalculationWorkflow
-import app.aaps.core.main.events.EventIobCalculationProgress
-import app.aaps.core.interfaces.overview.OverviewData
-import app.aaps.core.main.utils.worker.LoggingWorker
-import app.aaps.core.main.workflow.CalculationWorkflow
+import app.aaps.core.objects.workflow.LoggingWorker
 import app.aaps.core.utils.receivers.DataWorkerStorage
-import app.aaps.database.AppRepository
-import app.aaps.database.ValueWrapper
-import app.aaps.database.impl.AppRepository
 import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlin.math.max
@@ -32,7 +28,7 @@ class PrepareTsunamiDataWorker(
     @Inject lateinit var dataWorkerStorage: DataWorkerStorage
     @Inject lateinit var profileFunction: ProfileFunction
     @Inject lateinit var rh: ResourceHelper
-    @Inject lateinit var repository: AppRepository
+    @Inject lateinit var persistenceLayer: PersistenceLayer
     @Inject lateinit var loop: Loop
     @Inject lateinit var rxBus: RxBus
     private var ctx: Context
@@ -62,8 +58,8 @@ class PrepareTsunamiDataWorker(
         while (time < endTime) {
             val progress = (time - fromTime).toDouble() / (endTime - fromTime) * 100.0 //MP For inclusion of tsunami to graph loading bar
             rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, progress.toInt(), null)) //MP For inclusion of tsunami to graph loading bar
-            val tsuEnabled = repository.getTsunamiModeActiveAt(time).blockingGet()
-            val currentTsunami: Double = if (tsuEnabled is ValueWrapper.Existing) {
+            val tsuEnabled = persistenceLayer.getTsunamiActiveAt(time)
+            val currentTsunami: Double = if (tsuEnabled != null) {//MP used to be (tsuEnabled is ValueWrapper.Existing)
                 upperLimit
             } else {
                 0.0
@@ -79,10 +75,10 @@ class PrepareTsunamiDataWorker(
 
 
         // final points
-        val tsuEnabled = repository.getTsunamiModeActiveAt(System.currentTimeMillis()).blockingGet()
-        if (tsuEnabled is ValueWrapper.Existing) {
-            tsunamiArray.add(DataPoint((tsuEnabled.value.timestamp + tsuEnabled.value.duration).toDouble(), upperLimit)) //MP upperLimit must not exceed chart height, else background will be invisible!
-            tsunamiArray.add(DataPoint((tsuEnabled.value.timestamp + tsuEnabled.value.duration).toDouble(), 0.0))
+        val tsunami = persistenceLayer.getTsunamiActiveAt(System.currentTimeMillis())
+        if (tsunami != null) { //MP used to be (tsunami is ValueWrapper.Existing)
+            tsunamiArray.add(DataPoint((tsunami.end).toDouble(), upperLimit)) //MP upperLimit must not exceed chart height, else background will be invisible!
+            tsunamiArray.add(DataPoint((tsunami.end).toDouble(), 0.0))
         }
         // create series
         data.overviewData.tsunamiSeries = LineGraphSeries(Array(tsunamiArray.size) { i -> tsunamiArray[i] }).also {

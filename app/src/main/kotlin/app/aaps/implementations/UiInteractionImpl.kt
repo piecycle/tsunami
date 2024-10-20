@@ -118,7 +118,7 @@ class UiInteractionImpl @Inject constructor(
 
     override fun runTsunamiDialog(fragmentManager: FragmentManager) {
         TsunamiDialog()
-            .show(fragmentManager, "InsulinDialog")
+            .show(fragmentManager, "TsunamiDialog")
     }
 
     override fun runCalibrationDialog(fragmentManager: FragmentManager) {

@@ -44,11 +44,6 @@ interface OverviewData {
     fun extendedBolusDialogText(): String
 
     /*
-    * TSUNAMI
-    */
-    val tsunami: Tsunami?
-
-    /*
      * Graphs
      */
 

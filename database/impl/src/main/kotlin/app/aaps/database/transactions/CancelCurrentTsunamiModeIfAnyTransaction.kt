@@ -9,7 +9,7 @@ class CancelCurrentTsunamiModeIfAnyTransaction(
 
     override fun run(): TransactionResult {
         val result = TransactionResult()
-        val current = database.tsunamiDao.getTsunamiModeActiveAt(timestamp).blockingGet()
+        val current = database.tsunamiDao.getTsunamiActiveAt(timestamp).blockingGet()
         if (current != null) {
             current.end = timestamp
             database.tsunamiDao.updateExistingEntry(current)

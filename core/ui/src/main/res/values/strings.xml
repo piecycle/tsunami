@@ -617,4 +617,5 @@
     <string name="uel_tsunami">TSUNAMI</string>
     <string name="uel_tsunami_bolus">TSUNAMI+BOLUS</string>
     <string name="uel_cancel_tsunami">CANCEL TSUNAMI</string>
+    <string name="uel_cancel_tsunami_bolus">CANCEL TSUNAMI+BOLUS</string>
 </resources>

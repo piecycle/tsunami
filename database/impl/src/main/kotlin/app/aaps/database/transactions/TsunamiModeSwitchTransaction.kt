@@ -7,12 +7,9 @@ class TsunamiModeSwitchTransaction(
     val tsunami: Tsunami
 ) : Transaction<TsunamiModeSwitchTransaction.TransactionResult>() {
 
-    constructor(timestamp: Long, duration: Long, tsunamiMode: Int) :
-        this(Tsunami(timestamp = timestamp, duration = duration, tsunamiMode = tsunamiMode))
-
     override fun run(): TransactionResult {
         val result = TransactionResult()
-        val current = database.tsunamiDao.getTsunamiModeActiveAt(tsunami.timestamp).blockingGet()
+        val current = database.tsunamiDao.getTsunamiActiveAt(tsunami.timestamp).blockingGet()
         if (current != null) {
             current.end = tsunami.timestamp
             database.tsunamiDao.updateExistingEntry(current)

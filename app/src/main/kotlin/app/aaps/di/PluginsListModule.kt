@@ -273,7 +273,7 @@ abstract class PluginsListModule {
     @Binds
     @APS
     @IntoMap
-    @IntKey(225)
+    @IntKey(229)
     abstract fun bindTsunamiPlugin(plugin: TsunamiPlugin): PluginBase
 
     @Binds

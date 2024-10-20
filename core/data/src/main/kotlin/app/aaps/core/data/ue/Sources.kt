@@ -13,6 +13,7 @@ enum class Sources {
     TempBasalDialog,
     CalibrationDialog,
     FillDialog,
+    TsunamiDialog,      //MP Tsunami
     BgCheck,
     SensorInsert,
     BatteryChange,

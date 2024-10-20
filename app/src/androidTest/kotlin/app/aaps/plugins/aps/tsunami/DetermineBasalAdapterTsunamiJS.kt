@@ -1,67 +1,85 @@
 package app.aaps.plugins.aps.tsunami
 
+import androidx.annotation.VisibleForTesting
+import app.aaps.core.data.aps.SMBDefaults
+import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.interfaces.aps.DetermineBasalAdapter
+import app.aaps.core.interfaces.aps.GlucoseStatus
 import app.aaps.core.interfaces.aps.IobTotal
-import app.aaps.core.interfaces.aps.SMBDefaults
-import app.aaps.core.interfaces.constraints.ConstraintsChecker
-import app.aaps.core.interfaces.db.GlucoseUnit
-import app.aaps.core.interfaces.iob.GlucoseStatus
+import app.aaps.core.interfaces.aps.MealData
+import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.db.ProcessedTbrEbData
 import app.aaps.core.interfaces.iob.IobCobCalculator
-import app.aaps.core.interfaces.iob.IobTotal
-import app.aaps.core.interfaces.iob.MealData
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
-import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.sharedPreferences.SP
+import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.Round
-import app.aaps.core.interfaces.utils.SafeParse
-import app.aaps.core.main.extensions.convertedToAbsolute
-import app.aaps.core.main.extensions.getPassedDurationToTimeInMinutes
-import app.aaps.core.main.extensions.plannedRemainingMinutes
-import app.aaps.database.AppRepository
-import app.aaps.database.ValueWrapper
-import app.aaps.database.entities.data.GlucoseUnit
-import app.aaps.database.impl.AppRepository
-import app.aaps.plugins.aps.R
+import app.aaps.core.keys.BooleanKey
+import app.aaps.core.keys.DoubleKey
+import app.aaps.core.keys.IntKey
+import app.aaps.core.keys.Preferences
+import app.aaps.core.keys.UnitDoubleKey
+import app.aaps.core.objects.extensions.convertToJSONArray
+import app.aaps.core.objects.extensions.convertedToAbsolute
+import app.aaps.core.objects.extensions.getPassedDurationToTimeInMinutes
+import app.aaps.core.objects.extensions.plannedRemainingMinutes
+import app.aaps.core.utils.MidnightUtils
 import app.aaps.plugins.aps.logger.LoggerCallback
-import app.aaps.plugins.aps.openAPSSMB.DetermineBasalResultSMB
+import app.aaps.plugins.aps.openAPSSMB.DetermineBasalResultSMBFromJS
 import app.aaps.plugins.aps.utils.ScriptReader
 import dagger.android.HasAndroidInjector
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import org.mozilla.javascript.*
+import org.mozilla.javascript.Context
 import org.mozilla.javascript.Function
+import org.mozilla.javascript.NativeJSON
+import org.mozilla.javascript.NativeObject
+import org.mozilla.javascript.RhinoException
+import org.mozilla.javascript.Scriptable
+import org.mozilla.javascript.ScriptableObject
+import org.mozilla.javascript.Undefined
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import java.nio.charset.StandardCharsets
+import java.security.InvalidParameterException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.ln
 
-class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
+class DetermineBasalAdapterTsunamiJS (private val scriptReader: ScriptReader, private val injector: HasAndroidInjector) : DetermineBasalAdapter {
 
     @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var constraintChecker: ConstraintsChecker
     @Inject lateinit var sp: SP
-    @Inject lateinit var rh: ResourceHelper
+    @Inject lateinit var preferences: Preferences
     @Inject lateinit var profileFunction: ProfileFunction
-    @Inject lateinit var iobCobCalculator: IobCobCalculator
+    @Inject lateinit var processedTbrEbData: ProcessedTbrEbData
     @Inject lateinit var activePlugin: ActivePlugin
-    @Inject lateinit var repository: AppRepository
+    @Inject lateinit var profileUtil: ProfileUtil
+    @Inject lateinit var dateUtil: DateUtil
+    @Inject lateinit var iobCobCalculator: IobCobCalculator
+    @Inject lateinit var persistenceLayer: PersistenceLayer
 
-    private var profile = JSONObject()
-    private var mGlucoseStatus = JSONObject()
-    private var iobData: JSONArray? = null
-    private var mealData = JSONObject()
-    private var currentTemp = JSONObject()
-    private var autosensData = JSONObject()
-    private var microBolusAllowed = false
-    private var smbAlwaysAllowed = false
-    private var currentTime: Long = 0
-    private var flatBGsDetected = false
+    @VisibleForTesting var profile = JSONObject()
+    @VisibleForTesting var glucoseStatus = JSONObject()
+    @VisibleForTesting var iobData: JSONArray? = null
+    @VisibleForTesting var mealData = JSONObject()
+    @VisibleForTesting var currentTemp = JSONObject()
+    @VisibleForTesting var autosensData = JSONObject()
+    @VisibleForTesting var microBolusAllowed = false
+    @VisibleForTesting var smbAlwaysAllowed = false
+    @VisibleForTesting var currentTime: Long = 0
+    @VisibleForTesting var flatBGsDetected = false
+    @VisibleForTesting var tdd1D: Double? = null
+    @VisibleForTesting var tdd7D: Double? = null
+    @VisibleForTesting var tddLast24H: Double? = null
+    @VisibleForTesting var tddLast4H: Double? = null
+    @VisibleForTesting var tddLast8to4H: Double? = null
 
     override var currentTempParam: String? = null
     override var iobDataParam: String? = null
@@ -71,9 +89,28 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
     override var scriptDebug = ""
 
     @Suppress("SpellCheckingInspection")
-    override operator fun invoke(): DetermineBasalResultSMB? {
+    override fun json(): JSONObject = JSONObject().apply {
+        put("glucoseStatus", glucoseStatus)
+        put("currenttemp", currentTemp)
+        put("iob_data", iobData)
+        put("profile", profile)
+        put("autosens_data", autosensData)
+        put("meal_data", mealData)
+        put("microBolusAllowed", microBolusAllowed)
+        put("reservoir_data", null)
+        put("currentTime", currentTime)
+        put("flatBGsDetected", flatBGsDetected)
+        put("tdd1D", tdd1D)
+        put("tdd7D", tdd7D)
+        put("tddLast24H", tddLast24H)
+        put("tddLast4H", tddLast4H)
+        put("tddLast8to4H", tddLast8to4H)
+    }
+
+    @Suppress("SpellCheckingInspection")
+    override operator fun invoke(): DetermineBasalResultSMBFromJS? {
         aapsLogger.debug(LTag.APS, ">>> Invoking determine_basal <<<")
-        aapsLogger.debug(LTag.APS, "Glucose status: " + mGlucoseStatus.toString().also { glucoseStatusParam = it })
+        aapsLogger.debug(LTag.APS, "Glucose status: " + glucoseStatus.toString().also { glucoseStatusParam = it })
         aapsLogger.debug(LTag.APS, "IOB data:       " + iobData.toString().also { iobDataParam = it })
         aapsLogger.debug(LTag.APS, "Current temp:   " + currentTemp.toString().also { currentTempParam = it })
         aapsLogger.debug(LTag.APS, "Profile:        " + profile.toString().also { profileParam = it })
@@ -84,7 +121,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         aapsLogger.debug(LTag.APS, "SMBAlwaysAllowed:  $smbAlwaysAllowed")
         aapsLogger.debug(LTag.APS, "CurrentTime: $currentTime")
         aapsLogger.debug(LTag.APS, "flatBGsDetected: $flatBGsDetected")
-        var determineBasalResultSMB: DetermineBasalResultSMB? = null
+        var determineBasalResultSMB: DetermineBasalResultSMBFromJS? = null
         val rhino = Context.enter()
         val scope: Scriptable = rhino.initStandardObjects()
         // Turn off optimization to make Rhino Android compatible
@@ -113,7 +150,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
 
                 //prepare parameters
                 val params = arrayOf(
-                    makeParam(mGlucoseStatus, rhino, scope),
+                    makeParam(glucoseStatus, rhino, scope),
                     makeParam(currentTemp, rhino, scope),
                     makeParamArray(iobData, rhino, scope),
                     makeParam(profile, rhino, scope),
@@ -133,7 +170,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
                 aapsLogger.debug(LTag.APS, "Result: $result")
                 try {
                     val resultJson = JSONObject(result)
-                    determineBasalResultSMB = DetermineBasalResultSMB(injector, resultJson)
+                    determineBasalResultSMB = DetermineBasalResultSMBFromJS(injector, resultJson)
                 } catch (e: JSONException) {
                     aapsLogger.error(LTag.APS, "Unhandled exception", e)
                 }
@@ -153,7 +190,7 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         } finally {
             Context.exit()
         }
-        glucoseStatusParam = mGlucoseStatus.toString()
+        glucoseStatusParam = glucoseStatus.toString()
         iobDataParam = iobData.toString()
         currentTempParam = currentTemp.toString()
         profileParam = profile.toString()
@@ -185,6 +222,12 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         tddLast4H: Double?,
         tddLast8to4H: Double?
     ) {
+        this.tdd1D = tdd1D ?: throw InvalidParameterException()
+        this.tdd7D = tdd7D ?: throw InvalidParameterException()
+        this.tddLast24H = tddLast24H ?: throw InvalidParameterException()
+        this.tddLast4H = tddLast4H ?: throw InvalidParameterException()
+        this.tddLast8to4H = tddLast8to4H ?: throw InvalidParameterException()
+
         val pump = activePlugin.activePump
         val pumpBolusStep = pump.pumpDescription.bolusStep
         this.profile.put("max_iob", maxIob)
@@ -196,16 +239,15 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         this.profile.put("max_bg", maxBg)
         this.profile.put("target_bg", targetBg)
         this.profile.put("carb_ratio", profile.getIc())
-        this.profile.put("sens", profile.getIsfMgdl())
-        this.profile.put("max_daily_safety_multiplier", sp.getInt(R.string.key_openapsama_max_daily_safety_multiplier, 3))
-        this.profile.put("current_basal_safety_multiplier", sp.getDouble(R.string.key_openapsama_current_basal_safety_multiplier, 4.0))
+        this.profile.put("sens", profile.getIsfMgdl("DetermineBasalAdapterTsunamiJS"))
+        this.profile.put("max_daily_safety_multiplier", preferences.get(DoubleKey.ApsMaxDailyMultiplier))
+        this.profile.put("current_basal_safety_multiplier", preferences.get(DoubleKey.ApsMaxCurrentBasalMultiplier))
+        this.profile.put("lgsThreshold", profileUtil.convertToMgdlDetect(preferences.get(UnitDoubleKey.ApsLgsThreshold)))
 
-        //mProfile.put("high_temptarget_raises_sensitivity", SP.getBoolean(R.string.key_high_temptarget_raises_sensitivity, SMBDefaults.high_temptarget_raises_sensitivity));
-        this.profile.put("high_temptarget_raises_sensitivity", false)
-        //mProfile.put("low_temptarget_lowers_sensitivity", SP.getBoolean(R.string.key_low_temptarget_lowers_sensitivity, SMBDefaults.low_temptarget_lowers_sensitivity));
-        this.profile.put("low_temptarget_lowers_sensitivity", false)
-        this.profile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, SMBDefaults.sensitivity_raises_target))
-        this.profile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, SMBDefaults.resistance_lowers_target))
+        this.profile.put("high_temptarget_raises_sensitivity", preferences.get(BooleanKey.ApsAutoIsfHighTtRaisesSens.key))
+        this.profile.put("low_temptarget_lowers_sensitivity", preferences.get(BooleanKey.ApsAutoIsfLowTtLowersSens.key))
+        this.profile.put("sensitivity_raises_target", preferences.get(BooleanKey.ApsSensitivityRaisesTarget))
+        this.profile.put("resistance_lowers_target", preferences.get(BooleanKey.ApsResistanceLowersTarget))
         this.profile.put("adv_target_adjustments", SMBDefaults.adv_target_adjustments)
         this.profile.put("exercise_mode", SMBDefaults.exercise_mode)
         this.profile.put("half_basal_exercise_target", SMBDefaults.half_basal_exercise_target)
@@ -214,54 +256,77 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         this.profile.put("remainingCarbsCap", SMBDefaults.remainingCarbsCap)
         this.profile.put("enableUAM", uamAllowed)
         this.profile.put("A52_risk_enable", SMBDefaults.A52_risk_enable)
-        val smbEnabled = sp.getBoolean(R.string.key_use_smb, false)
-        this.profile.put("SMBInterval", sp.getInt(R.string.key_smb_interval, SMBDefaults.SMBInterval))
-        this.profile.put("enableSMB_with_COB", smbEnabled && sp.getBoolean(R.string.key_enableSMB_with_COB, false))
-        this.profile.put("enableSMB_with_temptarget", smbEnabled && sp.getBoolean(R.string.key_enableSMB_with_temptarget, false))
-        this.profile.put("allowSMB_with_high_temptarget", smbEnabled && sp.getBoolean(R.string.key_allowSMB_with_high_temptarget, false))
-        this.profile.put("enableSMB_always", smbEnabled && sp.getBoolean(R.string.key_enableSMB_always, false) && advancedFiltering)
-        this.profile.put("enableSMB_after_carbs", smbEnabled && sp.getBoolean(R.string.key_enableSMB_after_carbs, false) && advancedFiltering)
-        this.profile.put("maxSMBBasalMinutes", sp.getInt(R.string.key_smb_max_minutes, SMBDefaults.maxSMBBasalMinutes))
-        this.profile.put("maxUAMSMBBasalMinutes", sp.getInt(R.string.key_uam_smb_max_minutes, SMBDefaults.maxUAMSMBBasalMinutes))
+        val smbEnabled = preferences.get(BooleanKey.ApsUseSmb)
+        this.profile.put("SMBInterval", preferences.get(IntKey.ApsMaxSmbFrequency))
+        this.profile.put("enableSMB_with_COB", smbEnabled && preferences.get(BooleanKey.ApsUseSmbWithCob))
+        this.profile.put("enableSMB_with_temptarget", smbEnabled && preferences.get(BooleanKey.ApsUseSmbWithLowTt))
+        this.profile.put("allowSMB_with_high_temptarget", smbEnabled && preferences.get(BooleanKey.ApsUseSmbWithHighTt))
+        this.profile.put("enableSMB_always", smbEnabled && preferences.get(BooleanKey.ApsUseSmbAlways) && advancedFiltering)
+        this.profile.put("enableSMB_after_carbs", smbEnabled && preferences.get(BooleanKey.ApsUseSmbAfterCarbs) && advancedFiltering)
+        this.profile.put("maxSMBBasalMinutes", preferences.get(IntKey.ApsMaxMinutesOfBasalToLimitSmb))
+        this.profile.put("maxUAMSMBBasalMinutes", preferences.get(IntKey.ApsUamMaxMinutesOfBasalToLimitSmb))
         //set the min SMB amount to be the amount set by the pump.
         this.profile.put("bolus_increment", pumpBolusStep)
-        this.profile.put("carbsReqThreshold", sp.getInt(R.string.key_carbsReqThreshold, SMBDefaults.carbsReqThreshold))
+        this.profile.put("carbsReqThreshold", preferences.get(IntKey.ApsCarbsRequestThreshold))
         this.profile.put("current_basal", basalRate)
         this.profile.put("temptargetSet", tempTargetSet)
-        this.profile.put("autosens_max", SafeParse.stringToDouble(sp.getString(app.aaps.core.utils.R.string.key_openapsama_autosens_max, "1.2")))
+        this.profile.put("autosens_max", preferences.get(DoubleKey.AutosensMax))
+        this.profile.put("autosens_min", preferences.get(DoubleKey.AutosensMin))
+        //set the min SMB amount to be the amount set by the pump.
         if (profileFunction.getUnits() == GlucoseUnit.MMOL) {
             this.profile.put("out_units", "mmol/L")
         }
         val now = System.currentTimeMillis()
-        val tb = iobCobCalculator.getTempBasalIncludingConvertedExtended(now)
+        val tb = processedTbrEbData.getTempBasalIncludingConvertedExtended(now)
         currentTemp.put("temp", "absolute")
         currentTemp.put("duration", tb?.plannedRemainingMinutes ?: 0)
         currentTemp.put("rate", tb?.convertedToAbsolute(now, profile) ?: 0.0)
         // as we have non default temps longer than 30 mintues
         if (tb != null) currentTemp.put("minutesrunning", tb.getPassedDurationToTimeInMinutes(now))
 
-        iobData = iobCobCalculator.convertToJSONArray(iobArray)
-        mGlucoseStatus.put("glucose", glucoseStatus.glucose)
-        mGlucoseStatus.put("noise", glucoseStatus.noise)
-        if (sp.getBoolean(R.string.key_always_use_shortavg, false)) {
-            mGlucoseStatus.put("delta", glucoseStatus.shortAvgDelta)
+        iobData = iobArray.convertToJSONArray(dateUtil)
+        this.glucoseStatus.put("glucose", glucoseStatus.glucose)
+        this.glucoseStatus.put("noise", glucoseStatus.noise)
+        if (preferences.get(BooleanKey.ApsAlwaysUseShortDeltas)) {
+            this.glucoseStatus.put("delta", glucoseStatus.shortAvgDelta)
         } else {
-            mGlucoseStatus.put("delta", glucoseStatus.delta)
+            this.glucoseStatus.put("delta", glucoseStatus.delta)
         }
-        mGlucoseStatus.put("short_avgdelta", glucoseStatus.shortAvgDelta)
-        mGlucoseStatus.put("long_avgdelta", glucoseStatus.longAvgDelta)
-        mGlucoseStatus.put("date", glucoseStatus.date)
+
+        this.glucoseStatus.put("short_avgdelta", glucoseStatus.shortAvgDelta)
+        this.glucoseStatus.put("long_avgdelta", glucoseStatus.longAvgDelta)
+        this.glucoseStatus.put("date", glucoseStatus.date)
         this.mealData.put("carbs", mealData.carbs)
         this.mealData.put("mealCOB", mealData.mealCOB)
         this.mealData.put("slopeFromMaxDeviation", mealData.slopeFromMaxDeviation)
         this.mealData.put("slopeFromMinDeviation", mealData.slopeFromMinDeviation)
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
-        if (constraintChecker.isAutosensModeEnabled().value()) {
-            autosensData.put("ratio", autosensDataRatio)
-        } else {
-            autosensData.put("ratio", 1.0)
+
+        val insulin = activePlugin.activeInsulin
+        val insulinDivisor = when {
+            insulin.peak > 65 -> 55 // lyumjev peak: 45
+            insulin.peak > 50 -> 65 // ultra rapid peak: 55
+            else              -> 75 // rapid peak: 75
         }
+
+        val tddWeightedFromLast8H = ((1.4 * tddLast4H) + (0.6 * tddLast8to4H)) * 3
+        var tdd = (tddWeightedFromLast8H * 0.33) + (tdd7D * 0.34) + (tdd1D * 0.33)
+        val dynISFadjust = preferences.get(IntKey.ApsDynIsfAdjustmentFactor) / 100.0
+        tdd *= dynISFadjust
+
+        val variableSensitivity = Round.roundTo(1800 / (tdd * (ln((glucoseStatus.glucose / insulinDivisor) + 1))), 0.1)
+
+        this.profile.put("variable_sens", variableSensitivity)
+        this.profile.put("insulinDivisor", insulinDivisor)
+        this.profile.put("TDD", tdd)
+
+
+        if (preferences.get(BooleanKey.ApsDynIsfAdjustSensitivity))
+            autosensData.put("ratio", tddLast24H / tdd7D)
+        else
+            autosensData.put("ratio", 1.0)
+
         this.microBolusAllowed = microBolusAllowed
         smbAlwaysAllowed = advancedFiltering
         currentTime = now
@@ -270,21 +335,58 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         /*
         ** Tsunami specific variables
         */
+
         // Get peak time if using a PK insulin model
-        val activityPredTime_PK = TimeUnit.MILLISECONDS.toMinutes(activePlugin.activeInsulin.insulinConfiguration.peak) //MP act. pred. time for PK ins. models; target time = insulin peak time
+        val activityPredTimePK = TimeUnit.MILLISECONDS.toMinutes(insulin.peak.toLong()) //MP act. pred. time for PK ins. models; target time = insulin peak time
 
         // Get the ID of the currently used insulin preset
-        val insulinInterface = activePlugin.activeInsulin
-        val insulinID = insulinInterface.id.value
 
-        // Get the ID of the current tsunami mode (currently unused)
-        val tsunamiMode = repository.getTsunamiModeActiveAt(now).blockingGet()
-        val tsunamiActive:Boolean = tsunamiMode is ValueWrapper.Existing
-        var tsunamiModeID = 1
-        if (tsunamiMode is ValueWrapper.Existing) {
-            tsunamiModeID = tsunamiMode.value.tsunamiMode
+        val insulinID = insulin.id.value
+
+        // wave active hours redefinition (allowing end times < start times)
+        var waveStart : Double = preferences.get(DoubleKey.WaveStart)
+        var waveEnd : Double = preferences.get(DoubleKey.WaveEnd)
+        var referenceTimer: Double = MidnightUtils.secondsFromMidnight() / 3600.0 //MP current time in hours
+        if (waveEnd < waveStart) {
+            if (referenceTimer < waveStart) {
+                referenceTimer -= (waveStart - 24.0) //MP Transformed timer, counting from (24 - waveStart) until 23;
+            } else {
+                referenceTimer -= waveStart //MP Transformed timer, counting from 0 until (23 - waveStart);
+            }
+            waveEnd = 24.0 - (waveStart - waveEnd) //MP transformed end hour, represents total duration of Tsunami in h
+            waveStart = 0.0 //MP set starting hour to 0 and transform the rest;
         }
 
+        // Determine which mode will be active (0 = default; 1 = wave; 2 = tsunami)
+        val enableWave : Boolean = preferences.get(BooleanKey.EnableWave)
+        val tsunamiModeID = persistenceLayer.getTsunamiActiveAt(now)?.tsunamiMode ?: if (referenceTimer in waveStart..waveEnd && enableWave) {
+            1 //MP Tsunami inactive but conditions for wave are met --> use Wave
+        } else {
+            0 //MP Tsunami inactive and conditions for wave are not met --> use oref1
+        }
+
+        // Set mode specific variables to be relayed into DetermineBasalTsunami.kt
+        var SMBcap : Double = 0.0
+        var insulinReqPCT : Double = 0.0
+        var activityTarget : Double = 0.0
+        var deltaReductionPCT : Double = 0.0
+        if (tsunamiModeID == 2) { //MP: 2 = Tsunami
+            deltaReductionPCT = 1.0
+            SMBcap = preferences.get(DoubleKey.TsuSMBCap) //MP: User-set max SMB size for Tsunami.
+            if (preferences.get(BooleanKey.TsuSMBscaling)) {
+                SMBcap = (SMBcap * Math.min(profile.percentage.toDouble(), 130.0)/100.0) //SMBcap grows and shrinks with profile percentage;
+            }
+            insulinReqPCT = preferences.get(IntKey.TsuInsReqPCT).toDouble() / 100.0 // User-set percentage to modify insulin required
+            activityTarget = preferences.get(IntKey.TsuActivityTarget).toDouble() / 100.0 // MP for small deltas
+        } else if (tsunamiModeID == 1) { //MP: 1 = Wave
+            deltaReductionPCT = 0.5
+            SMBcap = preferences.get(DoubleKey.WaveSMBCap) ?: 0.0 //MP: User-set may SMB size for Wave.
+            if (preferences.get(BooleanKey.WaveSMBCapScaling)) {
+                SMBcap = (SMBcap * Math.min(profile.percentage.toDouble(), 130.0)/100.0) //SMBcap grows and shrinks with profile percentage;
+            }
+            insulinReqPCT = preferences.get(IntKey.WaveInsReqPCT).toDouble() / 100.0 // User-set percentage to modify insulin required
+            activityTarget = preferences.get(IntKey.WaveActivityTarget).toDouble() / 100.0 // MP for small deltas
+        }
         // Calculate reference activity values
         var currentActivity = 0.0
         for (i in -4..0) { //MP: -4 to 0 calculates all the insulin active during the last 5 minutes
@@ -294,28 +396,28 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
 
         var futureActivity = 0.0
         val activityPredTime: Long
-        val activityPredTime_PD = 65L //MP activity prediction time for pharmacodynamic model; fixed to 65 min (approx. peak time of 1 U bolus)
+        val activityPredTimePD = 65L //MP activity prediction time for pharmacodynamic model; fixed to 65 min (approx. peak time of 1 U bolus)
         if (insulinID != 105 && insulinID != 205) { //MP if not using PD insulin models
-            activityPredTime = activityPredTime_PK
+            activityPredTime = activityPredTimePK
         } else { //MP if using PD insulin models
-            activityPredTime = activityPredTime_PD
+            activityPredTime = activityPredTimePD
         }
-        for (i in -4..0) { //MP: calculate 5-minute-insulin activity centering around peaktime
+        for (i in -4..0) { //MP: calculate 5-minute-insulin activity centering around peakTime
             val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityPredTime - i), profile)
             futureActivity += iob.activity
         }
 
-        val sensorlag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
+        val sensorLag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
         var sensorLagActivity = 0.0
         for (i in -4..0) {
-            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorlag - i), profile)
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorLag - i), profile)
             sensorLagActivity += iob.activity
         }
 
-        val activity_historic = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
+        val activityHistoric = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
         var historicActivity = 0.0
         for (i in -2..2) {
-            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activity_historic - i), profile)
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityHistoric - i), profile)
             historicActivity += iob.activity
         }
 
@@ -328,37 +430,39 @@ class DetermineBasalAdapterTsunamiJS internal constructor(private val scriptRead
         //TODO: Improve meal detection system!
         val deltaScore: Double = Round.roundTo(glucoseStatus.shortAvgDelta/4, 0.01)
 
+        val tsunamiActive = false
+        if (tsunamiModeID == 2) {tsunamiActive == true}
+
         // Register profile variables
         this.profile.put("tsunamiModeID", tsunamiModeID)
-        this.profile.put("peaktime", activityPredTime_PK)
+        this.profile.put("peaktime", activityPredTime)
         this.profile.put("insulinID", insulinID)
-        this.profile.put("tsuSMBCap", SafeParse.stringToDouble(sp.getString(R.string.key_tsunami_smbcap, "1")))
-        this.profile.put("tsuInsReqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_insulinReqPCT, "65")))
-        val effective = repository.getEffectiveProfileSwitchActiveAt(now).blockingGet()
-        this.profile.put("percentage", if (effective is ValueWrapper.Existing) effective.value.originalPercentage else 100)
+        this.profile.put("tsuSMBCap", SMBcap)
+        this.profile.put("tsuInsReqPCT", insulinReqPCT)
+        this.profile.put("percentage", profile.percentage)
         this.profile.put("dia", profile.dia)
         this.profile.put("tsunamiActive", tsunamiActive)
-        this.profile.put("enableWaveMode", sp.getBoolean(R.string.key_enable_wave_mode, false))
-        this.profile.put("waveStart", SafeParse.stringToDouble(sp.getString(R.string.key_wave_start, "11")))
-        this.profile.put("waveEnd", SafeParse.stringToDouble(sp.getString(R.string.key_wave_end, "21")))
-        this.profile.put("waveUseSMBCap", sp.getBoolean(R.string.key_use_wave_smbcap, false))
-        this.profile.put("waveSMBCap", SafeParse.stringToDouble(sp.getString(R.string.key_wave_smbcap, "0.5")))
-        this.profile.put("waveInsReqPCT", SafeParse.stringToDouble(sp.getString(R.string.key_wave_insulinReqPCT, "65")))
-        this.profile.put("tsuSMBCapScaling", sp.getBoolean(R.string.key_tsu_SMB_scaling, false))
-        this.profile.put("tsuActivityTarget", SafeParse.stringToDouble(sp.getString(R.string.key_tsu_activity_target, "75")))
-        this.profile.put("waveSMBCapScaling", sp.getBoolean(R.string.key_wave_SMB_scaling, false))
-        this.profile.put("waveActivityTarget", SafeParse.stringToDouble(sp.getString(R.string.key_wave_activity_target, "50")))
+        this.profile.put("enableWaveMode", enableWave)
+        this.profile.put("waveStart", waveStart)
+        this.profile.put("waveEnd", waveEnd)
+        this.profile.put("waveUseSMBCap", preferences.get(BooleanKey.WaveUseSMBCap))
+        this.profile.put("waveSMBCap", SMBcap)
+        this.profile.put("waveInsReqPCT", insulinReqPCT)
+        this.profile.put("tsuSMBCapScaling", false)
+        this.profile.put("tsuActivityTarget", preferences.get(IntKey.TsuActivityTarget))
+        this.profile.put("waveSMBCapScaling", false)
+        this.profile.put("waveActivityTarget", preferences.get(IntKey.WaveActivityTarget))
 
         // Register glucose_status variables
-        mGlucoseStatus.put("futureActivity", futureActivity)
-        mGlucoseStatus.put("activityPredTime", activityPredTime)
-        mGlucoseStatus.put("sensorLagActivity", sensorLagActivity)
-        mGlucoseStatus.put("historicActivity", historicActivity)
-        mGlucoseStatus.put("currentActivity", currentActivity)
-        mGlucoseStatus.put("deltaScore", deltaScore)
+        this.glucoseStatus.put("futureActivity", futureActivity)
+        this.glucoseStatus.put("activityPredTime", activityPredTime)
+        this.glucoseStatus.put("sensorLagActivity", sensorLagActivity)
+        this.glucoseStatus.put("historicActivity", historicActivity)
+        this.glucoseStatus.put("currentActivity", currentActivity)
+        this.glucoseStatus.put("deltaScore", deltaScore)
 
         // Register meal_data variables
-        this.mealData.put("lastBolus", repository.getLastBolusRecordWrapped().blockingGet()) //TODO: New way of getting the last bolus size - check if this works as expected
+        this.mealData.put("lastBolus", persistenceLayer.getNewestBolus()?.amount ?: 0.0)
         /*
         ** Tsunami specific variables END
         */

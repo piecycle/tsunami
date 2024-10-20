@@ -24,9 +24,11 @@ internal interface TsunamiDao : TraceableDao<Tsunami> {
 
     @Query("SELECT * FROM $TABLE_TSUNAMI WHERE tsunamiMode <> NULL ORDER BY timestamp DESC limit 1")
     fun getTsunamiMode(): Maybe<Tsunami>
-
-    @Query("SELECT * FROM $TABLE_TSUNAMI WHERE timestamp <= :timestamp AND (timestamp + duration) > :timestamp AND referenceId IS NULL AND isValid = 1 ORDER BY timestamp DESC LIMIT 1")
+/*
+    @Query("SELECT tsunamiMode FROM $TABLE_TSUNAMI WHERE timestamp <= :timestamp AND (timestamp + duration) > :timestamp AND referenceId IS NULL AND isValid = 1 ORDER BY timestamp DESC LIMIT 1")
     fun getTsunamiModeActiveAt(timestamp: Long): Int?
+    //MP Causes errors -- use getTsunamiActiveAt and take .tsunamiMode value instead
+ */
 //MP graph test
     @Query("SELECT * FROM $TABLE_TSUNAMI WHERE timestamp >= :timestamp AND isValid = 1 AND referenceId IS NULL ORDER BY timestamp ASC")
     fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>>

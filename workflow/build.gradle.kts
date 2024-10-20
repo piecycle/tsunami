@@ -21,6 +21,7 @@ dependencies {
     implementation(project(":core:objects"))
     implementation(project(":core:ui"))
     implementation(project(":core:utils"))
+    implementation(project(":database:impl"))
 
     kapt(Libs.Dagger.compiler)
     kapt(Libs.Dagger.androidProcessor)

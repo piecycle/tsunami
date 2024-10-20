@@ -13,6 +13,7 @@ import app.aaps.core.interfaces.aps.IobTotal
 import app.aaps.core.interfaces.aps.MealData
 import app.aaps.core.interfaces.aps.OapsProfile
 import app.aaps.core.interfaces.aps.OapsProfileAutoIsf
+import app.aaps.core.interfaces.aps.OapsProfileTsunami
 import app.aaps.core.interfaces.aps.Predictions
 import app.aaps.core.interfaces.constraints.Constraint
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
@@ -84,6 +85,7 @@ open class APSResultObject(protected val injector: HasAndroidInjector) : APSResu
     override var currentTemp: CurrentTemp? = null
     override var oapsProfile: OapsProfile? = null
     override var oapsProfileAutoIsf: OapsProfileAutoIsf? = null
+    override var oapsProfileTsunami: OapsProfileTsunami? = null
     override var mealData: MealData? = null
     override var autosensResult: AutosensResult? = null
 

@@ -49,7 +49,7 @@ data class OapsProfileTsunami(
     var insulinDivisor: Int,
     var TDD: Double,
     //MP Tsunami specific variables
-    var tsunamiModeID: Int, //MP unused
+    var tsunamiModeID: Int,
     var peakTime: Double,
     var insulinID: Int,
     //var tsuSMBCap: Double,

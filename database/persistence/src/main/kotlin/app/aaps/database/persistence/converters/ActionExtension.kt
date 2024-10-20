@@ -91,6 +91,10 @@ fun UserEntry.Action.fromDb(): Action =
         UserEntry.Action.EXIT_AAPS                       -> Action.EXIT_AAPS
         UserEntry.Action.PLUGIN_ENABLED                  -> Action.PLUGIN_ENABLED
         UserEntry.Action.PLUGIN_DISABLED                 -> Action.PLUGIN_DISABLED
+        UserEntry.Action.TSUNAMI                         -> Action.TSUNAMI
+        UserEntry.Action.TSUNAMI_BOLUS                   -> Action.TSUNAMI_BOLUS
+        UserEntry.Action.CANCEL_TSUNAMI                  -> Action.CANCEL_TSUNAMI
+        UserEntry.Action.CANCEL_TSUNAMI_BOLUS            -> Action.CANCEL_TSUNAMI_BOLUS
         UserEntry.Action.UNKNOWN                         -> Action.UNKNOWN
     }
 
@@ -182,6 +186,10 @@ fun Action.toDb(): UserEntry.Action =
         Action.EXIT_AAPS                       -> UserEntry.Action.EXIT_AAPS
         Action.PLUGIN_ENABLED                  -> UserEntry.Action.PLUGIN_ENABLED
         Action.PLUGIN_DISABLED                 -> UserEntry.Action.PLUGIN_DISABLED
+        Action.TSUNAMI                         -> UserEntry.Action.TSUNAMI
+        Action.TSUNAMI_BOLUS                   -> UserEntry.Action.TSUNAMI_BOLUS
+        Action.CANCEL_TSUNAMI                  -> UserEntry.Action.CANCEL_TSUNAMI
+        Action.CANCEL_TSUNAMI_BOLUS            -> UserEntry.Action.CANCEL_TSUNAMI_BOLUS
         Action.UNKNOWN                         -> UserEntry.Action.UNKNOWN
     }
 

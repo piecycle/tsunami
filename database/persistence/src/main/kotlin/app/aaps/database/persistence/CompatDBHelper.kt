@@ -16,6 +16,7 @@ import app.aaps.core.interfaces.rx.events.EventTempBasalChange
 import app.aaps.core.interfaces.rx.events.EventTempTargetChange
 import app.aaps.core.interfaces.rx.events.EventTherapyEventChange
 import app.aaps.core.interfaces.rx.events.EventTreatmentChange
+import app.aaps.core.interfaces.rx.events.EventTsunamiModeChange
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.database.AppRepository
 import app.aaps.database.entities.Bolus
@@ -31,6 +32,7 @@ import app.aaps.database.entities.ProfileSwitch
 import app.aaps.database.entities.TemporaryBasal
 import app.aaps.database.entities.TemporaryTarget
 import app.aaps.database.entities.TherapyEvent
+import app.aaps.database.entities.Tsunami
 import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 import javax.inject.Singleton

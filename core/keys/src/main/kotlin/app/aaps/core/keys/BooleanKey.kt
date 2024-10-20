@@ -114,7 +114,7 @@ enum class BooleanKey(
     TsuSMBscaling(key = "key_tsu_SMB_scaling", defaultValue = false),
     EnableWave(key = "key_enable_wave_mode", defaultValue = false),
     WaveUseSMBCap(key = "key_use_wave_smbcap", defaultValue = false, dependency = EnableWave),
-    WaveSMBCapScaling(key = "key_wave_SMB_scaling", defaultValue = false, dependency = UseWaveSMBCap),
-
+    HideTsunamiButton(key = "key_hide_tsunami_button", defaultValue = false, dependency = EnableWave),
+    WaveSMBCapScaling(key = "key_wave_SMB_scaling", defaultValue = false, dependency = WaveUseSMBCap),
 
 }

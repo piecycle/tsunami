@@ -17,6 +17,7 @@ import app.aaps.core.data.model.SC
 import app.aaps.core.data.model.TB
 import app.aaps.core.data.model.TDD
 import app.aaps.core.data.model.TE
+import app.aaps.core.data.model.TSU
 import app.aaps.core.data.model.TT
 import app.aaps.core.data.model.UE
 import app.aaps.core.data.pump.defs.PumpType
@@ -1384,5 +1385,28 @@ interface PersistenceLayer {
     fun insertOrUpdateApsResult(apsResult: APSResult): Single<TransactionResult<APSResult>>
 
     //Tsunami
-    fun getTsunamiModeActiveAt(timestamp: Long): Int?
+    /*
+    /**
+     * get value of tsunamiMode from DB at desired time
+     * @param timestamp desired time in ms
+     */
+    fun getTsunamiModeActiveAt(timestamp: Long): Int? //MP Deprecated
+    */
+    /**
+     * get Tsunami DB-entry at desired time
+     * @param timestamp desired time in ms
+     */
+    fun getTsunamiActiveAt(timestamp: Long): TSU?
+
+    /**
+     * insert or update Tsunami record
+     * @param tsu record
+     */
+    fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>): Single<TransactionResult<TSU>>
+
+    /**
+     * cancel current Tsunami mode if running
+     * @param timestamp current time in ms
+     */
+    fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>): Single<TransactionResult<TSU>>
 }

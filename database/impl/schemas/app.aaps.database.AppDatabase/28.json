@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 28,
-    "identityHash": "2ec41e75f72dad6b0da01a52657d80e2",
+    "identityHash": "20337f71f0039980377534f8b2ef7c84",
     "entities": [
       {
         "tableName": "apsResults",
@@ -3637,12 +3637,186 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "tsunami",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `version` INTEGER NOT NULL, `dateCreated` INTEGER NOT NULL, `isValid` INTEGER NOT NULL, `referenceId` INTEGER, `timestamp` INTEGER NOT NULL, `utcOffset` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `tsunamiMode` INTEGER NOT NULL, `nightscoutSystemId` TEXT, `nightscoutId` TEXT, `pumpType` TEXT, `pumpSerial` TEXT, `temporaryId` INTEGER, `pumpId` INTEGER, `startId` INTEGER, `endId` INTEGER, FOREIGN KEY(`referenceId`) REFERENCES `tsunami`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateCreated",
+            "columnName": "dateCreated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isValid",
+            "columnName": "isValid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "referenceId",
+            "columnName": "referenceId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "utcOffset",
+            "columnName": "utcOffset",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tsunamiMode",
+            "columnName": "tsunamiMode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.nightscoutSystemId",
+            "columnName": "nightscoutSystemId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.nightscoutId",
+            "columnName": "nightscoutId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.pumpType",
+            "columnName": "pumpType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.pumpSerial",
+            "columnName": "pumpSerial",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.temporaryId",
+            "columnName": "temporaryId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.pumpId",
+            "columnName": "pumpId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.startId",
+            "columnName": "startId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "interfaceIDs_backing.endId",
+            "columnName": "endId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_tsunami_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_id` ON `${TABLE_NAME}` (`id`)"
+          },
+          {
+            "name": "index_tsunami_isValid",
+            "unique": false,
+            "columnNames": [
+              "isValid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_isValid` ON `${TABLE_NAME}` (`isValid`)"
+          },
+          {
+            "name": "index_tsunami_nightscoutId",
+            "unique": false,
+            "columnNames": [
+              "nightscoutId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_nightscoutId` ON `${TABLE_NAME}` (`nightscoutId`)"
+          },
+          {
+            "name": "index_tsunami_referenceId",
+            "unique": false,
+            "columnNames": [
+              "referenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_referenceId` ON `${TABLE_NAME}` (`referenceId`)"
+          },
+          {
+            "name": "index_tsunami_timestamp",
+            "unique": false,
+            "columnNames": [
+              "timestamp"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tsunami_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "tsunami",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "referenceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2ec41e75f72dad6b0da01a52657d80e2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '20337f71f0039980377534f8b2ef7c84')"
     ]
   }
 }
