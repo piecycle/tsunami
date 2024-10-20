@@ -319,7 +319,7 @@ class DetermineBasalTsunami @Inject constructor(
 
         // Variable definitions
         //var activityController = false //MP Tsunami main switch; controls whether Tsunami (true) or oref1 (false) is used
-        var deltaScore = profile.deltaScore //MP Modifies insulinReqPCT; deltaScore grows larger the largest the previous deltas were, until it reaches 1
+        var deltaScore = profile.deltaScore.coerceIn(0.0, 1.0) //MP Modifies insulinReqPCT; deltaScore grows larger the largest the previous deltas were, until it reaches 1
         var bgScore = 0.0
         //TODO: improve meal detection (deltaScore)
         var tsunamiModeID = profile.tsunamiModeID
@@ -336,7 +336,7 @@ class DetermineBasalTsunami @Inject constructor(
         //MP Calculate absolute activity to neutralise delta
         val actCurr = profile.sensorLagActivity //MP Current delta value, due to sensor lag, is more likely to represent situation from about 10 minutes ago - therefore activity from 10 minutes ago is used for activity calculations.
         val actFuture = profile.futureActivity //MP prognosed activity in "peak-time" minutes (peak-time must be set by the user using free-peak oref)
-        val deltaGross = round(Math.min(glucose_status.delta + Math.max(actCurr * sens, 0.0), 35.0), 1) //MP 5-minute-delta value if insulin activity was zero;
+        val deltaGross = round((glucose_status.delta + actCurr * sens).coerceIn(0.0, 35.0), 1) //MP 5-minute-delta value if insulin activity was zero; Caps at 35 (assumed glucose absorption limit), and is weakened by negative IA; Currently, negative IA disables the activity controller
         val actTarget = deltaGross / sens * deltaReductionPCT //MP 5-min-insulin activity at which delta should be at the desired target value (if delta remains unchanged)
         var actMissing = 0.0
 
@@ -352,7 +352,7 @@ class DetermineBasalTsunami @Inject constructor(
             if (glucose_status.delta <= 4.0) {
                 //MP Adjust activity target to activityTarget % of current activity if glucose is near constant / delta is low (near-constant activity)
                 actMissing = round((actCurr * activityTarget - Math.max(actFuture, 0.0)) / 5, 4) //MP Use activityTarget% of current activity as target activity in the future; Divide by 5 to get per-minute activity
-                deltaScore = Math.min(1.0, Math.max((bg - target_bg) / 100, 0.0)) //MP redefines deltaScore as it otherwise would be near-zero (low deltas). The higher the bg, the larger deltaScore
+                deltaScore = ((bg - target_bg) / 100).coerceIn(0.0, 1.0) //MP redefines deltaScore as it otherwise would be near-zero (low deltas). The higher the bg, the larger deltaScore. If difference between bg and target is 100 --> DeltaScore = 1.0
             } else {
                 //MP Escalate activity at medium to high delta (activity build-up)
                 actMissing = round((actTarget - Math.max(actFuture, 0.0)) / 5, 4) //MP Calculate required activity to end a rise in t minutes; Divide by 5 to get per-minute activity
@@ -402,7 +402,7 @@ class DetermineBasalTsunami @Inject constructor(
                         tpModel = Math.pow(tp, 2.0) * 2
                         actAtT = 2 * tsuInsReq / tpModel * t * Math.exp(-Math.pow(t, 2.0) / tpModel)
                         actRatio = (actAtT / actMissing)
-                        consoleLog.add("tsuInsReq (" + iterations + "): " + round(tsuInsReq, 3) + " | (" + round(actRatio, 3) + ")")
+                        consoleError.add("tsuInsReq (" + iterations + "): " + round(tsuInsReq, 3) + " | (" + round(actRatio, 3) + ")")
                         iterations += 1
                     }
                     iterations -= 1 //MP Minus 1 as the iterations are overcounted by 1 in the while loop
@@ -425,80 +425,79 @@ class DetermineBasalTsunami @Inject constructor(
             insulinReqPCT = round(profile.insulinReqPCT * deltaScore, 3) //MP Fetch insulinReqPCT from profile and modify it in dependence of previous delta values. Overrides default insulinReqPCT value of 0.5 used by oref1
             val bgScoreUpperThreshold = 140.0 //MP BG above which no penalty will be given
             val bgScoreLowerThreshold = 80.0 //MP BG below which Tsunami will not deliver SMBs
-            bgScore = round(Math.min((bg - bgScoreLowerThreshold) / (bgScoreUpperThreshold - bgScoreLowerThreshold), 1.0), 3) //MP Penalty at low or near-target bg values. Modifies SMBcap.
+            bgScore = round(((bg - bgScoreLowerThreshold) / (bgScoreUpperThreshold - bgScoreLowerThreshold)).coerceAtMost(1.0), 3) //MP Penalty at low or near-target bg values. Modifies SMBcap.
             SMBcap = round(SMBcap * bgScore, 2)
 
             //MP Reporting messages
             if (tsunamiModeID == 2) {
-                consoleLog.add("------------------------------")
-                consoleLog.add("TSUNAMI STATUS")
-                consoleLog.add("------------------------------")
+                consoleError.add("---------------------------------------------------")
+                consoleError.add("TSUNAMI STATUS")
+                consoleError.add("---------------------------------------------------")
             } else {
-                consoleLog.add("------------------------------")
-                consoleLog.add("WAVE STATUS")
-                consoleLog.add("------------------------------")
+                consoleError.add("---------------------------------------------------")
+                consoleError.add("WAVE STATUS")
+                consoleError.add("---------------------------------------------------")
             }
-            consoleLog.add("act. lag: $actCurr")
-            consoleLog.add("act. now: $profile.currentActivity")
-            consoleLog.add("act. future: $actFuture")
-            consoleLog.add("act. missing: $actMissing")
-            consoleLog.add("-------------")
-            consoleLog.add("bg: $bg")
-            consoleLog.add("net delta: $glucose_status.delta")
-            consoleLog.add("gross delta: $deltaGross")
-            consoleLog.add("-------------")
-            consoleLog.add("deltaScore: " + round(deltaScore, 3))
-            consoleLog.add("bgScore: $bgScore")
-            consoleLog.add("insulinReqPCT_live: $insulinReqPCT")
-            consoleLog.add("SMBcap_live: $SMBcap")
-            consoleLog.add("tsuInsReq: $tsuInsReq")
-            consoleLog.add("iterations: $iterations")
+            consoleError.add("act. lag: $actCurr")
+            consoleError.add("act. now: " + profile.currentActivity)
+            consoleError.add("act. future: $actFuture")
+            consoleError.add("act. missing: $actMissing")
+            consoleError.add("-------------")
+            consoleError.add("bg: $bg")
+            consoleError.add("net delta: " + glucose_status.delta)
+            consoleError.add("gross delta: $deltaGross")
+            consoleError.add("-------------")
+            consoleError.add("deltaScore: " + round(deltaScore, 3))
+            consoleError.add("bgScore: $bgScore")
+            consoleError.add("insulinReqPCT_live: $insulinReqPCT")
+            consoleError.add("SMBcap_live: $SMBcap")
+            consoleError.add("tsuInsReq: $tsuInsReq")
+            consoleError.add("iterations: $iterations")
             if ((tsuInsReq + iob_data.iob < bgCorrection) || (bgCorrection > iob_data.iob && bgCorrection > tsuInsReq)) {
-                consoleLog.add("Mode: ISF-based glucose correction.")
+                consoleError.add("Mode: ISF-based glucose correction.")
             } else if (glucose_status.delta <= 4.1 && actCurr > 0) {
-                consoleLog.add("Mode: Activity control. Target: " + round((activityTarget * 100), 0) + "%")
+                consoleError.add("Mode: Activity control. Target: " + round((activityTarget * 100), 0) + "%")
             } else {
-                consoleLog.add("Mode: Ramping up activity.")
+                consoleError.add("Mode: Ramping up activity.")
             }
-            consoleLog.add("------------------------------")
+            consoleError.add("---------------------------------------------------")
         } else {
             //MP Reporting if Tsunami is bypassed
             if (!profile.enableWaveMode) {
-                consoleLog.add("------------------------------")
-                consoleLog.add("TSUNAMI STATUS")
-                consoleLog.add("------------------------------")
-                consoleLog.add("Tsunami bypassed - reasons:")
+                consoleError.add("---------------------------------------------------")
+                consoleError.add("TSUNAMI BYPASSED")
+                consoleError.add("---------------------------------------------------")
             } else {
-                consoleLog.add("------------------------------")
-                consoleLog.add("TSUNAMI / WAVE STATUS")
-                consoleLog.add("------------------------------")
-                consoleLog.add("Tsunami/Wave bypassed - reasons:")
+                consoleError.add("---------------------------------------------------")
+                consoleError.add("TSUNAMI / WAVE BYPASSED")
+                consoleError.add("---------------------------------------------------")
             }
             if (profile.referenceTimer !in waveStart..waveEnd) {
-                consoleLog.add("Wave: outside active hours.")
+                consoleError.add("Wave: outside active hours.")
             }
             if (glucose_status.delta < 0) {
-                consoleLog.add("Negative delta reported. (" + glucose_status.delta + ")")
+                consoleError.add("Negative delta reported. (" + glucose_status.delta + ")")
             }
             if (bg < target_bg) {
-                consoleLog.add("Glucose below target.")
+                consoleError.add("Glucose below target.")
             }
             if (iob_data.iob <= 0.1) {
-                consoleLog.add("IOB below 0.1 U.")
+                consoleError.add("IOB below 0.1 U.")
             }
             //if (meal_data.mealCOB > 0) {
-            //    consoleLog.add("COB is more than 0 g.")
+            //    consoleError.add("COB is more than 0 g.")
             //}
             if (actCurr <= 0) {
-                consoleLog.add("Insulin activity at or below 0.")
+                consoleError.add("Insulin activity at or below 0.")
             }
             if (tsunamiModeID != 2) {
-                consoleLog.add("Tsunami mode inactive.")
+                consoleError.add("Tsunami mode inactive.")
             }
             if (!profile.enableWaveMode) {
-                consoleLog.add("Wave mode disabled in settings.")
+                consoleError.add("Wave mode disabled in settings.")
             }
-            consoleLog.add("------------------------------")
+            consoleError.add("---------------------------------------------------")
+
         }
         //----------------------------- MP
         // TSUNAMI ACTIVITY ENGINE END  MP
@@ -1084,7 +1083,7 @@ class DetermineBasalTsunami @Inject constructor(
             durationReq = round(durationReq / 30.0) * 30
             // always set a 30-120m zero temp (oref0-pump-loop will let any longer SMB zero temp run)
             durationReq = min(120, max(30, durationReq))
-            consoleLog.add("Checkpoint 0")
+            consoleError.add("Checkpoint 0")
             return setTempBasal(0.0, durationReq, profile, rT, currenttemp)
         }
 
@@ -1094,7 +1093,7 @@ class DetermineBasalTsunami @Inject constructor(
         if (profile.skip_neutral_temps && minutes >= 55) {
             rT.reason.append("; Canceling temp at " + minutes + "m past the hour. ")
             return setTempBasal(0.0, 0, profile, rT, currenttemp)
-            consoleLog.add("Checkpoint 1")
+            consoleError.add("Checkpoint 1")
         }
 
         //MP Bypass oref1 block below if Tsunami/Wave is active
@@ -1106,7 +1105,7 @@ class DetermineBasalTsunami @Inject constructor(
                 if (naive_eventualBG < 40) {
                     rT.reason.append(", naive_eventualBG < 40. ")
                     return setTempBasal(0.0, 30, profile, rT, currenttemp)
-                    consoleLog.add("Checkpoint 2")
+                    consoleError.add("Checkpoint 2")
                 }
                 if (glucose_status.delta > minDelta) {
                     rT.reason.append(", but Delta ${convert_bg(tick.toDouble())} > expectedDelta ${convert_bg(expectedDelta)}")
@@ -1115,11 +1114,11 @@ class DetermineBasalTsunami @Inject constructor(
                 }
                 if (currenttemp.duration > 15 && (round_basal(basal) == round_basal(currenttemp.rate))) {
                     rT.reason.append(", temp " + currenttemp.rate + " ~ req " + round(basal, 2).withoutZeros() + "U/hr. ")
-                    consoleLog.add("Checkpoint 3")
+                    consoleError.add("Checkpoint 3")
                     return rT
                 } else {
                     rT.reason.append("; setting current basal of ${round(basal, 2)} as temp. ")
-                    consoleLog.add("Checkpoint 4")
+                    consoleError.add("Checkpoint 4")
                     return setTempBasal(basal, 30, profile, rT, currenttemp)
                 }
             }
@@ -1151,12 +1150,12 @@ class DetermineBasalTsunami @Inject constructor(
             val minInsulinReq = Math.min(insulinReq, naiveInsulinReq)
             if (insulinScheduled < minInsulinReq - basal * 0.3) {
                 rT.reason.append(", ${currenttemp.duration}m@${(currenttemp.rate).toFixed2()} is a lot less than needed. ")
-                consoleLog.add("Checkpoint 5")
+                consoleError.add("Checkpoint 5")
                 return setTempBasal(rate, 30, profile, rT, currenttemp)
             }
             if (currenttemp.duration > 5 && rate >= currenttemp.rate * 0.8) {
                 rT.reason.append(", temp ${currenttemp.rate} ~< req ${round(rate, 2)}U/hr. ")
-                consoleLog.add("Checkpoint 6")
+                consoleError.add("Checkpoint 6")
                 return rT
             } else {
                 // calculate a long enough zero temp to eventually correct back up to target
@@ -1174,13 +1173,13 @@ class DetermineBasalTsunami @Inject constructor(
                     //console.error(durationReq);
                     if (durationReq > 0) {
                         rT.reason.append(", setting ${durationReq}m zero temp. ")
-                        consoleLog.add("Checkpoint 7")
+                        consoleError.add("Checkpoint 7")
                         return setTempBasal(rate, durationReq, profile, rT, currenttemp)
                     }
                 } else {
                     rT.reason.append(", setting ${round(rate, 2)}U/hr. ")
                 }
-                consoleLog.add("Checkpoint 8")
+                consoleError.add("Checkpoint 8")
                 return setTempBasal(rate, 30, profile, rT, currenttemp)
             }
         }
@@ -1200,11 +1199,11 @@ class DetermineBasalTsunami @Inject constructor(
                 }
                 if (currenttemp.duration > 15 && (round_basal(basal) == round_basal(currenttemp.rate))) {
                     rT.reason.append(", temp " + currenttemp.rate + " ~ req " + round(basal, 2).withoutZeros() + "U/hr. ")
-                    consoleLog.add("Checkpoint 9")
+                    consoleError.add("Checkpoint 9")
                     return rT
                 } else {
                     rT.reason.append("; setting current basal of ${round(basal, 2)} as temp. ")
-                    consoleLog.add("Checkpoint 10")
+                    consoleError.add("Checkpoint 10")
                     return setTempBasal(basal, 30, profile, rT, currenttemp)
                 }
             }
@@ -1216,11 +1215,11 @@ class DetermineBasalTsunami @Inject constructor(
                 rT.reason.append("${convert_bg(eventualBG)}-${convert_bg(minPredBG)} in range: no temp required")
                 if (currenttemp.duration > 15 && (round_basal(basal) == round_basal(currenttemp.rate))) {
                     rT.reason.append(", temp ${currenttemp.rate} ~ req ${round(basal, 2).withoutZeros()}U/hr. ")
-                    consoleLog.add("Checkpoint 11")
+                    consoleError.add("Checkpoint 11")
                     return rT
                 } else {
                     rT.reason.append("; setting current basal of ${round(basal, 2)} as temp. ")
-                    consoleLog.add("Checkpoint 12")
+                    consoleError.add("Checkpoint 12")
                     return setTempBasal(basal, 30, profile, rT, currenttemp)
                 }
             }
@@ -1235,11 +1234,11 @@ class DetermineBasalTsunami @Inject constructor(
             rT.reason.append("IOB ${round(iob_data.iob, 2)} > max_iob $max_iob")
             if (currenttemp.duration > 15 && (round_basal(basal) == round_basal(currenttemp.rate))) {
                 rT.reason.append(", temp ${currenttemp.rate} ~ req ${round(basal, 2).withoutZeros()}U/hr. ")
-                consoleLog.add("Checkpoint 13")
+                consoleError.add("Checkpoint 13")
                 return rT
             } else {
                 rT.reason.append("; setting current basal of ${round(basal, 2)} as temp. ")
-                consoleLog.add("Checkpoint 14")
+                consoleError.add("Checkpoint 14")
                 return setTempBasal(basal, 30, profile, rT, currenttemp)
             }
         } else { // otherwise, calculate 30m high-temp required to get projected BG down to target
@@ -1370,7 +1369,7 @@ class DetermineBasalTsunami @Inject constructor(
                 if (durationReq > 0) {
                     rT.rate = smbLowTempReq
                     rT.duration = durationReq
-                    consoleLog.add("Checkpoint 15")
+                    consoleError.add("Checkpoint 15")
                     return rT
                 }
 
@@ -1386,25 +1385,25 @@ class DetermineBasalTsunami @Inject constructor(
             val insulinScheduled = currenttemp.duration * (currenttemp.rate - basal) / 60
             if (insulinScheduled >= insulinReq * 2) { // if current temp would deliver >2x more than the required insulin, lower the rate
                 rT.reason.append("${currenttemp.duration}m@${(currenttemp.rate).toFixed2()} > 2 * insulinReq. Setting temp basal of ${round(rate, 2)}U/hr. ")
-                consoleLog.add("Checkpoint 16")
+                consoleError.add("Checkpoint 16")
                 return setTempBasal(rate, 30, profile, rT, currenttemp)
             }
 
             if (currenttemp.duration == 0) { // no temp is set
                 rT.reason.append("no temp, setting " + round(rate, 2).withoutZeros() + "U/hr. ")
-                consoleLog.add("Checkpoint 17")
+                consoleError.add("Checkpoint 17")
                 return setTempBasal(rate, 30, profile, rT, currenttemp)
             }
 
             if (currenttemp.duration > 5 && (round_basal(rate) <= round_basal(currenttemp.rate))) { // if required temp <~ existing temp basal
                 rT.reason.append("temp ${(currenttemp.rate).toFixed2()} >~ req ${round(rate, 2).withoutZeros()}U/hr. ")
-                consoleLog.add("Checkpoint 18")
+                consoleError.add("Checkpoint 18")
                 return rT
             }
 
             // required temp > existing temp basal
             rT.reason.append("temp ${currenttemp.rate.toFixed2()} < ${round(rate, 2).withoutZeros()}U/hr. ")
-            consoleLog.add("Checkpoint 19")
+            consoleError.add("Checkpoint 19")
             return setTempBasal(rate, 30, profile, rT, currenttemp)
         }
     }

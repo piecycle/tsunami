@@ -421,6 +421,9 @@ override fun onStart() {
         var insulinReqPCT : Double = 0.0
         var activityTarget : Double = 0.0
         var deltaReductionPCT : Double = 0.0
+        var deltaScore: Double = 0.5
+        //TODO: Improve meal detection system!
+        //TODO: Adjusted deltaScore divisor from 4 to 6 --> check performance (Oct 2024)
         if (tsunamiModeID == 2) { //MP: 2 = Tsunami
             deltaReductionPCT = 1.0
             SMBcap = preferences.get(DoubleKey.TsuSMBCap) //MP: User-set max SMB size for Tsunami.
@@ -429,6 +432,7 @@ override fun onStart() {
             }
             insulinReqPCT = preferences.get(IntKey.TsuInsReqPCT).toDouble() / 100.0 // User-set percentage to modify insulin required
             activityTarget = preferences.get(IntKey.TsuActivityTarget).toDouble() / 100.0 // MP for small deltas
+            deltaScore = Round.roundTo(glucoseStatus.shortAvgDelta/preferences.get(IntKey.TsuDeltaScoreDivisor), 0.01) //MP ShortAvgDelta must equal the divisor for deltaScore to be 1.0 (full force)
         } else if (tsunamiModeID == 1) { //MP: 1 = Wave
             deltaReductionPCT = 0.5
             SMBcap = preferences.get(DoubleKey.WaveSMBCap) ?: 0.0 //MP: User-set may SMB size for Wave.
@@ -437,6 +441,7 @@ override fun onStart() {
             }
             insulinReqPCT = preferences.get(IntKey.WaveInsReqPCT).toDouble() / 100.0 // User-set percentage to modify insulin required
             activityTarget = preferences.get(IntKey.WaveActivityTarget).toDouble() / 100.0 // MP for small deltas
+            deltaScore = Round.roundTo(glucoseStatus.shortAvgDelta/preferences.get(IntKey.WaveDeltaScoreDivisor), 0.01) //MP ShortAvgDelta must equal the divisor for deltaScore to be 1.0 (full force)
         }
         // Calculate reference activity values
         var currentActivity = 0.0
@@ -476,10 +481,6 @@ override fun onStart() {
         sensorLagActivity = Round.roundTo(sensorLagActivity, 0.0001)
         historicActivity = Round.roundTo(historicActivity, 0.0001)
         currentActivity = Round.roundTo(currentActivity, 0.0001)
-
-        //Calculate deltaScore
-        //TODO: Improve meal detection system!
-        val deltaScore: Double = Round.roundTo(glucoseStatus.shortAvgDelta/4, 0.01)
 
         val oapsProfile = OapsProfileTsunami(
             dia = insulin.dia, //MP alternatively: profile.dia, but deprecated...
@@ -698,12 +699,15 @@ override fun onStart() {
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.TsuButtonIncrement2, dialogMessage = R.string.tsunami_button_insulin_increment_button_message, title = R.string.tsunami_button_insulin_increment_2))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.TsuButtonIncrement3, dialogMessage = R.string.tsunami_button_insulin_increment_button_message, title = R.string.tsunami_button_insulin_increment_3))
                 addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuDefaultDuration, dialogMessage = R.string.tsunami_default_duration_message, title = R.string.tsunami_default_duration_title))
-                category.apply {
+                val advancedTsu = PreferenceCategory(context)
+                addPreference(advancedTsu)
+                advancedTsu.apply {
                     key = "key_advanced_tsunami"
                     title = rh.gs(R.string.advanced_tsunami_title)
-                    summary = rh.gs(R.string.advanced_tsunami_disclaimer)
+                    //summary = rh.gs(R.string.advanced_tsunami_disclaimer)
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuActivityTarget, dialogMessage = R.string.tsu_activity_target_summary, title = R.string.tsu_activity_target_title))
-                    addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuInsReqPCT, dialogMessage = R.string.insulinReqPCT_summary, title = R.string.insulinReqPCT_title))
+                    addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuInsReqPCT, dialogMessage = R.string.insulinReqPCT_summary, summary = R.string.insulinReqPCT_summary, title = R.string.insulinReqPCT_title))
+                    addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuDeltaScoreDivisor, dialogMessage = R.string.tsu_deltascore_divisor_dialogue, title = R.string.tsu_deltascore_divisor_title))
                 }
             })
             addPreference(preferenceManager.createPreferenceScreen(context).apply {
@@ -716,12 +720,15 @@ override fun onStart() {
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.WaveUseSMBCap, summary = R.string.use_wave_smbcap_summary, title = R.string.use_wave_smbcap_title))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.WaveSMBCap, dialogMessage = R.string.wave_smbcap_message, title = R.string.wave_smbcap_title))
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.WaveSMBCapScaling, summary = R.string.wave_SMB_scaling_summary, title = R.string.wave_SMB_scaling_title))
-                category.apply {
+                val advancedWave = PreferenceCategory(context)
+                addPreference(advancedWave)
+                advancedWave.apply {
                     key = "key_advanced_wave"
                     title = rh.gs(R.string.advanced_wave_title)
-                    summary = rh.gs(R.string.advanced_wave_disclaimer)
+                    //summary = rh.gs(R.string.advanced_wave_disclaimer)
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.WaveActivityTarget, dialogMessage = R.string.wave_activity_target_summary, title = R.string.wave_activity_target_title))
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.WaveInsReqPCT, dialogMessage = R.string.wave_insulinReqPCT_message, title = R.string.wave_insulinReqPCT_title))
+                    addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.WaveDeltaScoreDivisor, dialogMessage = R.string.wave_deltascore_divisor_dialogue, title = R.string.wave_deltascore_divisor_title))
                 }
             })
             addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.ApsUseDynamicSensitivity, summary = R.string.use_dynamic_sensitivity_summary, title = R.string.use_dynamic_sensitivity_title))

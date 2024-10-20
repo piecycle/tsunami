@@ -70,7 +70,8 @@ enum class IntKey(
     TsuDefaultDuration("key_tsunami_default_duration", 0, 0, 300, defaultedBySM = true),
     TsuActivityTarget("key_tsu_activity_target", 75, 50, 100, defaultedBySM = true),
     TsuInsReqPCT("key_insulinReqPCT", 65, 50, 100, defaultedBySM = true),
+    TsuDeltaScoreDivisor("key_tsu_deltascore_divisor", 6, 4, 18, defaultedBySM = true),
     WaveActivityTarget("key_wave_activity_target", 70, 50, 100, defaultedBySM = true, dependency = BooleanKey.EnableWave),
     WaveInsReqPCT("key_wave_insulinReqPCT", 65, 30, 100, defaultedBySM = true, dependency = BooleanKey.EnableWave),
-
+    WaveDeltaScoreDivisor("key_wave_deltascore_divisor", 6, 4, 18, defaultedBySM = true, dependency = BooleanKey.EnableWave),
 }

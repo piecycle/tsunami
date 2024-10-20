@@ -280,6 +280,10 @@
     <string name="wave_insulinReqPCT_message">Reduces the calculated insulin required to the specified percentage for delivery. Example: If calculated insulin required is 1 U and fraction size is 50%, at most 0.5 U will be delivered if no other constraints (e.g. SMB caps) apply.</string>
     <string name="wave_insulinReqPCT_title">Wave mode insulin delivery percentage [%]</string>
     <string name="key_tsu_SMB_scaling" translatable="false">tsu_SMB_scaling</string>
+    <string name="tsu_deltascore_divisor_dialogue">Short-average delta below which the tsunami insulin delivery percentage will be weakened. Larger values equal a weaker, more gradual response to rises.</string>
+    <string name="tsu_deltascore_divisor_title">DeltaScore divisor (Tsunami) [mg/dl]</string>
+    <string name="wave_deltascore_divisor_dialogue">Short-average delta below which the wave insulin delivery percentage will be weakened. Larger values equal a weaker, more gradual response to rises.</string>
+    <string name="wave_deltascore_divisor_title">DeltaScore divisor (Wave) [mg/dl]</string>
 
     <string name="tsu_hide_tsunami_button_title">Hide Tsunami button</string>
     <string name="tsu_hide_tsunami_button_summary">For users wishing to use wave mode only.</string>
