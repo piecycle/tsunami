@@ -294,7 +294,8 @@ override fun onStart() {
 
         val dynIsfMode = preferences.get(BooleanKey.ApsUseDynamicSensitivity)
         val smbEnabled = preferences.get(BooleanKey.ApsUseSmb)
-        val advancedFiltering = constraintsChecker.isAdvancedFilteringEnabled().also { inputConstraints.copyReasons(it) }.value()
+        //TODO AAPS recognised xDrip as unsafe source; wait for this to be fixed
+        val advancedFiltering = true//constraintsChecker.isAdvancedFilteringEnabled().also { inputConstraints.copyReasons(it) }.value()
 
         val now = dateUtil.now()
         val tb = processedTbrEbData.getTempBasalIncludingConvertedExtended(now)
