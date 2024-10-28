@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("kotlin-android")
     id("kotlin-kapt")
     id("android-module-dependencies")
@@ -25,11 +25,11 @@ dependencies {
     testImplementation(project(":pump:virtual"))
 
     // Protection
-    api(Libs.AndroidX.biometric)
+    api(libs.androidx.biometric)
     //Logger
-    api(Libs.Logging.slf4jApi)
-    api(Libs.Logging.logbackAndroid)
+    api(libs.org.slf4j.api)
+    api(libs.com.github.tony19.logback.android)
 
-    kapt(Libs.Dagger.compiler)
-    kapt(Libs.Dagger.androidProcessor)
+    kapt(libs.com.google.dagger.compiler)
+    kapt(libs.com.google.dagger.android.processor)
 }

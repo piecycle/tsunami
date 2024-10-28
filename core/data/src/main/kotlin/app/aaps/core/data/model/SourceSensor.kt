@@ -2,8 +2,9 @@ package app.aaps.core.data.model
 
 enum class SourceSensor(val text: String) {
     DEXCOM_NATIVE_UNKNOWN("AAPS-Dexcom"),
-    DEXCOM_G6_NATIVE("AAPS-DexcomG6"),
     DEXCOM_G5_NATIVE("AAPS-DexcomG5"),
+    DEXCOM_G6_NATIVE("AAPS-DexcomG6"),
+    DEXCOM_G7_NATIVE("AAPS-DexcomG7"),
     DEXCOM_G4_WIXEL("Bluetooth Wixel"),
     DEXCOM_G4_XBRIDGE("xBridge Wixel"),
     DEXCOM_G4_NATIVE("G4 Share Receiver"),
@@ -14,8 +15,7 @@ enum class SourceSensor(val text: String) {
     DEXCOM_G5_XDRIP("DexcomG5"),
     DEXCOM_G6_NATIVE_XDRIP("G6 Native"),
     DEXCOM_G5_NATIVE_XDRIP("G5 Native"),
-    DEXCOM_G6_G5_NATIVE_XDRIP("G6 Native / G5 Native"),
-    DEXCOM_G7_NATIVE_XDRIP("G7"),
+    DEXCOM_G7_NATIVE_XDRIP("G7 Native"),
     LIBRE_1_OTHER("Other App"),
     LIBRE_1_NET("Network libre"),
     LIBRE_1_BLUE("BlueReader"),

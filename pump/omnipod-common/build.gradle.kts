@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("kotlin-android")
     id("kotlin-kapt")
     id("android-module-dependencies")
@@ -17,11 +17,11 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:utils"))
 
-    api(Libs.AndroidX.constraintLayout)
-    api(Libs.AndroidX.fragment)
-    api(Libs.AndroidX.navigationFragment)
-    api(Libs.Google.Android.material)
+    api(libs.androidx.constraintlayout)
+    api(libs.androidx.fragment)
+    api(libs.androidx.navigation.fragment)
+    api(libs.com.google.android.material)
 
-    kapt(Libs.Dagger.compiler)
-    kapt(Libs.Dagger.androidProcessor)
+    kapt(libs.com.google.dagger.compiler)
+    kapt(libs.com.google.dagger.android.processor)
 }

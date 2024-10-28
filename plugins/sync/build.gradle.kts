@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("kotlin-android")
     id("kotlin-kapt")
     id("android-module-dependencies")
@@ -23,8 +23,8 @@ dependencies {
     implementation(project(":shared:impl"))
 
 
-    testImplementation(Libs.KotlinX.coroutinesTest)
-    testImplementation(Libs.AndroidX.Work.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.work.testing)
 
     testImplementation(project(":shared:tests"))
     testImplementation(project(":implementation"))
@@ -32,27 +32,27 @@ dependencies {
     androidTestImplementation(project(":shared:tests"))
 
     // OpenHuman
-    api(Libs.Squareup.Okhttp3.okhttp)
-    api(Libs.Squareup.Retrofit2.retrofit)
-    api(Libs.AndroidX.browser)
-    api(Libs.AndroidX.Work.runtimeKtx)
-    api(Libs.AndroidX.gridLayout)
-    api(Libs.Google.Android.material)
+    api(libs.com.squareup.okhttp3.okhttp)
+    api(libs.com.squareup.retrofit2.retrofit)
+    api(libs.androidx.browser)
+    api(libs.androidx.work.runtime)
+    api(libs.androidx.gridlayout)
+    api(libs.com.google.android.material)
 
     // NSClient, Tidepool
-    api(Libs.socketIo)
-    api(Libs.Squareup.Okhttp3.loggingInterceptor)
-    api(Libs.Squareup.Retrofit2.adapterRxJava3)
-    api(Libs.Squareup.Retrofit2.converterGson)
-    api(Libs.Google.gson)
+    api(libs.io.socket.client)
+    api(libs.com.squareup.okhttp3.logging.interceptor)
+    api(libs.com.squareup.retrofit2.adapter.rxjava3)
+    api(libs.com.squareup.retrofit2.converter.gson)
+    api(libs.com.google.code.gson)
 
     // DataLayerListenerService
-    api(Libs.Google.Android.PlayServices.wearable)
+    api(libs.com.google.android.gms.playservices.wearable)
 
     // Garmin
-    api(Libs.connectiqSdk)
-    androidTestImplementation(Libs.connectiqSdk)
+    api(libs.com.garmin.connectiq) { artifact { type = "aar" } }
+    androidTestImplementation(libs.com.garmin.connectiq) { artifact { type = "aar" } }
 
-    kapt(Libs.Dagger.compiler)
-    kapt(Libs.Dagger.androidProcessor)
+    kapt(libs.com.google.dagger.compiler)
+    kapt(libs.com.google.dagger.android.processor)
 }

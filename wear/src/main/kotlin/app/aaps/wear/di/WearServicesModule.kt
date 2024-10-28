@@ -20,11 +20,9 @@ import app.aaps.wear.tile.QuickWizardTileService
 import app.aaps.wear.tile.TempTargetTileService
 import app.aaps.wear.tile.TileBase
 import app.aaps.wear.watchfaces.AapsLargeWatchface
-import app.aaps.wear.watchfaces.BigChartWatchface
 import app.aaps.wear.watchfaces.CircleWatchface
 import app.aaps.wear.watchfaces.CustomWatchface
 import app.aaps.wear.watchfaces.DigitalStyleWatchface
-import app.aaps.wear.watchfaces.NoChartWatchface
 import app.aaps.wear.watchfaces.utils.BaseWatchFace
 import app.aaps.wear.wearStepCount.StepCountListener
 import dagger.Module
@@ -54,8 +52,6 @@ abstract class WearServicesModule {
     @ContributesAndroidInjector abstract fun contributesBaseWatchFace(): BaseWatchFace
     @ContributesAndroidInjector abstract fun contributesAapsLargeWatchface(): AapsLargeWatchface
     @ContributesAndroidInjector abstract fun contributesDigitalStyleWatchface(): DigitalStyleWatchface
-    @ContributesAndroidInjector abstract fun contributesBIGChart(): BigChartWatchface
-    @ContributesAndroidInjector abstract fun contributesNOChart(): NoChartWatchface
     @ContributesAndroidInjector abstract fun contributesCircleWatchface(): CircleWatchface
     @ContributesAndroidInjector abstract fun contributesCustomWatchface(): CustomWatchface
 

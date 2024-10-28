@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("kotlin-android")
     id("kotlin-kapt")
     id("android-module-dependencies")
@@ -26,10 +26,10 @@ dependencies {
     testImplementation(project(":plugins:main"))
     testImplementation(project(":pump:virtual"))
 
-    api(Libs.AndroidX.constraintLayout)
-    api(Libs.Google.Android.PlayServices.location)
-    api(Libs.Kotlin.reflect)
+    api(libs.androidx.constraintlayout)
+    api(libs.com.google.android.gms.playservices.location)
+    api(libs.kotlin.reflect)
 
-    kapt(Libs.Dagger.compiler)
-    kapt(Libs.Dagger.androidProcessor)
+    kapt(libs.com.google.dagger.compiler)
+    kapt(libs.com.google.dagger.android.processor)
 }
