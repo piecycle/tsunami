@@ -1307,15 +1307,33 @@ class DetermineBasalTsunami @Inject constructor(
                 }
 
                 //MP rT.reason for Tsunami
+                consoleError.add("act. lag: $actCurr")
+                consoleError.add("act. now: " + profile.currentActivity)
+                consoleError.add("act. future: $actFuture")
+                consoleError.add("act. missing: $actMissing")
+                consoleError.add("-------------")
+                consoleError.add("bg: $bg")
+                consoleError.add("net delta: " + glucose_status.delta)
+                consoleError.add("gross delta: $deltaGross")
+                consoleError.add("-------------")
+                consoleError.add("deltaScore: " + round(deltaScore, 3))
+                consoleError.add("bgScore: $bgScore")
+                consoleError.add("insulinReqPCT_live: $insulinReqPCT")
+                consoleError.add("SMBcap_live: $SMBcap")
+                consoleError.add("tsuInsReq: $tsuInsReq")
+                consoleError.add("iterations: $iterations")
+
+
+
                 if (activityController) {
                     rT.reason.append(" ##TSUNAMI STATUS##")
                     rT.reason.append(" act. lag: $actCurr")
-                    rT.reason.append("; act. now: $profile.currentActivity")
+                    rT.reason.append("; act. now: " + profile.currentActivity)
                     rT.reason.append("; act. future: $actFuture")
                     rT.reason.append("; act. missing: $actMissing")
                     rT.reason.append("; ###")
                     rT.reason.append(" bg: $bg")
-                    rT.reason.append("; net delta: $glucose_status.delta")
+                    rT.reason.append("net delta: " + glucose_status.delta)
                     rT.reason.append("; gross delta: $deltaGross")
                     rT.reason.append("; ###")
                     rT.reason.append(" deltaScore: " + round(deltaScore, 3))
