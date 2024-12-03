@@ -75,7 +75,7 @@ class TestTsunamiPlugin @Inject constructor(
             .shortName(R.string.tsunami_shortname)
             .preferencesVisibleInSimpleMode(true)
             .setDefault(false)
-            .showInList(config.isEngineeringMode() && config.isDev())
+            .showInList(showInList = {config.isEngineeringMode() && config.isDev()})
     }
 
     override fun specialEnableCondition(): Boolean = config.isEngineeringMode() && config.isDev()

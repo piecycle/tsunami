@@ -10,7 +10,6 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
-import app.aaps.annotations.OpenForTesting
 import app.aaps.core.data.aps.SMBDefaults
 import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.plugin.PluginType
@@ -74,13 +73,12 @@ import app.aaps.plugins.aps.events.EventResetOpenAPSGui
 import app.aaps.plugins.aps.openAPS.TddStatus
 import dagger.android.HasAndroidInjector
 import org.json.JSONObject
-import java.util.concurrent.TimeUnit
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.floor
 import kotlin.math.ln
 
-@OpenForTesting
 @Singleton
 open class TsunamiPlugin @Inject constructor(
     private val injector: HasAndroidInjector,
@@ -113,7 +111,7 @@ open class TsunamiPlugin @Inject constructor(
         .shortName(R.string.tsunami_shortname)
         .preferencesId(PluginDescription.PREFERENCE_SCREEN)
         .preferencesVisibleInSimpleMode(false)
-        .showInList(config.isEngineeringMode() && config.isDev())
+        .showInList(showInList = {config.isEngineeringMode() && config.isDev()})
         //.showInList(config.APS)
         .description(R.string.description_tsunami)
         .setDefault(),
@@ -143,15 +141,15 @@ override fun onStart() {
 
     override fun getIsfMgdl(multiplier: Double, timeShift: Int, caller: String): Double? {
         val start = dateUtil.now()
-        val sensitivity = calculateVariableIsf(start, bg = null)
+        val sensitivity = calculateVariableIsf(start)
         if (sensitivity.second == null)
             uiInteraction.addNotificationValidTo(
                 Notification.DYN_ISF_FALLBACK, start,
-                rh.gs(R.string.fallback_to_isf_no_tdd), Notification.INFO, dateUtil.now() + T.mins(1).msecs()
+                rh.gs(R.string.fallback_to_isf_no_tdd, sensitivity.first), Notification.INFO, dateUtil.now() + T.mins(1).msecs()
             )
         else
             uiInteraction.dismissNotification(Notification.DYN_ISF_FALLBACK)
-        profiler.log(LTag.APS, String.format("getIsfMgdl() %s %f %s %s", sensitivity.first, sensitivity.second, dateUtil.dateAndTimeAndSecondsString(start), caller), start)
+        profiler.log(LTag.APS, String.format(Locale.getDefault(), "getIsfMgdl() %s %f %s %s", sensitivity.first, sensitivity.second, dateUtil.dateAndTimeAndSecondsString(start), caller), start)
         return sensitivity.second?.let { it * multiplier }
     }
 
@@ -173,7 +171,7 @@ override fun onStart() {
     override fun specialEnableCondition(): Boolean {
         return try {
             activePlugin.activePump.pumpDescription.isTempBasalCapable
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
             // may fail during initialization
             true
         }
@@ -186,43 +184,35 @@ override fun onStart() {
 
     override fun preprocessPreferences(preferenceFragment: PreferenceFragmentCompat) {
         super.preprocessPreferences(preferenceFragment)
-        val uamEnabled = if (preferences.get(BooleanKey.ApsUseSmb)) {
-            preferences.get(BooleanKey.ApsUseUam)
-        } else {
-            preferences.get(BooleanKey.ApsUseSmb)
-        }
-        val smbAlwaysEnabled = if (preferences.get(BooleanKey.ApsUseSmb)) {
-            preferences.get(BooleanKey.ApsUseSmbAlways)
-        } else {
-            !preferences.get(BooleanKey.ApsUseSmb)
-        }
+
+        val smbEnabled = preferences.get(BooleanKey.ApsUseSmb)
+        val smbAlwaysEnabled = preferences.get(BooleanKey.ApsUseSmbAlways)
+        val uamEnabled = preferences.get(BooleanKey.ApsUseUam)
         val advancedFiltering = activePlugin.activeBgSource.advancedFilteringSupported()
-        val autoSensOrDynIsfSensEnabled = if (preferences.get(BooleanKey.ApsUseDynamicSensitivity)) {
-            preferences.get(BooleanKey.ApsDynIsfAdjustSensitivity)
-        } else {
-            preferences.get(BooleanKey.ApsUseAutosens)
-        }
-        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbWithCob.key)?.isVisible = !smbAlwaysEnabled || !advancedFiltering
-        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbWithLowTt.key)?.isVisible = !smbAlwaysEnabled || !advancedFiltering
-        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbAfterCarbs.key)?.isVisible = !smbAlwaysEnabled || !advancedFiltering
+        val autoSensOrDynIsfSensEnabled = preferences.get(BooleanKey.ApsUseDynamicSensitivity) && preferences.get(BooleanKey.ApsDynIsfAdjustSensitivity) || preferences.get(BooleanKey.ApsUseAutosens)
+
+        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbAlways.key)?.isVisible = smbEnabled && advancedFiltering
+        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbWithCob.key)?.isVisible = smbEnabled && !smbAlwaysEnabled && advancedFiltering || smbEnabled && !advancedFiltering
+        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbWithLowTt.key)?.isVisible = smbEnabled && !smbAlwaysEnabled && advancedFiltering || smbEnabled && !advancedFiltering
+        preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsUseSmbAfterCarbs.key)?.isVisible = smbEnabled && !smbAlwaysEnabled && advancedFiltering
         preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsResistanceLowersTarget.key)?.isVisible = autoSensOrDynIsfSensEnabled
         preferenceFragment.findPreference<SwitchPreference>(BooleanKey.ApsSensitivityRaisesTarget.key)?.isVisible = autoSensOrDynIsfSensEnabled
-        preferenceFragment.findPreference<AdaptiveIntPreference>(IntKey.ApsUamMaxMinutesOfBasalToLimitSmb.key)?.isVisible = uamEnabled
+        preferenceFragment.findPreference<AdaptiveIntPreference>(IntKey.ApsUamMaxMinutesOfBasalToLimitSmb.key)?.isVisible = smbEnabled && uamEnabled
     }
 
     private val dynIsfCache = LongSparseArray<Double>()
 
     @Synchronized
-    private fun calculateVariableIsf(timestamp: Long, bg: Double?): Pair<String, Double?> {
+    private fun calculateVariableIsf(timestamp: Long): Pair<String, Double?> {
         if (!preferences.get(BooleanKey.ApsUseDynamicSensitivity)) return Pair("OFF", null)
 
         val result = persistenceLayer.getApsResultCloseTo(timestamp)
-        if (result?.variableSens != null) {
+        if (result?.variableSens != null && result.variableSens != 0.0) {
             //aapsLogger.debug("calculateVariableIsf $caller DB  ${dateUtil.dateAndTimeAndSecondsString(timestamp)} ${result.variableSens}")
             return Pair("DB", result.variableSens)
         }
 
-        val glucose = bg ?: glucoseStatusProvider.glucoseStatusData?.glucose ?: return Pair("GLUC", null)
+        val glucose = glucoseStatusProvider.glucoseStatusData?.glucose ?: return Pair("GLUC", null)
         // Round down to 30 min and use it as a key for caching
         // Add BG to key as it affects calculation
         val key = timestamp - timestamp % T.mins(30).msecs() + glucose.toLong()
@@ -294,8 +284,7 @@ override fun onStart() {
 
         val dynIsfMode = preferences.get(BooleanKey.ApsUseDynamicSensitivity)
         val smbEnabled = preferences.get(BooleanKey.ApsUseSmb)
-        //TODO AAPS recognised xDrip as unsafe source; wait for this to be fixed
-        val advancedFiltering = true//constraintsChecker.isAdvancedFilteringEnabled().also { inputConstraints.copyReasons(it) }.value()
+        val advancedFiltering = constraintsChecker.isAdvancedFilteringEnabled().also { inputConstraints.copyReasons(it) }.value()
 
         val now = dateUtil.now()
         val tb = processedTbrEbData.getTempBasalIncludingConvertedExtended(now)
@@ -389,7 +378,7 @@ override fun onStart() {
         */
 
         // Get peak time if using a PK insulin model
-        val activityPredTimePK = TimeUnit.MILLISECONDS.toMinutes(insulin.peak.toLong()) //MP act. pred. time for PK ins. models; target time = insulin peak time
+        val activityPredTimePK = T.msecs(insulin.peak.toLong()).mins() //TimeUnit.MILLISECONDS.toMinutes(insulin.peak.toLong()) //MP act. pred. time for PK ins. models; target time = insulin peak time
 
         // Get the ID of the currently used insulin preset
 
@@ -447,7 +436,7 @@ override fun onStart() {
         // Calculate reference activity values
         var currentActivity = 0.0
         for (i in -4..0) { //MP: -4 to 0 calculates all the insulin active during the last 5 minutes
-            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(i.toLong()), profile)
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() - T.mins(i.toLong()).msecs(), profile) //TimeUnit.MINUTES.toMillis(i.toLong())
             currentActivity += iob.activity
         }
 
@@ -460,21 +449,21 @@ override fun onStart() {
             activityPredTime = activityPredTimePD
         }
         for (i in -4..0) { //MP: calculate 5-minute-insulin activity centering around peakTime
-            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityPredTime - i), profile)
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + T.mins(activityPredTime - i).msecs(), profile) //TimeUnit.MINUTES.toMillis(activityPredTime - i)
             futureActivity += iob.activity
         }
 
         val sensorLag = -10L //MP Assume that the glucose value measurement reflect the BG value from 'sensorlag' minutes ago & calculate the insulin activity then
         var sensorLagActivity = 0.0
         for (i in -4..0) {
-            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(sensorLag - i), profile)
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + T.mins(sensorLag - i).msecs(), profile) //TimeUnit.MINUTES.toMillis(sensorLag - i)
             sensorLagActivity += iob.activity
         }
 
         val activityHistoric = -20L //MP Activity at the time in minutes from now. Used to calculate activity in the past to use as target activity.
         var historicActivity = 0.0
         for (i in -2..2) {
-            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(activityHistoric - i), profile)
+            val iob = iobCobCalculator.calculateFromTreatmentsAndTemps(System.currentTimeMillis() + T.mins(activityHistoric - i).msecs(), profile) //TimeUnit.MINUTES.toMillis(activityHistoric - i)
             historicActivity += iob.activity
         }
 
