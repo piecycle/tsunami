@@ -216,11 +216,11 @@ class HeartRateListener(
             }
         }
 
-        fun cleanActionHeartRatehistory (timestamp: Long) {
+        fun cleanActionHeartRatehistory(timestamp: Long) {
             val iterator = actionHeartRatehistory.iterator()
-            while(iterator.hasNext()){
+            while (iterator.hasNext()) {
                 val hr = iterator.next()
-                if(hr.timestamp < timestamp - (maxAverage - 1) * 62000L){   // keep in memory the max duration + 2s marging for each min
+                if (hr.timestamp < timestamp - (maxAverage - 1) * 62000L) {   // keep in memory the max duration + 2s marging for each min
                     iterator.remove()
                 }
             }

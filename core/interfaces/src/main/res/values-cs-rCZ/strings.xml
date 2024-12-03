@@ -49,6 +49,8 @@
     <string name="pref_show_delta">Zobrazit deltu</string>
     <string name="pref_show_detailed_delta">Zobrazit detailní deltu</string>
     <string name="pref_show_avgdelta">Zobrazit průměrnou deltu</string>
+    <string name="pref_show_tempTarget">Zobrazit Dočasný cíl</string>
+    <string name="pref_show_reservoir_level">Zobrazit úroveň zásobníku</string>
     <string name="pref_show_phone_battery">Zobrazit stav baterie telefonu</string>
     <string name="pref_show_rig_battery">Zobrazit stav baterie dalších zařízení</string>
     <string name="pref_show_basal_rate">Zobrazit bazál</string>
@@ -60,6 +62,7 @@
     <string name="pref_show_week_number">Zobrazit číslo týdne</string>
     <string name="pref_show_date">Zobrazit datum</string>
     <string name="default_custom_watchface_comment">Výchozí ciferník. Můžete kliknout na tlačítko EXPORTOVAT CIFERNÍK pro vygenerování šablony</string>
+    <string name="default_custom_watchface_external_comment">Výchozí ciferník včetně externích zobrazení pro sledující, chcete-li vygenerovat šablonu, můžete kliknout na tlačítko EXPORTOVAT CIFERNÍK</string>
     <string name="wear_default_watchface">Výchozí ciferník</string>
     <string name="wear_more_watchfaces">Další ciferníky</string>
 </resources>

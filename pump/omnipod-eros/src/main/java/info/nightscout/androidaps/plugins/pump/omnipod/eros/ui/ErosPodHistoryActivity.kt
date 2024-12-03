@@ -172,17 +172,19 @@ class ErosPodHistoryActivity : TranslatedDaggerAppCompatActivity() {
                     }
 
                     PodHistoryEntryType.INSERT_CANNULA, PodHistoryEntryType.SET_BASAL_SCHEDULE                                                                                                                                                                                                                                                                                                                                                                                                                                                                       -> {
-                        if (historyEntry.data != null) {
-                            setProfileValue(historyEntry.data, valueView)
+                        historyEntry.data?.let {
+                            setProfileValue(it, valueView)
                         }
                     }
 
                     PodHistoryEntryType.SET_BOLUS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    -> {
-                        if (historyEntry.data.contains(";")) {
-                            val splitVal = historyEntry.data.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                            valueView.text = rh.gs(R.string.omnipod_eros_history_bolus_value_with_carbs, java.lang.Double.valueOf(splitVal[0]), java.lang.Double.valueOf(splitVal[1]))
-                        } else {
-                            valueView.text = rh.gs(R.string.omnipod_eros_history_bolus_value, java.lang.Double.valueOf(historyEntry.data))
+                        historyEntry.data?.let {
+                            if (it.contains(";")) {
+                                val splitVal = it.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                                valueView.text = rh.gs(R.string.omnipod_eros_history_bolus_value_with_carbs, java.lang.Double.valueOf(splitVal[0]), java.lang.Double.valueOf(splitVal[1]))
+                            } else {
+                                valueView.text = rh.gs(R.string.omnipod_eros_history_bolus_value, java.lang.Double.valueOf(it))
+                            }
                         }
                     }
 
@@ -218,15 +220,9 @@ class ErosPodHistoryActivity : TranslatedDaggerAppCompatActivity() {
 
         inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-            val timeView: TextView
-            val typeView: TextView
-            val valueView: TextView
-
-            init {
-                timeView = itemView.findViewById(R.id.omnipod_history_time)
-                typeView = itemView.findViewById(R.id.omnipod_history_source)
-                valueView = itemView.findViewById(R.id.omnipod_history_description)
-            }
+            val timeView: TextView = itemView.findViewById(R.id.omnipod_history_time)
+            val typeView: TextView = itemView.findViewById(R.id.omnipod_history_source)
+            val valueView: TextView = itemView.findViewById(R.id.omnipod_history_description)
         }
     }
 }

@@ -9,11 +9,9 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.AnimationDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +72,7 @@ import app.aaps.core.interfaces.rx.events.EventUpdateOverviewCalcProgress
 import app.aaps.core.interfaces.rx.events.EventUpdateOverviewGraph
 import app.aaps.core.interfaces.rx.events.EventUpdateOverviewIobCob
 import app.aaps.core.interfaces.rx.events.EventUpdateOverviewSensitivity
+import app.aaps.core.interfaces.rx.events.EventWearUpdateTiles
 import app.aaps.core.interfaces.rx.weardata.EventData
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.source.DexcomBoyda
@@ -98,7 +97,6 @@ import app.aaps.core.ui.elements.SingleClickButton
 import app.aaps.core.ui.extensions.runOnUiThread
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.extensions.toVisibilityKeepSpace
-import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.plugins.main.R
 import app.aaps.plugins.main.databinding.OverviewFragmentBinding
 import app.aaps.plugins.main.general.overview.graphData.GraphData
@@ -161,7 +159,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
     private var smallWidth = false
     private var smallHeight = false
-    private lateinit var dm: DisplayMetrics
     private var axisWidth: Int = 0
     private lateinit var refreshLoop: Runnable
     private var handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
@@ -170,6 +167,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     private val secondaryGraphsLabel = ArrayList<TextView>()
 
     private var carbAnimation: AnimationDrawable? = null
+    private var lastUserAction = ""
 
     private var _binding: OverviewFragmentBinding? = null
 
@@ -177,24 +175,21 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     // onDestroyView.
     private val binding get() = _binding!!
 
+    //@SuppressLint("NewApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         OverviewFragmentBinding.inflate(inflater, container, false).also {
             _binding = it
-            //check screen width
-            dm = DisplayMetrics()
-            @Suppress("DEPRECATION")
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
-                activity?.display?.getRealMetrics(dm)
-            else
-                activity?.windowManager?.defaultDisplay?.getMetrics(dm)
         }.root
 
+    //@SuppressLint("NewApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // pre-process landscape mode
-        val screenWidth = dm.widthPixels
-        val screenHeight = dm.heightPixels
+        //check screen width
+        val wm = requireActivity().windowManager.currentWindowMetrics
+        val screenWidth = wm.bounds.width()
+        val screenHeight = wm.bounds.height()
         smallWidth = screenWidth <= Constants.SMALL_WIDTH
         smallHeight = screenHeight <= Constants.SMALL_HEIGHT
         val landscape = screenHeight < screenWidth
@@ -204,7 +199,14 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
         binding.notifications.setHasFixedSize(false)
         binding.notifications.layoutManager = LinearLayoutManager(view.context)
-        axisWidth = if (dm.densityDpi <= 120) 3 else if (dm.densityDpi <= 160) 10 else if (dm.densityDpi <= 320) 35 else if (dm.densityDpi <= 420) 50 else if (dm.densityDpi <= 560) 70 else 80
+        axisWidth = when {
+            resources.displayMetrics.densityDpi <= 120 -> 3
+            resources.displayMetrics.densityDpi <= 160 -> 10
+            resources.displayMetrics.densityDpi <= 320 -> 35
+            resources.displayMetrics.densityDpi <= 420 -> 50
+            resources.displayMetrics.densityDpi <= 560 -> 70
+            else                                       -> 80
+        }
         binding.graphsLayout.bgGraph.gridLabelRenderer?.gridColor = rh.gac(context, app.aaps.core.ui.R.attr.graphGrid)
         binding.graphsLayout.bgGraph.gridLabelRenderer?.reloadStyles()
         binding.graphsLayout.bgGraph.gridLabelRenderer?.labelVerticalWidth = axisWidth
@@ -428,31 +430,12 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
                 R.id.cgm_button          -> {
                     if (xDripSource.isEnabled())
-                        openCgmApp("com.eveningoutpost.dexdrip")
-                    else if (dexcomBoyda.isEnabled()) {
-                        dexcomBoyda.findDexcomPackageName()?.let {
-                            openCgmApp(it)
-                        }
-                            ?: ToastUtils.infoToast(activity, rh.gs(R.string.dexcom_app_not_installed))
-                    }
+                        openCgmApp("com.eveningoutpost.dexdrip", "Home")
                 }
 
                 R.id.calibration_button  -> {
                     if (xDripSource.isEnabled()) {
                         uiInteraction.runCalibrationDialog(childFragmentManager)
-                    } else if (dexcomBoyda.isEnabled()) {
-                        try {
-                            dexcomBoyda.findDexcomPackageName()?.let {
-                                startActivity(
-                                    Intent("com.dexcom.cgm.activities.MeterEntryActivity")
-                                        .setPackage(it)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                )
-                            }
-                                ?: ToastUtils.infoToast(activity, rh.gs(R.string.dexcom_app_not_installed))
-                        } catch (e: ActivityNotFoundException) {
-                            ToastUtils.infoToast(activity, rh.gs(R.string.dexcom_app_not_detected))
-                        }
                     }
                 }
 
@@ -463,17 +446,19 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                             val lastRun = loop.lastRun
                             loop.invoke("Accept temp button", false)
                             if (lastRun?.lastAPSRun != null && lastRun.constraintsProcessed?.isChangeRequested == true) {
-                                protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable {
-                                    if (isAdded)
-                                        OKDialog.showConfirmation(activity, rh.gs(app.aaps.core.ui.R.string.tempbasal_label), lastRun.constraintsProcessed?.resultAsSpanned()
-                                            ?: "".toSpanned(), {
-                                                                      uel.log(Action.ACCEPTS_TEMP_BASAL, Sources.Overview)
-                                                                      (context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)?.cancel(Constants.notificationID)
-                                                                      rxBus.send(EventMobileToWear(EventData.CancelNotification(dateUtil.now())))
-                                                                      handler.post { loop.acceptChangeRequest() }
-                                                                      binding.buttonsLayout.acceptTempButton.visibility = View.GONE
-                                                                  })
-                                })
+                                runOnUiThread {
+                                    protectionCheck.queryProtection(activity, ProtectionCheck.Protection.BOLUS, UIRunnable {
+                                        if (isAdded)
+                                            OKDialog.showConfirmation(activity, rh.gs(app.aaps.core.ui.R.string.tempbasal_label), lastRun.constraintsProcessed?.resultAsSpanned()
+                                                ?: "".toSpanned(), {
+                                                                          uel.log(Action.ACCEPTS_TEMP_BASAL, Sources.Overview)
+                                                                          (context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)?.cancel(Constants.notificationID)
+                                                                          rxBus.send(EventMobileToWear(EventData.CancelNotification(dateUtil.now())))
+                                                                          handler.post { loop.acceptChangeRequest() }
+                                                                          binding.buttonsLayout.acceptTempButton.visibility = View.GONE
+                                                                      })
+                                    })
+                                }
                             }
                         }
                     }
@@ -488,17 +473,12 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         }
     }
 
-    private fun openCgmApp(packageName: String) {
-        context?.let {
-            val packageManager = it.packageManager
-            try {
-                val intent = packageManager.getLaunchIntentForPackage(packageName)
-                    ?: throw ActivityNotFoundException()
-                intent.addCategory(Intent.CATEGORY_LAUNCHER)
-                it.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                OKDialog.show(it, "", rh.gs(R.string.error_starting_cgm))
-            }
+    @Suppress("SameParameterValue")
+    private fun openCgmApp(packageName: String, launchActivity: String) {
+        try {
+            requireContext().startActivity(Intent(Intent.ACTION_MAIN).setClassName(packageName, "$packageName.$launchActivity"))
+        } catch (_: ActivityNotFoundException) {
+            OKDialog.show(requireContext(), "", rh.gs(R.string.error_starting_cgm))
         }
     }
 
@@ -560,6 +540,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val profile = profileFunction.getProfile()
         val profileName = profileFunction.getProfileName()
         val actualBG = iobCobCalculator.ads.actualBg()
+        var list = ""
 
         // QuickWizard button
         val quickWizardEntry = quickWizard.getActive()
@@ -587,7 +568,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             _binding ?: return@runOnUiThread
             if (showAcceptButton && pump.isInitialized() && !pump.isSuspended() && (loop as PluginBase).isEnabled()) {
                 binding.buttonsLayout.acceptTempButton.visibility = View.VISIBLE
-                binding.buttonsLayout.acceptTempButton.text = "${rh.gs(R.string.set_basal_question)}\n${lastRun?.constraintsProcessed?.resultAsString()}"
+                binding.buttonsLayout.acceptTempButton.text = "${rh.gs(R.string.set_basal_question)}\n${lastRun.constraintsProcessed?.resultAsString()}"
             } else {
                 binding.buttonsLayout.acceptTempButton.visibility = View.GONE
             }
@@ -621,16 +602,8 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
             // **** Calibration & CGM buttons ****
             val xDripIsBgSource = xDripSource.isEnabled()
-            val dexcomIsSource = dexcomBoyda.isEnabled()
             binding.buttonsLayout.calibrationButton.visibility = (xDripIsBgSource && actualBG != null && preferences.get(BooleanKey.OverviewShowCalibrationButton)).toVisibility()
-            if (dexcomIsSource) {
-                binding.buttonsLayout.cgmButton.setCompoundDrawablesWithIntrinsicBounds(null, rh.gd(R.drawable.ic_byoda), null, null)
-                for (drawable in binding.buttonsLayout.cgmButton.compoundDrawables) {
-                    drawable?.mutate()
-                    drawable?.colorFilter = PorterDuffColorFilter(rh.gac(context, app.aaps.core.ui.R.attr.cgmDexColor), PorterDuff.Mode.SRC_IN)
-                }
-                binding.buttonsLayout.cgmButton.setTextColor(rh.gac(context, app.aaps.core.ui.R.attr.cgmDexColor))
-            } else if (xDripIsBgSource) {
+            if (xDripIsBgSource) {
                 binding.buttonsLayout.cgmButton.setCompoundDrawablesWithIntrinsicBounds(null, rh.gd(app.aaps.core.objects.R.drawable.ic_xdrip), null, null)
                 for (drawable in binding.buttonsLayout.cgmButton.compoundDrawables) {
                     drawable?.mutate()
@@ -638,14 +611,14 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 }
                 binding.buttonsLayout.cgmButton.setTextColor(rh.gac(context, app.aaps.core.ui.R.attr.cgmXdripColor))
             }
-            binding.buttonsLayout.cgmButton.visibility = (preferences.get(BooleanKey.OverviewShowCgmButton) && (xDripIsBgSource || dexcomIsSource)).toVisibility()
+            binding.buttonsLayout.cgmButton.visibility = (preferences.get(BooleanKey.OverviewShowCgmButton) && xDripIsBgSource).toVisibility()
 
             // Automation buttons
             binding.buttonsLayout.userButtonsLayout.removeAllViews()
             val events = automation.userEvents()
-            if (!loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null)
+            if (!loop.isDisconnected && pump.isInitialized() && !pump.isSuspended() && profile != null && !config.showUserActionsOnWatchOnly())
                 for (event in events)
-                    if (event.isEnabled && event.canRun())
+                    if (event.isEnabled && event.canRun()) {
                         context?.let { context ->
                             SingleClickButton(context, null, app.aaps.core.ui.R.attr.customBtnStyle).also {
                                 it.setTextColor(rh.gac(context, app.aaps.core.ui.R.attr.treatmentButton))
@@ -665,7 +638,14 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                                 }
                             }
                         }
+                        list += event.hashCode()
+                    }
             binding.buttonsLayout.userButtonsLayout.visibility = events.isNotEmpty().toVisibility()
+        }
+        if (list != lastUserAction) {
+            // Synchronize Watch Tiles with overview
+            lastUserAction = list
+            rxBus.send(EventWearUpdateTiles())
         }
     }
 
@@ -676,11 +656,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val closedLoopEnabled = constraintChecker.isClosedLoopAllowed()
 
         fun apsModeSetA11yLabel(stringRes: Int) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                binding.infoLayout.apsMode.stateDescription = rh.gs(stringRes)
-            } else {
-                binding.infoLayout.apsMode.contentDescription = rh.gs(app.aaps.core.ui.R.string.aps_mode_title) + " " + rh.gs(stringRes)
-            }
+            binding.infoLayout.apsMode.stateDescription = rh.gs(stringRes)
         }
 
         runOnUiThread {
@@ -777,7 +753,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             secondaryGraphs.clear()
             secondaryGraphsLabel.clear()
             binding.graphsLayout.iobGraph.removeAllViews()
-            for (i in 1 until numOfGraphs) {
+            (1 until numOfGraphs).forEach {
                 val relativeLayout = RelativeLayout(context)
                 relativeLayout.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
@@ -1211,7 +1187,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val profile = profileFunction.getProfile()
         val request = loop.lastRun?.request
         val isfMgdl = profile?.getProfileIsfMgdl()
-        val isfForCarbs =  profile?.getIsfMgdlForCarbs(dateUtil.now(), "Overview")
+        val isfForCarbs = profile?.getIsfMgdlForCarbs(dateUtil.now(), "Overview", config, processedDeviceStatusData)
         val variableSens =
             if (config.APS) request?.variableSens ?: 0.0
             else if (config.NSCLIENT) processedDeviceStatusData.getAPSResult()?.variableSens ?: 0.0

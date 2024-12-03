@@ -112,7 +112,6 @@
     <string name="bg_label">КЗ</string>
     <string name="calibration">Калибрация</string>
     <string name="alarminxmin">Аларма след %1$d мин</string>
-    <string name="treatmentdeliveryerror">Грешка в болуса. Сам провери истинската стойност на доставения инсулин</string>
     <string name="bolus_reminder">Болус подсещане</string>
     <string name="duration_label">Продължителност</string>
     <string name="shortgramm">гр.</string>
@@ -492,6 +491,8 @@
     <string name="close">Затвори</string>
     <!-- TwoMessagesDialog -->
     <string name="password_preferences_decrypt_prompt">Парола, която е била използвана за криптиране на експортираните настройки.</string>
+    <!-- <unattended_export> -->
+    <!-- <unattended_export result messages> -->
     <!-- NumberPicker -->
     <string name="a11y_min_button_description">понижение %1$s с %2$s</string>
     <string name="a11y_plus_button_description">увеличение %1$s с %2$s</string>

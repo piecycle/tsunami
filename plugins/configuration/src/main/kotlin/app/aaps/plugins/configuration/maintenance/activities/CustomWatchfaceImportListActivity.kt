@@ -4,14 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.maintenance.FileListProvider
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
-import app.aaps.core.interfaces.rx.events.EventMobileDataToWear
+import app.aaps.core.interfaces.rx.events.EventMobileToWearWatchface
 import app.aaps.core.interfaces.rx.weardata.CUSTOM_VERSION
 import app.aaps.core.interfaces.rx.weardata.CwfFile
 import app.aaps.core.interfaces.rx.weardata.CwfMetadataKey.CWF_AUTHOR
@@ -76,8 +75,8 @@ class CustomWatchfaceImportListActivity : TranslatedDaggerAppCompatActivity() {
                         sp.putString(app.aaps.core.utils.R.string.key_wear_cwf_filename, customWatchfaceFile.cwfData.metadata[CWF_FILENAME] ?: "")
 
                         val i = Intent()
-                        setResult(FragmentActivity.RESULT_OK, i)
-                        rxBus.send(EventMobileDataToWear(customWatchfaceFile.zipByteArray))
+                        setResult(RESULT_OK, i)
+                        rxBus.send(EventMobileToWearWatchface(customWatchfaceFile.zipByteArray))
                         finish()
                     }
                 }

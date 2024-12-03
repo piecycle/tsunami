@@ -3,7 +3,6 @@ package app.aaps.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -33,7 +32,6 @@ import app.aaps.core.ui.activities.TranslatedDaggerAppCompatActivity
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.extensions.toVisibilityKeepSpace
 import app.aaps.databinding.ActivityHistorybrowseBinding
-import app.aaps.plugins.main.R
 import app.aaps.plugins.main.general.overview.graphData.GraphData
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.jjoe64.graphview.GraphView
@@ -130,14 +128,16 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
                 .show(supportFragmentManager, "history_date_picker")
         }
 
-        val dm = DisplayMetrics()
-        @Suppress("DEPRECATION")
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R)
-            display?.getRealMetrics(dm)
-        else
-            windowManager.defaultDisplay.getMetrics(dm)
+        windowManager.currentWindowMetrics
 
-        axisWidth = if (dm.densityDpi <= 120) 3 else if (dm.densityDpi <= 160) 10 else if (dm.densityDpi <= 320) 35 else if (dm.densityDpi <= 420) 50 else if (dm.densityDpi <= 560) 70 else 80
+        axisWidth = when {
+            resources.displayMetrics.densityDpi <= 120 -> 3
+            resources.displayMetrics.densityDpi <= 160 -> 10
+            resources.displayMetrics.densityDpi <= 320 -> 35
+            resources.displayMetrics.densityDpi <= 420 -> 50
+            resources.displayMetrics.densityDpi <= 560 -> 70
+            else                                       -> 80
+        }
         binding.bgGraph.gridLabelRenderer?.gridColor = rh.gac(this, app.aaps.core.ui.R.attr.graphGrid)
         binding.bgGraph.gridLabelRenderer?.reloadStyles()
         binding.bgGraph.gridLabelRenderer?.labelVerticalWidth = axisWidth
@@ -217,7 +217,7 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
             secondaryGraphs.clear()
             secondaryGraphsLabel.clear()
             binding.iobGraph.removeAllViews()
-            for (i in 1 until numOfGraphs) {
+            (1 until numOfGraphs).forEach { i ->
                 val relativeLayout = RelativeLayout(this)
                 relativeLayout.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 

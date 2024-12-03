@@ -88,7 +88,7 @@ class BigLogInquireResponsePacket(
         aapsLogger.debug(LTag.PUMPCOMM, "BigLogInquireResponsePacket init")
     }
 
-    override fun handleMessage(data: ByteArray?) {
+    override fun handleMessage(data: ByteArray) {
         val result = defect(data)
         if (result != 0) {
             aapsLogger.debug(LTag.PUMPCOMM, "BigLogInquireResponsePacket Got some Error")
@@ -913,8 +913,7 @@ class BigLogInquireResponsePacket(
             val api = retrofit?.create(DiaconnApiService::class.java)
             val pumpLogDto = PumpLogDto(
                 app_uid = appUid,
-                app_version = context.packageManager.safeGetPackageInfo(context.packageName, 0)
-                    .versionName,
+                app_version = context.packageManager.safeGetPackageInfo(context.packageName, 0).versionName ?: "",
                 pump_uid = diaconnG8Pump.pumpUid,
                 pump_version = diaconnG8Pump.pumpVersion,
                 incarnation_num = diaconnG8Pump.pumpIncarnationNum,
@@ -942,9 +941,7 @@ class BigLogInquireResponsePacket(
         }
     }
 
-    override fun getFriendlyName(): String {
-        return "BIG_LOG_INQUIRE_RESPONSE"
-    }
+    override val friendlyName = "BIG_LOG_INQUIRE_RESPONSE"
 
     private fun getReasonName(logKind: Byte, reason: Byte): String {
         val logInjectNormalFail: Byte = 0x0B

@@ -2,11 +2,9 @@ package app.aaps.plugins.source
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import app.aaps.core.data.configuration.Constants
 import app.aaps.core.data.model.GV
 import app.aaps.core.data.model.GlucoseUnit
@@ -24,7 +22,6 @@ import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.source.BgSource
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
-import app.aaps.shared.impl.extensions.safeGetInstalledPackages
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -51,8 +48,8 @@ class IntelligoPlugin @Inject constructor(
     aapsLogger, resourceHelper
 ), BgSource {
 
-    private val handler = Handler(HandlerThread(this::class.java.simpleName + "Handler").also { it.start() }.looper)
-    private lateinit var refreshLoop: Runnable
+    private var handler: Handler? = null
+    private var refreshLoop: Runnable
 
     private val contentUri: Uri = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
 
@@ -66,7 +63,7 @@ class IntelligoPlugin @Inject constructor(
             }
             val lastReadTimestamp = sp.getLong(R.string.key_last_processed_intelligo_timestamp, 0L)
             val differenceToNow = INTERVAL - (dateUtil.now() - lastReadTimestamp) % INTERVAL + T.secs(10).msecs()
-            handler.postDelayed(refreshLoop, differenceToNow)
+            handler?.postDelayed(refreshLoop, differenceToNow)
         }
     }
 
@@ -74,27 +71,20 @@ class IntelligoPlugin @Inject constructor(
 
     override fun onStart() {
         super.onStart()
-        handler.postDelayed(refreshLoop, T.secs(30).msecs()) // do not start immediately, app may be still starting
+        handler = Handler(HandlerThread(this::class.java.simpleName + "Handler").also { it.start() }.looper)
+        handler?.postDelayed(refreshLoop, T.secs(30).msecs()) // do not start immediately, app may be still starting
     }
 
     override fun onStop() {
         super.onStop()
-        handler.removeCallbacks(refreshLoop)
+        handler?.removeCallbacks(refreshLoop)
+        handler = null
         disposable.clear()
     }
 
     @SuppressLint("CheckResult")
     private fun handleNewData() {
         if (!isEnabled()) return
-
-        for (pack in context.packageManager.safeGetInstalledPackages(PackageManager.GET_PROVIDERS)) {
-            val providers = pack.providers
-            if (providers != null) {
-                for (provider in providers) {
-                    Log.d("Example", "provider: " + provider.authority)
-                }
-            }
-        }
 
         context.contentResolver.query(contentUri, null, null, null, null)?.let { cr ->
             val glucoseValues = mutableListOf<GV>()

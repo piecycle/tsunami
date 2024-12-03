@@ -113,7 +113,6 @@
     <string name="bg_label">BG</string>
     <string name="calibration">Kalibratie</string>
     <string name="alarminxmin">Start alarm over %1$d min</string>
-    <string name="treatmentdeliveryerror">Bolus fout geconstateerd. Controleer de daadwerkelijk toegediende hoeveelheid</string>
     <string name="bolus_reminder">Bolus herinnering</string>
     <string name="duration_label">Tijdsduur</string>
     <string name="shortgramm">g</string>
@@ -506,6 +505,8 @@
     <string name="close">Sluiten</string>
     <!-- TwoMessagesDialog -->
     <string name="password_preferences_decrypt_prompt">Je wordt gevraagd om een masterwachtwoord. Daarmee worden geïmporteerde instellingen ontsleuteld.</string>
+    <!-- <unattended_export> -->
+    <!-- <unattended_export result messages> -->
     <!-- NumberPicker -->
     <string name="a11y_min_button_description">verlaag %1$s met %2$s</string>
     <string name="a11y_plus_button_description">verhoog %1$s met %2$s</string>

@@ -49,6 +49,8 @@
     <string name="pref_show_delta">Vis Delta</string>
     <string name="pref_show_detailed_delta">Vis detaljert Delta</string>
     <string name="pref_show_avgdelta">Vis Gj. snitt Delta</string>
+    <string name="pref_show_tempTarget">Vis midlertidig mål</string>
+    <string name="pref_show_reservoir_level">Vis reservoarnivå</string>
     <string name="pref_show_phone_battery">Vis telefonbatteri</string>
     <string name="pref_show_rig_battery">Vis riggens batteri</string>
     <string name="pref_show_basal_rate">Vis basaldose</string>
@@ -60,6 +62,7 @@
     <string name="pref_show_week_number">Vis ukenummer</string>
     <string name="pref_show_date">Vis dato</string>
     <string name="default_custom_watchface_comment">Standard urskive, du kan klikke på EKSPORTER MAL for å lage en mal</string>
+    <string name="default_custom_watchface_external_comment">Standard urskive inkludert eksterne visninger for følgere, du kan klikke på knappen EKSPORTER URSKIVE for å generere en mal</string>
     <string name="wear_default_watchface">Standard urskive</string>
     <string name="wear_more_watchfaces">Flere urskiver</string>
 </resources>

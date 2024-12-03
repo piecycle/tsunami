@@ -113,7 +113,6 @@
     <string name="bg_label">혈당</string>
     <string name="calibration">보정</string>
     <string name="alarminxmin">%1$d분 뒤 알람 울림</string>
-    <string name="treatmentdeliveryerror">Bolus가 오류를 보고했습니다. 수동으로 실제 투여된 양을 확인합니다.</string>
     <string name="bolus_reminder">BOLUS 알림</string>
     <string name="duration_label">기간</string>
     <string name="shortgramm">g</string>
@@ -497,6 +496,8 @@
     <string name="close">닫기</string>
     <!-- TwoMessagesDialog -->
     <string name="password_preferences_decrypt_prompt">내보낸 preferences를 가져오기 위해서는 마스터 비밀번호가 필요합니다.</string>
+    <!-- <unattended_export> -->
+    <!-- <unattended_export result messages> -->
     <!-- NumberPicker -->
     <string name="a11y_min_button_description">%1$s을 %2$s만큼 감소하였습니다</string>
     <string name="a11y_plus_button_description">%1$s을 %2$s만큼 증가하였습니다</string>

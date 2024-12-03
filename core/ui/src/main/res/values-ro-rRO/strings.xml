@@ -113,7 +113,6 @@
     <string name="bg_label">Gl</string>
     <string name="calibration">Calibrare</string>
     <string name="alarminxmin">Rulează alarma în %1$d min</string>
-    <string name="treatmentdeliveryerror">Bolus a raportat o eroare. Verifică manual cantitatea livrată</string>
     <string name="bolus_reminder">Memento bolus</string>
     <string name="duration_label">Durată</string>
     <string name="shortgramm">g</string>
@@ -497,6 +496,8 @@
     <string name="close">Închide</string>
     <!-- TwoMessagesDialog -->
     <string name="password_preferences_decrypt_prompt">Vi se va solicita parola principală, care este necesară pentru a decripta setările importate.</string>
+    <!-- <unattended_export> -->
+    <!-- <unattended_export result messages> -->
     <!-- NumberPicker -->
     <string name="a11y_min_button_description">scădere %1$s cu %2$s</string>
     <string name="a11y_plus_button_description">creștere %1$s cu %2$s</string>

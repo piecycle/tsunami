@@ -89,6 +89,7 @@
     <string name="removerecord">Odstranit záznam</string>
     <string name="loopisdisabled">Smyčka je zakázána</string>
     <string name="alarm">Alarm</string>
+    <string name="exportsettings">Export nastavení</string>
     <string name="disableloop">Zakázat smyčku</string>
     <string name="enableloop">Povolit smyčku</string>
     <string name="resumeloop">Obnovit smyčku</string>
@@ -113,7 +114,7 @@
     <string name="bg_label">Gly</string>
     <string name="calibration">Kalibrace</string>
     <string name="alarminxmin">Spustit alarm za %1$d min</string>
-    <string name="treatmentdeliveryerror">Podání bolusu skončilo chybou. Ručně zkontrolujte, kolik inzulinu se skutečně vydalo.</string>
+    <string name="treatmentdeliveryerror">Podání bolusu skončilo chybou. Ručně zkontrolujte, kolik inzulinu a sacharidů se skutečně vydalo</string>
     <string name="bolus_reminder">Připomenutí bolusu</string>
     <string name="duration_label">Trvání</string>
     <string name="shortgramm">g</string>
@@ -177,6 +178,7 @@
     <string name="extended_bolus_full">E %1$.2f U/h @%2$s %3$s/%4$s min</string>
     <string name="extended_bolus_medium">%1$.2f U/h %2$s/%3$s\'</string>
     <string name="nav_export">Exportovat nastavení</string>
+    <string name="location_permission_not_granted">Oprávnění k přístupu k poloze zařízení nebylo uděleno. Povolte v nastavení systému Android.</string>
     <!--    Protection-->
     <string name="wrongpassword">Chybné heslo</string>
     <string name="wrongpin">Nesprávný PIN</string>
@@ -207,10 +209,12 @@
     <string name="careportal_bgcheck">Kontrola glykémie</string>
     <string name="careportal_mbg">Ruční glykémie nebo kalibrace</string>
     <string name="careportal_announcement">Oznámení</string>
+    <string name="careportal_settings_export">Export nastavení</string>
     <string name="careportal_note">Poznámka</string>
     <string name="careportal_question">Otázka</string>
     <string name="careportal_exercise">Cvičení</string>
     <string name="careportal_announcement_message">Oznámení: %1$s</string>
+    <string name="careportal_settings_export_message">Export nastavení: %1$s</string>
     <string name="careportal_note_message">Poznámka : %1$s</string>
     <string name="careportal_question_message">Otázka: %1$s</string>
     <string name="careportal_exercise_message">Cvičení : %1$s</string>
@@ -243,6 +247,7 @@
     <string name="activity">Aktivita</string>
     <string name="wear">Wear</string>
     <string name="automation">Automatizace</string>
+    <string name="settingsexport">Export nastavení</string>
     <string name="custom">Volitelný</string>
     <string name="loop">Smyčka</string>
     <string name="ns">NS</string>
@@ -344,6 +349,7 @@
     <string name="delete_future_treatments">Odstranit ošetření v budoucnu</string>
     <string name="uel_export_settings">EXPORTOVAT NASTAVENÍ</string>
     <string name="uel_import_settings">IMPORTOVAT NASTAVENÍ</string>
+    <string name="uel_select_directory">VYBERTE ADRESÁŘ</string>
     <string name="uel_reset_databases">RESETOVAT DATABÁZE</string>
     <string name="uel_reset_aps_results">RESETOVAT VÝSLEDKY APS</string>
     <string name="uel_cleanup_databases">VYČISTIT DATABÁZE</string>
@@ -506,6 +512,19 @@
     <string name="close">Zavřít</string>
     <!-- TwoMessagesDialog -->
     <string name="password_preferences_decrypt_prompt">Zobrazí se výzva k zadání hlavního hesla, které bude použito k dešifrování importovaných předvoleb.</string>
+    <!-- <unattended_export> -->
+    <string name="export_ok">OK</string>
+    <string name="export_warning">Varování</string>
+    <string name="export_expired">Vypršelo</string>
+    <string name="export_disabled">Zakázáno</string>
+    <string name="export_failed">Chyba</string>
+    <string name="export_alert">VÝSTRAHA</string>
+    <!-- <unattended_export result messages> -->
+    <string name="export_result_message_exported">Nastavení exportováno</string>
+    <string name="export_result_message_failed">Nastavení NEJSOU správně exportována!</string>
+    <string name="export_result_message_about_to_expire">Nastavení exportováno: heslo brzy vyprší. Exportujte ručně a (znovu) zadejte heslo.</string>
+    <string name="export_result_message_expired">Export nastavení zrušen: heslo vypršelo. Exportujte ručně a (znovu) zadejte heslo!</string>
+    <string name="export_result_message_disabled">Varování (automatizace): Není povolen export nastavení!</string>
     <!-- NumberPicker -->
     <string name="a11y_min_button_description">snížení %1$s o %2$s</string>
     <string name="a11y_plus_button_description">zvýšení %1$s o %2$s</string>

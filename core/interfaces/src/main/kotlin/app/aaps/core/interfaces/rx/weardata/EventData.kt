@@ -2,6 +2,7 @@ package app.aaps.core.interfaces.rx.weardata
 
 import app.aaps.core.interfaces.rx.events.Event
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.protobuf.ProtoBuf
@@ -9,6 +10,7 @@ import java.util.Date
 import java.util.Objects
 
 @Serializable
+@OptIn(InternalSerializationApi::class)
 sealed class EventData : Event() {
 
     var sourceNodeId = ""
@@ -22,14 +24,14 @@ sealed class EventData : Event() {
 
         fun deserialize(json: String) = try {
             Json.decodeFromString(serializer(), json)
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
             Error(System.currentTimeMillis())
         }
 
         @ExperimentalSerializationApi
         fun deserializeByte(byteArray: ByteArray) = try {
             ProtoBuf.decodeFromByteArray(serializer(), byteArray)
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
             Error(System.currentTimeMillis())
         }
     }
@@ -102,6 +104,12 @@ sealed class EventData : Event() {
 
     @Serializable
     data class ActionQuickWizardPreCheck(val guid: String) : EventData()
+
+    @Serializable
+    data class ActionUserActionPreCheck(val id: Int, val title: String) : EventData()
+
+    @Serializable
+    data class ActionUserActionConfirmed(val id: Int, val title: String) : EventData()
 
     @Serializable
     data class ActionHeartRate(
@@ -189,8 +197,14 @@ sealed class EventData : Event() {
     @Serializable
     data class BolusProgress(val percent: Int, val status: String) : EventData()
 
+    interface EventDataSet {
+
+        var dataset: Int
+    }
+
     @Serializable
     data class SingleBg(
+        override var dataset: Int,
         var timeStamp: Long,
         val sgvString: String = "---",
         val glucoseUnits: String = "-",
@@ -205,8 +219,9 @@ sealed class EventData : Event() {
         val low: Double, // lowLine
         val color: Int = 0,
         val deltaMgdl: Double? = null,
-        val avgDeltaMgdl: Double? = null
-    ) : EventData(), Comparable<SingleBg> {
+        val avgDeltaMgdl: Double? = null,
+        val id: Int = 0
+    ) : EventDataSet, EventData(), Comparable<SingleBg> {
 
         override fun equals(other: Any?): Boolean =
             when {
@@ -267,6 +282,7 @@ sealed class EventData : Event() {
 
     @Serializable
     data class Status(
+        override var dataset: Int,
         val externalStatus: String,
         val iobSum: String,
         val iobDetail: String,
@@ -276,8 +292,14 @@ sealed class EventData : Event() {
         val rigBattery: String,
         val openApsStatus: Long,
         val bgi: String,
-        val batteryLevel: Int
-    ) : EventData()
+        val batteryLevel: Int,
+        val patientName: String = "",
+        val tempTarget: String,
+        val tempTargetLevel: Int,
+        val reservoirString: String,
+        val reservoir: Double,
+        val reservoirLevel: Int
+    ) : EventData(), EventDataSet
 
     @Serializable
     data class Preferences(
@@ -309,6 +331,19 @@ sealed class EventData : Event() {
     }
 
     @Serializable
+    data class UserAction(
+        val entries: ArrayList<UserActionEntry>
+    ) : EventData() {
+
+        @Serializable
+        data class UserActionEntry(
+            val timeStamp: Long,
+            val id: Int,
+            val title: String
+        ) : EventData()
+    }
+
+    @Serializable
     data class ActionSetCustomWatchface(val customWatchfaceData: CwfData) : EventData()
 
     @Serializable
@@ -331,5 +366,4 @@ sealed class EventData : Event() {
 
     @Serializable
     data class SnoozeAlert(val timeStamp: Long) : EventData()
-
 }

@@ -141,7 +141,7 @@ class NSClientV3Plugin @Inject constructor(
 
     private val disposable = CompositeDisposable()
     private lateinit var runLoop: Runnable
-    private val handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
+    private var handler: Handler? = null
     override val listLog: MutableList<EventNSClientNewLog> = ArrayList()
     override val dataSyncSelector: DataSyncSelector get() = dataSyncSelectorV3
     override val status
@@ -187,6 +187,7 @@ class NSClientV3Plugin @Inject constructor(
 
     override fun onStart() {
         super.onStart()
+        handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
 
         lastLoadedSrvModified = Json.decodeFromString(
             sp.getString(
@@ -289,14 +290,14 @@ class NSClientV3Plugin @Inject constructor(
                 executeLoop("MAIN_LOOP", forceNew = true)
             else
                 rxBus.send(EventNSClientNewLog("● TICK", ""))
-            handler.postDelayed(runLoop, refreshInterval)
+            handler?.postDelayed(runLoop, refreshInterval)
         }
-        handler.postDelayed(runLoop, T.mins(2).msecs())
+        handler?.postDelayed(runLoop, T.mins(2).msecs())
     }
 
     fun scheduleIrregularExecution(refreshToken: Boolean = false) {
         if (refreshToken) {
-            handler.post { executeLoop("REFRESH TOKEN", forceNew = true) }
+            handler?.post { executeLoop("REFRESH TOKEN", forceNew = true) }
             return
         }
         if (config.NSCLIENT || nsClientSource.isEnabled()) {
@@ -308,19 +309,20 @@ class NSClientV3Plugin @Inject constructor(
                 origin = "1_MIN_OLD_DATA"
                 forceNew = false
             }
-            handler.postDelayed({ executeLoop(origin, forceNew = forceNew) }, toTime - dateUtil.now())
+            handler?.postDelayed({ executeLoop(origin, forceNew = forceNew) }, toTime - dateUtil.now())
             rxBus.send(EventNSClientNewLog("● NEXT", dateUtil.dateAndTimeAndSecondsString(toTime)))
         }
     }
 
     override fun onStop() {
-        handler.removeCallbacksAndMessages(null)
+        handler?.removeCallbacksAndMessages(null)
+        handler = null
         disposable.clear()
         stopService()
         super.onStop()
     }
 
-    override val hasWritePermission: Boolean get() = nsAndroidClient?.lastStatus?.apiPermissions?.isFull() ?: false
+    override val hasWritePermission: Boolean get() = nsAndroidClient?.lastStatus?.apiPermissions?.isFull() == true
     override val connected: Boolean get() = nsAndroidClient?.lastStatus != null
     private fun addToLog(ev: EventNSClientNewLog) {
         synchronized(listLog) {
@@ -356,7 +358,7 @@ class NSClientV3Plugin @Inject constructor(
     private fun stopService() {
         try {
             if (nsClientV3Service != null) context.unbindService(serviceConnection)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             nsClientV3Service = null
         }
     }
@@ -440,16 +442,17 @@ class NSClientV3Plugin @Inject constructor(
 
                     else -> {
                         rxBus.send(EventNSClientNewLog("◄ ERROR", "${result.errorResponse}"))
-                        return true
+                        return config.ignoreNightscoutV3Errors()
                     }
                 }
                 slowDown()
+                return result.response < 300 || config.ignoreNightscoutV3Errors()
             }
         } catch (e: Exception) {
             aapsLogger.error(LTag.NSCLIENT, "Upload exception", e)
             return false
         }
-        return true
+        return false
     }
 
     private suspend fun dbOperationDeviceStatus(collection: String = "devicestatus", dataPair: DataSyncSelector.PairDeviceStatus, progress: String): Boolean {
@@ -464,7 +467,7 @@ class NSClientV3Plugin @Inject constructor(
 
                     else -> {
                         rxBus.send(EventNSClientNewLog("◄ ERROR", "${result.errorResponse} "))
-                        return true
+                        return config.ignoreNightscoutV3Errors()
                     }
                 }
                 result.identifier?.let {
@@ -472,12 +475,14 @@ class NSClientV3Plugin @Inject constructor(
                     storeDataForDb.nsIdDeviceStatuses.add(dataPair.value)
                     sp.putBoolean(app.aaps.core.utils.R.string.key_objectives_pump_status_is_available_in_ns, true)
                 }
+                slowDown()
+                return result.response < 300 || config.ignoreNightscoutV3Errors()
             }
         } catch (e: Exception) {
             aapsLogger.error(LTag.NSCLIENT, "Upload exception", e)
             return false
         }
-        return true
+        return false
     }
 
     private suspend fun dbOperationEntries(collection: String = "entries", dataPair: DataSyncSelector.PairGlucoseValue, progress: String, operation: Operation): Boolean {
@@ -509,7 +514,7 @@ class NSClientV3Plugin @Inject constructor(
 
                     else -> {
                         rxBus.send(EventNSClientNewLog("◄ ERROR", "${result.errorResponse} "))
-                        return true
+                        return config.ignoreNightscoutV3Errors()
                     }
                 }
                 result.identifier?.let {
@@ -517,12 +522,13 @@ class NSClientV3Plugin @Inject constructor(
                     storeDataForDb.nsIdGlucoseValues.add(dataPair.value)
                 }
                 slowDown()
+                return result.response < 300 || config.ignoreNightscoutV3Errors()
             }
         } catch (e: Exception) {
             aapsLogger.error(LTag.NSCLIENT, "Upload exception", e)
             return false
         }
-        return true
+        return false
     }
 
     private suspend fun dbOperationFood(collection: String = "food", dataPair: DataSyncSelector.PairFood, progress: String, operation: Operation): Boolean {
@@ -554,7 +560,7 @@ class NSClientV3Plugin @Inject constructor(
 
                     else -> {
                         rxBus.send(EventNSClientNewLog("◄ ERROR", "${result.errorResponse} "))
-                        return true
+                        return config.ignoreNightscoutV3Errors()
                     }
                 }
                 result.identifier?.let {
@@ -562,12 +568,13 @@ class NSClientV3Plugin @Inject constructor(
                     storeDataForDb.nsIdFoods.add(dataPair.value)
                 }
                 slowDown()
+                return result.response < 300 || config.ignoreNightscoutV3Errors()
             }
         } catch (e: Exception) {
             aapsLogger.error(LTag.NSCLIENT, "Upload exception", e)
             return false
         }
-        return true
+        return false
     }
 
     private suspend fun dbOperationTreatments(collection: String = "treatments", dataPair: DataSyncSelector.DataPair, progress: String, operation: Operation, profile: Profile?): Boolean {
@@ -620,7 +627,7 @@ class NSClientV3Plugin @Inject constructor(
 
                         else -> {
                             rxBus.send(EventNSClientNewLog("◄ ERROR", "${result.errorResponse} "))
-                            return true
+                            return config.ignoreNightscoutV3Errors()
                         }
                     }
                     result.identifier?.let {
@@ -681,6 +688,7 @@ class NSClientV3Plugin @Inject constructor(
                         }
                     }
                     slowDown()
+                    return result.response < 300 || config.ignoreNightscoutV3Errors()
                 }
             } catch (e: Exception) {
                 rxBus.send(EventNSClientNewLog("◄ ERROR", e.localizedMessage))
@@ -688,7 +696,7 @@ class NSClientV3Plugin @Inject constructor(
                 return false
             }
         }
-        return true
+        return false
     }
 
     private suspend fun dbOperation(collection: String, dataPair: DataSyncSelector.DataPair, progress: String, operation: Operation, profile: Profile?): Boolean =

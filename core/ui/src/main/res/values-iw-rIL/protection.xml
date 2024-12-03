@@ -28,4 +28,6 @@
     <string name="pin_cleared">ה-PIN נמחק!</string>
     <string name="password_hint">הזינו את הסיסמה</string>
     <string name="pin_hint">הזינו PIN כאן</string>
+    <string name="master_password_not_set">הסיסמה הראשית לא הוגדרה</string>
+    <string name="aaps_directory_not_selected">לא נבחרה תיקיית AAPS</string>
 </resources>

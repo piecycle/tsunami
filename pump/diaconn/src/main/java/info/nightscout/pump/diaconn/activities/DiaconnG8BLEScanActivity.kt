@@ -44,7 +44,7 @@ class DiaconnG8BLEScanActivity : TranslatedDaggerAppCompatActivity() {
 
     private var listAdapter: ListAdapter? = null
     private val devices = ArrayList<BluetoothDeviceItem>()
-    private val bluetoothAdapter: BluetoothAdapter? get() = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?)?.adapter
+    private val bluetoothAdapter: BluetoothAdapter? get() = (context.getSystemService(BLUETOOTH_SERVICE) as BluetoothManager?)?.adapter
     private val bluetoothLeScanner: BluetoothLeScanner? get() = bluetoothAdapter?.bluetoothLeScanner
     private val serviceUUID = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e") // BLE GATT Service UUID
 
@@ -61,7 +61,10 @@ class DiaconnG8BLEScanActivity : TranslatedDaggerAppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        blePreCheck.prerequisitesCheck(this)
+        if (!blePreCheck.prerequisitesCheck(this)) {
+            ToastUtils.errorToast(this, getString(app.aaps.core.ui.R.string.need_connect_permission))
+            finish()
+        }
 
         listAdapter = ListAdapter()
         binding.bleScannerListview.emptyView = binding.bleScannerNoDevice

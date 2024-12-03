@@ -171,6 +171,4 @@ internal class HeartRateListenerTest {
         listener.dispose()
     }
 
-
-
 }

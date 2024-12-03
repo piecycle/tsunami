@@ -1,6 +1,5 @@
 package info.nightscout.pump.diaconn.service
 
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
@@ -63,7 +62,7 @@ import info.nightscout.pump.diaconn.packet.LanguageInquirePacket
 import info.nightscout.pump.diaconn.packet.LanguageSettingPacket
 import info.nightscout.pump.diaconn.packet.LogStatusInquirePacket
 import info.nightscout.pump.diaconn.packet.SerialNumInquirePacket
-import info.nightscout.pump.diaconn.packet.SneckLimitInquirePacket
+import info.nightscout.pump.diaconn.packet.SnackLimitInquirePacket
 import info.nightscout.pump.diaconn.packet.SoundInquirePacket
 import info.nightscout.pump.diaconn.packet.SoundSettingPacket
 import info.nightscout.pump.diaconn.packet.TempBasalInquirePacket
@@ -128,7 +127,7 @@ class DiaconnG8Service : DaggerService() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     override fun onDestroy() {
@@ -174,7 +173,7 @@ class DiaconnG8Service : DaggerService() {
                 sendMessage(BigAPSMainInfoInquirePacket(injector)) // APS Pump Main Info
             } else {
                 sendMessage(BasalLimitInquirePacket(injector)) // basal Limit
-                sendMessage(SneckLimitInquirePacket(injector)) // bolus Limit
+                sendMessage(SnackLimitInquirePacket(injector)) // bolus Limit
                 sendMessage(BigMainInfoInquirePacket(injector)) // Pump Main Info
                 sendMessage(SoundInquirePacket(injector)) // sounds
                 sendMessage(DisplayTimeInquirePacket(injector)) // display

@@ -3,7 +3,6 @@ package app.aaps.implementation.plugin
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.interfaces.aps.APS
 import app.aaps.core.interfaces.aps.Sensitivity
-import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.configuration.ConfigBuilder
 import app.aaps.core.interfaces.constraints.Objectives
 import app.aaps.core.interfaces.constraints.Safety
@@ -25,8 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PluginStore @Inject constructor(
-    private val aapsLogger: AAPSLogger,
-    private val config: Config
+    private val aapsLogger: AAPSLogger
 ) : ActivePlugin {
 
     lateinit var plugins: List<@JvmSuppressWildcards PluginBase>
@@ -74,10 +72,9 @@ class PluginStore @Inject constructor(
     }
 
     override fun verifySelectionInCategories() {
-        var pluginsInCategory: ArrayList<PluginBase>?
 
         // PluginType.APS
-        pluginsInCategory = getSpecificPluginsList(PluginType.APS)
+        var pluginsInCategory = getSpecificPluginsList(PluginType.APS)
         activeAPSStore = getTheOneEnabledInArray(pluginsInCategory, PluginType.APS) as APS?
         if (activeAPSStore == null) {
             activeAPSStore = getDefaultPlugin(PluginType.APS) as APS
@@ -181,14 +178,14 @@ class PluginStore @Inject constructor(
     override val activeInsulin: Insulin
         get() = activeInsulinStore ?: getDefaultPlugin(PluginType.INSULIN) as Insulin
 
-    private fun <T> wait(): T? {
-        Thread.sleep(3000)
+    private fun <T> wait(millis: Long = 3000): T? {
+        Thread.sleep(millis)
         return null
     }
 
     // App may not be initialized yet. Wait before second return
     override val activeAPS: APS
-        get() = activeAPSStore ?: wait() ?: activeAPSStore ?: checkNotNull(activeAPSStore) { "No APS selected" }
+        get() = activeAPSStore ?: wait() ?: activeAPSStore ?: wait(5000) ?: activeAPSStore ?: checkNotNull(activeAPSStore) { "No APS selected" }
 
     override val activePump: Pump
         get() = activePumpStore

@@ -23,6 +23,7 @@ import app.aaps.core.interfaces.pump.OmnipodEros
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.rx.events.EventAAPSDirectorySelected
 import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged
 import app.aaps.core.interfaces.rx.events.EventSWRLStatus
 import app.aaps.core.interfaces.rx.events.EventSWSyncStatus
@@ -39,6 +40,7 @@ import app.aaps.core.objects.crypto.CryptoUtil
 import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.utils.isRunningTest
 import app.aaps.plugins.configuration.R
+import app.aaps.plugins.configuration.activities.DaggerAppCompatActivityWithResult
 import app.aaps.plugins.configuration.setupwizard.elements.SWBreak
 import app.aaps.plugins.configuration.setupwizard.elements.SWButton
 import app.aaps.plugins.configuration.setupwizard.elements.SWEditEncryptedPassword
@@ -154,20 +156,15 @@ class SWDefinition @Inject constructor(
                      .text(R.string.askforpermission)
                      .visibility { !Settings.canDrawOverlays(activity) }
                      .action { activity.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + activity.packageName))) })
-            .visibility { !Settings.canDrawOverlays(activity) }
-            .validator { Settings.canDrawOverlays(activity) }
-
-    private val screenPermissionBattery
-        get() = SWScreen(injector, R.string.permission)
-            .skippable(false)
+            .add(SWBreak(injector))
             .add(SWInfoText(injector).label(rh.gs(R.string.need_whitelisting, rh.gs(config.appName))))
             .add(SWBreak(injector))
             .add(SWButton(injector)
                      .text(R.string.askforpermission)
                      .visibility { androidPermission.permissionNotGranted(context, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) }
                      .action { androidPermission.askForPermission(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) })
-            .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) }
-            .validator { !androidPermission.permissionNotGranted(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) }
+            .visibility { !Settings.canDrawOverlays(activity) || androidPermission.permissionNotGranted(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)}
+            .validator { Settings.canDrawOverlays(activity) && !androidPermission.permissionNotGranted(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)}
 
     private val screenPermissionBt
         get() = SWScreen(injector, R.string.permission)
@@ -178,8 +175,15 @@ class SWDefinition @Inject constructor(
                      .text(R.string.askforpermission)
                      .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_FINE_LOCATION) }
                      .action { androidPermission.askForPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) })
-            .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_FINE_LOCATION) }
-            .validator { !androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_FINE_LOCATION) }
+            .add(SWBreak(injector))
+            .add(SWInfoText(injector).label(rh.gs(R.string.need_background_location_permission)))
+            .add(SWBreak(injector))
+            .add(SWButton(injector)
+                     .text(R.string.askforpermission)
+                     .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION) }
+                     .action { androidPermission.askForPermission(activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION) })
+            .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_FINE_LOCATION) || androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION) }
+            .validator { !androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_FINE_LOCATION) && !androidPermission.permissionNotGranted(activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION)}
 
     private val screenPermissionStore
         get() = SWScreen(injector, R.string.permission)
@@ -188,17 +192,27 @@ class SWDefinition @Inject constructor(
             .add(SWBreak(injector))
             .add(SWButton(injector)
                      .text(R.string.askforpermission)
-                     .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) }
-                     .action { androidPermission.askForPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) })
-            .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) }
-            .validator { !androidPermission.permissionNotGranted(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) }
+                     .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) }
+                     .action { androidPermission.askForPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) })
+            .add(SWBreak(injector))
+            .add(SWInfoText(injector).label(rh.gs(R.string.select_aaps_directory)))
+            .add(SWBreak(injector))
+            .add(SWButton(injector)
+                     .text(R.string.aaps_directory)
+                     .visibility { preferences.getIfExists(StringKey.AapsDirectoryUri) == null }
+                     .action { (activity as DaggerAppCompatActivityWithResult).accessTree?.launch(null) })
+            .add(SWBreak(injector))
+            .add(SWEventListener(injector, EventAAPSDirectorySelected ::class.java).label(app.aaps.core.ui.R.string.settings).initialStatus(preferences.get(StringKey.AapsDirectoryUri)))
+            .add(SWBreak(injector))
+            .visibility { androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) || preferences.getIfExists(StringKey.AapsDirectoryUri) == null }
+            .validator { !androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) && preferences.getIfExists(StringKey.AapsDirectoryUri) != null}
 
     private val screenImport
         get() = SWScreen(injector, R.string.import_setting)
             .add(SWInfoText(injector).label(R.string.storedsettingsfound))
             .add(SWBreak(injector))
             .add(SWButton(injector).text(R.string.import_setting).action { importExportPrefs.importSharedPreferences(activity) })
-            .visibility { importExportPrefs.prefsFileExists() && !androidPermission.permissionNotGranted(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) }
+            .visibility { importExportPrefs.prefsFileExists() && !androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) }
 
     private val screenNsClient
         get() = SWScreen(injector, R.string.configbuilder_sync)
@@ -285,8 +299,7 @@ class SWDefinition @Inject constructor(
             )
             .validator {
                 activePlugin.activeProfileSource.profile?.getDefaultProfile()
-                    ?.let { ProfileSealed.Pure(it, activePlugin).isValid("StartupWizard", activePlugin.activePump, config, rh, rxBus, hardLimits, false).isValid }
-                    ?: false
+                    ?.let { ProfileSealed.Pure(it, activePlugin).isValid("StartupWizard", activePlugin.activePump, config, rh, rxBus, hardLimits, false).isValid } == true
             }
             .visibility { (activePlugin.activeProfileSource as PluginBase).isEnabled() }
 
@@ -398,15 +411,14 @@ class SWDefinition @Inject constructor(
                     )
                 //.add(ObjectivesFragment())
             )
-            .validator { activePlugin.activeObjectives?.isStarted(Objectives.FIRST_OBJECTIVE) ?: false }
-            .visibility { config.APS && !(activePlugin.activeObjectives?.isStarted(Objectives.FIRST_OBJECTIVE) ?: false) }
+            .validator { activePlugin.activeObjectives?.isStarted(Objectives.FIRST_OBJECTIVE) == true }
+            .visibility { config.APS && activePlugin.activeObjectives?.isStarted(Objectives.FIRST_OBJECTIVE) == false }
 
     private fun swDefinitionFull() = // List all the screens here
         add(screenSetupWizard)
             //.add(screenLanguage)
             .add(screenEula)
-            .add(if (isRunningTest()) null else screenPermissionBattery) // cannot mock ask battery optimization
-            .add(screenPermissionWindow)
+            .add(if (isRunningTest()) null else screenPermissionWindow)  // cannot mock ask battery optimization
             .add(screenPermissionBt)
             .add(screenPermissionStore)
             .add(screenMasterPassword)
@@ -431,8 +443,7 @@ class SWDefinition @Inject constructor(
         add(screenSetupWizard)
             //.add(screenLanguage)
             .add(screenEula)
-            .add(if (isRunningTest()) null else screenPermissionBattery) // cannot mock ask battery optimization
-            .add(screenPermissionWindow)
+            .add(if (isRunningTest()) null else screenPermissionWindow) // cannot mock ask battery optimization
             .add(screenPermissionBt)
             .add(screenPermissionStore)
             .add(screenMasterPassword)
@@ -453,8 +464,7 @@ class SWDefinition @Inject constructor(
         add(screenSetupWizard)
             //.add(screenLanguage)
             .add(screenEula)
-            .add(if (isRunningTest()) null else screenPermissionBattery) // cannot mock ask battery optimization
-            .add(screenPermissionWindow)
+            .add(if (isRunningTest()) null else screenPermissionWindow) // cannot mock ask battery optimization
             .add(screenPermissionStore)
             .add(screenMasterPassword)
             .add(screenImport)

@@ -32,7 +32,7 @@ class DigitalStyleWatchface : BaseWatchFace() {
     }
 
     override fun setColorDark() {
-        val color = when (singleBg.sgvLevel) {
+        val color = when (singleBg[0].sgvLevel) {
             1L   -> R.color.dark_highColor
             0L   -> R.color.dark_midColor
             -1L  -> R.color.dark_lowColor
@@ -41,10 +41,10 @@ class DigitalStyleWatchface : BaseWatchFace() {
         binding.sgv.setTextColor(ContextCompat.getColor(this, color))
         binding.direction.setTextColor(ContextCompat.getColor(this, color))
 
-        val colorTime = if (ageLevel == 1) R.color.dark_midColor else R.color.dark_TimestampOld
+        val colorTime = if (ageLevel() == 1) R.color.dark_midColor else R.color.dark_TimestampOld
         binding.timestamp.setTextColor(ContextCompat.getColor(this, colorTime))
 
-        val colorBat = if (status.batteryLevel == 1) R.color.dark_midColor else R.color.dark_uploaderBatteryEmpty
+        val colorBat = if (status[0].batteryLevel == 1) R.color.dark_midColor else R.color.dark_uploaderBatteryEmpty
         binding.uploaderBattery.setTextColor(ContextCompat.getColor(this, colorBat))
 
         highColor = ContextCompat.getColor(this, R.color.dark_highColor)
@@ -70,10 +70,10 @@ class DigitalStyleWatchface : BaseWatchFace() {
             val displayFrameColorOpacity = sp.getString(R.string.key_digital_style_frame_color_opacity, "1")
 
             // Load image with shapes
-            val styleDrawableName = "digital_style_bg_" + displayStyle
+            val styleDrawableName = "digital_style_bg_$displayStyle"
             try {
                 mShapesElements.background = ContextCompat.getDrawable(this, resources.getIdentifier(styleDrawableName, "drawable", this.packageName))
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 aapsLogger.error("digital_style_frameStyle", "RESOURCE NOT FOUND >> $styleDrawableName")
             }
 
@@ -86,7 +86,7 @@ class DigitalStyleWatchface : BaseWatchFace() {
                 try {
                     val colorStateList = ContextCompat.getColorStateList(this, resources.getIdentifier(strColorName, "color", this.packageName))
                     mShapesElements.backgroundTintList = colorStateList
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     mShapesElements.backgroundTintList = null
                     aapsLogger.error("digital_style_colorName", "COLOR NOT FOUND >> $strColorName")
                 }

@@ -112,7 +112,6 @@
     <string name="bg_label">BG</string>
     <string name="calibration">Καλιμπράρισμα</string>
     <string name="alarminxmin">Εκτέλεση συναγερμού σε %1$d λεπτά</string>
-    <string name="treatmentdeliveryerror">Το Bolus ανέφερε ένα σφάλμα. Ελέγξτε χειροκίνητα την ποσότητα που έχει πραγματικά χορηγηθεί</string>
     <string name="bolus_reminder">Υπενθύμιση Bolus</string>
     <string name="duration_label">Διάρκεια</string>
     <string name="shortgramm">g</string>
@@ -492,6 +491,8 @@
     <string name="close">Κλείσιμο</string>
     <!-- TwoMessagesDialog -->
     <string name="password_preferences_decrypt_prompt">Θα σας ζητηθεί ο βασικός κωδικός πρόσβασης, ο οποίος είναι απαραίτητος για την αποκωδικοποίηση των εισαγώμενων προτιμήσεων.</string>
+    <!-- <unattended_export> -->
+    <!-- <unattended_export result messages> -->
     <!-- NumberPicker -->
     <string name="a11y_min_button_description">μείωση %1$s κατά %2$s</string>
     <string name="a11y_plus_button_description">αύξηση %1$s κατά %2$s</string>

@@ -191,7 +191,20 @@
     <string name="statuslights_bat_warning">Pompa pil seviye uyarısı [%]</string>
     <string name="statuslights_bat_critical">Kritik pompa pili seviyesi [%]</string>
     <string name="statuslights_copy_ns">Ayarları NS\'den kopyala</string>
+    <string name="graph_scale_6h">6s</string>
+    <string name="graph_scale_12h">12s</string>
+    <string name="graph_scale_18h">18s</string>
+    <string name="graph_scale_24h">24s</string>
+    <string name="graph_long_scale_6h">6 saat</string>
+    <string name="graph_long_scale_12h">12 saat</string>
+    <string name="graph_long_scale_18h">18 saat</string>
+    <string name="graph_long_scale_24h">24 saat</string>
     <string name="a11y_graph">grafik</string>
+    <string name="a11y_graph_scale">grafik ölçeğini seç</string>
+    <string name="a11y_graph_scale_6h">6 saatlik ölçek</string>
+    <string name="a11y_graph_scale_12h">12 saatlik ölçek</string>
+    <string name="a11y_graph_scale_18h">18 saatlik ölçek</string>
+    <string name="a11y_graph_scale_24h">24 saatlik ölçek</string>
     <string name="a11y_insulin_label">insülin</string>
     <string name="chart_menu">Grafik menüsü</string>
     <string name="a11y_bg_quality">kan şekeri kalitesi</string>
@@ -205,8 +218,6 @@
     <string name="overview_buttons_selection">Butonlar</string>
     <string name="show_calibration_button_summary">xDrip+\'a bir kalibrasyon gönderir veya BYODA kalibrasyon iletişim kutusunu açar</string>
     <string name="show_cgm_button_summary">xDrip+ veya BYODA\'yı açar, geri dönme düğmesi AAPS\'ye döndürür</string>
-    <string name="dexcom_app_not_installed">Dexcom uygulaması yüklü değil.</string>
-    <string name="dexcom_app_not_detected">Lütfen Dexcom uygulamanızı desteklenen sürüme güncelleyin</string>
     <string name="error_starting_cgm">CGM uygulaması başlatılamadı. Yüklendiğinden emin olun.</string>
     <string name="not_available_full">Mevcut değil</string>
     <string name="constraints_violation">Kısıtlamalar ihlali</string>
@@ -290,7 +301,6 @@
     <string name="skin">Görünüm</string>
     <string name="cannula_usage">kullanım:</string>
     <!--    Iob-->
-    <string name="send_logfiles">Bu günün kayıt dosyalarını geliştiricilere gönderin. Beklenmedik bir durum.</string>
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">Döngü\'ün ne yaptığını kısa bir genel bakışla devam eden bir bildirimi gösterir</string>
     <string name="old_data">ESKİ VERİ</string>

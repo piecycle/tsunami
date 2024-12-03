@@ -1,23 +1,26 @@
 # libs.versions.toml
 [versions]
-gradlePlugin = "8.7.1"
+gradlePlugin = "8.7.3"
 googleServices = "4.4.2"
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 wearable = "2.9.0"
 room = "2.6.1"
-dagger = "2.52"
+dagger = "2.53"
 mockito = "5.14.2"
 junit = "5.11.3"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 kotlinx-serialization = "1.7.3"
 kotlinx-coroutines = "1.9.0"
-work = "2.9.1"
+work = "2.10.0"
+datastorePreferences = "1.1.1"
+annotation = "1.9.1"
 
 [plugins]
 android-library = { id = "com.android.library" }
-klint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
+klint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.2" }
 moduleDependencyGraph = { id = "com.savvasdalkitsis.module-dependency-graph", version = "0.12" }
+ksp = { id = "com.google.devtools.ksp", version = "2.1.0-1.0.29" }
 
 
 [libraries]
@@ -30,14 +33,14 @@ com-google-dagger-android-processor = { group = "com.google.dagger", name = "dag
 com-google-dagger-android-support = { group = "com.google.dagger", name = "dagger-android-support", version.ref = "dagger" }
 
 com-google-firebase-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.2" }
-com-google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.5.1" }
-com-google-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-com-google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-com-google-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-com-google-firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
-com-google-firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
+com-google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.6.0" }
+com-google-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+com-google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+com-google-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+com-google-firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+com-google-firebase-database = { group = "com.google.firebase", name = "firebase-database" }
 com-google-android-gms-playservices-measurement = { group = "com.google.android.gms", name = "play-services-measurement-api", version = "22.1.2" }
-com-google-android-gms-playservices-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version = "18.2.0" }
+com-google-android-gms-playservices-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version = "19.0.0" }
 com-google-android-gms-playservices-location = { group = "com.google.android.gms", name = "play-services-location", version = "21.3.0" }
 
 com-google-android-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
@@ -76,14 +79,15 @@ androidx-activity = { group = "androidx.activity", name = "activity-ktx", versio
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.0" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric", version = "1.1.0" }
 androidx-browser = { group = "androidx.browser", name = "browser", version = "1.8.0" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.13.1" }
-androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.4" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.0" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.15.0" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.5" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version = "1.0.0" }
 androidx-legacy-support = { group = "androidx.legacy", name = "legacy-support-v13", version = "1.0.0" }
-androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.8.6" }
-androidx-media3-common = { group = "androidx.media3", name = "media3-common", version = "1.4.1" }
-androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version = "2.8.3" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.8.7" }
+androidx-media3-common = { group = "androidx.media3", name = "media3-common", version = "1.5.0" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version = "2.8.4" }
 androidx-preference = { group = "androidx.preference", name = "preference-ktx", version = "1.2.1" }
 androidx-room = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -131,6 +135,7 @@ org-json = { group = "org.json", name = "json", version = "20240303" }
 org-skyscreamer-jsonassert = { group = "org.skyscreamer", name = "jsonassert", version = "1.5.3" }
 com-scottyab-rootbeer-lib = { group = "com.scottyab", name = "rootbeer-lib", version = "0.1.1" }
 com-eatthepath-java-otp = { group = "com.eatthepath", name = "java-otp", version = "0.4.0" }
+com-github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" }
 com-github-kenglxn-qrgen-android = { group = "com.github.kenglxn.QRGen", name = "android", version = "3.0.1" }
 io-socket-client = { group = "io.socket", name = "socket.io-client", version = "2.1.1" }
 io-kotlintest-runner-junit5 = { group = "io.kotlintest", name = "kotlintest-runner-junit5", version = "3.4.2" }
@@ -138,5 +143,6 @@ com-polidea-rxandroidble3 = { group = "com.polidea.rxandroidble3", name = "rxand
 com-jakewharton-rx3-replaying-share = { group = "com.jakewharton.rx3", name = "replaying-share", version = "3.0.0" }
 commons-codec = { group = "commons-codec", name = "commons-codec", version = "1.17.1" }
 com-github-guepardoapps-kulid = { group = "com.github.guepardoapps", name = "kulid", version = "2.0.0.0" }
-com-thoughtworks-xstream = { group = "com.thoughtworks.xstream", name = "xstream", version = "1.4.20" }
+com-thoughtworks-xstream = { group = "com.thoughtworks.xstream", name = "xstream", version = "1.4.21" }
 com-garmin-connectiq = { group = "com.garmin.connectiq", name = "ciq-companion-app-sdk", version = "2.0.3" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }

@@ -11,8 +11,10 @@ import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.profiling.Profiler
+import app.aaps.core.interfaces.protection.ExportPasswordDataStore
 import app.aaps.core.interfaces.protection.PasswordCheck
 import app.aaps.core.interfaces.protection.ProtectionCheck
+import app.aaps.core.interfaces.protection.SecureEncrypt
 import app.aaps.core.interfaces.pump.BlePreCheck
 import app.aaps.core.interfaces.pump.DetailedBolusInfoStorage
 import app.aaps.core.interfaces.pump.PumpSync
@@ -46,8 +48,10 @@ import app.aaps.implementation.profile.ProfileFunctionImpl
 import app.aaps.implementation.profile.ProfileStoreObject
 import app.aaps.implementation.profile.ProfileUtilImpl
 import app.aaps.implementation.profiling.ProfilerImpl
+import app.aaps.implementation.protection.ExportPasswordDataStoreImpl
 import app.aaps.implementation.protection.PasswordCheckImpl
 import app.aaps.implementation.protection.ProtectionCheckImpl
+import app.aaps.implementation.protection.SecureEncryptImpl
 import app.aaps.implementation.pump.BlePreCheckImpl
 import app.aaps.implementation.pump.DetailedBolusInfoStorageImpl
 import app.aaps.implementation.pump.PumpSyncImplementation
@@ -81,14 +85,14 @@ import dagger.android.ContributesAndroidInjector
 )
 
 @Suppress("unused")
-abstract class ImplementationModule {
-
-    @ContributesAndroidInjector abstract fun profileStoreInjector(): ProfileStoreObject
-    @ContributesAndroidInjector abstract fun contributesNetworkChangeReceiver(): NetworkChangeReceiver
-    @ContributesAndroidInjector abstract fun autosensDataObjectInjector(): AutosensDataObject
+class ImplementationModule {
 
     @Module
     interface Bindings {
+
+        @ContributesAndroidInjector fun profileStoreInjector(): ProfileStoreObject
+        @ContributesAndroidInjector fun contributesNetworkChangeReceiver(): NetworkChangeReceiver
+        @ContributesAndroidInjector fun autosensDataObjectInjector(): AutosensDataObject
 
         @Binds fun bindPreferences(preferencesImpl: PreferencesImpl): Preferences
         @Binds fun bindFabricPrivacy(fabricPrivacyImpl: FabricPrivacyImpl): FabricPrivacy
@@ -101,6 +105,8 @@ abstract class ImplementationModule {
         @Binds fun bindTranslator(translatorImpl: TranslatorImpl): Translator
         @Binds fun bindProtectionCheck(protectionCheckImpl: ProtectionCheckImpl): ProtectionCheck
         @Binds fun bindPasswordCheck(passwordCheckImpl: PasswordCheckImpl): PasswordCheck
+        @Binds fun bindExportPasswordCheck(exportPasswordDataStoreImpl: ExportPasswordDataStoreImpl): ExportPasswordDataStore
+        @Binds fun bindSecureEncrypt(secureEncryptImpl: SecureEncryptImpl): SecureEncrypt
         @Binds fun bindLoggerUtils(loggerUtilsImpl: LoggerUtilsImpl): LoggerUtils
         @Binds fun bindProfiler(profilerImpl: ProfilerImpl): Profiler
         @Binds fun bindWarnColors(warnColorsImpl: WarnColorsImpl): WarnColors

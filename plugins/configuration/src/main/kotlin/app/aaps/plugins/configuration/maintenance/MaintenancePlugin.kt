@@ -3,7 +3,7 @@ package app.aaps.plugins.configuration.maintenance
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.FileProvider
+import androidx.documentfile.provider.DocumentFile
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
@@ -66,12 +66,10 @@ class MaintenancePlugin @Inject constructor(
         val recipient = preferences.get(StringKey.MaintenanceEmail)
         val amount = preferences.get(IntKey.MaintenanceLogsAmount)
         val logs = getLogFiles(amount)
-        val zipDir = fileListProvider.ensureTempDirExists()
-        val zipFile = File(zipDir, constructName())
-        aapsLogger.debug("zipFile: ${zipFile.absolutePath}")
+        val zipFile = fileListProvider.ensureTempDirExists()?.createFile("application/zip", constructName()) ?: return
+        aapsLogger.debug("zipFile: ${zipFile.name}")
         val zip = zipLogs(zipFile, logs)
-        val attachmentUri =
-            FileProvider.getUriForFile(context, config.APPLICATION_ID + ".fileprovider", zip)
+        val attachmentUri = zip.uri
         val emailIntent: Intent = this.sendMail(attachmentUri, recipient, "Log Export")
         aapsLogger.debug("sending emailIntent")
         context.startActivity(emailIntent)
@@ -106,11 +104,8 @@ class MaintenancePlugin @Inject constructor(
             }
         }
         val exportDir = fileListProvider.ensureTempDirExists()
-        if (exportDir.exists()) {
-            exportDir.listFiles()?.let { expFiles ->
-                for (file in expFiles) file.delete()
-            }
-            exportDir.delete()
+        exportDir?.listFiles()?.let { expFiles ->
+            for (file in expFiles) file.delete()
         }
     }
 
@@ -141,8 +136,8 @@ class MaintenancePlugin @Inject constructor(
         return result.subList(0, toIndex)
     }
 
-    fun zipLogs(zipFile: File, files: List<File>): File {
-        aapsLogger.debug("creating zip ${zipFile.absolutePath}")
+    fun zipLogs(zipFile: DocumentFile, files: List<File>): DocumentFile {
+        aapsLogger.debug("creating zip ${zipFile.name}")
         try {
             zip(zipFile, files)
         } catch (e: IOException) {
@@ -163,9 +158,9 @@ class MaintenancePlugin @Inject constructor(
         return "AndroidAPS_LOG_" + System.currentTimeMillis() + loggerUtils.suffix
     }
 
-    private fun zip(zipFile: File?, files: List<File>) {
+    private fun zip(zipFile: DocumentFile, files: List<File>) {
         val bufferSize = 2048
-        val out = ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile)))
+        val out = ZipOutputStream(BufferedOutputStream(FileOutputStream(context.contentResolver.openFileDescriptor(zipFile.uri, "w")?.fileDescriptor)))
         for (file in files) {
             val data = ByteArray(bufferSize)
             FileInputStream(file).use { fileInputStream ->
@@ -235,7 +230,7 @@ class MaintenancePlugin @Inject constructor(
     }
 
     override fun addPreferenceScreen(preferenceManager: PreferenceManager, parent: PreferenceScreen, context: Context, requiredKey: String?) {
-        if (requiredKey != null && requiredKey != "data_choice_setting") return
+        if (requiredKey != null && !(requiredKey == "data_choice_setting" || requiredKey == "unattended_export_setting")) return
         val category = PreferenceCategory(context)
         parent.addPreference(category)
         category.apply {
@@ -253,7 +248,24 @@ class MaintenancePlugin @Inject constructor(
                 key = "data_choice_setting"
                 title = rh.gs(R.string.data_choices)
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.MaintenanceEnableFabric, title = R.string.fabric_upload))
-                addPreference(AdaptiveStringPreference(ctx = context, stringKey = StringKey.MaintenanceIdentification, summary = R.string.summary_email_for_crash_report, title = R.string.identification))
+                addPreference(AdaptiveStringPreference(ctx = context, stringKey = StringKey.MaintenanceIdentification, title = R.string.identification))
+            })
+
+            addPreference(preferenceManager.createPreferenceScreen(context).apply {
+                key = "unattended_export_setting"
+                title = rh.gs(R.string.unattended_settings_export)
+                addPreference(
+                    AdaptiveSwitchPreference(
+                        ctx = context, booleanKey = BooleanKey.MaintenanceEnableExportSettingsAutomation,
+                        title = R.string.unattended_settings_export,
+                        summary = R.string.unattended_settings_export_summary
+                    )
+                )
+                // addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.AutoExportPasswordExpiryDays,
+                //     title = R.string.unattended_settings_export_password_expiry,
+                //     summary = R.string.unattended_settings_export_password_expiry_summary
+                //     )
+                // )
             })
         }
     }

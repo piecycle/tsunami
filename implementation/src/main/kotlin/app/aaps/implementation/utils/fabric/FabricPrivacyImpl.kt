@@ -32,7 +32,7 @@ class FabricPrivacyImpl @Inject constructor(
 
     init {
         firebaseAnalytics.setAnalyticsCollectionEnabled(!java.lang.Boolean.getBoolean("disableFirebase") && fabricEnabled())
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!java.lang.Boolean.getBoolean("disableFirebase") && fabricEnabled())
+        FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = !java.lang.Boolean.getBoolean("disableFirebase") && fabricEnabled()
     }
 
     override fun setUserProperty(key: String, value: String) {
@@ -79,9 +79,9 @@ class FabricPrivacyImpl @Inject constructor(
             } else {
                 aapsLogger.debug(LTag.CORE, "Ignoring recently opted-out event: $event")
             }
-        } catch (e: NullPointerException) {
+        } catch (_: NullPointerException) {
             aapsLogger.debug(LTag.CORE, "Ignoring opted-out non-initialized event: $event")
-        } catch (e: IllegalStateException) {
+        } catch (_: IllegalStateException) {
             aapsLogger.debug(LTag.CORE, "Ignoring opted-out non-initialized event: $event")
         }
     }

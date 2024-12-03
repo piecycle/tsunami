@@ -202,7 +202,7 @@ class CwfInfosActivity : TranslatedDaggerAppCompatActivity() {
                     if (visibility || allViews)
                         visibleKeyPairs.add(Pair(viewKey, visibility))
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 aapsLogger.debug(LTag.WEAR, "Wrong key in json file: ${viewKey.key}")
             }
         }

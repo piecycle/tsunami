@@ -23,6 +23,7 @@ import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
+import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
@@ -40,7 +41,6 @@ import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.Round
-import app.aaps.core.interfaces.utils.SafeParse
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.Preferences
 import app.aaps.core.objects.constraints.ConstraintObject
@@ -83,6 +83,7 @@ class BolusWizard @Inject constructor(
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var persistenceLayer: PersistenceLayer
     @Inject lateinit var decimalFormatter: DecimalFormatter
+    @Inject lateinit var processedDeviceStatusData: ProcessedDeviceStatusData
 
     var timeStamp: Long
 
@@ -209,7 +210,7 @@ class BolusWizard @Inject constructor(
         this.positiveIOBOnly = positiveIOBOnly
 
         // Insulin from BG
-        sens = profileUtil.fromMgdlToUnits(profile.getIsfMgdlForCarbs(dateUtil.now(), "BolusWizard"))
+        sens = profileUtil.fromMgdlToUnits(profile.getIsfMgdlForCarbs(dateUtil.now(), "BolusWizard", config, processedDeviceStatusData))
         targetBGLow = profileUtil.fromMgdlToUnits(profile.getTargetLowMgdl())
         targetBGHigh = profileUtil.fromMgdlToUnits(profile.getTargetHighMgdl())
         if (useTT && tempTarget != null) {
@@ -379,9 +380,9 @@ class BolusWizard @Inject constructor(
         if (quickWizardEntry != null) {
             val eCarbsYesNo = JsonHelper.safeGetInt(quickWizardEntry.storage, "useEcarbs", QuickWizardEntry.NO)
             if (eCarbsYesNo == QuickWizardEntry.YES) {
-                val timeOffset = JsonHelper.safeGetInt(quickWizardEntry.storage,"time", 0)
-                val duration = JsonHelper.safeGetInt(quickWizardEntry.storage,"duration", 0)
-                val carbs2 = JsonHelper.safeGetInt(quickWizardEntry.storage,"carbs2", 0)
+                val timeOffset = JsonHelper.safeGetInt(quickWizardEntry.storage, "time", 0)
+                val duration = JsonHelper.safeGetInt(quickWizardEntry.storage, "duration", 0)
+                val carbs2 = JsonHelper.safeGetInt(quickWizardEntry.storage, "carbs2", 0)
 
                 if (carbs2 > 0) {
                     val ecarbsMessage = rh.gs(app.aaps.core.ui.R.string.format_carbs, carbs2) + "/" + duration + "h (+" + timeOffset + "min)"
@@ -559,9 +560,9 @@ class BolusWizard @Inject constructor(
     private fun scheduleECarbsFromQuickWizard(ctx: Context, quickWizardEntry: QuickWizardEntry) {
         val eCarbsYesNo = JsonHelper.safeGetInt(quickWizardEntry.storage, "useEcarbs", QuickWizardEntry.NO)
         if (eCarbsYesNo == QuickWizardEntry.YES) {
-            val timeOffset = JsonHelper.safeGetInt(quickWizardEntry.storage,"time", 0)
-            val duration = JsonHelper.safeGetInt(quickWizardEntry.storage,"duration", 0)
-            val carbs2 = JsonHelper.safeGetInt(quickWizardEntry.storage,"carbs2", 0)
+            val timeOffset = JsonHelper.safeGetInt(quickWizardEntry.storage, "time", 0)
+            val duration = JsonHelper.safeGetInt(quickWizardEntry.storage, "duration", 0)
+            val carbs2 = JsonHelper.safeGetInt(quickWizardEntry.storage, "carbs2", 0)
 
             val currentTime = Calendar.getInstance().timeInMillis
             val eventTime: Long = currentTime + (timeOffset * 60000)

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.aaps.core.interfaces.maintenance.FileListProvider
@@ -54,7 +53,7 @@ class PrefImportListActivity : TranslatedDaggerAppCompatActivity() {
                         val i = Intent()
 
                         i.putExtra(PrefsFileContract.OUTPUT_PARAM, prefFile)
-                        setResult(FragmentActivity.RESULT_OK, i)
+                        setResult(RESULT_OK, i)
                         finish()
                     }
                 }
@@ -73,10 +72,8 @@ class PrefImportListActivity : TranslatedDaggerAppCompatActivity() {
         override fun onBindViewHolder(holder: PrefFileViewHolder, position: Int) {
             val prefFile = prefFileList[position]
             with(holder.maintenanceImportListItemBinding) {
-                filelistName.text = prefFile.file.name
+                filelistName.text = prefFile.name
                 filelistName.tag = prefFile
-
-                filelistDir.text = rh.gs(R.string.in_directory, prefFile.file.parentFile?.absolutePath)
 
                 metalineName.visibility = View.VISIBLE
                 metaDateTimeIcon.visibility = View.VISIBLE

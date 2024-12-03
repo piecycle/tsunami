@@ -218,8 +218,6 @@
     <string name="overview_buttons_selection">Кнопки</string>
     <string name="show_calibration_button_summary">Отправляет калибровки на xDrip+ или открывает диалоговое окно калибровки BYODA DEXCOM</string>
     <string name="show_cgm_button_summary">Открывает xDrip + или BYODA DEXCOM, кнопка назад возвращает в AAPS</string>
-    <string name="dexcom_app_not_installed">Приложение Dexcom не установлено</string>
-    <string name="dexcom_app_not_detected">Пожалуйста, обновите приложение Dexcom до поддерживаемой версии</string>
     <string name="error_starting_cgm">Не удалось запустить приложения мониторинга СК. Убедитесь, что оно установлено.</string>
     <string name="not_available_full">Недоступно</string>
     <string name="constraints_violation">ограничение нарушено</string>
@@ -257,7 +255,7 @@
     <string name="high_mark">Отметка ВЫСОКИЙ</string>
     <string name="short_tabtitles">Сокращенные наименования вкладок</string>
     <string name="overview_show_notes_field_in_dialogs_title">Показать поле примечаний в диалогах терапии</string>
-    <string name="deliverpartofboluswizard">Мастер болюса выполняет расчет, но подается только эта часть рекомендуемого инсулина. Полезно с алгоритмом SMB.</string>
+    <string name="deliverpartofboluswizard">Помощник болюса выполняет расчет, но подается только эта часть рекомендуемого инсулина. Полезно с алгоритмом SMB.</string>
     <string name="deliver_part_of_boluswizard_reset_time">Подать полный болюс (100%), если гликемия старше</string>
     <string name="enable_bolus_advisor">Вкл помощник болюса</string>
     <string name="enable_bolus_advisor_summary">Воспользуйтесь напоминанием, чтобы начать есть позже, вместо того, чтобы задействовать помощник болюса на высоких значениях ГК (\"пре-болюс\")</string>
@@ -302,7 +300,6 @@
     <string name="skin">Тема оформления</string>
     <string name="cannula_usage">применение:</string>
     <!--    Iob-->
-    <string name="send_logfiles">Отправьте файлы сегодняшнего лога разработчикам наряду с этим. Непредвиденная ситуация.</string>
     <!--    PersistentNotification-->
     <string name="description_persistent_notification">Показывает текущие уведомления и краткий обзор событий цикла</string>
     <string name="old_data">старые данные</string>

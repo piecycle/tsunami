@@ -40,6 +40,7 @@ import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
 import app.aaps.core.interfaces.notifications.Notification
+import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
 import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBase
@@ -116,7 +117,8 @@ class LoopPlugin @Inject constructor(
     private val persistenceLayer: PersistenceLayer,
     private val runningConfiguration: RunningConfiguration,
     private val uiInteraction: UiInteraction,
-    private val instantiator: Instantiator
+    private val instantiator: Instantiator,
+    private val processedDeviceStatusData: ProcessedDeviceStatusData
 ) : PluginBase(
     PluginDescription()
         .mainType(PluginType.LOOP)
@@ -137,11 +139,12 @@ class LoopPlugin @Inject constructor(
     override var lastRun: LastRun? = null
     override var closedLoopEnabled: Constraint<Boolean>? = null
 
-    private var handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
+    private var handler: Handler? = null
 
     override fun onStart() {
         createNotificationChannel()
         super.onStart()
+        handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
         disposable += rxBus
             .toObservable(EventTempTargetChange::class.java)
             .observeOn(aapsSchedulers.io)
@@ -162,7 +165,8 @@ class LoopPlugin @Inject constructor(
 
     override fun onStop() {
         disposable.clear()
-        handler.removeCallbacksAndMessages(null)
+        handler?.removeCallbacksAndMessages(null)
+        handler = null
         super.onStop()
     }
 
@@ -170,7 +174,7 @@ class LoopPlugin @Inject constructor(
         return try {
             val pump = activePlugin.activePump
             pump.pumpDescription.isTempBasalCapable
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
             // may fail during initialization
             true
         }
@@ -340,7 +344,7 @@ class LoopPlugin @Inject constructor(
                                 disposable += persistenceLayer.insertPumpTherapyEventIfNewByTimestamp(
                                     therapyEvent = TE.asAnnouncement(resultAfterConstraints.carbsRequiredText),
                                     timestamp = dateUtil.now(),
-                                    action = app.aaps.core.data.ue.Action.TREATMENT,
+                                    action = Action.TREATMENT,
                                     source = Sources.Loop,
                                     note = resultAfterConstraints.carbsRequiredText,
                                     listValues = listOf()
@@ -431,7 +435,7 @@ class LoopPlugin @Inject constructor(
                                                 lastRun.lastSMBRequest = lastRun.lastAPSRun
                                                 lastRun.lastSMBEnact = dateUtil.now()
                                             } else {
-                                                handler.postDelayed({ invoke("tempBasalFallback", allowNotification, true) }, 1000)
+                                                handler?.postDelayed({ invoke("tempBasalFallback", allowNotification, true) }, 1000)
                                             }
                                             rxBus.send(EventLoopUpdateGui())
                                         }
@@ -761,6 +765,7 @@ class LoopPlugin @Inject constructor(
                 // do not send if result is older than 1 min
                 apsResult = lastRun.request?.json()?.also {
                     it.put("timestamp", dateUtil.toISOString(lastRun.lastAPSRun))
+                    it.put("isfMgdlForCarbs", profile.getIsfMgdlForCarbs(dateUtil.now(), "LoopPlugin", config, processedDeviceStatusData))
                 }
                 iob = lastRun.request?.iob?.json(dateUtil)?.also {
                     it.put("time", dateUtil.toISOString(lastRun.lastAPSRun))
@@ -784,7 +789,7 @@ class LoopPlugin @Inject constructor(
             val calcIob = iobCobCalculator.calculateIobArrayInDia(profile)
             if (calcIob.isNotEmpty()) {
                 iob = calcIob[0].json(dateUtil)
-                iob?.put("time", dateUtil.toISOString(dateUtil.now()))
+                iob.put("time", dateUtil.toISOString(dateUtil.now()))
             }
         }
         persistenceLayer.insertDeviceStatus(

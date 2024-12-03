@@ -132,7 +132,8 @@ class CircleWatchface : WatchFace() {
         super.onDestroy()
     }
 
-    @Synchronized override fun onDraw(canvas: Canvas) {
+    @Synchronized
+    override fun onDraw(canvas: Canvas) {
         aapsLogger.debug(LTag.WEAR, "start onDraw")
         canvas.drawColor(backgroundColor)
         drawTime(canvas)
@@ -140,14 +141,15 @@ class CircleWatchface : WatchFace() {
         myLayout?.draw(canvas)
     }
 
-    @Synchronized private fun prepareLayout() {
+    @Synchronized
+    private fun prepareLayout() {
         aapsLogger.debug(LTag.WEAR, "start startPrepareLayout")
 
         // prepare fields
         mSgv = myLayout?.findViewById(R.id.sgvString)
         if (sp.getBoolean(R.string.key_show_bg, true)) {
             mSgv?.visibility = View.VISIBLE
-            mSgv?.text = singleBg.sgvString
+            mSgv?.text = singleBg[0].sgvString
             mSgv?.setTextColor(textColor)
         } else {
             //Also possible: View.INVISIBLE instead of View.GONE (no layout change)
@@ -156,12 +158,12 @@ class CircleWatchface : WatchFace() {
         val detailedIob = sp.getBoolean(R.string.key_show_detailed_iob, false)
         val showBgi = sp.getBoolean(R.string.key_show_bgi, false)
         val iobString =
-            if (detailedIob) "${status.iobSum} ${status.iobDetail}"
-            else status.iobSum + getString(R.string.units_short)
+            if (detailedIob) "${status[0].iobSum} ${status[0].iobDetail}"
+            else status[0].iobSum + getString(R.string.units_short)
         val externalStatus = if (showBgi)
-            "${status.externalStatus} ${iobString} ${status.bgi}"
+            "${status[0].externalStatus} $iobString ${status[0].bgi}"
         else
-            "${status.externalStatus} ${iobString}"
+            "${status[0].externalStatus} $iobString"
         var textView = myLayout?.findViewById<TextView>(R.id.statusString)
         if (sp.getBoolean(R.string.key_show_external_status, true)) {
             textView?.visibility = View.VISIBLE
@@ -189,7 +191,7 @@ class CircleWatchface : WatchFace() {
         val detailedDelta = sp.getBoolean(R.string.key_show_detailed_delta, false)
         if (sp.getBoolean(R.string.key_show_delta, true)) {
             textView?.visibility = View.VISIBLE
-            textView?.text = if (detailedDelta) singleBg.deltaDetailed else singleBg.delta
+            textView?.text = if (detailedDelta) singleBg[0].deltaDetailed else singleBg[0].delta
             textView?.setTextColor(textColor)
             if (sp.getBoolean(R.string.key_show_big_numbers, false)) {
                 textView?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25f)
@@ -197,7 +199,7 @@ class CircleWatchface : WatchFace() {
                 textView?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
             }
             if (sp.getBoolean(R.string.key_show_avg_delta, true)) {
-                textView?.append("  " + if (detailedDelta) singleBg.avgDeltaDetailed else singleBg.avgDelta)
+                textView?.append("  " + if (detailedDelta) singleBg[0].avgDeltaDetailed else singleBg[0].avgDelta)
             }
         } else {
             //Also possible: View.INVISIBLE instead of View.GONE (no layout change)
@@ -210,8 +212,8 @@ class CircleWatchface : WatchFace() {
     private val minutes: String
         get() {
             var minutes = "--'"
-            if (singleBg.timeStamp != 0L) {
-                minutes = floor((System.currentTimeMillis() - singleBg.timeStamp) / 60000.0).toInt().toString() + "'"
+            if (singleBg[0].timeStamp != 0L) {
+                minutes = floor((System.currentTimeMillis() - singleBg[0].timeStamp) / 60000.0).toInt().toString() + "'"
             }
             return minutes
         }
@@ -239,14 +241,15 @@ class CircleWatchface : WatchFace() {
         }
     }
 
-    @Synchronized private fun prepareDrawTime() {
+    @Synchronized
+    private fun prepareDrawTime() {
         aapsLogger.debug(LTag.WEAR, "start prepareDrawTime")
         val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY] % 12
         val minute = Calendar.getInstance()[Calendar.MINUTE]
         angleBig = ((hour + minute / 60f) / 12f * 360 - 90 - BIG_HAND_WIDTH / 2f + 360) % 360
         angleSMALL = (minute / 60f * 360 - 90 - SMALL_HAND_WIDTH / 2f + 360) % 360
         color = 0
-        when (singleBg.sgvLevel.toInt()) {
+        when (singleBg[0].sgvLevel.toInt()) {
             -1 -> color = lowColor
             0  -> color = inRangeColor
             1  -> color = highColor
@@ -300,7 +303,7 @@ class CircleWatchface : WatchFace() {
         aapsLogger.debug(LTag.WEAR, "start onDrawOtherStuff. bgDataList.size(): " + bgDataList.size)
         if (sp.getBoolean(R.string.key_show_ring_history, false)) {
             //Perfect low and High indicators
-            if (bgDataList.size > 0) {
+            if (bgDataList.isNotEmpty()) {
                 addIndicator(canvas, 100f, Color.LTGRAY)
                 addIndicator(canvas, bgDataList.iterator().next().low.toFloat(), lowColor)
                 addIndicator(canvas, bgDataList.iterator().next().high.toFloat(), highColor)
@@ -317,7 +320,8 @@ class CircleWatchface : WatchFace() {
         }
     }
 
-    @Synchronized fun addToWatchSet() {
+    @Synchronized
+    fun addToWatchSet() {
         bgDataList.clear()
         if (!sp.getBoolean(R.string.key_show_ring_history, false)) return
         val threshold = (System.currentTimeMillis() - 1000L * 60 * 30).toDouble() // 30 min
