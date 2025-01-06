@@ -378,7 +378,7 @@ override fun onStart() {
         */
 
         // Get peak time if using a PK insulin model
-        val activityPredTimePK = T.msecs(insulin.peak.toLong()).mins() //TimeUnit.MILLISECONDS.toMinutes(insulin.peak.toLong()) //MP act. pred. time for PK ins. models; target time = insulin peak time
+        val activityPredTimePK = insulin.peak //MP act. pred. time for PK ins. models; target time = insulin peak time
 
         // Get the ID of the currently used insulin preset
 
@@ -444,7 +444,7 @@ override fun onStart() {
         val activityPredTime: Long
         val activityPredTimePD = 65L //MP activity prediction time for pharmacodynamic model; fixed to 65 min (approx. peak time of 1 U bolus)
         if (insulinID != 105 && insulinID != 205) { //MP if not using PD insulin models
-            activityPredTime = activityPredTimePK
+            activityPredTime = activityPredTimePK.toLong()
         } else { //MP if using PD insulin models
             activityPredTime = activityPredTimePD
         }
