@@ -10,18 +10,22 @@ import app.aaps.core.interfaces.aps.OapsProfileTsunami
 import app.aaps.core.interfaces.aps.Predictions
 import app.aaps.core.interfaces.aps.RT
 import app.aaps.core.interfaces.profile.ProfileUtil
+import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import java.text.DecimalFormat
 import java.time.Instant
 import java.time.ZoneId
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.ln
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
+@Singleton
 class DetermineBasalTsunami @Inject constructor(
-    private val profileUtil: ProfileUtil
+    private val profileUtil: ProfileUtil,
+    private val fabricPrivacy: FabricPrivacy
 ) {
 
     private val consoleError = mutableListOf<String>()
@@ -252,7 +256,7 @@ class DetermineBasalTsunami @Inject constructor(
 
         // adjust min, max, and target BG for sensitivity, such that 50% increase in ISF raises target from 100 to 120
         if (profile.temptargetSet) {
-            //consoleLog.add("Temp Target set, not adjusting with autosens; ");
+            //console.log("Temp Target set, not adjusting with autosens; ");
         } else {
             if (profile.sensitivity_raises_target && autosens_data.ratio < 1 || profile.resistance_lowers_target && autosens_data.ratio > 1) {
                 // with a target of 100, default 0.7-1.2 autosens min/max range would allow a 93-117 target range
@@ -295,7 +299,7 @@ class DetermineBasalTsunami @Inject constructor(
                     consoleLog.add("ISF unchanged: $adjusted_sens")
                 }
                 adjusted_sens
-                //consoleLog.add(" (autosens ratio "+sensitivityRatio+")");
+                //console.log(" (autosens ratio "+sensitivityRatio+")");
             }
         consoleError.add("CR:${profile.carb_ratio}")
 
@@ -675,6 +679,9 @@ class DetermineBasalTsunami @Inject constructor(
         // area of the /\ triangle is the same as a remainingCIpeak-height rectangle out to remainingCATime/2
         // remainingCIpeak (mg/dL/5m) = remainingCarbs (g) * CSF (mg/dL/g) * 5 (m/5m) * 1h/60m / (remainingCATime/2) (h)
         val remainingCIpeak = remainingCarbs * csf * 5 / 60 / (remainingCATime / 2)
+        if (remainingCIpeak.isNaN()) {
+            throw Exception("remainingCarbs=$remainingCarbs remainingCATime=$remainingCATime profile.remainingCarbsCap=${profile.remainingCarbsCap} csf=$csf")
+        }
         //console.error(profile.min_5m_carbimpact,ci,totalCI,totalCA,remainingCarbs,remainingCI,remainingCATime);
 
         // calculate peak deviation in last hour, and slope from that to current deviation
@@ -697,7 +704,7 @@ class DetermineBasalTsunami @Inject constructor(
         }
         val acid = max(0.0, meal_data.mealCOB * csf / aci)
         // duration (hours) = duration (5m) * 5 / 60 * 2 (to account for linear decay)
-        consoleError.add("Carb Impact: ${ci} mg/dL per 5m; CI Duration: ${round(cid * 5 / 60 * 2, 1)} hours; remaining CI (~2h peak): ${round(remainingCIpeak, 1)} mg/dL per 5m")
+        consoleError.add("Carb Impact: $ci mg/dL per 5m; CI Duration: ${round(cid * 5 / 60 * 2, 1)} hours; remaining CI (~2h peak): ${round(remainingCIpeak, 1)} mg/dL per 5m")
         //console.error("Accel. Carb Impact:",aci,"mg/dL per 5m; ACI Duration:",round(acid*5/60*2,1),"hours");
         var minIOBPredBG = 999.0
         var minCOBPredBG = 999.0
@@ -733,6 +740,9 @@ class DetermineBasalTsunami @Inject constructor(
                 if (dynIsfMode) round((-iobTick.activity * (1800 / (profile.TDD * (ln((max(IOBpredBGs[IOBpredBGs.size - 1], 39.0) / profile.insulinDivisor) + 1)))) * 5), 2)
                 else predBGI
             iobTick.iobWithZeroTemp ?: error("iobTick.iobWithZeroTemp missing")
+            // try to find where is crashing https://console.firebase.google.com/u/0/project/androidaps-c34f8/crashlytics/app/android:info.nightscout.androidaps/issues/950cdbaf63d545afe6d680281bb141e5?versions=3.3.0-dev-d%20(1500)&time=last-thirty-days&types=crash&sessionEventKey=673BF7DD032300013D4704707A053273_2017608123846397475
+            if (iobTick.iobWithZeroTemp!!.activity.isNaN() || sens.isNaN())
+                fabricPrivacy.logCustom("iobTick.iobWithZeroTemp!!.activity=${iobTick.iobWithZeroTemp!!.activity} sens=$sens")
             val predZTBGI =
                 if (dynIsfMode) round((-iobTick.iobWithZeroTemp!!.activity * (1800 / (profile.TDD * (ln((max(ZTpredBGs[ZTpredBGs.size - 1], 39.0) / profile.insulinDivisor) + 1)))) * 5), 2)
                 else round((-iobTick.iobWithZeroTemp!!.activity * sens * 5), 2)
@@ -754,10 +764,13 @@ class DetermineBasalTsunami @Inject constructor(
             // and ending at remainingCATime h (remainingCATime*12 * 5m intervals)
             val intervals = Math.min(COBpredBGs.size.toDouble(), ((remainingCATime * 12) - COBpredBGs.size))
             val remainingCI = Math.max(0.0, intervals / (remainingCATime / 2 * 12) * remainingCIpeak)
+            if (remainingCI.isNaN()) {
+                throw Exception("remainingCI=$remainingCI intervals=$intervals remainingCIpeak=$remainingCIpeak")
+            }
             remainingCItotal += predCI + remainingCI
             remainingCIs.add(round(remainingCI))
             predCIs.add(round(predCI))
-            //consoleLog.add(round(predCI,1)+"+"+round(remainingCI,1)+" ");
+            //console.log(round(predCI,1)+"+"+round(remainingCI,1)+" ");
             COBpredBG = COBpredBGs[COBpredBGs.size - 1] + predBGI + min(0.0, predDev) + predCI + remainingCI
             aCOBpredBG = aCOBpredBGs[aCOBpredBGs.size - 1] + predBGI + min(0.0, predDev) + predACI
             // for UAMpredBGs, predicted carb impact drops at slopeFromDeviations
@@ -777,19 +790,19 @@ class DetermineBasalTsunami @Inject constructor(
             //console.error(predBGI, predCI, predUCI);
             // truncate all BG predictions at 4 hours
             if (IOBpredBGs.size < 48) IOBpredBGs.add(IOBpredBG)
-            if (COBpredBGs.size < 48) COBpredBGs.add(COBpredBG!!)
-            if (aCOBpredBGs.size < 48) aCOBpredBGs.add(aCOBpredBG!!)
-            if (UAMpredBGs.size < 48) UAMpredBGs.add(UAMpredBG!!)
+            if (COBpredBGs.size < 48) COBpredBGs.add(COBpredBG)
+            if (aCOBpredBGs.size < 48) aCOBpredBGs.add(aCOBpredBG)
+            if (UAMpredBGs.size < 48) UAMpredBGs.add(UAMpredBG)
             if (ZTpredBGs.size < 48) ZTpredBGs.add(ZTpredBG)
             // calculate minGuardBGs without a wait from COB, UAM, IOB predBGs
-            if (COBpredBG!! < minCOBGuardBG) minCOBGuardBG = round(COBpredBG!!).toDouble()
-            if (UAMpredBG!! < minUAMGuardBG) minUAMGuardBG = round(UAMpredBG!!).toDouble()
+            if (COBpredBG < minCOBGuardBG) minCOBGuardBG = round(COBpredBG).toDouble()
+            if (UAMpredBG < minUAMGuardBG) minUAMGuardBG = round(UAMpredBG).toDouble()
             if (IOBpredBG < minIOBGuardBG) minIOBGuardBG = IOBpredBG
             if (ZTpredBG < minZTGuardBG) minZTGuardBG = round(ZTpredBG, 0)
 
             // set minPredBGs starting when currently-dosed insulin activity will peak
-            // #look ahead 60m (regardless of insulin type) so as to be less aggressive on slower insulins
-            // #add 30m to allow for insulin delivery (SMBs or temps)
+            // look ahead 60m (regardless of insulin type) so as to be less aggressive on slower insulins
+            // add 30m to allow for insulin delivery (SMBs or temps)
             // MP adjusted below for Tsunami. Default: 90; Here: profile.peakTime with no added 30m. This code was written for slower insulins than available today and recommended for use with Tsunami
             val insulinPeakTime = profile.peakTime
             val insulinPeak5m = (insulinPeakTime / 60.0) * 12.0
@@ -799,9 +812,9 @@ class DetermineBasalTsunami @Inject constructor(
             if (IOBpredBGs.size > insulinPeak5m && (IOBpredBG < minIOBPredBG)) minIOBPredBG = round(IOBpredBG, 0)
             if (IOBpredBG > maxIOBPredBG) maxIOBPredBG = IOBpredBG
             // wait 85-105m before setting COB and 60m for UAM minPredBGs
-            if ((cid != 0.0 || remainingCIpeak > 0) && COBpredBGs.size > insulinPeak5m && (COBpredBG!! < minCOBPredBG)) minCOBPredBG = round(COBpredBG!!, 0)
-            if ((cid != 0.0 || remainingCIpeak > 0) && COBpredBG!! > maxIOBPredBG) maxCOBPredBG = COBpredBG!!
-            if (enableUAM && UAMpredBGs.size > 12 && (UAMpredBG!! < minUAMPredBG)) minUAMPredBG = round(UAMpredBG!!, 0)
+            if ((cid != 0.0 || remainingCIpeak > 0) && COBpredBGs.size > insulinPeak5m && (COBpredBG < minCOBPredBG)) minCOBPredBG = round(COBpredBG, 0)
+            if ((cid != 0.0 || remainingCIpeak > 0) && COBpredBG > maxIOBPredBG) maxCOBPredBG = COBpredBG
+            if (enableUAM && UAMpredBGs.size > 12 && (UAMpredBG < minUAMPredBG)) minUAMPredBG = round(UAMpredBG, 0)
             //if (enableUAM && UAMpredBG!! > maxIOBPredBG) maxUAMPredBG = UAMpredBG!!
         }
         // set eventualBG to include effect of carbs
@@ -814,7 +827,7 @@ class DetermineBasalTsunami @Inject constructor(
         IOBpredBGs = IOBpredBGs.map { round(min(401.0, max(39.0, it)), 0) }.toMutableList()
         for (i in IOBpredBGs.size - 1 downTo 13) {
             if (IOBpredBGs[i - 1] != IOBpredBGs[i]) break
-            else IOBpredBGs.removeLast()
+            else IOBpredBGs.removeAt(IOBpredBGs.lastIndex)
         }
         rT.predBGs?.IOB = IOBpredBGs.map { it.toInt() }
         lastIOBpredBG = round(IOBpredBGs[IOBpredBGs.size - 1]).toDouble()
@@ -822,21 +835,21 @@ class DetermineBasalTsunami @Inject constructor(
         for (i in ZTpredBGs.size - 1 downTo 7) {
             // stop displaying ZTpredBGs once they're rising and above target
             if (ZTpredBGs[i - 1] >= ZTpredBGs[i] || ZTpredBGs[i] <= target_bg) break
-            else ZTpredBGs.removeLast()
+            else ZTpredBGs.removeAt(ZTpredBGs.lastIndex)
         }
         rT.predBGs?.ZT = ZTpredBGs.map { it.toInt() }
         if (meal_data.mealCOB > 0) {
             aCOBpredBGs = aCOBpredBGs.map { round(min(401.0, max(39.0, it)), 0) }.toMutableList()
             for (i in aCOBpredBGs.size - 1 downTo 13) {
                 if (aCOBpredBGs[i - 1] != aCOBpredBGs[i]) break
-                else aCOBpredBGs.removeLast()
+                else aCOBpredBGs.removeAt(aCOBpredBGs.lastIndex)
             }
         }
         if (meal_data.mealCOB > 0 && (ci > 0 || remainingCIpeak > 0)) {
             COBpredBGs = COBpredBGs.map { round(min(401.0, max(39.0, it)), 0) }.toMutableList()
             for (i in COBpredBGs.size - 1 downTo 13) {
                 if (COBpredBGs[i - 1] != COBpredBGs[i]) break
-                else COBpredBGs.removeLast()
+                else COBpredBGs.removeAt(COBpredBGs.lastIndex)
             }
             rT.predBGs?.COB = COBpredBGs.map { it.toInt() }
             lastCOBpredBG = COBpredBGs[COBpredBGs.size - 1]
@@ -847,7 +860,7 @@ class DetermineBasalTsunami @Inject constructor(
                 UAMpredBGs = UAMpredBGs.map { round(min(401.0, max(39.0, it)), 0) }.toMutableList()
                 for (i in UAMpredBGs.size - 1 downTo 13) {
                     if (UAMpredBGs[i - 1] != UAMpredBGs[i]) break
-                    else UAMpredBGs.removeLast()
+                    else UAMpredBGs.removeAt(UAMpredBGs.lastIndex)
                 }
                 rT.predBGs?.UAM = UAMpredBGs.map { it.toInt() }
                 lastUAMpredBG = UAMpredBGs[UAMpredBGs.size - 1]

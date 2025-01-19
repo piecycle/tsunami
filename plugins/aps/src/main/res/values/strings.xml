@@ -280,13 +280,12 @@
     <string name="wave_SMB_scaling_summary">Scales Wave SMB cap with the current profile percentage (max: 130%).</string>
     <string name="key_advanced_tsunami" translatable="false">Advanced_tsunami_settings</string>
     <string name="advanced_tsunami_title">Advanced Tsunami settings</string>
-    <string name="advanced_tsunami_disclaimer">The following settings are for experienced users only and do not have to be adjusted! New users are advised to use the default settings.</string>
     <string name="key_tsu_activity_target" translatable="false">tsu_activity_target</string>
     <string name="tsu_activity_target_title">Activity target (Tsunami) [%]</string>
     <string name="tsu_activity_target_summary">Percentage of current IA to maintain in case of small delta values (constant activity mode for Tsunami).</string>
     <string name="key_advanced_wave" translatable="false">Advanced_wave_settings</string>
     <string name="advanced_wave_title">Advanced Wave settings</string>
-    <string name="advanced_wave_disclaimer">The following settings are for experienced users only and do not have to be adjusted! New users are advised to use the default settings.</string>
+    <string name="advanced_tsu_wave_disclaimer">The following settings are for experienced users only and do not have to be adjusted! New users are advised to use the default settings.</string>
     <string name="key_wave_activity_target" translatable="false">wave_activity_target</string>
     <string name="wave_activity_target_title">Activity target (Wave) [%]</string>
     <string name="wave_activity_target_summary">Percentage of current IA to maintain in case of small delta values (constant activity mode for Wave).</string>

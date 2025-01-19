@@ -1796,7 +1796,7 @@ class PersistenceLayerImpl @Inject constructor(
     override fun getTsunamiActiveAt(timestamp: Long): TSU? =
         repository.getTsunamiActiveAt(timestamp).blockingGet()?.fromDb()
 
-    override fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>)
+    override fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>)
         : Single<PersistenceLayer.TransactionResult<TSU>> =
         repository.runTransactionForResult(TsunamiModeSwitchTransaction(tsu.toDb()))
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while saving Tsunami mode.", it) }
@@ -1819,7 +1819,7 @@ class PersistenceLayerImpl @Inject constructor(
                 transactionResult
             }
 
-    override fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>)
+    override fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>)
         : Single<PersistenceLayer.TransactionResult<TSU>> =
         repository.runTransactionForResult(CancelCurrentTsunamiModeIfAnyTransaction(timestamp))
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while updating Tsunami mode.", it) }

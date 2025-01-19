@@ -268,8 +268,8 @@ class TsunamiDialog : DialogFragmentWithDate() {
                                     note = notes,
                                     listValues = listOf(
                                         ValueWithUnit.Insulin(insulinAfterConstraints),
-                                        ValueWithUnit.Timestamp(time).takeIf { eventTimeChanged },
-                                        ValueWithUnit.Minute(duration))
+                                        ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged },
+                                        ValueWithUnit.Minute(duration)).filterNotNull()
                                 ).subscribe()
                             }
                             commandQueue.bolus(detailedBolusInfo, object : Callback() {
@@ -292,8 +292,8 @@ class TsunamiDialog : DialogFragmentWithDate() {
                                 source = Sources.TsunamiDialog,
                                 note = notes,
                                 listValues = listOf(
-                                    ValueWithUnit.Timestamp(time).takeIf { eventTimeChanged },
-                                    ValueWithUnit.Minute(duration))
+                                    ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged },
+                                    ValueWithUnit.Minute(duration)).filterNotNull()
                             ).subscribe()
                         }
                     })

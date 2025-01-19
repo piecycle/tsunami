@@ -1402,11 +1402,11 @@ interface PersistenceLayer {
      * insert or update Tsunami record
      * @param tsu record
      */
-    fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>): Single<TransactionResult<TSU>>
+    fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): Single<TransactionResult<TSU>>
 
     /**
      * cancel current Tsunami mode if running
      * @param timestamp current time in ms
      */
-    fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit?>): Single<TransactionResult<TSU>>
+    fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): Single<TransactionResult<TSU>>
 }
