@@ -49,7 +49,7 @@ class ActionStartTempTarget(injector: HasAndroidInjector) : Action(injector) {
 
     override fun friendlyName(): Int = R.string.starttemptarget
     override fun shortDescription(): String = rh.gs(R.string.starttemptarget) + ": " + tt().friendlyDescription(value.units, rh, profileUtil)
-    @DrawableRes override fun icon(): Int = app.aaps.core.objects.R.drawable.ic_temptarget_high
+    @DrawableRes override fun icon(): Int = app.aaps.core.objects.R.drawable.ic_temptarget_high_24dp
 
     override fun doAction(callback: Callback) {
         disposable += persistenceLayer.insertAndCancelCurrentTemporaryTarget(
@@ -61,7 +61,7 @@ class ActionStartTempTarget(injector: HasAndroidInjector) : Action(injector) {
                 ValueWithUnit.Mgdl(tt().lowTarget),
                 ValueWithUnit.Mgdl(tt().highTarget).takeIf { tt().lowTarget != tt().highTarget },
                 ValueWithUnit.Minute(TimeUnit.MILLISECONDS.toMinutes(tt().duration).toInt())
-            )
+            ).filterNotNull()
         ).subscribe(
             { callback.result(instantiator.providePumpEnactResult().success(true).comment(app.aaps.core.ui.R.string.ok)).run() },
             { callback.result(instantiator.providePumpEnactResult().success(false).comment(app.aaps.core.ui.R.string.error)).run() }

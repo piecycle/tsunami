@@ -209,7 +209,7 @@ abstract class AbstractDanaRPlugin protected constructor(
             return result
         }
         val durationInHours = max(durationInMinutes / 60, 1)
-        val connectionOK = executionService?.tempBasal(percentReq, durationInHours) ?: false
+        val connectionOK = executionService?.tempBasal(percentReq, durationInHours) == true
         if (connectionOK && danaPump.isTempBasalInProgress && danaPump.tempBasalPercent == percentReq) {
             result.enacted(true)
                 .success(true)
@@ -433,10 +433,10 @@ abstract class AbstractDanaRPlugin protected constructor(
         }
         val (temporaryBasal, extendedBolus) = pumpSync.expectedPumpState()
         if (temporaryBasal != null) {
-            ret += "Temp: ${temporaryBasal.toStringFull(dateUtil, decimalFormatter)}\n"
+            ret += "Temp: ${temporaryBasal.toStringFull(dateUtil, rh)}\n"
         }
         if (extendedBolus != null) {
-            ret += "Extended: ${extendedBolus.toStringFull(dateUtil, decimalFormatter)}\n"
+            ret += "Extended: ${extendedBolus.toStringFull(dateUtil, rh)}\n"
         }
         if (!veryShort) {
             ret += "TDD: ${decimalFormatter.to0Decimal(danaPump.dailyTotalUnits)} / ${danaPump.maxDailyTotalUnits} U\n"

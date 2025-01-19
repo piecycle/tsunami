@@ -114,6 +114,7 @@
     <string name="bg_label">Glykémia</string>
     <string name="calibration">Kalibrácia</string>
     <string name="alarminxmin">Spustiť výstrahu za %1$d min</string>
+    <string name="treatmentdeliveryerror">Bolus zaznamenal chybu. Manuálne skontrolujte skutočne podané množstvo inzulínu a sacharidov</string>
     <string name="bolus_reminder">Pripomenutie bolusu</string>
     <string name="duration_label">Trvanie</string>
     <string name="shortgramm">g</string>
@@ -177,6 +178,7 @@
     <string name="extended_bolus_full">E %1$.2f JI/h @%2$s %3$s/%4$s min</string>
     <string name="extended_bolus_medium">%1$.2f JI/h %2$s/%3$s\'</string>
     <string name="nav_export">Exportovať nastavenia</string>
+    <string name="location_permission_not_granted">Povolenie na zisťovanie polohy nebolo udelené. Povoľte v nastaveniach systému Android.</string>
     <!--    Protection-->
     <string name="wrongpassword">Nesprávne heslo</string>
     <string name="wrongpin">Nesprávny PIN</string>
@@ -347,6 +349,7 @@
     <string name="delete_future_treatments">Odstrániť ošetrenia v budúcnosti</string>
     <string name="uel_export_settings">EXPORTOVAŤ NASTAVENIA</string>
     <string name="uel_import_settings">IMPORTOVAŤ NASTAVENIA</string>
+    <string name="uel_select_directory">VYBERTE PRIEČINOK</string>
     <string name="uel_reset_databases">RESETOVAŤ DATABÁZY</string>
     <string name="uel_reset_aps_results">RESETOVAŤ VÝSLEDKY AAPS</string>
     <string name="uel_cleanup_databases">VYČISTIŤ DATABÁZU</string>
@@ -410,6 +413,12 @@
     <string name="formatPercent">%1$.0f%%</string>
     <string name="basal">Bazál</string>
     <string name="basalpct">Bazál %</string>
+    <string name="sensitivity">Citlivosť</string>
+    <string name="isf_for_carbs">ISF pre kalkulačku a vstrebávanie sacharidov: %1$.1f</string>
+    <string name="autosens_long">Hodnota Autosense: %.0f%%</string>
+    <string name="autosens_short">AS: %.0f%%</string>
+    <string name="algorithm_long">Detekcia citlivosti algoritmu: %.0f%%</string>
+    <string name="algorithm_short">Alg: %.0f%%</string>
     <string name="a11y_file">súbor</string>
     <string name="a11y_user">používateľ</string>
     <!-- Autotune -->
@@ -589,4 +598,8 @@
     <!--    DecimalFormatterImpl -->
     <string name="format_insulin_units1">%1$.1f JI</string>
     <string name="format_insulin_units">%1$.2f JI</string>
+    <string name="percent_rate_duration">Hodnota: %1$.2f%% (%2$.2f JI/h) Trvanie: %3$d min</string>
+    <string name="rate_percent_duration">Hodnota: %1$.2f JI/h (%2$.2f%%) Trvanie: %3$d min</string>
+    <string name="percent_rate_duration_formatted"><![CDATA[<b>Hodnota</b>: %1$.2f%% (%2$.2f JI/h)<br><b>Trvanie</b>: %3$d min<br>]]></string>
+    <string name="rate_percent_duration_formatted"><![CDATA[<b>Hodnota</b>: %1$.2f JI/h (%2$.2f%%) <br><b>Trvanie</b>: %3$d min<br>]]></string>
 </resources>

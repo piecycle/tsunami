@@ -32,6 +32,8 @@
     <string name="pref_show_phone_battery">Mostrar batería del teléfono</string>
     <string name="pref_show_rig_battery">Mostrar batería de la plataforma</string>
     <string name="pref_show_basal_rate">Mostrar la tasa basal</string>
+    <string name="pref_show_temp_target">Mostrar Objetivo Temporal</string>
+    <string name="pref_show_reservoir_level">Mostrar el nivel del reservorio</string>
     <string name="pref_show_loop_status">Mostrar estado de bucle</string>
     <string name="pref_show_bg">Mostrar glucosa</string>
     <string name="pref_show_bgi">Mostrar BGI (Índice de glucosa en sangre)</string>
@@ -215,6 +217,7 @@
     <string name="complication_full_status_flipped">Estado completo (invertido)</string>
     <string name="complication_blood_glucose">Glucosa en sangre</string>
     <string name="complication_br_cob_iob">BR, COB &amp; IOB</string>
+    <string name="complication_br_iob">BR &amp; IOB</string>
     <string name="complication_cob_iob">COB &amp; IOB</string>
     <string name="complication_cob_icon">Icono COB</string>
     <string name="complication_cob_detailed">COB detallado</string>

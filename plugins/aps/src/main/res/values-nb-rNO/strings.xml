@@ -50,7 +50,7 @@
     <string name="openapsma_max_iob_summary">Denne verdien kalles Maks IOB av OpenAPS\nAAPS vil ikke gi mere insulin hvis mengden insulin ombord (IOB) overstiger denne verdien.</string>
     <string name="openapsama_autosens_adjust_targets_summary">Standard verdi: sann\nGir autosens tillatelse til å justere BS-mål, i tillegg til ISF og basaler.</string>
     <string name="openapsama_autosens_adjust_targets">Autosens justerer også BS målverdier</string>
-    <string name="openapsama_min_5m_carb_impact_summary">Standardverdi er: 3.0 (AMA) eller 8.0 (SMB). Dette er grunninnstillingen for KH-opptak per 5 minutt. Den påvirker hvor raskt COB skal reduseres, og benyttes i beregning av fremtidig BS-kurve når BS enten synker eller øker mer enn forventet. Standardverdi er 3mg/dl/5 min.</string>
+    <string name="openapsama_min_5m_carb_impact_summary">Standardverdi: 3.0 (AMA) eller 8.0 (SMB). Dette er en innstilling for standard karboabsorpsjonsvirkning per 5 minutter. Standard forventet er 3mg/dl/5min. Dette påvirker hvor raskt COB avtar, og hvor mye karboabsorpsjon antas ved beregning av fremtidig forventet BS, når BS faller mer enn forventet, eller når det ikke stiger så mye som forventet.</string>
     <string name="openapsama_max_daily_safety_multiplier_summary">Standardverdi: 3 Dette er en viktig OpenAPS sikkerhetsbegrensning. Dette begrenser dine basaler til maks 3x av din høyeste basalverdi. Du vil trolig ikke behøve å endre denne verdien, men les og forstå hva som menes med \"3x max daglig; 4x gjeldende\" som sikkerhetsinnstilling.</string>
     <string name="openapsama_current_basal_safety_multiplier_summary">Standardverdi: 4 Dette er en viktig OpenAPS sikkerhetsbegrensning. Dette begrenser dine temp basal til max 4 ganger din nåværende basal dose, uansett hva som er maks basal i pumpen. Dette er for å unngå at man setter farlige høye maks basaldoser uten at man har forstått algoritmene. Når du taket i denne begrensningen bør du i stedet fokusere på å endre andre innstillinger.</string>
     <string name="openapsama_bolus_snooze_dia_divisor_summary">Standard verdi: 2\nBolus-slumre er aktivt etter at du har gitt en måltidsbolus slik at loop ikke skal forsøke å sette lav-temp når du nettopp har spist. I dette eksempelet brukes standardverdi på 2, så med en DIA på 3 timer vil bolus-slumre begrensningen gradvis forsvinne etter 1.5 timer (3DIA / 2).</string>
@@ -66,9 +66,9 @@
     <string name="enable_smb_summary">Bruk Super Micro Boluser i kombinasjon med midlertidig basal for raskere resultat</string>
     <string name="enable_uam_summary">Oppdage uannonsert måltid (UAM)</string>
     <string name="enable_smb_always">Aktiver SMB alltid</string>
-    <string name="enable_smb_always_summary">Aktiver SMB alltid uavhengig av COB, lave midlertidige mål eller boluser. Bare mulig med en bra filtrert BS-kilde som f.eks. Dexcom G6/G7</string>
+    <string name="enable_smb_always_summary">Aktiver SMB alltid uavhengig av COB, midlertidige mål eller boluser. Bare mulig med en BS-kilde som støtter avansert filtrering av data</string>
     <string name="enable_smb_after_carbs">Aktiver SMB etter karbohydrater</string>
-    <string name="enable_smb_after_carbs_summary">Aktiver SMB i 6 timer etter inntak av karbohydrater, selv med 0 COB (Karbo ombord). Bare mulig med en bra filtrert BS-kilde som f. eks. Dexcom G6/G7</string>
+    <string name="enable_smb_after_carbs_summary">Aktiver SMB i 6 timer etter inntak av karbohydrater, selv med 0 COB. Bare mulig med en BS-kilde som støtter avansert filtrering av data</string>
     <string name="enable_smb_with_cob">Aktiver SMB med COB</string>
     <string name="enable_smb_with_cob_summary">Aktiver SMB når COB (karbohydrater ombord) er aktiv.</string>
     <string name="enable_smb_with_temp_target">Aktiver SMB med lav midlertidig målverdi</string>
@@ -122,7 +122,7 @@
     <string name="loop_open_mode_min_change">Minste endringsforespørsel [%]</string>
     <string name="loop_open_mode_min_change_summary" formatted="false">I åpen Loopmodus vil AAPS be deg utføre en hendelse hvis forandringen er større enn denne verdien i %. Standard verdi er 20%</string>
     <string name="fallback_smb_no_tdd">Går tilbake til SMB. Ikke nok data om total daglig dose.</string>
-    <string name="fallback_to_isf_no_tdd">Faller tilbake til profilsensitivitet. Ikke nok TDD-data.</string>
+    <string name="fallback_to_isf_no_tdd">Faller tilbake til profilsensitivitet. Ikke nok TDD-data. Årsak: %1$s</string>
     <!-- Autotune -->
     <string name="autotune_description">Hjelp til potensiell justering av profilen (ISF, IK og basaldoser)</string>
     <string name="autotune_shortname">AT</string>

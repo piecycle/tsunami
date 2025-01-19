@@ -9,6 +9,7 @@ import app.aaps.core.keys.StringKey
 import com.eatthepath.otp.HmacOneTimePasswordGenerator
 import com.google.common.io.BaseEncoding
 import java.net.URLEncoder
+import java.util.Locale
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
@@ -46,13 +47,13 @@ class OneTimePassword @Inject constructor(
      */
     fun ensureKey(forceNewKey: Boolean = false) {
         val keyBytes: ByteArray
-        val strSecret = preferences.get(StringKey.SmsOtpPassword).trim()
+        val strSecret = preferences.get(StringKey.SmsOtpSecret).trim()
         if (strSecret.isEmpty() || forceNewKey) {
             val keyGenerator = KeyGenerator.getInstance(totp.algorithm)
             keyGenerator.init(Constants.OTP_GENERATED_KEY_LENGTH_BITS)
             val generatedKey = keyGenerator.generateKey()
             keyBytes = generatedKey.encoded
-            preferences.put(StringKey.SmsOtpPassword, Base64.encodeToString(keyBytes, Base64.NO_WRAP + Base64.NO_PADDING))
+            preferences.put(StringKey.SmsOtpSecret, Base64.encodeToString(keyBytes, Base64.NO_WRAP + Base64.NO_PADDING))
         } else {
             keyBytes = Base64.decode(strSecret, Base64.DEFAULT)
         }
@@ -60,12 +61,17 @@ class OneTimePassword @Inject constructor(
     }
 
     private fun configure() {
-        ensureKey()
+        try {
+            ensureKey()
+        } catch (_: Exception) {
+            preferences.put(StringKey.SmsOtpPassword, "")
+            ensureKey()
+        }
         pin = preferences.get(StringKey.SmsOtpPassword).trim()
     }
 
     private fun generateOneTimePassword(counter: Long): String =
-        key?.let { String.format("%06d", totp.generateOneTimePassword(key, counter)) } ?: ""
+        key?.let { String.format(Locale.getDefault(), "%06d", totp.generateOneTimePassword(key, counter)) } ?: ""
 
     /**
      * Check if given OTP+PIN is valid

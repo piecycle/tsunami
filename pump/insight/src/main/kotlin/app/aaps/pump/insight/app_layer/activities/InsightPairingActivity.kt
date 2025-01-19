@@ -23,13 +23,13 @@ import app.aaps.core.interfaces.pump.PumpSync
 import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.core.utils.extensions.safeDisable
 import app.aaps.core.utils.extensions.safeGetParcelableExtra
+import app.aaps.pump.insight.R
 import app.aaps.pump.insight.connection_service.InsightConnectionService
 import app.aaps.pump.insight.connection_service.InsightConnectionService.ExceptionCallback
+import app.aaps.pump.insight.databinding.ActivityInsightPairingBinding
 import app.aaps.pump.insight.descriptors.InsightState
 import app.aaps.pump.insight.utils.ExceptionTranslator
 import dagger.android.support.DaggerAppCompatActivity
-import info.nightscout.androidaps.insight.R
-import info.nightscout.androidaps.insight.databinding.ActivityInsightPairingBinding
 import javax.inject.Inject
 
 class InsightPairingActivity : DaggerAppCompatActivity(), InsightConnectionService.StateCallback, View.OnClickListener, ExceptionCallback {
@@ -41,6 +41,7 @@ class InsightPairingActivity : DaggerAppCompatActivity(), InsightConnectionServi
     private lateinit var binding: ActivityInsightPairingBinding
     private var scanning = false
     private val deviceAdapter = DeviceAdapter()
+    private var isBound = false
 
     private var service: InsightConnectionService? = null
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
@@ -54,10 +55,13 @@ class InsightPairingActivity : DaggerAppCompatActivity(), InsightConnectionServi
                     onStateChanged(it.state)
                     pumpSync.connectNewPump()
                 }
+                isBound = true
             }
         }
 
-        override fun onServiceDisconnected(name: ComponentName) {}
+        override fun onServiceDisconnected(name: ComponentName) {
+            isBound =false
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +87,8 @@ class InsightPairingActivity : DaggerAppCompatActivity(), InsightConnectionServi
             unregisterStateCallback(this@InsightPairingActivity)
             unregisterExceptionCallback(this@InsightPairingActivity)
         }
-        unbindService(serviceConnection)
+        if (isBound)
+            unbindService(serviceConnection)
         super.onDestroy()
     }
 

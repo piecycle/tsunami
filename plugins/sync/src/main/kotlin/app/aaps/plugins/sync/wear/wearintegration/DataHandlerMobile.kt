@@ -1079,8 +1079,10 @@ class DataHandlerMobile @Inject constructor(
                 processedTbrEbData.getTempBasalIncludingConvertedExtended(System.currentTimeMillis())?.toStringShort(rh) ?: rh.gs(app.aaps.core.ui.R.string.pump_base_basal_rate, profile.getBasal())
 
             //bgi
-            val bgi = -(bolusIob.activity + basalIob.activity) * 5 * profileUtil.fromMgdlToUnits(profile.getIsfMgdl("DataHandlerMobile $caller"))
-            bgiString = "" + (if (bgi >= 0) "+" else "") + decimalFormatter.to1Decimal(bgi)
+            if (glucoseStatusProvider.glucoseStatusData != null) {
+                val bgi = -(bolusIob.activity + basalIob.activity) * 5 * profileUtil.fromMgdlToUnits(profile.getIsfMgdl("DataHandlerMobile $caller"))
+                bgiString = "" + (if (bgi >= 0) "+" else "") + decimalFormatter.to1Decimal(bgi)
+            }
             status = generateStatusString(profile)
         }
 
@@ -1103,21 +1105,21 @@ class DataHandlerMobile @Inject constructor(
             // If the target is not the same as set in the profile then oref has overridden it
             val targetUsed =
                 if (config.APS) loop.lastRun?.constraintsProcessed?.targetBG ?: 0.0
-                else if (config.NSCLIENT) processedDeviceStatusData.getAPSResult()?.targetBG ?: 0.0
+                else if (config.AAPSCLIENT) processedDeviceStatusData.getAPSResult()?.targetBG ?: 0.0
                 else 0.0
 
             if (targetUsed != 0.0 && abs(profile.getTargetMgdl() - targetUsed) > 0.01) {
-                    tempTargetLevel = 1     // Green
-                    profileUtil.toTargetRangeString(targetUsed, targetUsed, GlucoseUnit.MGDL, units)
+                tempTargetLevel = 1     // Green
+                profileUtil.toTargetRangeString(targetUsed, targetUsed, GlucoseUnit.MGDL, units)
             } else {
-                    profileUtil.toTargetRangeString(profile.getTargetLowMgdl(), profile.getTargetHighMgdl(), GlucoseUnit.MGDL, units)
+                profileUtil.toTargetRangeString(profile.getTargetLowMgdl(), profile.getTargetHighMgdl(), GlucoseUnit.MGDL, units)
             }
         } ?: ""
         // Reservoir Level
         val pump = activePlugin.activePump
         val maxReading = pump.pumpDescription.maxResorvoirReading.toDouble()
         val reservoir = pump.reservoirLevel.let { if (pump.pumpDescription.isPatchPump && it > maxReading) maxReading else it }
-        val reservoirString = if (reservoir > 0) "${decimalFormatter.to0Decimal(reservoir, rh.gs(app.aaps.core.ui.R.string.insulin_unit_shortname))}" else ""
+        val reservoirString = if (reservoir > 0) decimalFormatter.to0Decimal(reservoir, rh.gs(app.aaps.core.ui.R.string.insulin_unit_shortname)) else ""
         val resUrgent = preferences.get(IntKey.OverviewResCritical)
         val resWarn = preferences.get(IntKey.OverviewResWarning)
         val reservoirLevel = when {
@@ -1366,7 +1368,7 @@ class DataHandlerMobile @Inject constructor(
                     ValueWithUnit.fromGlucoseUnit(command.low, profileFunction.getUnits()),
                     ValueWithUnit.fromGlucoseUnit(command.high, profileFunction.getUnits()).takeIf { command.low != command.high },
                     ValueWithUnit.Minute(command.duration)
-                )
+                ).filterNotNull()
             ).subscribe()
         else
             disposable += persistenceLayer.cancelCurrentTemporaryTargetIfAny(
@@ -1399,7 +1401,8 @@ class DataHandlerMobile @Inject constructor(
                 action = action, source = Sources.Wear,
                 listValues = listOf(ValueWithUnit.Insulin(amount).takeIf { amount != 0.0 },
                                     ValueWithUnit.Gram(carbs).takeIf { carbs != 0 },
-                                    ValueWithUnit.Hour(carbsDuration).takeIf { carbsDuration != 0 })
+                                    ValueWithUnit.Hour(carbsDuration).takeIf { carbsDuration != 0 }
+                ).filterNotNull()
             )
             commandQueue.bolus(detailedBolusInfo, object : Callback() {
                 override fun run() {
@@ -1447,7 +1450,7 @@ class DataHandlerMobile @Inject constructor(
         detailedBolusInfo.bolusType = BS.Type.PRIMING
         uel.log(
             action = Action.PRIME_BOLUS, source = Sources.Wear,
-            listValues = listOf(ValueWithUnit.Insulin(amount).takeIf { amount != 0.0 })
+            listValues = listOf(ValueWithUnit.Insulin(amount).takeIf { amount != 0.0 }).filterNotNull()
         )
         commandQueue.bolus(detailedBolusInfo, object : Callback() {
             override fun run() {
@@ -1464,7 +1467,8 @@ class DataHandlerMobile @Inject constructor(
             source = Sources.Wear,
             listValues = listOf(ValueWithUnit.Timestamp(carbsTime),
                                 ValueWithUnit.Gram(carbs),
-                                ValueWithUnit.Hour(duration).takeIf { duration != 0 })
+                                ValueWithUnit.Hour(duration).takeIf { duration != 0 }
+            ).filterNotNull()
         )
         doBolus(0.0, carbs, carbsTime, duration, null, notes)
     }
@@ -1486,7 +1490,7 @@ class DataHandlerMobile @Inject constructor(
             listValues = listOf(
                 ValueWithUnit.Percent(command.percentage),
                 ValueWithUnit.Hour(command.timeShift).takeIf { command.timeShift != 0 }
-            )
+            ).filterNotNull()
         )
     }
 

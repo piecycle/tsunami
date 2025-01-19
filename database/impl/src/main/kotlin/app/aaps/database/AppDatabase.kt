@@ -44,9 +44,9 @@ package app.aaps.database
  import app.aaps.database.entities.Tsunami
  import app.aaps.database.entities.UserEntry
  import app.aaps.database.entities.VersionChange
- import java.io.Closeable
 
-const val DATABASE_VERSION = 28
+
+const val DATABASE_VERSION = 29
 
 @Database(
     version = DATABASE_VERSION,
@@ -58,7 +58,7 @@ const val DATABASE_VERSION = 28
     exportSchema = true
 )
 @TypeConverters(Converters::class)
-internal abstract class AppDatabase : Closeable, RoomDatabase() {
+internal abstract class AppDatabase : RoomDatabase() {
 
     abstract val glucoseValueDao: GlucoseValueDao
 

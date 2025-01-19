@@ -378,6 +378,9 @@
     <color name="toastWarn">#FF8C00</color>
     <color name="toastInfo">#03A9F4</color>
 
+    <!--    Automations-->
+    <color name="actionColor">#FF8B00</color>
+
     <!-- Tsunami Button Light Theme -->
     <color name="colorTsunamiButton">#2f9c77</color>
     <color name="tsunamiMint">#2f9c77</color>

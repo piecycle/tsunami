@@ -148,6 +148,7 @@
         <item name="actionsError">@color/errorAlertBackground</item>
         <item name="automationBackgroundColor">@color/black</item>
         <item name="automationOverlayColor">@color/black_alpha_40</item>
+        <item name="actionColor">@color/actionColor</item>
         <!---BG source -->
         <item name="bgsourceError">@color/errorAlertBackground</item>
         <!---TDD-statistics -->
@@ -357,7 +358,7 @@
     </style>
 
     <!--    Common Buttons -->
-    <dimen name="gray_material_button_margin_horizontal">5dp</dimen>
+    <dimen name="gray_material_button_margin_horizontal">2dp</dimen>
 
     <style name="GrayButton" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/mtrl_btn_bg_color_selector_grey</item>
@@ -440,6 +441,14 @@
         <item name="android:paddingEnd">15dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">#ff0000</item>
+    </style>
+
+    <style name="Widget.App.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/button_tint</item>
+    </style>
+
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/button_tint</item>
     </style>
 
 </resources>

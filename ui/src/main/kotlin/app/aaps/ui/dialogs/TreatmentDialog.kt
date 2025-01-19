@@ -104,7 +104,7 @@ class TreatmentDialog : DialogFragmentWithDate() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (config.NSCLIENT) {
+        if (config.AAPSCLIENT) {
             binding.recordOnly.isChecked = true
             binding.recordOnly.isEnabled = false
         }
@@ -206,7 +206,8 @@ class TreatmentDialog : DialogFragmentWithDate() {
                                 source = Sources.TreatmentDialog,
                                 listValues = listOf(
                                     ValueWithUnit.Insulin(insulinAfterConstraints),
-                                    ValueWithUnit.Gram(carbsAfterConstraints).takeIf { carbsAfterConstraints != 0 })
+                                    ValueWithUnit.Gram(carbsAfterConstraints).takeIf { carbsAfterConstraints != 0 }
+                                ).filterNotNull()
                             )
                             commandQueue.bolus(detailedBolusInfo, object : Callback() {
                                 override fun run() {

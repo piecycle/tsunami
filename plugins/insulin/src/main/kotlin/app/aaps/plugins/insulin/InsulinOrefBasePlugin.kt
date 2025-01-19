@@ -42,7 +42,7 @@ abstract class InsulinOrefBasePlugin(
         .pluginIcon(R.drawable.ic_insulin)
         .shortName(R.string.insulin_shortname)
         .visibleByDefault(false)
-        .neverVisible(config.NSCLIENT),
+        .neverVisible(config.AAPSCLIENT),
     aapsLogger, rh
 ), Insulin {
 

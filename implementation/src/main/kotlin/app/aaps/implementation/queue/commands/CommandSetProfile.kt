@@ -50,8 +50,8 @@ class CommandSetProfile(
         callback?.result(r)?.run()
         // Send SMS notification if ProfileSwitch is coming from NS
         val profileSwitch = persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now())
-        if (profileSwitch != null && r.enacted && hasNsId && !config.NSCLIENT) {
-            if (smsCommunicator.isEnabled())
+        if (profileSwitch != null && r.enacted && hasNsId && !config.AAPSCLIENT) {
+            if (smsCommunicator.isEnabled() && !config.doNotSendSmsOnProfileChange())
                 smsCommunicator.sendNotificationToAllNumbers(rh.gs(app.aaps.core.ui.R.string.profile_set_ok))
         }
     }

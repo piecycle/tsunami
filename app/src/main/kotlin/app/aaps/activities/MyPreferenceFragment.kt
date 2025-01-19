@@ -16,7 +16,6 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import androidx.preference.size
 import app.aaps.R
-import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.plugin.ActivePlugin
@@ -35,11 +34,12 @@ import app.aaps.core.interfaces.rx.events.EventRebuildTabs
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.keys.BooleanKey
-import app.aaps.core.keys.DoubleKey
+import app.aaps.core.keys.DoublePreferenceKey
 import app.aaps.core.keys.IntKey
+import app.aaps.core.keys.IntPreferenceKey
 import app.aaps.core.keys.Preferences
 import app.aaps.core.keys.StringKey
-import app.aaps.core.keys.UnitDoubleKey
+import app.aaps.core.keys.StringPreferenceKey
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.utils.extensions.safeGetSerializable
 import app.aaps.core.validators.DefaultEditTextValidator
@@ -56,8 +56,6 @@ import app.aaps.plugins.configuration.maintenance.MaintenancePlugin
 import app.aaps.plugins.main.general.smsCommunicator.SmsCommunicatorPlugin
 import app.aaps.plugins.main.skins.SkinProvider
 import dagger.android.support.AndroidSupportInjection
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.util.Vector
 import javax.inject.Inject
 
@@ -133,10 +131,8 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         if (pluginName != null) {
             val plugin = activePlugin.getPluginsList().firstOrNull { it.javaClass.simpleName == pluginName } ?: error("Plugin not found")
             addPreferencesIfEnabled(plugin, rootKey)
-        } else if (customPreference != null) {
-            when (customPreference!!) {
-                UiInteraction.Preferences.PROTECTION -> addProtectionScreen(rootKey)
-            }
+        } else if (customPreference == UiInteraction.Preferences.PROTECTION) {
+            addProtectionScreen(rootKey)
         } else {
             addGeneralScreen(rootKey)
             addProtectionScreen(rootKey)
@@ -156,7 +152,11 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
             addAlertScreen(rootKey)
             addPreferencesIfEnabled(maintenancePlugin, rootKey)
         }
-        initSummary(preferenceScreen, pluginName != null)
+        try {
+            initSummary(preferenceScreen, pluginName != null)
+        } catch (_: Exception) {
+            throw Exception("Error in onCreatePreferences pluginName=$pluginName customPreference=$customPreference rootKey=$rootKey filter=$filter")
+        }
         preprocessPreferences()
         if (filter != "") updateFilterVisibility(filter, preferenceScreen)
     }
@@ -285,13 +285,13 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         pref ?: return
         val keyDefinition = pref.key?.let { preferences.getIfExists(it) }
         when (keyDefinition) {
-            is IntKey,
-            is DoubleKey -> {
+            is IntPreferenceKey,
+            is DoublePreferenceKey -> {
                 if (pref is EditTextPreference && pref.text != null) pref.summary = pref.text
                 if (pref is ListPreference) pref.summary = pref.entry
             }
 
-            is StringKey -> {
+            is StringPreferenceKey -> {
                 val value = sp.getString(pref.key, "")
                 when {
                     // We use Preference and custom editor instead of EditTextPreference
@@ -304,13 +304,6 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
                 }
             }
 
-            is UnitDoubleKey -> {
-                // convert preferences values to current units
-                val value = profileUtil.valueInCurrentUnitsDetect(preferences.get(keyDefinition)).toString()
-                val precision = if (profileUtil.units == GlucoseUnit.MGDL) 0 else 1
-                val converted = BigDecimal(value).setScale(precision, RoundingMode.HALF_UP)
-                pref.summary = converted.toPlainString()
-            }
         }
         for (plugin in activePlugin.getPluginsList()) pref.key?.let { plugin.updatePreferenceSummary(pref) }
     }

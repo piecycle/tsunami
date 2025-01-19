@@ -2,8 +2,10 @@ package app.aaps.receivers
 
 import android.content.Context
 import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkQuery
@@ -16,6 +18,7 @@ import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.iob.IobCobCalculator
+import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.ProfileFunction
@@ -26,6 +29,7 @@ import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventProfileSwitchChanged
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.utils.DateUtil
+import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.objects.workflow.LoggingWorker
 import app.aaps.plugins.configuration.maintenance.MaintenancePlugin
@@ -66,10 +70,30 @@ class KeepAliveWorker(
         const val KA_0 = "KeepAlive"
         private const val KA_5 = "KeepAlive_5"
         private const val KA_10 = "KeepAlive_10"
+
+        fun scheduleIfNotRunning(context: Context, aapsLogger: AAPSLogger, fabricPrivacy: FabricPrivacy) {
+            if (lastRun != 0L && lastRun + T.mins(20).msecs() < System.currentTimeMillis()) {
+                schedule(context)
+                aapsLogger.error(LTag.CORE, "KeepAliveRescheduled")
+                fabricPrivacy.logCustom("KeepAliveRescheduled")
+            }
+        }
+
+        fun schedule(context: Context) {
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                KA_0,
+                ExistingPeriodicWorkPolicy.UPDATE,
+                PeriodicWorkRequest.Builder(KeepAliveWorker::class.java, 15, TimeUnit.MINUTES)
+                    .setInputData(Data.Builder().putString("schedule", KA_0).build())
+                    .setInitialDelay(5, TimeUnit.SECONDS)
+                    .build()
+            )
+
+        }
     }
 
     override suspend fun doWorkAndLog(): Result {
-        aapsLogger.debug(LTag.CORE, "KeepAlive received from: " + inputData.getString("schedule"))
+        aapsLogger.debug(LTag.CORE, "KeepAlive received from: " + inputData.getString("schedule") + " Thread count: " + Thread.activeCount())
 
         // 15 min interval is WorkManager minimum so schedule another instances to have 5 min interval
         if (inputData.getString("schedule") == KA_0) {
@@ -144,13 +168,13 @@ class KeepAliveWorker(
     // IOB displayed in NS
     private fun checkAPS() {
         var shouldUploadStatus = false
-        if (config.NSCLIENT) return
+        if (config.AAPSCLIENT) return
         if (config.PUMPCONTROL) shouldUploadStatus = true
         else if (!loop.isEnabled() || iobCobCalculator.ads.actualBg() == null) shouldUploadStatus = true
         else if (dateUtil.isOlderThan(activePlugin.activeAPS.lastAPSRun, 5)) shouldUploadStatus = true
         if (dateUtil.isOlderThan(lastIobUpload, IOB_UPDATE_FREQUENCY_IN_MINUTES) && shouldUploadStatus) {
             lastIobUpload = dateUtil.now()
-            loop.buildAndStoreDeviceStatus()
+            loop.scheduleBuildAndStoreDeviceStatus("KeepAliveWorker")
         }
     }
 
