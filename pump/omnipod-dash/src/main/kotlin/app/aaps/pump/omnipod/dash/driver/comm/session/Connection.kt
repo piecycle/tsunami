@@ -77,9 +77,10 @@ class Connection(
             Thread.sleep(SLEEP_WHEN_FAILING_TO_CONNECT_GATT) // Do not retry too often
             throw FailedToConnectException("connectGatt() returned null")
         }
-        if (!gatt.connect()) {
-            throw FailedToConnectException("connect() returned false")
-        }
+        gatt.connect()
+        // if (!gatt.connect()) {
+        //     throw FailedToConnectException("connect() returned false")
+        // }
         val before = SystemClock.elapsedRealtime()
         if (waitForConnection(connectionWaitCond) !is Connected) {
             podState.bluetoothConnectionState = OmnipodDashPodStateManager.BluetoothConnectionState.DISCONNECTED
