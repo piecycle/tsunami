@@ -11,8 +11,10 @@ import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.objects.wizard.BolusWizard
 import app.aaps.implementation.iob.GlucoseStatusProviderImpl
+import app.aaps.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
 import app.aaps.shared.tests.TestBaseWithProfile
 import com.google.common.truth.Truth.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -28,6 +30,7 @@ class BolusWizardTest : TestBaseWithProfile() {
     @Mock lateinit var loop: Loop
     @Mock lateinit var autosensDataStore: AutosensDataStore
     @Mock lateinit var processedDeviceStatusData: ProcessedDeviceStatusData
+    @Mock lateinit var openAPSSMBPlugin: OpenAPSSMBPlugin
 
     init {
         addInjector {
@@ -42,7 +45,7 @@ class BolusWizardTest : TestBaseWithProfile() {
                 it.loop = loop
                 it.dateUtil = dateUtil
                 it.iobCobCalculator = iobCobCalculator
-                it.glucoseStatusProvider = GlucoseStatusProviderImpl(aapsLogger, iobCobCalculator, dateUtil, decimalFormatter)
+                it.glucoseStatusProvider = GlucoseStatusProviderImpl(activePlugin)
                 it.profileUtil = profileUtil
                 it.config = config
                 it.processedDeviceStatusData = processedDeviceStatusData
@@ -50,6 +53,10 @@ class BolusWizardTest : TestBaseWithProfile() {
         }
     }
 
+    @BeforeEach
+    fun prepareMocking() {
+        Mockito.`when`(activePlugin.activeAPS).thenReturn(openAPSSMBPlugin)
+    }
     @Suppress("SameParameterValue")
     private fun setupProfile(targetLow: Double, targetHigh: Double, insulinSensitivityFactor: Double, insulinToCarbRatio: Double): Profile {
         val profile = Mockito.mock(Profile::class.java)

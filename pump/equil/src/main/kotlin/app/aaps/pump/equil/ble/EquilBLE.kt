@@ -427,16 +427,15 @@ class EquilBLE @Inject constructor(
         baseCmd?.resolvedResult = result
     }
 
-    val equilStatus: Unit
-        get() {
-            aapsLogger.debug(LTag.PUMPCOMM, "getEquilStatus====$startTrue====$isConnected")
-            if (startTrue || isConnected) {
-                return
-            }
-            autoScan = false
-            baseCmd = null
-            startScan()
+    fun checkEquilStatus() {
+        aapsLogger.debug(LTag.PUMPCOMM, "getEquilStatus====$startTrue====$isConnected")
+        if (startTrue || isConnected) {
+            return
         }
+        autoScan = false
+        baseCmd = null
+        startScan()
+    }
 
     private fun buildScanFilters(): List<ScanFilter> {
         val scanFilterList = ArrayList<ScanFilter>()

@@ -130,7 +130,7 @@ class InsulinDialog : DialogFragmentWithDate() {
         }
         val maxInsulin = constraintChecker.getMaxBolusAllowed().value()
 
-        if (loop.isDisconnected || pump.isSuspended() || !pump.isInitialized()) {
+        if (loop.runningMode.isSuspended() || !pump.isInitialized()) {
             binding.recordOnly.isChecked = true
             binding.recordOnly.isEnabled = false
             binding.recordOnly.setTextColor(rh.gac(app.aaps.core.ui.R.attr.warningColor))

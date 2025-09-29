@@ -81,7 +81,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humulin R®/\"обикновен\" човешки инсулин.</string>
     <string name="sensitivity_label">Плъгини за Чувствителност</string>
     <string name="sensitivity_adjust">Плъгините за чувствителност позволяват на AAPS да се коригира за временни или краткотрайни промени в инсулиновата чувствителност (например хормонални промени или проблеми с абсорбцията на мястото на инфузия).</string>
     <string name="sensitivity_edit">Плъгините за чувствителност предоставят на потребителя предложения за промени в базалните дози, съотношенията I:C и ISF, които могат да се използват за редактиране на профил.</string>
@@ -141,7 +140,7 @@
     <string name="ic_isf">Ако промените своя ISF във вашия профил, винаги трябва да промените и съотношението си I:C.</string>
     <string name="ic_label_exam">Съотношение на инсулин към въглехидрати (I:C)</string>
     <string name="ic_increasingvalue">По-високите стойности на I:C водят до по-малко инсулин доставени за дадено количество въглехидрати.</string>
-    <string name="ic_decreasingvalue">По-ниските стойности на I:C водят до повече инсулин доставен за дадено количество въглехидрати.</string>
+    <string name="ic_decreasingvalue">По-ниските стойности на I:C водят до по-малко инсулин, доставен за дадено количество въглехидрати.</string>
     <string name="profileswitch_label">Смяна на профил</string>
     <string name="profileswitch_pctwillchange">При превключване на 90% профил, кои отговори са верни?</string>
     <string name="profileswitch_basallower">Базалните нива ще бъдат с 10% по-ниски.</string>

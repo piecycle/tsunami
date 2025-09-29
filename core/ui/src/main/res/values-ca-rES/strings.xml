@@ -78,7 +78,6 @@
     <string name="loopisdisabled">Llaç desactivat</string>
     <string name="alarm">Alarma</string>
     <string name="disableloop">Desactivar llaç</string>
-    <string name="enableloop">Activar llaç</string>
     <string name="resumeloop">Reprendre llaç</string>
     <string name="suspendloop">Aturar el llaç</string>
     <string name="duration_min_label">Durada [min]</string>
@@ -135,7 +134,6 @@
     <string name="dia">DIA (Durada de l\'Acció de la Insulina)</string>
     <string name="ic_short">IC</string>
     <string name="isf_short">ISF</string>
-    <string name="suspendloop_label">Llaç desactivat/aturat</string>
     <string name="iob_label">Insulina \"a bord\" (IOB)</string>
     <!--    Protection-->
     <string name="wrongpassword">Contrasenya incorrecta</string>
@@ -240,7 +238,6 @@
     <string name="uel_lgs_loop_mode">MODE LLAÇ LGS</string>
     <string name="uel_open_loop_mode">MODE LLAÇ OBERT</string>
     <string name="uel_loop_disabled">LLAÇ DESACTIVAT</string>
-    <string name="uel_loop_enabled">LLAÇ ACTIVAT</string>
     <string name="uel_reconnect">RECONNECTAR</string>
     <string name="uel_disconnect">DESCONNECTAR</string>
     <string name="uel_resume">REPRENDRE</string>

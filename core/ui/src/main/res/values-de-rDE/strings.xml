@@ -90,7 +90,6 @@
     <string name="loopisdisabled">Loop ist deaktiviert.</string>
     <string name="alarm">Alarm</string>
     <string name="disableloop">Loop deaktivieren</string>
-    <string name="enableloop">Loop aktivieren</string>
     <string name="resumeloop">Loop fortsetzen</string>
     <string name="suspendloop">Loop pausieren</string>
     <string name="duration_min_label">Dauer [min]</string>
@@ -165,7 +164,6 @@
     <string name="canceling_tbr_failed">Abbruch der temporären Basalrate fehlgeschlagen</string>
     <string name="canceling_eb_failed">Der Abbruch des erweiterten Bolus ist fehlgeschlagen</string>
     <string name="virtualpump_uploadstatus_title">Status zu NS oder Tidepool hochladen</string>
-    <string name="suspendloop_label">Deaktiviere/Pausiere den Loop</string>
     <string name="iob_label">Aktives Insulin (IOB)</string>
     <string name="loopstatus_targets">ZIELE:</string>
     <string name="loopstatus_OAPS_result">OAPS ERGEBNIS:</string>
@@ -284,7 +282,6 @@
     <string name="uel_lgs_loop_mode">LGS LOOP MODE</string>
     <string name="uel_open_loop_mode">OPEN LOOP MODE</string>
     <string name="uel_loop_disabled">LOOP DEAKTIVIERT</string>
-    <string name="uel_loop_enabled">LOOP AKTIVIERT</string>
     <string name="uel_reconnect">ERNEUT VERBINDEN</string>
     <string name="uel_disconnect">VERBINDUNG TRENNEN</string>
     <string name="uel_resume">FORTFAHREN</string>

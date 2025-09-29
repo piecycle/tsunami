@@ -3,7 +3,6 @@ package app.aaps.plugins.automation.triggers
 import app.aaps.core.interfaces.aps.AutosensDataStore
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.receivers.ReceiverStatusStore
-import app.aaps.implementation.iob.GlucoseStatusProviderImpl
 import app.aaps.plugins.automation.AutomationPlugin
 import app.aaps.plugins.automation.services.LastLocationDataContainer
 import app.aaps.shared.tests.TestBaseWithProfile
@@ -36,7 +35,7 @@ open class TriggerTestBase : TestBaseWithProfile() {
                 it.persistenceLayer = persistenceLayer
                 it.activePlugin = activePlugin
                 it.iobCobCalculator = iobCobCalculator
-                it.glucoseStatusProvider = GlucoseStatusProviderImpl(aapsLogger, iobCobCalculator, dateUtil, decimalFormatter)
+                it.glucoseStatusProvider = smbGlucoseStatusProvider
                 it.dateUtil = dateUtil
                 it.profileUtil = profileUtil
             }

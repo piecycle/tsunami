@@ -81,7 +81,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog ®</string>
-    <string name="insulin_actrapid">Actrapid ®/Humalin R ®/\"reguljärt\" human-insulin.</string>
     <string name="sensitivity_label">Insticksprogram för känslighet</string>
     <string name="sensitivity_adjust">Insticksprogram för känslighet gör det möjligt för AAPS att justera för tillfälliga eller kortvariga förändringar i insulinkänsligheten (t. ex. hormonella förändringar eller problem med absorption vid infusionsstället).</string>
     <string name="sensitivity_edit">Insticksprogram för känslighet ger användaren föreslagna ändringar av basaldoser, KH-kvoter och ISF som kan användas för att redigera profilen.</string>

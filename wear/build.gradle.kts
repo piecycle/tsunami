@@ -12,8 +12,8 @@ plugins {
 }
 
 repositories {
-    google()
     mavenCentral()
+    google()
 }
 
 fun generateGitBuild(): String {

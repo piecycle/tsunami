@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.data.ue.Action
@@ -25,6 +27,7 @@ import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBase
+import app.aaps.core.interfaces.plugin.PluginBaseWithPreferences
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.ProfileSource
 import app.aaps.core.interfaces.protection.ProtectionCheck
@@ -36,18 +39,24 @@ import app.aaps.core.interfaces.rx.events.EventAppExit
 import app.aaps.core.interfaces.rx.events.EventAppInitialized
 import app.aaps.core.interfaces.rx.events.EventConfigBuilderChange
 import app.aaps.core.interfaces.rx.events.EventRebuildTabs
-import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.smoothing.Smoothing
 import app.aaps.core.interfaces.source.BgSource
 import app.aaps.core.interfaces.sync.NsClient
 import app.aaps.core.interfaces.ui.UiInteraction
-import app.aaps.core.keys.Preferences
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.ui.dialogs.OKDialog
+import app.aaps.core.ui.extensions.scanForActivity
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.plugins.configuration.R
 import app.aaps.plugins.configuration.configBuilder.events.EventConfigBuilderUpdateGui
 import app.aaps.plugins.configuration.databinding.ConfigbuilderSingleCategoryBinding
 import app.aaps.plugins.configuration.databinding.ConfigbuilderSinglePluginBinding
+import app.aaps.plugins.configuration.keys.ConfigurationBooleanComposedKey
+import app.aaps.plugins.configuration.keys.ConfigurationBooleanKey
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.system.exitProcess
@@ -56,8 +65,7 @@ import kotlin.system.exitProcess
 class ConfigBuilderPlugin @Inject constructor(
     aapsLogger: AAPSLogger,
     rh: ResourceHelper,
-    private val sp: SP,
-    private val preferences: Preferences,
+    preferences: Preferences,
     private val rxBus: RxBus,
     private val activePlugin: ActivePlugin,
     private val uel: UserEntryLogger,
@@ -65,8 +73,8 @@ class ConfigBuilderPlugin @Inject constructor(
     private val protectionCheck: ProtectionCheck,
     private val uiInteraction: UiInteraction,
     private val context: Context
-) : PluginBase(
-    PluginDescription()
+) : PluginBaseWithPreferences(
+    pluginDescription = PluginDescription()
         .mainType(PluginType.GENERAL)
         .fragmentClass(ConfigBuilderFragment::class.java.name)
         .alwaysEnabled(true)
@@ -74,8 +82,12 @@ class ConfigBuilderPlugin @Inject constructor(
         .pluginName(R.string.config_builder)
         .shortName(R.string.config_builder_shortname)
         .description(R.string.description_config_builder),
-    aapsLogger, rh
+    ownPreferences = listOf(ConfigurationBooleanKey::class.java, ConfigurationBooleanComposedKey::class.java),
+    aapsLogger, rh, preferences
 ), ConfigBuilder {
+
+    private val scope = CoroutineScope(Dispatchers.Default + Job())
+    private var expandAnimation: AnimationDrawable? = null
 
     override fun initialize() {
         loadSettings()
@@ -103,11 +115,13 @@ class ConfigBuilderPlugin @Inject constructor(
     }
 
     private fun savePref(p: PluginBase, type: PluginType) {
-        val settingEnabled = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Enabled"
-        sp.putBoolean(settingEnabled, p.isEnabled())
-        aapsLogger.debug(LTag.CONFIGBUILDER, "Storing: " + settingEnabled + ":" + p.isEnabled())
+        // val settingEnabled = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Enabled"
+        // sp.putBoolean(settingEnabled, p.isEnabled())
+        preferences.put(ConfigurationBooleanComposedKey.ConfigBuilderEnabled, type.name + "_" + p.javaClass.simpleName, value = p.isEnabled())
+        aapsLogger.debug(LTag.CONFIGBUILDER, "Storing: " + ConfigurationBooleanComposedKey.ConfigBuilderEnabled.composeKey(type.name + "_" + p.javaClass.simpleName) + ":" + p.isEnabled())
         val settingVisible = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Visible"
-        sp.putBoolean(settingVisible, p.isFragmentVisible())
+        //sp.putBoolean(settingVisible, p.isFragmentVisible())
+        preferences.put(ConfigurationBooleanComposedKey.ConfigBuilderVisible, type.name + "_" + p.javaClass.simpleName, value = p.isFragmentVisible())
         aapsLogger.debug(LTag.CONFIGBUILDER, "Storing: " + settingVisible + ":" + p.isFragmentVisible())
     }
 
@@ -121,18 +135,22 @@ class ConfigBuilderPlugin @Inject constructor(
     }
 
     private fun loadPref(p: PluginBase, type: PluginType) {
-        val settingEnabled = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Enabled"
-        if (sp.contains(settingEnabled)) p.setPluginEnabled(type, sp.getBoolean(settingEnabled, false))
+        // val settingEnabled = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Enabled"
+        // if (sp.contains(settingEnabled)) p.setPluginEnabled(type, sp.getBoolean(settingEnabled, false))
+        val existing = preferences.getIfExists(ConfigurationBooleanComposedKey.ConfigBuilderEnabled, type.name + "_" + p.javaClass.simpleName)
+        if (existing != null) p.setPluginEnabled(type, existing)
         else if (p.getType() == type && (p.pluginDescription.enableByDefault || p.pluginDescription.alwaysEnabled)) {
             p.setPluginEnabled(type, true)
         }
-        aapsLogger.debug(LTag.CONFIGBUILDER, "Loaded: " + settingEnabled + ":" + p.isEnabled(type))
-        val settingVisible = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Visible"
-        if (sp.contains(settingVisible)) p.setFragmentVisible(type, sp.getBoolean(settingVisible, false) && sp.getBoolean(settingEnabled, false))
+        aapsLogger.debug(LTag.CONFIGBUILDER, "Loaded: " + ConfigurationBooleanComposedKey.ConfigBuilderEnabled.composeKey(type.name + "_" + p.javaClass.simpleName) + ":" + p.isEnabled(type))
+        //val settingVisible = "ConfigBuilder_" + type.name + "_" + p.javaClass.simpleName + "_Visible"
+        //if (sp.contains(settingVisible)) p.setFragmentVisible(type, sp.getBoolean(settingVisible, false) && sp.getBoolean(settingEnabled, false))
+        val existingVisible = preferences.getIfExists(ConfigurationBooleanComposedKey.ConfigBuilderVisible, type.name + "_" + p.javaClass.simpleName)
+        if (existingVisible != null) p.setFragmentVisible(type, existingVisible)
         else if (p.getType() == type && p.pluginDescription.visibleByDefault) {
             p.setFragmentVisible(type, true)
         }
-        aapsLogger.debug(LTag.CONFIGBUILDER, "Loaded: " + settingVisible + ":" + p.isFragmentVisible())
+        aapsLogger.debug(LTag.CONFIGBUILDER, "Loaded: " + ConfigurationBooleanComposedKey.ConfigBuilderVisible.composeKey(type.name + "_" + p.javaClass.simpleName) + ":" + p.isFragmentVisible())
     }
 
     fun logPluginStatus() {
@@ -165,7 +183,7 @@ class ConfigBuilderPlugin @Inject constructor(
     }
 
     private fun confirmPumpPluginActivation(changedPlugin: PluginBase, newState: Boolean, activity: FragmentActivity, type: PluginType) {
-        val allowHardwarePump = sp.getBoolean("allow_hardware_pump", false)
+        val allowHardwarePump = preferences.get(ConfigurationBooleanKey.AllowHardwarePump)
         if (allowHardwarePump) {
             performPluginSwitch(changedPlugin, newState, type)
             pumpSync.connectNewPump()
@@ -173,7 +191,7 @@ class ConfigBuilderPlugin @Inject constructor(
             OKDialog.showConfirmation(activity, rh.gs(R.string.allow_hardware_pump_text), {
                 performPluginSwitch(changedPlugin, newState, type)
                 pumpSync.connectNewPump()
-                sp.putBoolean("allow_hardware_pump", true)
+                preferences.put(ConfigurationBooleanKey.AllowHardwarePump, true)
                 uel.log(
                     action = Action.HW_PUMP_ALLOWED,
                     source = Sources.ConfigBuilder,
@@ -189,27 +207,29 @@ class ConfigBuilderPlugin @Inject constructor(
     }
 
     override fun performPluginSwitch(changedPlugin: PluginBase, enabled: Boolean, type: PluginType) {
-        Thread {
-            if (enabled && !changedPlugin.isEnabled()) {
+        if (enabled && !changedPlugin.isEnabled()) {
+            scope.launch {
                 uel.log(
                     Action.PLUGIN_ENABLED, Sources.ConfigBuilder, rh.gs(changedPlugin.pluginDescription.pluginName),
                     ValueWithUnit.SimpleString(rh.gsNotLocalised(changedPlugin.pluginDescription.pluginName))
                 )
-            } else if (!enabled) {
+            }
+        } else if (!enabled) {
+            scope.launch {
                 uel.log(
                     Action.PLUGIN_DISABLED, Sources.ConfigBuilder, rh.gs(changedPlugin.pluginDescription.pluginName),
                     ValueWithUnit.SimpleString(rh.gsNotLocalised(changedPlugin.pluginDescription.pluginName))
                 )
             }
-            changedPlugin.setPluginEnabled(type, enabled)
-            changedPlugin.setFragmentVisible(type, enabled)
-            processOnEnabledCategoryChanged(changedPlugin, type)
-            storeSettings("RemoteConfiguration")
-            rxBus.send(EventRebuildTabs())
-            rxBus.send(EventConfigBuilderChange())
-            rxBus.send(EventConfigBuilderUpdateGui())
-            logPluginStatus()
-        }.start()
+        }
+        changedPlugin.setPluginEnabled(type, enabled)
+        changedPlugin.setFragmentVisible(type, enabled)
+        processOnEnabledCategoryChanged(changedPlugin, type)
+        storeSettings("RemoteConfiguration")
+        rxBus.send(EventRebuildTabs())
+        rxBus.send(EventConfigBuilderChange())
+        rxBus.send(EventConfigBuilderUpdateGui())
+        logPluginStatus()
     }
 
     override fun processOnEnabledCategoryChanged(changedPlugin: PluginBase, type: PluginType) {
@@ -252,7 +272,7 @@ class ConfigBuilderPlugin @Inject constructor(
         @StringRes description: Int,
         pluginType: PluginType,
         plugins: List<PluginBase>,
-        pluginViewHolders: ArrayList<ConfigBuilder.PluginViewHolderInterface>,
+        pluginViewHolders: ArrayList<ConfigBuilder.PluginViewHolderInterface>?,
         activity: FragmentActivity,
         parent: LinearLayout,
         showExpanded: Boolean
@@ -267,9 +287,14 @@ class ConfigBuilderPlugin @Inject constructor(
         else layout.categoryTitle.visibility = View.GONE
         layout.categoryVisibility.visibility = preferences.simpleMode.not().toVisibility()
         layout.categoryDescription.text = rh.gs(description)
+        expandAnimation = layout.categoryExpandMore.background as AnimationDrawable?
+        expandAnimation?.setEnterFadeDuration(200)
+        expandAnimation?.setExitFadeDuration(200)
+        if (expandAnimation?.isRunning == false)
+            expandAnimation?.start()
         layout.categoryExpandLess.setOnClickListener {
             layout.categoryExpandLess.visibility = false.toVisibility()
-            layout.categoryExpandMore.visibility = true.toVisibility()
+            layout.categoryExpandMore.visibility = (plugins.size > 1).toVisibility()
             pluginsAdded.forEach { pluginViewHolder ->
                 pluginViewHolder.layout.root.visibility = pluginViewHolder.plugin.isEnabled().toVisibility()
             }
@@ -282,9 +307,9 @@ class ConfigBuilderPlugin @Inject constructor(
             }
         }
         for (plugin in plugins) {
-            val pluginViewHolder = PluginViewHolder(layoutInflater, activity, pluginType, plugin)
+            val pluginViewHolder = PluginViewHolder(layoutInflater, pluginType, plugin)
             layout.categoryPlugins.addView(pluginViewHolder.layout.root)
-            pluginViewHolders.add(pluginViewHolder)
+            pluginViewHolders?.add(pluginViewHolder)
             pluginsAdded.add(pluginViewHolder)
         }
         if (showExpanded) layout.categoryExpandMore.callOnClick()
@@ -293,7 +318,6 @@ class ConfigBuilderPlugin @Inject constructor(
 
     inner class PluginViewHolder internal constructor(
         layoutInflater: LayoutInflater,
-        private val activity: FragmentActivity,
         private val pluginType: PluginType,
         val plugin: PluginBase
     ) : ConfigBuilder.PluginViewHolderInterface {
@@ -307,26 +331,32 @@ class ConfigBuilderPlugin @Inject constructor(
             }
 
             layout.pluginEnabledExclusive.setOnClickListener {
-                switchAllowed(plugin, if (layout.pluginEnabledExclusive.visibility == View.VISIBLE) layout.pluginEnabledExclusive.isChecked else layout.pluginEnabledInclusive.isChecked, activity, pluginType)
+                it.context.scanForActivity()?.let { activity ->
+                    switchAllowed(plugin, if (layout.pluginEnabledExclusive.isVisible) layout.pluginEnabledExclusive.isChecked else layout.pluginEnabledInclusive.isChecked, activity, pluginType)
+                }
             }
             layout.pluginEnabledInclusive.setOnClickListener {
-                switchAllowed(plugin, if (layout.pluginEnabledExclusive.visibility == View.VISIBLE) layout.pluginEnabledExclusive.isChecked else layout.pluginEnabledInclusive.isChecked, activity, pluginType)
+                it.context.scanForActivity()?.let { activity ->
+                    switchAllowed(plugin, if (layout.pluginEnabledExclusive.isVisible) layout.pluginEnabledExclusive.isChecked else layout.pluginEnabledInclusive.isChecked, activity, pluginType)
+                }
             }
 
             layout.pluginPreferences.setOnClickListener {
-                protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREFERENCES, {
-                    val i = Intent(activity, uiInteraction.preferencesActivity)
-                    i.putExtra(UiInteraction.PLUGIN_NAME, plugin.javaClass.simpleName)
-                    activity.startActivity(i)
-                }, null)
+                it.context.scanForActivity()?.let { activity ->
+                    protectionCheck.queryProtection(activity, ProtectionCheck.Protection.PREFERENCES, {
+                        val i = Intent(activity, uiInteraction.preferencesActivity)
+                        i.putExtra(UiInteraction.PLUGIN_NAME, plugin.javaClass.simpleName)
+                        activity.startActivity(i)
+                    }, null)
+                }
             }
         }
 
         init {
-            update()
+            update(layoutInflater.context)
         }
 
-        override fun update() {
+        override fun update(context: Context) {
             layout.pluginEnabledExclusive.visibility = areMultipleSelectionsAllowed(pluginType).not().toVisibility()
             layout.pluginEnabledInclusive.visibility = areMultipleSelectionsAllowed(pluginType).toVisibility()
             layout.pluginEnabledExclusive.isChecked = plugin.isEnabled(pluginType)
@@ -335,10 +365,10 @@ class ConfigBuilderPlugin @Inject constructor(
             layout.pluginEnabledExclusive.isEnabled = !plugin.pluginDescription.alwaysEnabled
             if (plugin.menuIcon != -1) {
                 layout.pluginIcon.visibility = View.VISIBLE
-                layout.pluginIcon.setImageDrawable(ContextCompat.getDrawable(activity, plugin.menuIcon))
+                layout.pluginIcon.setImageDrawable(ContextCompat.getDrawable(context, plugin.menuIcon))
                 if (plugin.menuIcon2 != -1) {
                     layout.pluginIcon2.visibility = View.VISIBLE
-                    layout.pluginIcon2.setImageDrawable(ContextCompat.getDrawable(activity, plugin.menuIcon2))
+                    layout.pluginIcon2.setImageDrawable(ContextCompat.getDrawable(context, plugin.menuIcon2))
                 } else {
                     layout.pluginIcon2.visibility = View.GONE
                 }

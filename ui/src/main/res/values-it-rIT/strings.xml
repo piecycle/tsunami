@@ -137,6 +137,8 @@
     <!--    Widget-->
     <string name="use_black_color">Usa colore nero</string>
     <string name="widget_configuration">Configurazione widget</string>
+    <string name="until_changed">Fino a Modifica</string>
+    <string name="limitations">Limitazioni</string>
     <string-array name="yes_no_positiveonly_negativeonly">
         <item>Entrambi</item>
         <item>Solo positivo</item>

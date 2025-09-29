@@ -33,11 +33,11 @@ import javax.inject.Inject
 class ResourceHelperImpl @Inject constructor(var context: Context, private val fabricPrivacy: FabricPrivacy) : ResourceHelper {
 
     override fun gs(@StringRes id: Int): String =
-        context.createConfigurationContext(Configuration().apply { setLocale(LocaleHelper.currentLocale(context)) }).resources.getString(id)
+        context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(LocaleHelper.currentLocale(context)) }).resources.getString(id)
 
     override fun gs(@StringRes id: Int, vararg args: Any?): String {
         return try {
-            context.createConfigurationContext(Configuration().apply { setLocale(LocaleHelper.currentLocale(context)) }).resources.getString(id, *args)
+            context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(LocaleHelper.currentLocale(context)) }).resources.getString(id, *args)
         } catch (exception: Exception) {
             val resourceName = context.resources.getResourceEntryName(id)
             val resourceValue = context.getString(id)

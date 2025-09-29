@@ -137,6 +137,8 @@
     <!--    Widget-->
     <string name="use_black_color">Použiť čiernu farbu</string>
     <string name="widget_configuration">Konfiguráciu widgetu</string>
+    <string name="until_changed">Dokiaľ sa nezmení</string>
+    <string name="limitations">Obmedzenia</string>
     <string-array name="yes_no_positiveonly_negativeonly">
         <item>Oba</item>
         <item>Iba kladné</item>

@@ -67,7 +67,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humalin R®/insulina humana \"estàndard\".</string>
     <string name="sensitivity_label">Plugins de sensibilitat</string>
     <string name="wrongcarbs_label">Errors d\'entrada de carbohidrats</string>
     <string name="wrongcarbs_whattodo">Què cal fer si feu una entrada incorrecta de carbohidrats?</string>

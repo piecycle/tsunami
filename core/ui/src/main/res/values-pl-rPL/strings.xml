@@ -91,7 +91,6 @@
     <string name="alarm">Alarm</string>
     <string name="exportsettings">Eksport ustawień</string>
     <string name="disableloop">Wyłącz pętle</string>
-    <string name="enableloop">Włącz pętle</string>
     <string name="resumeloop">Wznów pętlę</string>
     <string name="suspendloop">Wstrzymaj pętle</string>
     <string name="duration_min_label">Czas trwania [min]</string>
@@ -167,7 +166,6 @@
     <string name="canceling_tbr_failed">Anulowanie bazy tymczasowej nie powiodło się</string>
     <string name="canceling_eb_failed">Anulowanie przedłużonego bolusa nie powiodło się</string>
     <string name="virtualpump_uploadstatus_title">Prześlij status pompy do NS lub Tidepool</string>
-    <string name="suspendloop_label">Wyłączona/zawieszona pętla</string>
     <string name="iob_label">Aktywna insulina (IOB)</string>
     <string name="loopstatus_targets">CELE:</string>
     <string name="loopstatus_OAPS_result">WYNIK OAPS:</string>
@@ -297,7 +295,6 @@
     <string name="uel_lgs_loop_mode">TRYB ZAWIESZENIA PRZY NISKIEJ GLIKEMI (LGS)</string>
     <string name="uel_open_loop_mode">TRYB OTWARTEJ PĘTLI</string>
     <string name="uel_loop_disabled">PĘTLA WYŁĄCZONA</string>
-    <string name="uel_loop_enabled">PĘTLA WŁĄCZONA</string>
     <string name="uel_reconnect">POŁĄCZ PONOWNIE</string>
     <string name="uel_disconnect">ROZŁĄCZ</string>
     <string name="uel_resume">WZNÓW</string>

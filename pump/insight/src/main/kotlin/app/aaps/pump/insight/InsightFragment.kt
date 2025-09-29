@@ -93,7 +93,7 @@ class InsightFragment : DaggerFragment(), View.OnClickListener {
                     when (insightPlugin.operatingMode) {
                         OperatingMode.PAUSED, OperatingMode.STOPPED -> commandQueue.startPump(operatingModeCallback)
                         OperatingMode.STARTED                       -> commandQueue.stopPump(operatingModeCallback)
-                        null                                        -> Unit
+                        else                                        -> Unit
                     }
                 }
             }
@@ -238,7 +238,7 @@ class InsightFragment : DaggerFragment(), View.OnClickListener {
                 string = app.aaps.core.ui.R.string.paused
             }
 
-            null                  -> Unit
+            else                  -> Unit
         }
         binding.operatingModeLine.visibility = View.VISIBLE
         binding.operatingMode.text = rh.gs(string)

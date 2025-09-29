@@ -4,6 +4,7 @@
     <string name="pump_driver_changed" comment="26 characters max for translation">Драйвер помпы изменен.</string>
     <!--    DateUtil-->
     <string name="minago">%1$d мин. назад</string>
+    <string name="secago">%1$d сек назад</string>
     <string name="minago_long">%1$d минут назад</string>
     <string name="hoursago">%1$.1fч. назад</string>
     <string name="days_ago">%1$s дн назад</string>
@@ -69,4 +70,5 @@
     <string name="temp_basal_absolute_rate">%1$.2f ед/ч @%2$s %3$d/%4$d\'</string>
     <string name="temp_basal_percent_rate">%1$.2f ед/ч @%2$s %3$d/%4$d\'</string>
     <string name="temp_basal_extended_bolus">E %1$.2f ед/ч @%2$s %3$d/%4$d мин</string>
+    <string name="forever">Навсегда</string>
 </resources>

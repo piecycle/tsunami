@@ -7,7 +7,7 @@ import app.aaps.core.data.model.EB
 import app.aaps.core.data.model.FD
 import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.model.IDs
-import app.aaps.core.data.model.OE
+import app.aaps.core.data.model.RM
 import app.aaps.core.data.model.TB
 import app.aaps.core.data.model.TE
 import app.aaps.core.data.model.TT
@@ -31,8 +31,8 @@ import app.aaps.core.interfaces.rx.events.EventExtendedBolusChange
 import app.aaps.core.interfaces.rx.events.EventFoodDatabaseChanged
 import app.aaps.core.interfaces.rx.events.EventNewBG
 import app.aaps.core.interfaces.rx.events.EventNewHistoryData
-import app.aaps.core.interfaces.rx.events.EventOfflineChange
 import app.aaps.core.interfaces.rx.events.EventProfileSwitchChanged
+import app.aaps.core.interfaces.rx.events.EventRunningModeChange
 import app.aaps.core.interfaces.rx.events.EventTempBasalChange
 import app.aaps.core.interfaces.rx.events.EventTempTargetChange
 import app.aaps.core.interfaces.rx.events.EventTherapyEventChange
@@ -96,7 +96,7 @@ class CompatDbHelperTest @Inject constructor() {
         rxHelper.listen(EventTempTargetChange::class.java)
         rxHelper.listen(EventTherapyEventChange::class.java)
         rxHelper.listen(EventFoodDatabaseChanged::class.java)
-        rxHelper.listen(EventOfflineChange::class.java)
+        rxHelper.listen(EventRunningModeChange::class.java)
         rxHelper.listen(EventDeviceStatusChange::class.java)
 
         // Enable event logging
@@ -266,16 +266,16 @@ class CompatDbHelperTest @Inject constructor() {
         // EventFoodDatabaseChanged should be triggered
         assertThat(rxHelper.waitFor(EventFoodDatabaseChanged::class.java, comment = "step13").first).isTrue()
 
-        // OE
-        rxHelper.resetState(EventOfflineChange::class.java)
-        val oe = OE(
+        // RM
+        rxHelper.resetState(EventRunningModeChange::class.java)
+        val rm = RM(
             timestamp = dateUtil.now(),
-            reason = OE.Reason.OTHER,
+            mode = RM.Mode.DISCONNECTED_PUMP,
             duration = T.hours(1).msecs()
         )
-        persistenceLayer.insertAndCancelCurrentOfflineEvent(oe, Action.DISCONNECT, Sources.Aaps, null, listOf()).blockingGet()
+        persistenceLayer.insertOrUpdateRunningMode(rm, Action.DISCONNECT, Sources.Aaps, null, listOf()).blockingGet()
         // EventOfflineChange should be triggered
-        assertThat(rxHelper.waitFor(EventOfflineChange::class.java, comment = "step13").first).isTrue()
+        assertThat(rxHelper.waitFor(EventRunningModeChange::class.java, comment = "step13").first).isTrue()
 
         // DS
         rxHelper.resetState(EventDeviceStatusChange::class.java)

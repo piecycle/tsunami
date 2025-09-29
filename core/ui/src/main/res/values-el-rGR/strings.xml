@@ -89,7 +89,6 @@
     <string name="loopisdisabled">Κύκλωμα απενεργοποιημένο</string>
     <string name="alarm">Συναγερμός</string>
     <string name="disableloop">Απενεργοποιήστε κύκλωμα</string>
-    <string name="enableloop">Ενεργοποιήστε κύκλωμα</string>
     <string name="resumeloop">Επαναφορά κυκλώματος</string>
     <string name="suspendloop">Αναστολή κυκλώματος</string>
     <string name="duration_min_label">Διάρκεια [min]</string>
@@ -164,7 +163,6 @@
     <string name="canceling_tbr_failed">Απέτυχε η Ακύρωση Προσωρινού Ρυθμού</string>
     <string name="canceling_eb_failed">Η ακύρωση της εκτεταμένης δόσης bolus απέτυχε</string>
     <string name="virtualpump_uploadstatus_title">Φόρτωση κατάστασης αντλίας στο NS ή στο Tidepool</string>
-    <string name="suspendloop_label">Απενεργοποιημένο/Αναστολή κυκλώματος</string>
     <string name="iob_label">Ενεργή Ινσουλίνη (IOB)</string>
     <!--    Protection-->
     <string name="wrongpassword">Λάθος κωδικός</string>
@@ -281,7 +279,6 @@
     <string name="uel_lgs_loop_mode">ΛΕΙΤΟΥΡΓΙΑ ΚΥΚΛΩΜΑΤΟΣ LGS</string>
     <string name="uel_open_loop_mode">ΛΕΙΤΟΥΡΓΙΑ ΑΝΟΙΚΤΟΥ ΚΥΚΛΩΜΑΤΟΣ</string>
     <string name="uel_loop_disabled">ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ ΚΥΚΛΩΜΑΤΟΣ</string>
-    <string name="uel_loop_enabled">ΕΝΕΡΓΟΠΟΙΗΣΗ ΚΥΚΛΩΜΑΤΟΣ</string>
     <string name="uel_reconnect">ΕΝΑΝΑΣΥΝΔΕΣΗ</string>
     <string name="uel_disconnect">ΑΠΟΣΥΝΔΕΣΗ</string>
     <string name="uel_resume">ΕΠΑΝΑΦΟΡΑ</string>

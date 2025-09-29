@@ -137,6 +137,8 @@
     <!--    Widget-->
     <string name="use_black_color">使用黑色</string>
     <string name="widget_configuration">小工具設定</string>
+    <string name="until_changed">直到更改</string>
+    <string name="limitations">限制</string>
     <string-array name="yes_no_positiveonly_negativeonly">
         <item>兩者皆是</item>
         <item>僅正值</item>

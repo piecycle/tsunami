@@ -97,7 +97,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humalin R®/\"regular\" menselijke insuline.</string>
     <string name="insulin_hint1">https://wiki.aaps.app/nl/latest/Configuration/Config-Builder.html#insuline</string>
     <string name="sensitivity_label">Gevoeligheidsplugins</string>
     <string name="sensitivity_adjust">Gevoeligheidsplugins stellen AndroidAPS in staat om aan te passen aan tijdelijke of kortstondige veranderingen in insulinegevoeligheid (bijvoorbeeld hormonale veranderingen of problemen met insuline-opname bij de infuusplaats).</string>

@@ -22,9 +22,11 @@ import app.aaps.core.interfaces.rx.events.EventTempBasalChange
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.extensions.toStringFull
 import app.aaps.pump.virtual.databinding.VirtualPumpFragmentBinding
 import app.aaps.pump.virtual.events.EventVirtualPumpUpdateGui
+import app.aaps.pump.virtual.keys.VirtualBooleanNonPreferenceKey
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -41,6 +43,7 @@ class VirtualPumpFragment : DaggerFragment() {
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var decimalFormatter: DecimalFormatter
     @Inject lateinit var persistenceLayer: PersistenceLayer
+    @Inject lateinit var preferences: Preferences
 
     private val disposable = CompositeDisposable()
 
@@ -76,6 +79,9 @@ class VirtualPumpFragment : DaggerFragment() {
             handler.postDelayed(refreshLoop, T.mins(1).msecs())
         }
         handler.postDelayed(refreshLoop, T.mins(1).msecs())
+
+        binding.pumpSuspended.isChecked = preferences.get(VirtualBooleanNonPreferenceKey.IsSuspended)
+        binding.pumpSuspended.setOnClickListener { preferences.put(VirtualBooleanNonPreferenceKey.IsSuspended, binding.pumpSuspended.isChecked) }
         updateGui()
     }
 

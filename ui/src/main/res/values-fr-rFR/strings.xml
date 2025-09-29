@@ -137,6 +137,8 @@
     <!--    Widget-->
     <string name="use_black_color">Utiliser la couleur noire</string>
     <string name="widget_configuration">Configuration du widget</string>
+    <string name="until_changed">Jusqu\'à nouvel ordre</string>
+    <string name="limitations">Limitations</string>
     <string-array name="yes_no_positiveonly_negativeonly">
         <item>Les deux</item>
         <item>Positif uniquement</item>

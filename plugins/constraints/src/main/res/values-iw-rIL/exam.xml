@@ -84,7 +84,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humalin R®/ אינסולין אנושי \"רגיל\".</string>
     <string name="sensitivity_label">תוספי רגישות</string>
     <string name="sensitivity_adjust">תוספי רגישות מאפשרים ל-AndroidAPS לפצות על שינויים זמניים או קצרים ברגישות לאינסולין (לדוגמה משינויים הורמונליים או בעיות עם קליטה באתר העירוי).</string>
     <string name="sensitivity_edit">תוספי רגישות מספקים למשתמש הצעות לשינויים למינוני הבזאלי, יחסי התיקון והפחמימות, שאיתם ניתן לערוך את הפרופיל.</string>

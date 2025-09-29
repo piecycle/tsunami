@@ -89,7 +89,6 @@
     <string name="loopisdisabled">Loop er deaktiveret</string>
     <string name="alarm">Alarm</string>
     <string name="disableloop">Deaktivér loop</string>
-    <string name="enableloop">Aktiver loop</string>
     <string name="resumeloop">Genoptag loop</string>
     <string name="suspendloop">Suspendér Loop</string>
     <string name="duration_min_label">Varighed [min]</string>
@@ -164,7 +163,6 @@
     <string name="canceling_tbr_failed">Annullering af midlertidig basal mislykkedes</string>
     <string name="canceling_eb_failed">Annullering af forlænget bolus mislykkedes</string>
     <string name="virtualpump_uploadstatus_title">Upload pumpestatus til NS eller Tidepool</string>
-    <string name="suspendloop_label">Deaktiveret/Suspendéret Loop</string>
     <string name="iob_label">Insulin om bord (IOB)</string>
     <!--    Protection-->
     <string name="wrongpassword">Forkert kodeord</string>
@@ -281,7 +279,6 @@
     <string name="uel_lgs_loop_mode">LGS LOOP MODUS</string>
     <string name="uel_open_loop_mode">ÅBEN LOOP MODUS</string>
     <string name="uel_loop_disabled">LOOP DEAKTIVERET</string>
-    <string name="uel_loop_enabled">LOOP AKTIVERET</string>
     <string name="uel_reconnect">GENFORBIND</string>
     <string name="uel_disconnect">AFBRYD</string>
     <string name="uel_resume">FORTSÆT</string>

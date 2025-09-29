@@ -137,6 +137,8 @@
     <!--    Widget-->
     <string name="use_black_color">Bruk svart farge</string>
     <string name="widget_configuration">Widget konfigurasjon</string>
+    <string name="until_changed">Inntil endret</string>
+    <string name="limitations">Begrensninger</string>
     <string-array name="yes_no_positiveonly_negativeonly">
         <item>Begge</item>
         <item>Kun positiv</item>

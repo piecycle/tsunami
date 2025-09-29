@@ -81,7 +81,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humalin R®/\"regular\" ανθρώπινη ινσουλίνη.</string>
     <string name="sensitivity_label">Πρόσθετα Ευαισθησίας</string>
     <string name="sensitivity_adjust">Τα πρόσθετα ευαισθησίας επιτρέπουν την προσαρμογή του AAPS σε προσωρινές ή βραχύβιες αλλαγές στην ευαισθησία στην ινσουλίνη (για παράδειγμα ορμονικές αλλαγές ή ζητήματα απορρόφησης στο σημείο έγχυσης).</string>
     <string name="sensitivity_edit">Τα πρόσθετα ευαισθησίας προτείνουν στο χρήστη αλλαγές στον βασικό ρυθμό, τις αναλογίες I:C και ISF και μπορούν να χρησιμοποιηθούν στην επεξεργασία του προφίλ σας.</string>

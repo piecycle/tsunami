@@ -4,16 +4,18 @@ import android.content.Context
 import android.os.PowerManager
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import kotlinx.datetime.Clock
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * Created by andy on 3/5/19.
  * Adapted by dlvoy on 2019-11-06 using code from jamorham JoH class
  */
 @Singleton
-open class WearUtil @Inject constructor(
+open class WearUtil @OptIn(ExperimentalTime::class)
+@Inject constructor(
     private val context: Context,
     private val aapsLogger: AAPSLogger,
     private val clock: Clock,
@@ -25,6 +27,7 @@ open class WearUtil @Inject constructor(
     //==============================================================================================
     // Time related util methods
     //==============================================================================================
+    @OptIn(ExperimentalTime::class)
     open fun timestamp(): Long {
         return clock.now().toEpochMilliseconds()
     }

@@ -1,7 +1,7 @@
 package app.aaps.core.data.ue
 
 import app.aaps.core.data.model.GlucoseUnit
-import app.aaps.core.data.model.OE
+import app.aaps.core.data.model.RM
 import app.aaps.core.data.model.TE
 import app.aaps.core.data.model.TT
 
@@ -37,7 +37,7 @@ sealed class ValueWithUnit {          //I use a sealed class because of StringRe
 
     data class TETTReason(val value: TT.Reason) : ValueWithUnit()
 
-    data class OEReason(val value: OE.Reason) : ValueWithUnit()
+    data class RMMode(val value: RM.Mode) : ValueWithUnit()
     companion object {
 
         fun fromGlucoseUnit(value: Double, glucoseUnit: GlucoseUnit): ValueWithUnit =
@@ -45,14 +45,5 @@ sealed class ValueWithUnit {          //I use a sealed class because of StringRe
                 GlucoseUnit.MGDL -> Mgdl(value)
                 GlucoseUnit.MMOL -> Mmoll(value)
             }
-
-        /*
-                fun fromGlucoseUnit(value: Double, string: String): ValueWithUnit? =
-                    when (string) {
-                        GlucoseUnit.MGDL.asText, "mgdl"   -> Mgdl(value)
-                        GlucoseUnit.MMOL.asText, "mmol/l" -> Mmoll(value)
-                        else                              -> null
-                    }
-        */
     }
 }

@@ -1,7 +1,6 @@
 package app.aaps.activities
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -26,8 +25,8 @@ import app.aaps.core.interfaces.rx.events.EventUpdateOverviewGraph
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.interfaces.workflow.CalculationWorkflow
-import app.aaps.core.keys.Preferences
 import app.aaps.core.keys.UnitDoubleKey
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.ui.activities.TranslatedDaggerAppCompatActivity
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.extensions.toVisibilityKeepSpace
@@ -35,18 +34,17 @@ import app.aaps.databinding.ActivityHistorybrowseBinding
 import app.aaps.plugins.main.general.overview.graphData.GraphData
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.jjoe64.graphview.GraphView
-import dagger.android.HasAndroidInjector
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import java.util.Calendar
 import java.util.GregorianCalendar
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.math.min
 
 class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
 
     @Inject lateinit var historyBrowserData: HistoryBrowserData
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var preferences: Preferences
     @Inject lateinit var activePlugin: ActivePlugin
@@ -54,12 +52,12 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
     @Inject lateinit var fabricPrivacy: FabricPrivacy
     @Inject lateinit var overviewMenus: OverviewMenus
     @Inject lateinit var dateUtil: DateUtil
-    @Inject lateinit var context: Context
     @Inject lateinit var calculationWorkflow: CalculationWorkflow
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var profileUtil: ProfileUtil
+    @Inject lateinit var graphDataProvider: Provider<GraphData>
 
     private val disposable = CompositeDisposable()
 
@@ -160,6 +158,8 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
     @Synchronized
     override fun onDestroy() {
         destroyed = true
+        secondaryGraphs.clear()
+        secondaryGraphsLabel.clear()
         super.onDestroy()
     }
 
@@ -216,7 +216,7 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
             // rebuild needed
             secondaryGraphs.clear()
             secondaryGraphsLabel.clear()
-            binding.iobGraph.removeAllViews()
+            binding.secondaryGraphs.removeAllViews()
             (1 until numOfGraphs).forEach { i ->
                 val relativeLayout = RelativeLayout(this)
                 relativeLayout.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -239,7 +239,7 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
                 relativeLayout.addView(label)
                 secondaryGraphsLabel.add(label)
 
-                binding.iobGraph.addView(relativeLayout)
+                binding.secondaryGraphs.addView(relativeLayout)
                 secondaryGraphs.add(graph)
             }
         }
@@ -304,7 +304,7 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
         updateDate()
         binding.scaleButton.text = overviewMenus.scaleString(rangeToDisplay)
         val pump = activePlugin.activePump
-        val graphData = GraphData(injector, binding.bgGraph, historyBrowserData.overviewData)
+        val graphData = graphDataProvider.get().with(binding.bgGraph, historyBrowserData.overviewData)
         val menuChartSettings = overviewMenus.setting
         graphData.addInRangeArea(
             historyBrowserData.overviewData.fromTime, historyBrowserData.overviewData.endTime,
@@ -313,10 +313,10 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
         )
         if (menuChartSettings[0][OverviewMenus.CharType.TSU.ordinal])
             graphData.addTsunamiArea()
-        graphData.addBgReadings(menuChartSettings[0][OverviewMenus.CharType.PRE.ordinal], context)
+        graphData.addBgReadings(menuChartSettings[0][OverviewMenus.CharType.PRE.ordinal], this)
         graphData.addBucketedData()
-        graphData.addTreatments(context)
-        graphData.addEps(context, 0.95)
+        graphData.addTreatments(this)
+        graphData.addEps(this, 0.95)
         if (menuChartSettings[0][OverviewMenus.CharType.TREAT.ordinal])
             graphData.addTherapyEvents()
         if (menuChartSettings[0][OverviewMenus.CharType.ACT.ordinal])
@@ -324,6 +324,7 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
         if (pump.pumpDescription.isTempBasalCapable && menuChartSettings[0][OverviewMenus.CharType.BAS.ordinal])
             graphData.addBasals()
         graphData.addTargetLine()
+        graphData.addRunningModes()
         graphData.addNowLine(dateUtil.now())
 
         // set manual x bounds to have nice steps
@@ -338,7 +339,7 @@ class HistoryBrowseActivity : TranslatedDaggerAppCompatActivity() {
 
         val now = System.currentTimeMillis()
         for (g in 0 until min(secondaryGraphs.size, menuChartSettings.size + 1)) {
-            val secondGraphData = GraphData(injector, secondaryGraphs[g], historyBrowserData.overviewData)
+            val secondGraphData = graphDataProvider.get().with(secondaryGraphs[g], historyBrowserData.overviewData)
             var useABSForScale = false
             var useIobForScale = false
             var useCobForScale = false

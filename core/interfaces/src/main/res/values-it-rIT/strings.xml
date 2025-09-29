@@ -4,6 +4,7 @@
     <string name="pump_driver_changed" comment="26 characters max for translation">Driver micro cambiato.</string>
     <!--    DateUtil-->
     <string name="minago">%1$d m fa</string>
+    <string name="secago">%1$d s fa</string>
     <string name="minago_long">%1$d minuti fa</string>
     <string name="hoursago">%1$.1f h fa</string>
     <string name="days_ago">%1$.1f giorni fa</string>
@@ -69,4 +70,5 @@
     <string name="temp_basal_absolute_rate">%1$.2f U/h @%2$s %3$d/%4$d\'</string>
     <string name="temp_basal_percent_rate">%1$.2f%% @%2$s %3$d/%4$d\'</string>
     <string name="temp_basal_extended_bolus">E %1$.2f U/h @%2$s %3$d/%4$d min</string>
+    <string name="forever">Sempre</string>
 </resources>

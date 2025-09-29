@@ -1,12 +1,9 @@
 package app.aaps.plugins.constraints.objectives
 
-import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.constraints.Objectives
-import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.resources.ResourceHelper
-import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.utils.DateUtil
-import app.aaps.core.keys.Preferences
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.plugins.constraints.R
 import app.aaps.plugins.constraints.objectives.objectives.Objective
@@ -22,18 +19,14 @@ import org.mockito.Mockito.`when`
 class ObjectivesPluginTest : TestBase() {
 
     @Mock lateinit var rh: ResourceHelper
-    @Mock lateinit var activePlugin: ActivePlugin
-    @Mock lateinit var sp: SP
     @Mock lateinit var preferences: Preferences
     @Mock lateinit var dateUtil: DateUtil
-    @Mock lateinit var config: Config
 
     private lateinit var objectivesPlugin: ObjectivesPlugin
 
     private val injector = HasAndroidInjector {
         AndroidInjector {
             if (it is Objective) {
-                it.sp = sp
                 it.preferences = preferences
                 it.rh = rh
                 it.dateUtil = dateUtil
@@ -42,10 +35,12 @@ class ObjectivesPluginTest : TestBase() {
     }
 
     @BeforeEach fun prepareMock() {
-        objectivesPlugin = ObjectivesPlugin(injector, aapsLogger, rh, sp)
+        objectivesPlugin = ObjectivesPlugin(injector, aapsLogger, rh, preferences)
+        objectivesPlugin.onStart()
         `when`(rh.gs(R.string.objectivenotstarted, 9)).thenReturn("Objective 9 not started")
         `when`(rh.gs(R.string.objectivenotstarted, 8)).thenReturn("Objective 8 not started")
-        `when`(rh.gs(R.string.objectivenotstarted, 6)).thenReturn("Objective 6 not started")
+        `when`(rh.gs(R.string.objectivenotfinished, 6)).thenReturn("Objective 6 not finished")
+        `when`(rh.gs(R.string.objectivenotstarted, 7)).thenReturn("Objective 7 not started")
         `when`(rh.gs(R.string.objectivenotstarted, 1)).thenReturn("Objective 1 not started")
     }
 
@@ -57,10 +52,18 @@ class ObjectivesPluginTest : TestBase() {
         objectivesPlugin.objectives[Objectives.FIRST_OBJECTIVE].startedOn = dateUtil.now()
     }
 
+    @Test fun notStartedObjective5ShouldForceLgs() {
+        objectivesPlugin.objectives[Objectives.LGS_OBJECTIVE].startedOn = 1
+        objectivesPlugin.objectives[Objectives.LGS_OBJECTIVE].accomplishedOn = 0
+        val c = objectivesPlugin.isLgsForced(ConstraintObject(false, aapsLogger))
+        assertThat(c.getReasons()).contains("Objective 6 not finished")
+        assertThat(c.value()).isTrue()
+    }
+
     @Test fun notStartedObjective6ShouldLimitClosedLoop() {
-        objectivesPlugin.objectives[Objectives.MAXIOB_ZERO_CL_OBJECTIVE].startedOn = 0
+        objectivesPlugin.objectives[Objectives.CLOSED_LOOP_OBJECTIVE].startedOn = 0
         val c = objectivesPlugin.isClosedLoopAllowed(ConstraintObject(true, aapsLogger))
-        assertThat(c.getReasons()).contains("Objective 6 not started")
+        assertThat(c.getReasons()).contains("Objective 7 not started")
         assertThat(c.value()).isFalse()
     }
 

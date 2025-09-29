@@ -62,7 +62,7 @@ object ToastUtils {
             lastToast?.cancel()
             lastToast = Toast(ctx)
             lastToast?.duration = if (isShort) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
-            @Suppress("deprecation")
+            // This is causing memory leak. Migrate to [Snackbar]
             lastToast?.view = toastRoot
             lastToast?.show()
         }

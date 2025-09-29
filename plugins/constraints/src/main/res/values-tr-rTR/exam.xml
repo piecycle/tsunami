@@ -97,7 +97,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humulin R®/ insan insülini.</string>
     <string name="insulin_hint1">https://wiki.aaps.app/en/latest/SettingUpAaps/ConfigBuilder.html#insulin</string>
     <string name="sensitivity_label">Duyarlılık Eklentileri</string>
     <string name="sensitivity_adjust">Duyarlılık eklentileri, AAPS\'nin insülin duyarlılığındaki geçici veya kısa süreli değişiklikleri (örneğin hormonal değişiklikler veya infüzyon bölgesinde emilim sorunları) ayarlamasına olanak tanır.</string>

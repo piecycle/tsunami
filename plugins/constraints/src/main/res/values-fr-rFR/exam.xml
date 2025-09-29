@@ -97,7 +97,7 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid®/Novolog®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid®/Humalin R®/Insuline humaine \"Normale\".</string>
+    <string name="insulin_actrapid">Actrapid®/Humulin R®/insuline humaine rapide.</string>
     <string name="insulin_hint1">https://wiki.aaps.app/fr/latest/SettingUpAaps/ConfigBuilder.html#insulin</string>
     <string name="sensitivity_label">Plugins de Sensibilité</string>
     <string name="sensitivity_adjust">Les plugins de sensibilité permettent à AAPS de s\'adapter aux changements temporaires ou de courte durée de la sensibilité à l\'insuline (par ex. changements hormonaux ou problèmes d\'absorption sur le site d\'infusion).</string>

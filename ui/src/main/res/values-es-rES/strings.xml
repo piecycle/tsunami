@@ -137,6 +137,8 @@
     <!--    Widget-->
     <string name="use_black_color">Usar modo oscuro</string>
     <string name="widget_configuration">Configuración del Widget</string>
+    <string name="until_changed">Hasta el cambio</string>
+    <string name="limitations">Limitaciones</string>
     <string-array name="yes_no_positiveonly_negativeonly">
         <item>Ambos</item>
         <item>Sólo positivo</item>

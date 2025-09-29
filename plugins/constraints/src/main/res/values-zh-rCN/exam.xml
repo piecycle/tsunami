@@ -62,7 +62,6 @@
     <string name="insulin_fiasp">Fiasp®速效门冬胰岛素(超速效)</string>
     <string name="insulin_novorapid">诺和锐®/门冬胰岛素®</string>
     <string name="insulin_humalog">优泌乐®赖脯胰岛素</string>
-    <string name="insulin_actrapid">诺和灵®/优泌林 R®/\"常规\"人胰岛素</string>
     <string name="sensitivity_label">敏感度插件</string>
     <string name="wrongcarbs_label">碳水化合物输入错误</string>
     <string name="wrongcarbs_whattodo">如果您输入了不正确的碳水化合物，该怎么办?</string>

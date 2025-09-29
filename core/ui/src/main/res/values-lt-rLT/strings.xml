@@ -91,7 +91,6 @@
     <string name="alarm">Aliarmas</string>
     <string name="exportsettings">Eksportuoti nustatymus</string>
     <string name="disableloop">Išjungti Ciklą</string>
-    <string name="enableloop">Įjungti Ciklą</string>
     <string name="resumeloop">Atnaujinti ciklą</string>
     <string name="suspendloop">Sustabdyti ciklą</string>
     <string name="duration_min_label">Trukmė [min]</string>
@@ -167,7 +166,6 @@
     <string name="canceling_tbr_failed">Laikinos bazės atšaukti nepavyko</string>
     <string name="canceling_eb_failed">Ištęsto boluso atšaukti nepavyko</string>
     <string name="virtualpump_uploadstatus_title">Pompos statusas perduodamas į NS arba Tidepool</string>
-    <string name="suspendloop_label">Ciklas išjungtas/sustabdytas</string>
     <string name="iob_label">Aktyvus insulinas organizme (AIO)</string>
     <string name="loopstatus_targets">TIKSLAI:</string>
     <string name="loopstatus_OAPS_result">OAPS REZULTATAS:</string>
@@ -297,7 +295,6 @@
     <string name="uel_lgs_loop_mode">STABDYMAS PRIE ŽEMO</string>
     <string name="uel_open_loop_mode">ATVIRO CIKLO REŽIMAS</string>
     <string name="uel_loop_disabled">CIKLAS IŠJUNGTAS</string>
-    <string name="uel_loop_enabled">CIKLAS ĮJUNGTAS</string>
     <string name="uel_reconnect">VĖL PRISIJUNGTI</string>
     <string name="uel_disconnect">ATSIJUNGTI</string>
     <string name="uel_resume">ATNAUJINTI</string>

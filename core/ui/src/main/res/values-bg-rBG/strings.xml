@@ -89,7 +89,6 @@
     <string name="loopisdisabled">APS е изключен</string>
     <string name="alarm">Аларма</string>
     <string name="disableloop">Изключи Loop</string>
-    <string name="enableloop">Включи Loop</string>
     <string name="resumeloop">Възстанови loop</string>
     <string name="suspendloop">Изключи APS</string>
     <string name="duration_min_label">Продължителност [мин.]</string>
@@ -164,7 +163,6 @@
     <string name="canceling_tbr_failed">Отмяната на временния базал е неуспешна</string>
     <string name="canceling_eb_failed">Неуспешно спиране на удължен болус</string>
     <string name="virtualpump_uploadstatus_title">Качване на статуса на помпата в NS или Tidepool</string>
-    <string name="suspendloop_label">Изключен/забранен цикъл</string>
     <string name="iob_label">Активен Инсулин (IOB)</string>
     <!--    Protection-->
     <string name="wrongpassword">Грешна парола</string>
@@ -281,7 +279,6 @@
     <string name="uel_lgs_loop_mode">РЕЖИМ LGS ЦИКЪЛ</string>
     <string name="uel_open_loop_mode">РЕЖИМ ОТВОРЕН ЦИКЪЛ</string>
     <string name="uel_loop_disabled">ЦИКЪЛ ИЗКЛЮЧЕН</string>
-    <string name="uel_loop_enabled">ЦИКЪЛ ВКЛЮЧЕН</string>
     <string name="uel_reconnect">СВЪРЗВАНЕ ОТНОВО</string>
     <string name="uel_disconnect">Разкачане</string>
     <string name="uel_resume">ПРОДЪЛЖИ</string>

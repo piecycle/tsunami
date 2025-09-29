@@ -97,7 +97,7 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid ® /Novolog ®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid ®/Humilin R ®/\"běžný\" lidský inzulín.</string>
+    <string name="insulin_actrapid">Actrapid ®/Humulin R ®/„krátkodobě působící“ humánní inzulín.</string>
     <string name="insulin_hint1">https://wiki.aaps.app/cs/latest/SettingUpAaps/ConfigBuilder.html#insulin</string>
     <string name="sensitivity_label">Pluginy Citlivost</string>
     <string name="sensitivity_adjust">Pluginy citlivosti umožňují AAPS přizpůsobit se dočasným nebo krátkodobým změnám v citlivosti inzulinu (například hormonální změny nebo problémy s absorpcí na infúzním místě).</string>

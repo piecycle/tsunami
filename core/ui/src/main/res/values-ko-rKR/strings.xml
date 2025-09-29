@@ -90,7 +90,6 @@
     <string name="loopisdisabled">Loop가 중지중입니다.</string>
     <string name="alarm">알람</string>
     <string name="disableloop">Loop 중지하기</string>
-    <string name="enableloop">Loop 실행하기</string>
     <string name="resumeloop">Loop 재실행</string>
     <string name="suspendloop">Loop 일시중지</string>
     <string name="duration_min_label">기간 [min]</string>
@@ -165,7 +164,6 @@
     <string name="canceling_tbr_failed">임시 basal 취소 실패</string>
     <string name="canceling_eb_failed">확장 Bolus 취소 실패</string>
     <string name="virtualpump_uploadstatus_title">NS에 펌프상태 업로드하기</string>
-    <string name="suspendloop_label">중지 또는 일시중지된 loop</string>
     <string name="iob_label">활성 인슐린 (IOB)</string>
     <string name="loopstatus_targets">목표:</string>
     <string name="loopstatus_OAPS_result">OAPS 결과:</string>
@@ -284,7 +282,6 @@
     <string name="uel_lgs_loop_mode">LGS loop 모드</string>
     <string name="uel_open_loop_mode">Open loop 모드</string>
     <string name="uel_loop_disabled">Loop 사용하지 않음</string>
-    <string name="uel_loop_enabled">Loop 사용함</string>
     <string name="uel_reconnect">재연결</string>
     <string name="uel_disconnect">연결 끊기</string>
     <string name="uel_resume">재시작</string>

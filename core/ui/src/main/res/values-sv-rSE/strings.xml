@@ -89,7 +89,6 @@
     <string name="loopisdisabled">Loop är inaktiverad</string>
     <string name="alarm">Larm</string>
     <string name="disableloop">Inaktivera loop</string>
-    <string name="enableloop">Aktivera loop</string>
     <string name="resumeloop">Återuppta loop</string>
     <string name="suspendloop">Pausa loop</string>
     <string name="duration_min_label">Duration [min]</string>
@@ -164,7 +163,6 @@
     <string name="canceling_tbr_failed">Det gick inte att avbryta temp-basal</string>
     <string name="canceling_eb_failed">Det gick inte att avbryta förlängd bolus</string>
     <string name="virtualpump_uploadstatus_title">Ladda upp status till Nightscout eller Tidepool</string>
-    <string name="suspendloop_label">Inaktiverad/pausad loop</string>
     <string name="iob_label">Aktivt Insulin (IOB)</string>
     <!--    Protection-->
     <string name="wrongpassword">Fel lösenord</string>
@@ -281,7 +279,6 @@
     <string name="uel_lgs_loop_mode">LGS LOOP-LÄGE</string>
     <string name="uel_open_loop_mode">OPEN LOOP-LÄGE</string>
     <string name="uel_loop_disabled">LOOP INAKTIVERAD</string>
-    <string name="uel_loop_enabled">LOOP AKTIVERAD</string>
     <string name="uel_reconnect">ÅTERANSLUT</string>
     <string name="uel_disconnect">KOPPLA IFRÅN</string>
     <string name="uel_resume">ÅTERUPPTA</string>

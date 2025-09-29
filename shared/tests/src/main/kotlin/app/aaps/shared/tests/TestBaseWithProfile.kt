@@ -6,9 +6,11 @@ import androidx.preference.PreferenceManager
 import app.aaps.core.data.model.EPS
 import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.model.ICfg
+import app.aaps.core.interfaces.aps.GlucoseStatus
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.db.ProcessedTbrEbData
+import app.aaps.core.interfaces.iob.GlucoseStatusProvider
 import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
@@ -16,21 +18,30 @@ import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profile.ProfileStore
 import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.resources.ResourceHelper
-import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.HardLimits
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
-import app.aaps.core.keys.Preferences
 import app.aaps.core.keys.StringKey
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.aps.DetermineBasalResult
 import app.aaps.core.objects.extensions.pureProfileFromJson
 import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.ui.R
+import app.aaps.core.validators.preferences.AdaptiveClickPreference
+import app.aaps.core.validators.preferences.AdaptiveDoublePreference
+import app.aaps.core.validators.preferences.AdaptiveIntPreference
+import app.aaps.core.validators.preferences.AdaptiveIntentPreference
+import app.aaps.core.validators.preferences.AdaptiveListIntPreference
+import app.aaps.core.validators.preferences.AdaptiveListPreference
+import app.aaps.core.validators.preferences.AdaptiveStringPreference
+import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
+import app.aaps.core.validators.preferences.AdaptiveUnitPreference
 import app.aaps.implementation.instantiator.InstantiatorImpl
 import app.aaps.implementation.profile.ProfileStoreObject
 import app.aaps.implementation.profile.ProfileUtilImpl
 import app.aaps.implementation.utils.DecimalFormatterImpl
+import app.aaps.plugins.aps.openAPSSMB.GlucoseStatusCalculatorSMB
 import app.aaps.shared.impl.utils.DateUtilImpl
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -56,7 +67,6 @@ open class TestBaseWithProfile : TestBase() {
     @Mock lateinit var profileFunction: ProfileFunction
     @Mock lateinit var config: Config
     @Mock lateinit var context: DaggerApplication
-    @Mock lateinit var sp: SP
     @Mock lateinit var preferences: Preferences
     @Mock lateinit var constraintsChecker: ConstraintsChecker
     @Mock lateinit var theme: Resources.Theme
@@ -67,6 +77,15 @@ open class TestBaseWithProfile : TestBase() {
     lateinit var decimalFormatter: DecimalFormatter
     lateinit var hardLimits: HardLimits
     lateinit var instantiator: Instantiator
+    lateinit var glucoseStatusCalculatorSMB: GlucoseStatusCalculatorSMB
+
+    val smbGlucoseStatusProvider = object : GlucoseStatusProvider {
+        override val glucoseStatusData: GlucoseStatus?
+            get() = getGlucoseStatusData(false)
+
+        override fun getGlucoseStatusData(allowOldData: Boolean): GlucoseStatus? = glucoseStatusCalculatorSMB.getGlucoseStatusData(allowOldData)
+
+    }
 
     private val injectors = mutableListOf<(Any) -> Unit>()
     fun addInjector(fn: (Any) -> Unit) {
@@ -84,6 +103,38 @@ open class TestBaseWithProfile : TestBase() {
                 it.profileFunction = profileFunction
                 it.rh = rh
                 it.decimalFormatter = decimalFormatter
+            }
+            if (it is AdaptiveDoublePreference) {
+                it.profileUtil = profileUtil
+                it.preferences = preferences
+            }
+            if (it is AdaptiveIntPreference) {
+                it.profileUtil = profileUtil
+                it.preferences = preferences
+                it.config = config
+            }
+            if (it is AdaptiveIntentPreference) {
+                it.preferences = preferences
+            }
+            if (it is AdaptiveUnitPreference) {
+                it.profileUtil = profileUtil
+                it.preferences = preferences
+            }
+            if (it is AdaptiveSwitchPreference) {
+                it.preferences = preferences
+                it.config = config
+            }
+            if (it is AdaptiveStringPreference) {
+                it.preferences = preferences
+            }
+            if (it is AdaptiveListPreference) {
+                it.preferences = preferences
+            }
+            if (it is AdaptiveListIntPreference) {
+                it.preferences = preferences
+            }
+            if (it is AdaptiveClickPreference) {
+                it.preferences = preferences
             }
             injectors.forEach { fn -> fn(it) }
         }
@@ -120,7 +171,7 @@ open class TestBaseWithProfile : TestBase() {
         Mockito.`when`(dateUtil.now()).thenReturn(now)
         Mockito.`when`(activePlugin.activePump).thenReturn(testPumpPlugin)
         Mockito.`when`(preferences.get(StringKey.GeneralUnits)).thenReturn(GlucoseUnit.MGDL.asText)
-        hardLimits = HardLimitsMock(sp, preferences, rh)
+        hardLimits = HardLimitsMock(preferences, rh)
         validProfile = ProfileSealed.Pure(pureProfileFromJson(JSONObject(validProfileJSON), dateUtil)!!, activePlugin)
         effectiveProfileSwitch = EPS(
             timestamp = dateUtil.now(),
@@ -239,6 +290,7 @@ open class TestBaseWithProfile : TestBase() {
             String.format(rh.gs(string), arg1, arg2, arg3)
         }.`when`(rh).gs(anyInt(), anyString(), anyInt(), anyString())
         instantiator = InstantiatorImpl(injector, dateUtil, rh, aapsLogger, preferences, activePlugin, config, rxBus, hardLimits)
+        glucoseStatusCalculatorSMB = GlucoseStatusCalculatorSMB(aapsLogger, iobCobCalculator, dateUtil, decimalFormatter)
     }
 
     fun getValidProfileStore(): ProfileStore {

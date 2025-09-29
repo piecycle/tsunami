@@ -81,7 +81,6 @@
     <string name="insulin_fiasp">피아스프(Fiasp®)</string>
     <string name="insulin_novorapid">노보래피드(NovoRapid®)/노보로그(Novolog®)</string>
     <string name="insulin_humalog">휴마로그(Humalog®)</string>
-    <string name="insulin_actrapid">액트라피드(Actrapid®)/휴말린 R(Humalin R®)/\"보통의\" 인간 인슐린.</string>
     <string name="sensitivity_label">민감도 플러그인</string>
     <string name="sensitivity_adjust">민감도 플러그인은 AAPS가 일시적 또는 단기적으로 인슐린 민감도를 조절할 수 있도록 합니다 (예를 들어, 호르몬 변화 또는 주입 부위의 흡수 문제).</string>
     <string name="sensitivity_edit">민감도 플러그인은 프로파일을 수정할 때 사용할 수 있도록 basal양, I:C ratio, 그리고 ISF의 제안된 변경 사항을 사용자에게 제공합니다.</string>

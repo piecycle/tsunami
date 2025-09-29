@@ -2,11 +2,11 @@ package app.aaps.plugins.aps.loop
 
 import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import app.aaps.core.data.aps.ApsMode
+import app.aaps.core.data.model.RM
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.data.pump.defs.PumpDescription
+import app.aaps.core.interfaces.constraints.Constraint
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.logging.UserEntryLogger
@@ -15,15 +15,15 @@ import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.receivers.ReceiverStatusStore
 import app.aaps.core.interfaces.ui.UiInteraction
-import app.aaps.core.keys.StringKey
+import app.aaps.core.interfaces.utils.HardLimits
 import app.aaps.core.nssdk.interfaces.RunningConfiguration
-import app.aaps.core.validators.preferences.AdaptiveIntPreference
-import app.aaps.core.validators.preferences.AdaptiveListPreference
+import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.pump.virtual.VirtualPumpPlugin
 import app.aaps.shared.tests.TestBaseWithProfile
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
@@ -38,29 +38,15 @@ class LoopPluginTest : TestBaseWithProfile() {
     @Mock lateinit var uel: UserEntryLogger
     @Mock lateinit var runningConfiguration: RunningConfiguration
     @Mock lateinit var uiInteraction: UiInteraction
-    @Mock lateinit var sharedPrefs: SharedPreferences
     @Mock lateinit var processedDeviceStatusData: ProcessedDeviceStatusData
 
     private lateinit var loopPlugin: LoopPlugin
 
-    init {
-        addInjector {
-            if (it is AdaptiveIntPreference) {
-                it.profileUtil = profileUtil
-                it.preferences = preferences
-                it.sharedPrefs = sharedPrefs
-                it.config = config
-            }
-            if (it is AdaptiveListPreference) {
-                it.preferences = preferences
-            }
-        }
-    }
-
     @BeforeEach fun prepare() {
+        `when`(config.APS).thenReturn(true)
         preferenceManager = PreferenceManager(context)
         loopPlugin = LoopPlugin(
-            aapsLogger, aapsSchedulers, rxBus, sp, preferences, config,
+            aapsLogger, aapsSchedulers, rxBus, preferences, config,
             constraintChecker, rh, profileFunction, context, commandQueue, activePlugin, virtualPumpPlugin, iobCobCalculator, processedTbrEbData, receiverStatusStore, fabricPrivacy, dateUtil, uel,
             persistenceLayer, runningConfiguration, uiInteraction, instantiator, processedDeviceStatusData
         )
@@ -72,7 +58,7 @@ class LoopPluginTest : TestBaseWithProfile() {
     fun testPluginInterface() {
         `when`(rh.gs(app.aaps.core.ui.R.string.loop)).thenReturn("Loop")
         `when`(rh.gs(app.aaps.plugins.aps.R.string.loop_shortname)).thenReturn("LOOP")
-        `when`(preferences.get(StringKey.LoopApsMode)).thenReturn(ApsMode.CLOSED.name)
+//        `when`(preferences.get(StringKey.LoopApsMode)).thenReturn(ApsMode.CLOSED.name)
         val pumpDescription = PumpDescription()
         `when`(virtualPumpPlugin.pumpDescription).thenReturn(pumpDescription)
         assertThat(loopPlugin.pluginDescription.fragmentClass).isEqualTo(LoopFragment::class.java.name)
@@ -83,20 +69,38 @@ class LoopPluginTest : TestBaseWithProfile() {
         assertThat(loopPlugin.showInList(PluginType.LOOP)).isTrue()
         assertThat(loopPlugin.preferencesId.toLong()).isEqualTo(PluginDescription.PREFERENCE_SCREEN)
 
-        // Plugin is disabled by default
-        assertThat(loopPlugin.isEnabled()).isFalse()
-        loopPlugin.setPluginEnabled(PluginType.LOOP, true)
+        // Plugin is enabled by default
         assertThat(loopPlugin.isEnabled()).isTrue()
 
         // No temp basal capable pump should disable plugin
         virtualPumpPlugin.pumpDescription.isTempBasalCapable = false
-        assertThat(loopPlugin.isEnabled()).isFalse()
+        assertThat(loopPlugin.specialEnableCondition()).isFalse()
         virtualPumpPlugin.pumpDescription.isTempBasalCapable = true
 
         // Fragment is hidden by default
         assertThat(loopPlugin.isFragmentVisible()).isFalse()
         loopPlugin.setFragmentVisible(PluginType.LOOP, true)
         assertThat(loopPlugin.isFragmentVisible()).isTrue()
+    }
+
+    @Test
+    fun iobShouldBeLimited() {
+        `when`(rh.gs(app.aaps.core.ui.R.string.lowglucosesuspend)).thenReturn("Low Glucose Suspend")
+        `when`(rh.gs(app.aaps.core.ui.R.string.limiting_iob, HardLimits.MAX_IOB_LGS, rh.gs(app.aaps.core.ui.R.string.lowglucosesuspend))).thenReturn("Limiting IOB to %1\$.1f U because of %2\$s")
+        `when`(constraintChecker.isLoopInvocationAllowed()).thenReturn(ConstraintObject(true, aapsLogger))
+        `when`(persistenceLayer.getRunningModeActiveAt(anyLong())).thenReturn(
+            RM(
+                timestamp = 0,
+                mode = RM.Mode.CLOSED_LOOP_LGS,
+                duration = 0
+            )
+        )
+        // Apply all limits
+        var d: Constraint<Double> = ConstraintObject(Double.MAX_VALUE, aapsLogger)
+        d = loopPlugin.applyMaxIOBConstraints(d)
+        assertThat(d.value()).isWithin(0.01).of(HardLimits.MAX_IOB_LGS)
+        assertThat(d.getReasons()).isEqualTo("Loop: Limiting IOB to 0.0 U because of Low Glucose Suspend")
+        assertThat(d.getMostLimitedReasons()).isEqualTo("Loop: Limiting IOB to 0.0 U because of Low Glucose Suspend")
     }
 
     @Test

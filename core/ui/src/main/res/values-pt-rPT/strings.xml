@@ -89,7 +89,6 @@
     <string name="loopisdisabled">Loop está desactivado</string>
     <string name="alarm">Alarme</string>
     <string name="disableloop">Desactivar Loop</string>
-    <string name="enableloop">Activar Loop</string>
     <string name="resumeloop">Retomar loop</string>
     <string name="suspendloop">Suspender loop</string>
     <string name="duration_min_label">Duração [min]</string>
@@ -164,7 +163,6 @@
     <string name="canceling_tbr_failed">Não foi possível cancelar a basal temporária</string>
     <string name="canceling_eb_failed">Não foi possível cancelar o bólus prolongado</string>
     <string name="virtualpump_uploadstatus_title">Enviar o estado da bomba para NS ou Tidepool</string>
-    <string name="suspendloop_label">Loop Desactivado/Suspenso</string>
     <string name="iob_label">Insulina ativa (IA )</string>
     <!--    Protection-->
     <string name="wrongpassword">Palavra-passe incorreta</string>
@@ -281,7 +279,6 @@
     <string name="uel_lgs_loop_mode">MODO DE LOOP DE SGB</string>
     <string name="uel_open_loop_mode">MODO DE LOOP ABERTO</string>
     <string name="uel_loop_disabled">LOOP DESATIVADO</string>
-    <string name="uel_loop_enabled">LOOP ATIVADO</string>
     <string name="uel_reconnect">RECONETAR</string>
     <string name="uel_disconnect">DESCONETAR</string>
     <string name="uel_resume">RESUMO</string>

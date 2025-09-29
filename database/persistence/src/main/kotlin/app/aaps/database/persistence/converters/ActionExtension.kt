@@ -25,8 +25,9 @@ fun UserEntry.Action.fromDb(): Action =
         UserEntry.Action.LGS_LOOP_MODE                   -> Action.LGS_LOOP_MODE
         UserEntry.Action.OPEN_LOOP_MODE                  -> Action.OPEN_LOOP_MODE
         UserEntry.Action.LOOP_DISABLED                   -> Action.LOOP_DISABLED
-        UserEntry.Action.LOOP_ENABLED                    -> Action.LOOP_ENABLED
+        UserEntry.Action.LOOP_RESUME  -> Action.LOOP_RESUME
         UserEntry.Action.LOOP_CHANGE                     -> Action.LOOP_CHANGE
+        UserEntry.Action.PUMP_RUNNING -> Action.PUMP_RUNNING
         UserEntry.Action.LOOP_REMOVED                    -> Action.LOOP_REMOVED
         UserEntry.Action.RECONNECT                       -> Action.RECONNECT
         UserEntry.Action.DISCONNECT                      -> Action.DISCONNECT
@@ -121,8 +122,9 @@ fun Action.toDb(): UserEntry.Action =
         Action.LGS_LOOP_MODE                   -> UserEntry.Action.LGS_LOOP_MODE
         Action.OPEN_LOOP_MODE                  -> UserEntry.Action.OPEN_LOOP_MODE
         Action.LOOP_DISABLED                   -> UserEntry.Action.LOOP_DISABLED
-        Action.LOOP_ENABLED                    -> UserEntry.Action.LOOP_ENABLED
+        Action.LOOP_RESUME                     -> UserEntry.Action.LOOP_RESUME
         Action.LOOP_CHANGE                     -> UserEntry.Action.LOOP_CHANGE
+        Action.PUMP_RUNNING                    -> UserEntry.Action.PUMP_RUNNING
         Action.LOOP_REMOVED                    -> UserEntry.Action.LOOP_REMOVED
         Action.RECONNECT                       -> UserEntry.Action.RECONNECT
         Action.DISCONNECT                      -> UserEntry.Action.DISCONNECT

@@ -90,7 +90,6 @@
     <string name="loopisdisabled">Bucla este dezactivată</string>
     <string name="alarm">Alarmă</string>
     <string name="disableloop">Dezactivează bucla</string>
-    <string name="enableloop">Activează bucla</string>
     <string name="resumeloop">Repornește bucla</string>
     <string name="suspendloop">Suspendă bucla</string>
     <string name="duration_min_label">Durată [min]</string>
@@ -165,7 +164,6 @@
     <string name="canceling_tbr_failed">Anularea ratei bazale temporare a eșuat</string>
     <string name="canceling_eb_failed">Anularea bolusului extins a eșuat</string>
     <string name="virtualpump_uploadstatus_title">Trimitere status către NS sau Tidepool</string>
-    <string name="suspendloop_label">Buclă dezactivată/suspendată</string>
     <string name="iob_label">Insulină activă (IOB)</string>
     <string name="loopstatus_targets">ȚINTE:</string>
     <string name="loopstatus_OAPS_result">REZULTATUL OAPS:</string>
@@ -284,7 +282,6 @@
     <string name="uel_lgs_loop_mode">MOD BUCLA LGS</string>
     <string name="uel_open_loop_mode">MOD BUCLA DESCHISA</string>
     <string name="uel_loop_disabled">BUCLA DEZACTIVATA</string>
-    <string name="uel_loop_enabled">BUCLA ACTIVATA</string>
     <string name="uel_reconnect">RECONECTARE</string>
     <string name="uel_disconnect">DECONECTARE</string>
     <string name="uel_resume">REPORNIRE</string>

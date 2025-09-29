@@ -12,6 +12,7 @@ import org.json.JSONObject
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
+import org.skyscreamer.jsonassert.JSONAssert
 
 class TriggerDeltaTest : TriggerTestBase() {
 
@@ -66,7 +67,7 @@ class TriggerDeltaTest : TriggerTestBase() {
     @Test
     fun toJSONTest() {
         val t: TriggerDelta = TriggerDelta(injector).units(GlucoseUnit.MGDL).setValue(4.1, DeltaType.DELTA).comparator(Comparator.Compare.IS_EQUAL)
-        assertThat(t.toJSON()).isEqualTo(deltaJson)
+        JSONAssert.assertEquals(deltaJson, t.toJSON(), true)
     }
 
     @Test

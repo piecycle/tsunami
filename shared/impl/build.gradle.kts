@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:interfaces"))
     implementation(project(":core:keys"))
+    implementation(project(":core:utils"))
 
     //Logger
     api(libs.org.slf4j.api)

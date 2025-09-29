@@ -1,6 +1,6 @@
 package app.aaps.core.interfaces.utils
 
-import app.aaps.core.data.model.OE
+import app.aaps.core.data.model.RM
 import app.aaps.core.data.model.TE
 import app.aaps.core.data.model.TT
 import app.aaps.core.data.ue.Action
@@ -14,6 +14,6 @@ interface Translator {
     fun translate(meterType: TE.MeterType?): String
     fun translate(type: TE.Type?): String
     fun translate(reason: TT.Reason?): String
-    fun translate(reason: OE.Reason?): String
+    fun translate(mode: RM.Mode?): String
     fun translate(source: Sources): String
 }

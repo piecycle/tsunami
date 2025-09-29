@@ -97,7 +97,6 @@
     <string name="insulin_fiasp">Fiasp®</string>
     <string name="insulin_novorapid">NovoRapid ® /Novolog ®</string>
     <string name="insulin_humalog">Humalog®</string>
-    <string name="insulin_actrapid">Actrapid ® /Humulin R ®/\"zwykła\" insulina ludzka.</string>
     <string name="insulin_hint1">https://wiki.aaps.app/en/latest/SettingUpAaps/ConfigBuilder.html#insulin</string>
     <string name="sensitivity_label">Wtyczki wrażliwości</string>
     <string name="sensitivity_adjust">Wtyczki wrażliwości pozwalają AAPS dostosować się do tymczasowych lub krótkotrwałych zmian wrażliwości na insulinę (na przykład zmian hormonalnych lub problemów z wchłanianiem w miejscu wkłucia).</string>

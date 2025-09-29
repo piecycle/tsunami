@@ -9,12 +9,13 @@ import app.aaps.wear.interaction.utils.Constants
 import app.aaps.wear.interaction.utils.Persistence
 import app.aaps.wear.interaction.utils.WearUtil
 import app.aaps.wear.testing.mocks.SharedPreferencesMock
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 open class WearTestBase : TestBase() {
 
@@ -22,6 +23,7 @@ open class WearTestBase : TestBase() {
     @Mock lateinit var context: Context
     @Mock lateinit var sp: SP
     @Mock lateinit var dateUtil: DateUtil
+    @OptIn(ExperimentalTime::class)
     @Mock lateinit var clock: Clock
     lateinit var wearUtil: WearUtil
 
@@ -29,6 +31,7 @@ open class WearTestBase : TestBase() {
 
     private val mockedSharedPrefs: HashMap<String, SharedPreferences> = HashMap()
 
+    @OptIn(ExperimentalTime::class)
     @BeforeEach
     fun setup() {
         wearUtil = WearUtil(context, aapsLogger, clock)
@@ -52,6 +55,7 @@ open class WearTestBase : TestBase() {
         setClockNow()
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun setClockNow() {
         Mockito.`when`(clock.now()).thenReturn(Instant.fromEpochMilliseconds(clockNow))
     }

@@ -19,6 +19,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import app.aaps.core.data.configuration.Constants
 import app.aaps.core.data.model.GlucoseUnit
+import app.aaps.core.data.model.RM
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.data.ue.ValueWithUnit
@@ -41,7 +42,7 @@ import app.aaps.core.interfaces.utils.SafeParse
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.IntKey
-import app.aaps.core.keys.Preferences
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.ui.elements.WeekDay
@@ -58,6 +59,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import org.json.JSONObject
 import java.text.DecimalFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class AutotuneFragment : DaggerFragment() {
@@ -254,7 +256,7 @@ class AutotuneFragment : DaggerFragment() {
             val tunedProfile = autotunePlugin.tunedProfile
             autotunePlugin.updateProfile(tunedProfile)
             val circadian = preferences.get(BooleanKey.AutotuneCircadianIcIsf)
-            if (loop.isDisconnected) {
+            if (loop.runningMode == RM.Mode.DISCONNECTED_PUMP) {
                 activity?.let { it1 -> OKDialog.show(it1, rh.gs(R.string.not_available_full), rh.gs(R.string.pump_disconnected)) }
             } else {
                 tunedProfile?.let { tunedP ->
@@ -570,12 +572,12 @@ class AutotuneFragment : DaggerFragment() {
             row.addView(TextView(context).apply {
                 layoutParams = lp.apply { column = 1 }
                 textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-                text = String.format(format, inputValue)
+                text = String.format(Locale.getDefault(), format, inputValue)
             })
             row.addView(TextView(context).apply {
                 layoutParams = lp.apply { column = 2 }
                 textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-                text = String.format(format, tunedValue)
+                text = String.format(Locale.getDefault(), format, tunedValue)
             })
             row.addView(TextView(context).apply {
                 layoutParams = lp.apply { column = 3 }
