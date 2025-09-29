@@ -1940,13 +1940,17 @@ class PersistenceLayerImpl @Inject constructor(
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while saving Tsunami mode.", it) }
             .map { result ->
                 val transactionResult = PersistenceLayer.TransactionResult<TSU>()
+                val ueValues = mutableListOf<UE>()
                 result.inserted.forEach {
-                    log(
-                        action = action,
-                        source = source,
-                        note = note,
-                        listValues = listValues
+                    ueValues.add(
+                        UE(
+                            timestamp = dateUtil.now(),
+                            action = action,
+                            source = source,
+                            note = note ?: "",
+                            values = listValues
                         )
+                    )
                     aapsLogger.debug(LTag.DATABASE, "Inserted Tsunami from ${source.name} $it")
                     transactionResult.inserted.add(it.fromDb())
                 }
@@ -1963,12 +1967,16 @@ class PersistenceLayerImpl @Inject constructor(
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while updating Tsunami mode.", it) }
             .map { result ->
                 val transactionResult = PersistenceLayer.TransactionResult<TSU>()
+                val ueValues = mutableListOf<UE>()
                 result.updated.forEach {
-                    log(
-                        action = action,
-                        source = source,
-                        note = note,
-                        listValues = listValues
+                    ueValues.add(
+                        UE(
+                            timestamp = dateUtil.now(),
+                            action = action,
+                            source = source,
+                            note = note ?: "",
+                            values = listValues
+                        )
                     )
                     aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
                     transactionResult.updated.add(it.fromDb())

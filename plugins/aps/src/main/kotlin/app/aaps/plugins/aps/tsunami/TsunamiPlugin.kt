@@ -2,9 +2,10 @@ package app.aaps.plugins.aps.tsunami
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.util.LongSparseArray
+import androidx.core.net.toUri
 import androidx.core.util.forEach
+import androidx.core.util.size
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
@@ -18,6 +19,8 @@ import app.aaps.core.interfaces.aps.APS
 import app.aaps.core.interfaces.aps.APSResult
 import app.aaps.core.interfaces.aps.AutosensResult
 import app.aaps.core.interfaces.aps.CurrentTemp
+import app.aaps.core.interfaces.aps.GlucoseStatus
+import app.aaps.core.interfaces.aps.GlucoseStatusSMB
 import app.aaps.core.interfaces.aps.OapsProfileTsunami
 import app.aaps.core.interfaces.bgQualityCheck.BgQualityCheck
 import app.aaps.core.interfaces.configuration.Config
@@ -50,8 +53,8 @@ import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.DoubleKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.IntentKey
-import app.aaps.core.keys.Preferences
 import app.aaps.core.keys.UnitDoubleKey
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.aps.DetermineBasalResult
 import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.core.objects.extensions.convertedToAbsolute
@@ -72,6 +75,7 @@ import app.aaps.plugins.aps.R
 import app.aaps.plugins.aps.events.EventOpenAPSUpdateGui
 import app.aaps.plugins.aps.events.EventResetOpenAPSGui
 import app.aaps.plugins.aps.openAPS.TddStatus
+import app.aaps.plugins.aps.openAPSSMB.GlucoseStatusCalculatorSMB
 import dagger.android.HasAndroidInjector
 import org.json.JSONObject
 import javax.inject.Inject
@@ -102,6 +106,7 @@ open class TsunamiPlugin @Inject constructor(
     private val uiInteraction: UiInteraction,
     private val determineBasalTsunami: DetermineBasalTsunami,
     private val profiler: Profiler,
+    private val glucoseStatusCalculatorSMB: GlucoseStatusCalculatorSMB
 ) : PluginBase(
     PluginDescription()
         .mainType(PluginType.APS)
@@ -180,8 +185,8 @@ override fun onStart() {
 
     override fun specialShowInListCondition(): Boolean {
         try {
-        val pump = activePlugin.activePump
-        return pump.pumpDescription.isTempBasalCapable
+            val pump = activePlugin.activePump
+            return pump.pumpDescription.isTempBasalCapable
         } catch (_: Exception) {
             return true
         }
@@ -236,7 +241,7 @@ override fun onStart() {
         // no cached result found, let's calculate the value
         //aapsLogger.debug("calculateVariableIsf $caller CAL ${dateUtil.dateAndTimeAndSecondsString(timestamp)} $sensitivity")
         dynIsfCache.put(key, dynIsfResult.variableSensitivity)
-        if (dynIsfCache.size() > 1000) dynIsfCache.clear()
+        if (dynIsfCache.size > 1000) dynIsfCache.clear()
         return Pair("CALC", dynIsfResult.variableSensitivity)
     }
 
@@ -266,7 +271,7 @@ override fun onStart() {
         // DynamicISF specific
         // without these values DynISF doesn't work properly
         // Current implementation is fallback to SMB if TDD history is not available. Thus calculated here
-        val glucoseStatus = glucoseStatusProvider.glucoseStatusData
+        val glucoseStatus = glucoseStatusProvider.glucoseStatusData as GlucoseStatusSMB?
         dynIsfResult.tdd1D = tddCalculator.averageTDD(tddCalculator.calculate(1, allowMissingDays = false))?.data?.totalAmount
         tddCalculator.averageTDD(tddCalculator.calculate(7, allowMissingDays = false))?.let {
             dynIsfResult.tdd7D = it.data.totalAmount
@@ -336,7 +341,13 @@ override fun onStart() {
 
         // End of check, start gathering data
 
-        val dynIsfMode = preferences.get(BooleanKey.ApsUseDynamicSensitivity) && hardLimits.checkHardLimits(preferences.get(IntKey.ApsDynIsfAdjustmentFactor).toDouble(), R.string.dyn_isf_adjust_title, IntKey.ApsDynIsfAdjustmentFactor.min.toDouble(), IntKey.ApsDynIsfAdjustmentFactor.max.toDouble())
+        val dynIsfMode =
+            preferences.get(BooleanKey.ApsUseDynamicSensitivity) && hardLimits.checkHardLimits(
+                preferences.get(IntKey.ApsDynIsfAdjustmentFactor).toDouble(),
+                R.string.dyn_isf_adjust_title,
+                IntKey.ApsDynIsfAdjustmentFactor.min.toDouble(),
+                IntKey.ApsDynIsfAdjustmentFactor.max.toDouble()
+            )
         val smbEnabled = preferences.get(BooleanKey.ApsUseSmb)
         val advancedFiltering = constraintsChecker.isAdvancedFilteringEnabled().also { inputConstraints.copyReasons(it) }.value()
 
@@ -359,44 +370,43 @@ override fun onStart() {
         }
 
         var autosensResult = AutosensResult()
-        var dynIsfResult: DynIsfResult? = null
         // var variableSensitivity = 0.0
         // var tdd = 0.0
         // var insulinDivisor = 0
-        dynIsfResult = calculateRawDynIsf((profile as ProfileSealed.EPS).value.originalPercentage / 100.0)
+        val dynIsfResult = calculateRawDynIsf((profile as ProfileSealed.EPS).value.originalPercentage / 100.0)
         if (dynIsfMode && !dynIsfResult.tddPartsCalculated()) {
-                uiInteraction.addNotificationValidTo(
-                    Notification.SMB_FALLBACK, dateUtil.now(),
-                    rh.gs(R.string.fallback_smb_no_tdd), Notification.INFO, dateUtil.now() + T.mins(1).msecs()
-                )
-                inputConstraints.copyReasons(
-                    ConstraintObject(false, aapsLogger).also {
-                        it.set(false, rh.gs(R.string.fallback_smb_no_tdd), this)
-                    }
-                )
-                inputConstraints.copyReasons(
+            uiInteraction.addNotificationValidTo(
+                Notification.SMB_FALLBACK, dateUtil.now(),
+                rh.gs(R.string.fallback_smb_no_tdd), Notification.INFO, dateUtil.now() + T.mins(1).msecs()
+            )
+            inputConstraints.copyReasons(
+                ConstraintObject(false, aapsLogger).also {
+                    it.set(false, rh.gs(R.string.fallback_smb_no_tdd), this)
+                }
+            )
+            inputConstraints.copyReasons(
                 ConstraintObject(false, aapsLogger).apply {
                     set(true, "tdd1D=${dynIsfResult.tdd1D} tdd7D=${dynIsfResult.tdd7D} tddLast4H=${dynIsfResult.tddLast4H} tddLast8to4H=${dynIsfResult.tddLast8to4H} tddLast24H=${dynIsfResult.tddLast24H}", this)
                 }
-                )
+            )
         }
         if (dynIsfMode && dynIsfResult.tddPartsCalculated()) {
-                uiInteraction.dismissNotification(Notification.SMB_FALLBACK)
-                // Compare insulin consumption of last 24h with last 7 days average
+            uiInteraction.dismissNotification(Notification.SMB_FALLBACK)
+            // Compare insulin consumption of last 24h with last 7 days average
             val tddRatio = if (preferences.get(BooleanKey.ApsDynIsfAdjustSensitivity)) dynIsfResult.tddLast24H!! / dynIsfResult.tdd7D!! else 1.0
-                // Because consumed carbs affects total amount of insulin compensate final ratio by consumed carbs ratio
-                // take only 60% (expecting 40% basal). We cannot use bolus/total because of SMBs
-                val carbsRatio = if (
-                    preferences.get(BooleanKey.ApsDynIsfAdjustSensitivity) &&
+            // Because consumed carbs affects total amount of insulin compensate final ratio by consumed carbs ratio
+            // take only 60% (expecting 40% basal). We cannot use bolus/total because of SMBs
+            val carbsRatio = if (
+                preferences.get(BooleanKey.ApsDynIsfAdjustSensitivity) &&
                 dynIsfResult.tddLast24HCarbs != 0.0 &&
                 dynIsfResult.tdd7DDataCarbs != 0.0 &&
                 dynIsfResult.tdd7DAllDaysHaveCarbs
             ) ((dynIsfResult.tddLast24HCarbs / dynIsfResult.tdd7DDataCarbs - 1.0) * 0.6) + 1.0 else 1.0
-                autosensResult = AutosensResult(
-                    ratio = tddRatio / carbsRatio,
-                    ratioFromTdd = tddRatio,
-                    ratioFromCarbs = carbsRatio
-                )
+            autosensResult = AutosensResult(
+                ratio = tddRatio / carbsRatio,
+                ratioFromTdd = tddRatio,
+                ratioFromCarbs = carbsRatio
+            )
         } else {
             if (constraintsChecker.isAutosensModeEnabled().value()) {
                 val autosensData = iobCobCalculator.getLastAutosensDataWithWaitForCalculationFinish("OpenAPSPlugin")
@@ -629,6 +639,8 @@ override fun onStart() {
         rxBus.send(EventOpenAPSUpdateGui())
     }
 
+    override fun getGlucoseStatusData(allowOldData: Boolean): GlucoseStatus? = glucoseStatusCalculatorSMB.getGlucoseStatusData(allowOldData)
+
     override fun isSuperBolusEnabled(value: Constraint<Boolean>): Constraint<Boolean> {
         value.set(false)
         return value
@@ -783,10 +795,19 @@ override fun onStart() {
             addPreference(preferenceManager.createPreferenceScreen(context).apply {
                 key = "absorption_smb_advanced"
                 title = rh.gs(app.aaps.core.ui.R.string.advanced_settings_title)
-                addPreference(AdaptiveIntentPreference(ctx = context, intentKey = IntentKey.ApsLinkToDocs, intent = Intent().apply { action = Intent.ACTION_VIEW; data = Uri.parse(rh.gs(R.string.openapsama_link_to_preference_json_doc)) }, summary = R.string.openapsama_link_to_preference_json_doc_txt))
+                addPreference(
+                    AdaptiveIntentPreference(
+                        ctx = context,
+                        intentKey = IntentKey.ApsLinkToDocs,
+                        intent = Intent().apply { action = Intent.ACTION_VIEW; data = rh.gs(R.string.openapsama_link_to_preference_json_doc).toUri() },
+                        summary = R.string.openapsama_link_to_preference_json_doc_txt
+                    )
+                )
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.ApsAlwaysUseShortDeltas, summary = R.string.always_use_short_avg_summary, title = R.string.always_use_short_avg))
                 addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.ApsMaxDailyMultiplier, dialogMessage = R.string.openapsama_max_daily_safety_multiplier_summary, title = R.string.openapsama_max_daily_safety_multiplier))
-                addPreference(AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.ApsMaxCurrentBasalMultiplier, dialogMessage = R.string.openapsama_current_basal_safety_multiplier_summary, title = R.string.openapsama_current_basal_safety_multiplier))
+                addPreference(
+                    AdaptiveDoublePreference(ctx = context, doubleKey = DoubleKey.ApsMaxCurrentBasalMultiplier, dialogMessage = R.string.openapsama_current_basal_safety_multiplier_summary, title = R.string.openapsama_current_basal_safety_multiplier)
+                )
             })
         }
     }

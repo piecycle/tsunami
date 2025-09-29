@@ -326,13 +326,13 @@ class DetermineBasalTsunami @Inject constructor(
         var deltaScore = profile.deltaScore.coerceIn(0.0, 1.0) //MP Modifies insulinReqPCT; deltaScore grows larger the largest the previous deltas were, until it reaches 1
         var bgScore = 0.0
         //TODO: improve meal detection (deltaScore)
-        var tsunamiModeID = profile.tsunamiModeID
-        var deltaReductionPCT = profile.deltaReductionPCT //MP Reduction of current delta by X percent; 1 = delta of 0, 0.5 = delta of 50% of current delta;
+        val tsunamiModeID = profile.tsunamiModeID
+        val deltaReductionPCT = profile.deltaReductionPCT //MP Reduction of current delta by X percent; 1 = delta of 0, 0.5 = delta of 50% of current delta;
         var SMBcap = profile.SMBcap
         var insulinReqPCT = 0.5 //MP Default used by oref1
-        var waveStart = profile.waveStart
-        var waveEnd = profile.waveEnd
-        var activityTarget = profile.activityTarget
+        val waveStart = profile.waveStart
+        val waveEnd = profile.waveEnd
+        val activityTarget = profile.activityTarget
         var tsuInsReq = 0.0
         val bgCorrection = (bg - target_bg) / sens //MP Use to compare with tsunami output to decide between oref1 and activity controller
         var iterations: Int = 0 //MP Not used in the PK model - will show up as 'undefined' - this can be used for debugging if people send screenshots of TSUNAMI STATUS
@@ -369,7 +369,7 @@ class DetermineBasalTsunami @Inject constructor(
             var tp: Double
             var t: Double
 
-            if (profile.insulinID !== 105 && profile.insulinID !== 205) {
+            if (profile.insulinID != 105 && profile.insulinID != 205) {
                 // PK BASED MODEL CODE
                 // MP Calculate the insulin required to neutralise the current delta in "peak-time" minutes
                 tp = profile.peakTime //MP Insulin peak time as stated in InsulinOrefFreePeakPlugin. Doesn't work with insulin presets. Should be same value as used for actFuture calculation (see glucoseStatus.java)
@@ -397,7 +397,7 @@ class DetermineBasalTsunami @Inject constructor(
                 if (actMissing != 0.0) {
                     while (round(actAtT / actMissing, 2) > 1.02 || round(actAtT / actMissing, 2) < 0.98) {
                         tsuInsReq = tsuInsReq / actRatio
-                        tp = if (profile.insulinID === 205) { //MP ID = 205 for Lyumjev U200
+                        tp = if (profile.insulinID == 205) { //MP ID = 205 for Lyumjev U200
                             (A0 + A1 * 2 * tsuInsReq) / (1 + B1 * 2 * tsuInsReq)
                         } else { //MP Lyumjev U100 (ID = 105)
                             (A0 + A1 * tsuInsReq) / (1 + B1 * tsuInsReq)
@@ -1283,7 +1283,7 @@ class DetermineBasalTsunami @Inject constructor(
                 val mealInsulinReq = round(meal_data.mealCOB / profile.carb_ratio, 3)
                 //MP Use SMBcap during Tsunami or SMBcap-enabled Wave
                 if (tsunamiModeID == 2 || (tsunamiModeID == 1 && profile.waveUseSMBCap)) {
-                    maxBolus = SMBcap;
+                    maxBolus = SMBcap
                 } else if (iob_data.iob > mealInsulinReq && iob_data.iob > 0) {
                     consoleError.add("IOB ${iob_data.iob} > COB ${meal_data.mealCOB}; mealInsulinReq = $mealInsulinReq")
                     consoleError.add("profile.maxUAMSMBBasalMinutes: ${profile.maxUAMSMBBasalMinutes} profile.current_basal: ${profile.current_basal}")

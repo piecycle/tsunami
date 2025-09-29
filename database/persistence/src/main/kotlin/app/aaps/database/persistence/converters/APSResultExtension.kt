@@ -53,7 +53,11 @@ fun app.aaps.database.entities.APSResult.fromDb(injector: HasAndroidInjector): A
         app.aaps.database.entities.APSResult.Algorithm.TSUNAMI ->
             DetermineBasalResult(injector, Json.decodeFromString(this.resultJson)).also { result ->
                 result.date = this.timestamp
-                result.glucoseStatus = this.glucoseStatusJson?.let { Json.decodeFromString(it) }
+                result.glucoseStatus = try {
+                    this.glucoseStatusJson?.let { Json.decodeFromString(it) }
+                } catch (_: Exception) {
+                    null
+                }
                 result.currentTemp = this.currentTempJson?.let { Json.decodeFromString(it) }
                 result.iobData = this.iobDataJson?.let { Json.decodeFromString(it) }
                 result.oapsProfileTsunami = this.profileJson?.let { Json.decodeFromString(it) }
@@ -98,7 +102,7 @@ fun APSResult.toDb(): app.aaps.database.entities.APSResult =
             app.aaps.database.entities.APSResult(
                 timestamp = this.date,
                 algorithm = this.algorithm.toDb(),
-                glucoseStatusJson = this.glucoseStatus?.let { Json.encodeToString(GlucoseStatus.serializer(), it) },
+                glucoseStatusJson = this.glucoseStatus?.let { Json.encodeToString(GlucoseStatusSMB.serializer(), it as GlucoseStatusSMB) }, //MP Use SMB glucose status for now
                 currentTempJson = this.currentTemp?.let { Json.encodeToString(CurrentTemp.serializer(), it) },
                 iobDataJson = this.iobData?.let { Json.encodeToString(ArraySerializer(IobTotal.serializer()), it) },
                 profileJson = this.oapsProfileTsunami?.let { Json.encodeToString(OapsProfileTsunami.serializer(), it) },

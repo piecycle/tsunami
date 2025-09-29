@@ -89,8 +89,7 @@ class OverviewMenusImpl @Inject constructor(
         }
         CharTypeData.DEVSLOPE.visibility = { config.isDev() }
         CharTypeData.VAR_SENS.visibility = { preferences.get(BooleanKey.ApsUseDynamicSensitivity) }
-        val tsunamiIsActiveAPS = (activePlugin.activeAPS.algorithm == APSResult.Algorithm.TSUNAMI)
-        CharTypeData.TSU.visibility = { tsunamiIsActiveAPS }
+        CharTypeData.TSU.visibility = { activePlugin.activeAPS.algorithm == APSResult.Algorithm.TSUNAMI }
     }
 
     companion object {
