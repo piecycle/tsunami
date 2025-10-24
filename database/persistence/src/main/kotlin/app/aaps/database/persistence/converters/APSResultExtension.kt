@@ -5,6 +5,7 @@ import app.aaps.core.interfaces.aps.AutosensResult
 import app.aaps.core.interfaces.aps.CurrentTemp
 import app.aaps.core.interfaces.aps.GlucoseStatusAutoIsf
 import app.aaps.core.interfaces.aps.GlucoseStatusSMB
+import app.aaps.core.interfaces.aps.GlucoseStatusTsunami
 import app.aaps.core.interfaces.aps.IobTotal
 import app.aaps.core.interfaces.aps.MealData
 import app.aaps.core.interfaces.aps.OapsProfile
@@ -102,7 +103,7 @@ fun APSResult.toDb(): app.aaps.database.entities.APSResult =
             app.aaps.database.entities.APSResult(
                 timestamp = this.date,
                 algorithm = this.algorithm.toDb(),
-                glucoseStatusJson = this.glucoseStatus?.let { Json.encodeToString(GlucoseStatusSMB.serializer(), it as GlucoseStatusSMB) }, //MP Use SMB glucose status for now
+                glucoseStatusJson = this.glucoseStatus?.let { Json.encodeToString(GlucoseStatusTsunami.serializer(), it as GlucoseStatusTsunami) }, //MP Use SMB glucose status for now
                 currentTempJson = this.currentTemp?.let { Json.encodeToString(CurrentTemp.serializer(), it) },
                 iobDataJson = this.iobData?.let { Json.encodeToString(ArraySerializer(IobTotal.serializer()), it) },
                 profileJson = this.oapsProfileTsunami?.let { Json.encodeToString(OapsProfileTsunami.serializer(), it) },

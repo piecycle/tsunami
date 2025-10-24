@@ -20,7 +20,7 @@ import app.aaps.core.interfaces.aps.APSResult
 import app.aaps.core.interfaces.aps.AutosensResult
 import app.aaps.core.interfaces.aps.CurrentTemp
 import app.aaps.core.interfaces.aps.GlucoseStatus
-import app.aaps.core.interfaces.aps.GlucoseStatusSMB
+import app.aaps.core.interfaces.aps.GlucoseStatusTsunami
 import app.aaps.core.interfaces.aps.OapsProfileTsunami
 import app.aaps.core.interfaces.bgQualityCheck.BgQualityCheck
 import app.aaps.core.interfaces.configuration.Config
@@ -75,7 +75,7 @@ import app.aaps.plugins.aps.R
 import app.aaps.plugins.aps.events.EventOpenAPSUpdateGui
 import app.aaps.plugins.aps.events.EventResetOpenAPSGui
 import app.aaps.plugins.aps.openAPS.TddStatus
-import app.aaps.plugins.aps.openAPSSMB.GlucoseStatusCalculatorSMB
+import app.aaps.plugins.aps.tsunami.GlucoseStatusCalculatorTsunami
 import dagger.android.HasAndroidInjector
 import org.json.JSONObject
 import javax.inject.Inject
@@ -106,7 +106,7 @@ open class TsunamiPlugin @Inject constructor(
     private val uiInteraction: UiInteraction,
     private val determineBasalTsunami: DetermineBasalTsunami,
     private val profiler: Profiler,
-    private val glucoseStatusCalculatorSMB: GlucoseStatusCalculatorSMB
+    private val glucoseStatusCalculatorTsunami: GlucoseStatusCalculatorTsunami
 ) : PluginBase(
     PluginDescription()
         .mainType(PluginType.APS)
@@ -271,7 +271,7 @@ override fun onStart() {
         // DynamicISF specific
         // without these values DynISF doesn't work properly
         // Current implementation is fallback to SMB if TDD history is not available. Thus calculated here
-        val glucoseStatus = glucoseStatusProvider.glucoseStatusData as GlucoseStatusSMB?
+        val glucoseStatus = glucoseStatusProvider.glucoseStatusData as GlucoseStatusTsunami?
         dynIsfResult.tdd1D = tddCalculator.averageTDD(tddCalculator.calculate(1, allowMissingDays = false))?.data?.totalAmount
         tddCalculator.averageTDD(tddCalculator.calculate(7, allowMissingDays = false))?.let {
             dynIsfResult.tdd7D = it.data.totalAmount
@@ -307,6 +307,8 @@ override fun onStart() {
         aapsLogger.debug(LTag.APS, "invoke from $initiator tempBasalFallback: $tempBasalFallback")
         lastAPSResult = null
         val glucoseStatus = glucoseStatusProvider.glucoseStatusData
+        val recentGlucoseHistory = glucoseStatusCalculatorTsunami.recentGlucoseHistory(false)
+        val rawGlucoseHistory = glucoseStatusCalculatorTsunami.recentGlucoseHistory(true)
         val profile = profileFunction.getProfile()
         val pump = activePlugin.activePump
         if (profile == null) {
@@ -453,15 +455,27 @@ override fun onStart() {
         } else {
             0 //MP Tsunami inactive and conditions for wave are not met --> use oref1
         }
-
+        val tsunamiModeActivationTime = persistenceLayer.getTsunamiActiveAt(now)?.timestamp
         // Set mode specific variables to be relayed into DetermineBasalTsunami.kt
         var SMBcap : Double = 0.0
         var insulinReqPCT : Double = 0.0
         var activityTarget : Double = 0.0
         var deltaReductionPCT : Double = 0.0
-        var deltaScore: Double = 0.5
-        //TODO: Improve meal detection system!
-        //TODO: Adjusted deltaScore divisor from 4 to 6 --> check performance (Oct 2024)
+
+        /*MP Differences Tsunami : Wave
+        ***Tsunami***
+        *DeltaReductionPct = 1.0 (get delta to zero)
+        *SMBcap = User-set, probably higher than wave
+        *insulinReqPCT = User-set, probably higher than wave
+        * activityTarget = User-set, probably higher than wave
+        *
+        ***Wave***
+        *DeltaReductionPct = 0.5 (get delta to 50% of current delta)
+        *SMBcap = User-set, probably lower than tsu
+        *insulinReqPCT = User-set, probably lower than tsu
+        * activityTarget = User-set, probably lower than tsu
+         */
+
         if (tsunamiModeID == 2) { //MP: 2 = Tsunami
             deltaReductionPCT = 1.0
             SMBcap = preferences.get(DoubleKey.TsuSMBCap) //MP: User-set max SMB size for Tsunami.
@@ -470,16 +484,14 @@ override fun onStart() {
             }
             insulinReqPCT = preferences.get(IntKey.TsuInsReqPCT).toDouble() / 100.0 // User-set percentage to modify insulin required
             activityTarget = preferences.get(IntKey.TsuActivityTarget).toDouble() / 100.0 // MP for small deltas
-            deltaScore = Round.roundTo(glucoseStatus.shortAvgDelta/preferences.get(IntKey.TsuDeltaScoreDivisor), 0.01) //MP ShortAvgDelta must equal the divisor for deltaScore to be 1.0 (full force)
         } else if (tsunamiModeID == 1) { //MP: 1 = Wave
             deltaReductionPCT = 0.5
-            SMBcap = preferences.get(DoubleKey.WaveSMBCap) ?: 0.0 //MP: User-set may SMB size for Wave.
+            SMBcap = preferences.get(DoubleKey.WaveSMBCap) //MP: User-set may SMB size for Wave.
             if (preferences.get(BooleanKey.WaveSMBCapScaling)) {
                 SMBcap = (SMBcap * Math.min(profile.percentage.toDouble(), 130.0)/100.0) //SMBcap grows and shrinks with profile percentage;
             }
             insulinReqPCT = preferences.get(IntKey.WaveInsReqPCT).toDouble() / 100.0 // User-set percentage to modify insulin required
             activityTarget = preferences.get(IntKey.WaveActivityTarget).toDouble() / 100.0 // MP for small deltas
-            deltaScore = Round.roundTo(glucoseStatus.shortAvgDelta/preferences.get(IntKey.WaveDeltaScoreDivisor), 0.01) //MP ShortAvgDelta must equal the divisor for deltaScore to be 1.0 (full force)
         }
         // Calculate reference activity values
         var currentActivity = 0.0
@@ -566,12 +578,10 @@ override fun onStart() {
             insulinDivisor = dynIsfResult.insulinDivisor,
             TDD = dynIsfResult.tdd ?: 0.0,
             tsunamiModeID = tsunamiModeID,
+            tsunamiModeActivationTime = tsunamiModeActivationTime,
             peakTime = activityPredTimePK.toDouble(),
             insulinID = insulinID,
-            //tsuSMBCap = preferences.get(DoubleKey.TsuSMBCap),
-            //tsuInsReqPCT = preferences.get(IntKey.TsuInsReqPCT),
             percentage = profile.value.originalPercentage,//profile.percentage,
-            //tsunamiActive: Boolean,
             enableWaveMode = enableWave,
             waveStart = waveStart,
             waveEnd = waveEnd,
@@ -581,18 +591,11 @@ override fun onStart() {
             insulinReqPCT = insulinReqPCT,
             activityTarget = activityTarget,
             deltaReductionPCT = deltaReductionPCT,
-            //waveSMBCap = preferences.get(DoubleKey.WaveSMBCap),
-            //waveInsReqPCT = preferences.get(IntKey.WaveInsReqPCT),
-            //tsuSMBCapScaling = preferences.get(BooleanKey.TsuSMBscaling),
-            //tsuActivityTarget = preferences.get(IntKey.TsuActivityTarget),
-            //waveSMBCapScaling = preferences.get(BooleanKey.WaveSMBCapScaling),
-            //waveActivityTarget = preferences.get(IntKey.WaveActivityTarget),
             futureActivity = futureActivity,
             activityPredTime = activityPredTime.toDouble(),
             sensorLagActivity = sensorLagActivity,
             historicActivity = historicActivity,
             currentActivity = currentActivity,
-            deltaScore = deltaScore,
             lastBolus = persistenceLayer.getNewestBolus()?.amount ?: 0.0
         )
         val microBolusAllowed = constraintsChecker.isSMBModeEnabled(ConstraintObject(tempBasalFallback.not(), aapsLogger)).also { inputConstraints.copyReasons(it) }.value()
@@ -619,7 +622,9 @@ override fun onStart() {
             microBolusAllowed = microBolusAllowed,
             currentTime = now,
             flatBGsDetected = flatBGsDetected,
-            dynIsfMode = dynIsfMode && dynIsfResult.tddPartsCalculated()
+            dynIsfMode = dynIsfMode && dynIsfResult.tddPartsCalculated(),
+            recentGlucoseHistory = recentGlucoseHistory,
+            rawGlucoseHistory = rawGlucoseHistory,
         ).also {
             val determineBasalResult = DetermineBasalResult(injector, it)
             // Preserve input data
@@ -639,7 +644,7 @@ override fun onStart() {
         rxBus.send(EventOpenAPSUpdateGui())
     }
 
-    override fun getGlucoseStatusData(allowOldData: Boolean): GlucoseStatus? = glucoseStatusCalculatorSMB.getGlucoseStatusData(allowOldData)
+    override fun getGlucoseStatusData(allowOldData: Boolean): GlucoseStatus? = glucoseStatusCalculatorTsunami.getGlucoseStatusData(allowOldData)
 
     override fun isSuperBolusEnabled(value: Constraint<Boolean>): Constraint<Boolean> {
         value.set(false)
@@ -748,7 +753,6 @@ override fun onStart() {
                     addPreference(AdaptiveIntentPreference(ctx = context, intentKey = IntentKey.TsuWaveDisclaimer, summary = R.string.advanced_tsu_wave_disclaimer))
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuActivityTarget, dialogMessage = R.string.tsu_activity_target_summary, title = R.string.tsu_activity_target_title))
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuInsReqPCT, dialogMessage = R.string.insulinReqPCT_summary, summary = R.string.insulinReqPCT_summary, title = R.string.insulinReqPCT_title))
-                    addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.TsuDeltaScoreDivisor, dialogMessage = R.string.tsu_deltascore_divisor_dialogue, title = R.string.tsu_deltascore_divisor_title))
                 }
             })
             addPreference(preferenceManager.createPreferenceScreen(context).apply {
@@ -769,7 +773,6 @@ override fun onStart() {
                     addPreference(AdaptiveIntentPreference(ctx = context, intentKey = IntentKey.TsuWaveDisclaimer, summary = R.string.advanced_tsu_wave_disclaimer))
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.WaveActivityTarget, dialogMessage = R.string.wave_activity_target_summary, title = R.string.wave_activity_target_title))
                     addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.WaveInsReqPCT, dialogMessage = R.string.wave_insulinReqPCT_message, title = R.string.wave_insulinReqPCT_title))
-                    addPreference(AdaptiveIntPreference(ctx = context, intKey = IntKey.WaveDeltaScoreDivisor, dialogMessage = R.string.wave_deltascore_divisor_dialogue, title = R.string.wave_deltascore_divisor_title))
                 }
             })
             addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.ApsUseDynamicSensitivity, summary = R.string.use_dynamic_sensitivity_summary, title = R.string.use_dynamic_sensitivity_title))

@@ -75,6 +75,7 @@ import dagger.multibindings.IntoMap
 import info.nightscout.pump.combov2.ComboV2Plugin
 import app.aaps.plugins.insulin.InsulinLyumjevU100PDPlugin
 import app.aaps.plugins.insulin.InsulinLyumjevU200PDPlugin
+import app.aaps.plugins.smoothing.UnscentedKalmanFilterPlugin
 import javax.inject.Qualifier
 
 @Suppress("unused")
@@ -502,6 +503,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(610)
     abstract fun bindAvgSmoothingPlugin(plugin: AvgSmoothingPlugin): PluginBase
+
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(615)
+    abstract fun bindUnscentedKalmanFilterPlugin(plugin: UnscentedKalmanFilterPlugin): PluginBase
 
     @Qualifier
     annotation class AllConfigs
