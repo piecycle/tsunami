@@ -44,6 +44,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.anyLong
 import org.mockito.Mockito.`when`
 import org.mockito.invocation.InvocationOnMock
+import javax.inject.Provider
 
 @Suppress("SpellCheckingInspection")
 class SmsCommunicatorPluginTest : TestBaseWithProfile() {
@@ -60,19 +61,6 @@ class SmsCommunicatorPluginTest : TestBaseWithProfile() {
     @Mock lateinit var autosensDataStore: AutosensDataStore
     @Mock lateinit var smsManager: SmsManager
     @Mock lateinit var configBuilder: ConfigBuilder
-
-    init {
-        addInjector {
-            if (it is AuthRequest) {
-                it.aapsLogger = aapsLogger
-                it.smsCommunicator = smsCommunicatorPlugin
-                it.rh = rh
-                it.otp = otp
-                it.dateUtil = dateUtil
-                it.commandQueue = commandQueue
-            }
-        }
-    }
 
     private lateinit var smsCommunicatorPlugin: SmsCommunicatorPlugin
     private val modeClosed = "Closed Loop"
@@ -96,54 +84,55 @@ class SmsCommunicatorPluginTest : TestBaseWithProfile() {
         ).thenReturn(Single.just(PersistenceLayer.TransactionResult<TT>().apply {
         }))
 
+        val authRequestProvider = Provider { AuthRequest(aapsLogger, smsCommunicatorPlugin, rh, otp, dateUtil, commandQueue) }
         smsCommunicatorPlugin = SmsCommunicatorPlugin(
-            injector, aapsLogger, rh, smsManager, aapsSchedulers, preferences, constraintChecker, rxBus, profileFunction, profileUtil, fabricPrivacy, activePlugin, commandQueue,
+            aapsLogger, rh, smsManager, aapsSchedulers, preferences, constraintChecker, rxBus, profileFunction, profileUtil, fabricPrivacy, activePlugin, commandQueue,
             loop, iobCobCalculator, xDripBroadcast,
             otp, config, dateUtilMocked, uel,
-            smbGlucoseStatusProvider, persistenceLayer, decimalFormatter, configBuilder
+            smbGlucoseStatusProvider, persistenceLayer, decimalFormatter, configBuilder, authRequestProvider
         )
         smsCommunicatorPlugin.setPluginEnabled(PluginType.GENERAL, true)
         Mockito.doAnswer { invocation: InvocationOnMock ->
-            val callback = invocation.getArgument<Callback>(1)
-            callback.result = instantiator.providePumpEnactResult().success(true)
+            val callback = invocation.getArgument<Callback>(2)
+            callback.result = pumpEnactResultProvider.get().success(true)
             callback.run()
             null
-        }.`when`(commandQueue).cancelTempBasal(ArgumentMatchers.anyBoolean(), ArgumentMatchers.any(Callback::class.java))
+        }.`when`(commandQueue).cancelTempBasal(ArgumentMatchers.anyBoolean(), ArgumentMatchers.anyBoolean(), ArgumentMatchers.any(Callback::class.java))
         Mockito.doAnswer { invocation: InvocationOnMock ->
             val callback = invocation.getArgument<Callback>(0)
-            callback.result = instantiator.providePumpEnactResult().success(true)
+            callback.result = pumpEnactResultProvider.get().success(true)
             callback.run()
             null
         }.`when`(commandQueue).cancelExtended(ArgumentMatchers.any(Callback::class.java))
         Mockito.doAnswer { invocation: InvocationOnMock ->
             val callback = invocation.getArgument<Callback>(1)
-            callback.result = instantiator.providePumpEnactResult().success(true)
+            callback.result = pumpEnactResultProvider.get().success(true)
             callback.run()
             null
         }.`when`(commandQueue).readStatus(ArgumentMatchers.anyString(), ArgumentMatchers.any(Callback::class.java))
         Mockito.doAnswer { invocation: InvocationOnMock ->
             val callback = invocation.getArgument<Callback>(1)
-            callback.result = instantiator.providePumpEnactResult().success(true).bolusDelivered(1.0)
+            callback.result = pumpEnactResultProvider.get().success(true).bolusDelivered(1.0)
             callback.run()
             null
         }.`when`(commandQueue).bolus(anyObject(), ArgumentMatchers.any(Callback::class.java))
         Mockito.doAnswer { invocation: InvocationOnMock ->
             val callback = invocation.getArgument<Callback>(5)
-            callback.result = instantiator.providePumpEnactResult().success(true).isPercent(true).percent(invocation.getArgument(0)).duration(invocation.getArgument(1))
+            callback.result = pumpEnactResultProvider.get().success(true).isPercent(true).percent(invocation.getArgument(0)).duration(invocation.getArgument(1))
             callback.run()
             null
         }.`when`(commandQueue)
             .tempBasalPercent(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt(), ArgumentMatchers.anyBoolean(), anyObject(), anyObject(), ArgumentMatchers.any(Callback::class.java))
         Mockito.doAnswer { invocation: InvocationOnMock ->
             val callback = invocation.getArgument<Callback>(5)
-            callback.result = instantiator.providePumpEnactResult().success(true).isPercent(false).absolute(invocation.getArgument(0)).duration(invocation.getArgument(1))
+            callback.result = pumpEnactResultProvider.get().success(true).isPercent(false).absolute(invocation.getArgument(0)).duration(invocation.getArgument(1))
             callback.run()
             null
         }.`when`(commandQueue)
             .tempBasalAbsolute(ArgumentMatchers.anyDouble(), ArgumentMatchers.anyInt(), ArgumentMatchers.anyBoolean(), anyObject(), anyObject(), ArgumentMatchers.any(Callback::class.java))
         Mockito.doAnswer { invocation: InvocationOnMock ->
             val callback = invocation.getArgument<Callback>(2)
-            callback.result = instantiator.providePumpEnactResult().success(true).isPercent(false).absolute(invocation.getArgument(0)).duration(invocation.getArgument(1))
+            callback.result = pumpEnactResultProvider.get().success(true).isPercent(false).absolute(invocation.getArgument(0)).duration(invocation.getArgument(1))
             callback.run()
             null
         }.`when`(commandQueue).extendedBolus(ArgumentMatchers.anyDouble(), ArgumentMatchers.anyInt(), ArgumentMatchers.any(Callback::class.java))
@@ -256,7 +245,7 @@ class SmsCommunicatorPluginTest : TestBaseWithProfile() {
         assertThat(smsCommunicatorPlugin.isCommand("BOLUS", "")).isTrue()
         smsCommunicatorPlugin.messageToConfirm = null
         assertThat(smsCommunicatorPlugin.isCommand("BLB", "")).isFalse()
-        smsCommunicatorPlugin.messageToConfirm = AuthRequest(injector, Sms("1234", "ddd"), "RequestText", "ccode", object : SmsAction(false) {
+        smsCommunicatorPlugin.messageToConfirm = AuthRequest(aapsLogger, smsCommunicatorPlugin, rh, otp, dateUtil, commandQueue).with(Sms("1234", "ddd"), "RequestText", "ccode", object : SmsAction(false) {
             override fun run() {}
         })
         assertThat(smsCommunicatorPlugin.isCommand("BLB", "1234")).isTrue()

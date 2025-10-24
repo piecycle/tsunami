@@ -123,7 +123,7 @@ class StatusLightHandler @Inject constructor(
     ) {
         if (level >= maxReading) {
             @Suppress("SetTextI18n")
-            view?.text = "${decimalFormatter.to0Decimal(maxReading)}+$units"
+            view?.text = "${decimalFormatter.to0Decimal(maxReading)}+ $units"
             view?.setTextColor(rh.gac(view.context, app.aaps.core.ui.R.attr.defaultTextColor))
         } else {
             handleLevel(view, criticalSetting, warnSetting, level, units)

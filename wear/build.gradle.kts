@@ -109,8 +109,6 @@ dependencies {
     implementation(libs.androidx.wear.tiles)
     implementation(libs.androidx.constraintlayout)
 
-    testImplementation(project(":shared:tests"))
-
     compileOnly(libs.com.google.android.wearable)
     implementation(libs.com.google.android.wearable.support)
     implementation(libs.com.google.android.gms.playservices.wearable)

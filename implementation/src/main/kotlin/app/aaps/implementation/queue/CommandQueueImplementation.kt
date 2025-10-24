@@ -23,10 +23,10 @@ import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.pump.BolusProgressData
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.pump.PumpSync
@@ -80,6 +80,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import java.util.LinkedList
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @OpenForTesting
@@ -102,7 +103,7 @@ class CommandQueueImplementation @Inject constructor(
     private val uiInteraction: UiInteraction,
     private val persistenceLayer: PersistenceLayer,
     private val decimalFormatter: DecimalFormatter,
-    private val instantiator: Instantiator,
+    private val pumpEnactResultProvider: Provider<PumpEnactResult>,
     private val jobName: CommandQueueName,
     private val workManager: WorkManager
 ) : CommandQueue {
@@ -158,7 +159,7 @@ class CommandQueueImplementation @Inject constructor(
     }
 
     private fun executingNowError(): PumpEnactResult =
-        instantiator.providePumpEnactResult().success(false).enacted(false).comment(R.string.executing_right_now)
+        pumpEnactResultProvider.get().success(false).enacted(false).comment(R.string.executing_right_now)
 
     override fun isRunning(type: CommandType): Boolean = performing?.commandType == type
 
@@ -173,14 +174,33 @@ class CommandQueueImplementation @Inject constructor(
         }
     }
 
-    @Suppress("SameParameterValue")
+    /**
+     * Watchdog. I observed issue where work stuck in RUNNING state but nothing actually happens
+     * (last work completed successfully).
+     * Cancel scheduled work in this case
+     */
+    private var readScheduledDetected: Long? = null
+
     @Synchronized
-    fun isLastScheduled(type: CommandType): Boolean {
+    fun isReadStatusScheduled(): Boolean {
+        /*
+         * Cancel all works if ReadStatus is scheduled for more that 15 min
+         */
+        readScheduledDetected?.let {
+            if (dateUtil.isOlderThan(it, minutes = 15)) {
+                workManager.cancelUniqueWork(jobName.name)
+                fabricPrivacy.logCustom("QueueWorkerStuck")
+                Thread.sleep(5000)
+            }
+        }
+
         synchronized(queue) {
-            if (queue.isNotEmpty() && queue[queue.size - 1].commandType == type) {
+            if (queue.isNotEmpty() && queue[queue.size - 1].commandType == CommandType.READSTATUS) {
+                readScheduledDetected = dateUtil.now()
                 return true
             }
         }
+        readScheduledDetected = null
         return false
     }
 
@@ -250,7 +270,7 @@ class CommandQueueImplementation @Inject constructor(
         val tempCommandQueue = CommandQueueImplementation(
             injector, aapsLogger, rxBus, aapsSchedulers, rh,
             constraintChecker, profileFunction, activePlugin, context, preferences,
-            config, dateUtil, fabricPrivacy, androidPermission, uiInteraction, persistenceLayer, decimalFormatter, instantiator, CommandQueueName("CommandQueueIndependentInstance"), workManager
+            config, dateUtil, fabricPrivacy, androidPermission, uiInteraction, persistenceLayer, decimalFormatter, pumpEnactResultProvider, CommandQueueName("CommandQueueIndependentInstance"), workManager
         )
         tempCommandQueue.readStatus(reason, callback)
         tempCommandQueue.disposable.clear()
@@ -291,8 +311,8 @@ class CommandQueueImplementation @Inject constructor(
                     action = Action.CARBS,
                     source = Sources.Database
                 ).subscribe(
-                    { callback?.result(instantiator.providePumpEnactResult().enacted(false).success(true))?.run() },
-                    { callback?.result(instantiator.providePumpEnactResult().enacted(false).success(false))?.run() }
+                    { callback?.result(pumpEnactResultProvider.get().enacted(false).success(true))?.run() },
+                    { callback?.result(pumpEnactResultProvider.get().enacted(false).success(false))?.run() }
                 )
             }
             // Do not process carbs anymore
@@ -308,13 +328,13 @@ class CommandQueueImplementation @Inject constructor(
         if (type == CommandType.SMB_BOLUS) {
             if (bolusInQueue()) {
                 aapsLogger.debug(LTag.PUMPQUEUE, "Rejecting SMB since a bolus is queue/running")
-                callback?.result(instantiator.providePumpEnactResult().enacted(false).success(false))?.run()
+                callback?.result(pumpEnactResultProvider.get().enacted(false).success(false))?.run()
                 return false
             }
             val lastBolusTime = persistenceLayer.getNewestBolus()?.timestamp ?: 0L
             if (detailedBolusInfo.lastKnownBolusTime < lastBolusTime) {
                 aapsLogger.debug(LTag.PUMPQUEUE, "Rejecting bolus, another bolus was issued since request time")
-                callback?.result(instantiator.providePumpEnactResult().enacted(false).success(false))?.run()
+                callback?.result(pumpEnactResultProvider.get().enacted(false).success(false))?.run()
                 return false
             }
             removeAll(CommandType.SMB_BOLUS)
@@ -416,7 +436,7 @@ class CommandQueueImplementation @Inject constructor(
     }
 
     // returns true if command is queued
-    override fun cancelTempBasal(enforceNew: Boolean, callback: Callback?): Boolean {
+    override fun cancelTempBasal(enforceNew: Boolean, autoForced: Boolean, callback: Callback?): Boolean {
         if (!enforceNew && isRunning(CommandType.TEMPBASAL)) {
             callback?.result(executingNowError())?.run()
             return false
@@ -424,7 +444,7 @@ class CommandQueueImplementation @Inject constructor(
         // remove all unfinished
         removeAll(CommandType.TEMPBASAL)
         // add new command to queue
-        add(CommandCancelTempBasal(injector, enforceNew, callback))
+        add(CommandCancelTempBasal(injector, enforceNew, autoForced = autoForced, callback))
         notifyAboutNewCommand()
         return true
     }
@@ -447,12 +467,12 @@ class CommandQueueImplementation @Inject constructor(
     fun setProfile(profile: ProfileSealed, hasNsId: Boolean, callback: Callback?): Boolean {
         if (isRunning(CommandType.BASAL_PROFILE)) {
             aapsLogger.debug(LTag.PUMPQUEUE, "Command is already executed")
-            callback?.result(instantiator.providePumpEnactResult().success(true).enacted(false))?.run()
+            callback?.result(pumpEnactResultProvider.get().success(true).enacted(false))?.run()
             return false
         }
         if (isThisProfileSet(profile) && persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now()) != null) {
             aapsLogger.debug(LTag.PUMPQUEUE, "Correct profile already set")
-            callback?.result(instantiator.providePumpEnactResult().success(true).enacted(false))?.run()
+            callback?.result(pumpEnactResultProvider.get().success(true).enacted(false))?.run()
             return false
         }
         // Compare with pump limits
@@ -461,7 +481,7 @@ class CommandQueueImplementation @Inject constructor(
             if (basalValue.value < activePlugin.activePump.pumpDescription.basalMinimumRate) {
                 val notification = Notification(Notification.BASAL_VALUE_BELOW_MINIMUM, rh.gs(R.string.basal_value_below_minimum), Notification.URGENT)
                 rxBus.send(EventNewNotification(notification))
-                callback?.result(instantiator.providePumpEnactResult().success(false).enacted(false).comment(R.string.basal_value_below_minimum))?.run()
+                callback?.result(pumpEnactResultProvider.get().success(false).enacted(false).comment(R.string.basal_value_below_minimum))?.run()
                 return false
             }
         }
@@ -476,7 +496,7 @@ class CommandQueueImplementation @Inject constructor(
 
     // returns true if command is queued
     override fun readStatus(reason: String, callback: Callback?): Boolean {
-        if (isLastScheduled(CommandType.READSTATUS)) {
+        if (isReadStatusScheduled()) {
             aapsLogger.debug(LTag.PUMPQUEUE, "READSTATUS $reason ignored as duplicated")
             callback?.result(executingNowError())?.run()
             return false
@@ -672,16 +692,11 @@ class CommandQueueImplementation @Inject constructor(
     }
 
     private fun showBolusProgressDialog(detailedBolusInfo: DetailedBolusInfo) {
+        BolusProgressData.set(detailedBolusInfo.insulin, isSMB = detailedBolusInfo.bolusType === BS.Type.SMB, id = detailedBolusInfo.id)
         if (detailedBolusInfo.context != null) {
-            uiInteraction.runBolusProgressDialog(
-                (detailedBolusInfo.context as AppCompatActivity).supportFragmentManager,
-                detailedBolusInfo.insulin,
-                detailedBolusInfo.id
-            )
+            uiInteraction.runBolusProgressDialog((detailedBolusInfo.context as AppCompatActivity).supportFragmentManager)
         } else {
             val i = Intent()
-            i.putExtra("insulin", detailedBolusInfo.insulin)
-            i.putExtra("id", detailedBolusInfo.id)
             i.setClass(context, uiInteraction.bolusProgressHelperActivity)
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(i)

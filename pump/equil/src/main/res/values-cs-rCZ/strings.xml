@@ -3,14 +3,13 @@
     <string name="equil_pump_description">Equil 5.3 nebo novější pumpa </string>
     <!--  start  -->
     <string name="equil_basal_speed">Základní bazál</string>
-    <string name="equil_bolus_delivered">Vydáno %1$.3f U / %2$.3f U</string>
     <string name="equil_btn_cancel">Zrušit</string>
     <string name="equil_btn_need">Potřeba</string>
     <string name="equil_btn_skip">Přeskočit</string>
     <string name="equil_date_device">Poslední připojení</string>
     <string name="equil_dressing">Vyměnit zásobník</string>
     <string name="equil_dressing_onkey_msg">Automatické přetáčení pístu do výchozí polohy. Po dosažení dna se automaticky zastaví. V případě potřeby akci přerušte kliknutím na tlačítko \"Stop\".</string>
-    <string name="equil_finish">Dokončeno</string>
+    <string name="equil_finish">Dokončit</string>
     <string name="equil_next">Další</string>
     <string name="equil_hint_dressing">Tato operace zastaví vydávání inzulínu, a způsobí přetočení pístu do výchozí polohy!</string>
     <string name="equil_history">Historie</string>
@@ -163,6 +162,7 @@ Pravidlo pro tvorbu hesla: musí být 4 znaky dlouhé a musí obsahovat znaky z 
     <string name="equil_set_pair_password">Nastavit heslo pro párování</string>
     <string name="equil_hint1">Po připojení pumpy k základně zvolte, zda chcete vyprázdnit vzduch z vnitřní jehly.</string>
     <string name="equil_unbind">Zrušit párování zařízení</string>
+    <string name="equil_device_unpaired">Zařízení odpárováno</string>
     <string name="equil_assemble">Prosím, sestavte pumpu, naplněný zásobník a nabitou baterii</string>
     <string name="equil_devices_number">Zadejte ID nové pumpy</string>
     <string name="equil_insert">Prosím naplňte zásobník, dokud se na jehle neobjeví kapička inzulínu</string>
@@ -175,4 +175,5 @@ Pravidlo pro tvorbu hesla: musí být 4 znaky dlouhé a musí obsahovat znaky z 
     <string name="equil_maxbolus_tips">Maximální povolený bolus v pumpě [%1$s U]</string>
     <string name="equil_replace_reservoir">Zásobník je prázdný. Prosím vyměňte zásobník</string>
     <string name="error_mustbe6hexadidits">Musí mít 6 znaků z ABCDEF0123456789</string>
+    <string name="equil_removed_anyway">Příkaz pro odpárování se nezdařil. Pumpa bude přesto odstraněna. Heslo nastavené během párování není z pumpy odebráno.</string>
 </resources>

@@ -3,11 +3,13 @@ package app.aaps.plugins.aps.autotune
 import app.aaps.core.interfaces.logging.UserEntryLogger
 import app.aaps.core.validators.preferences.AdaptiveIntPreference
 import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
+import app.aaps.plugins.aps.autotune.data.ATProfile
 import app.aaps.shared.tests.TestBaseWithProfile
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
+import javax.inject.Provider
 
 class AutotunePluginTest : TestBaseWithProfile() {
 
@@ -33,9 +35,12 @@ class AutotunePluginTest : TestBaseWithProfile() {
     }
 
     @BeforeEach fun prepare() {
+        val atProfileProvider = Provider {
+            ATProfile(activePlugin, preferences, profileUtil, dateUtil, rh, profileStoreProvider, aapsLogger)
+        }
         autotunePlugin = AutotunePlugin(
-            injector, aapsLogger, rh, preferences, rxBus, profileFunction, dateUtil, activePlugin,
-            autotuneFS, autotuneIob, autotunePrep, autotuneCore, config, uel, instantiator
+            aapsLogger, rh, preferences, rxBus, profileFunction, dateUtil, activePlugin,
+            autotuneFS, autotuneIob, autotunePrep, autotuneCore, config, uel, profileStoreProvider, atProfileProvider
         )
     }
 

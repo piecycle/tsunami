@@ -12,17 +12,16 @@ import app.aaps.core.interfaces.aps.OapsProfile
 import app.aaps.core.interfaces.aps.OapsProfileAutoIsf
 import app.aaps.core.interfaces.aps.OapsProfileTsunami
 import app.aaps.core.interfaces.aps.RT
-import app.aaps.core.objects.aps.DetermineBasalResult
-import dagger.android.HasAndroidInjector
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.builtins.ArraySerializer
 import kotlinx.serialization.json.Json
+import javax.inject.Provider
 
-fun app.aaps.database.entities.APSResult.fromDb(injector: HasAndroidInjector): APSResult =
+fun app.aaps.database.entities.APSResult.fromDb(apsResultProvider: Provider<APSResult>): APSResult =
     when (algorithm) {
         app.aaps.database.entities.APSResult.Algorithm.AMA,
         app.aaps.database.entities.APSResult.Algorithm.SMB      ->
-            DetermineBasalResult(injector, Json.decodeFromString(this.resultJson)).also { result ->
+            apsResultProvider.get().with(Json.decodeFromString(this.resultJson)).also { result ->
                 result.date = this.timestamp
                 result.glucoseStatus = try {
                     this.glucoseStatusJson?.let { Json.decodeFromString(it) }
@@ -37,7 +36,7 @@ fun app.aaps.database.entities.APSResult.fromDb(injector: HasAndroidInjector): A
             }
 
         app.aaps.database.entities.APSResult.Algorithm.AUTO_ISF ->
-            DetermineBasalResult(injector, Json.decodeFromString(this.resultJson)).also { result ->
+            apsResultProvider.get().with(Json.decodeFromString(this.resultJson)).also { result ->
                 result.date = this.timestamp
                 result.glucoseStatus = try {
                     this.glucoseStatusJson?.let { Json.decodeFromString(it) }

@@ -5,14 +5,13 @@
 
     <!--  start  -->
     <string name="equil_basal_speed">Base basal</string>
-    <string name="equil_bolus_delivered">%1$.3f U / %2$.3f U Delivered</string>
     <string name="equil_btn_cancel">Cancel</string>
     <string name="equil_btn_need">Need</string>
     <string name="equil_btn_skip">Skip</string>
     <string name="equil_date_device">Last connection</string>
     <string name="equil_dressing">Change reservoir</string>
     <string name="equil_dressing_onkey_msg">Automatically moving the plunger to the reservoir bottom. It will stop automatically upon reaching the bottom. Click \'Stop\' to interrupt if needed.</string>
-    <string name="equil_finish">Completed</string>
+    <string name="equil_finish">Finish</string>
     <string name="equil_next">Next</string>
 
     <string name="equil_hint_dressing">This operation will stop insulin infusion and cause the pump plunger to retract to the bottom!</string>
@@ -181,6 +180,7 @@
 
 
     <string name="equil_unbind">Unpair device</string>
+    <string name="equil_device_unpaired">Device unpaired</string>
     <string name="equil_assemble">Please assemble the pump, the filled reservoir and the charged battery</string>
     <string name="equil_devices_number">Enter new pump ID</string>
     <string name="equil_insert">Please prime the reservoir until there is a drop of insulin on the needle tip</string>
@@ -195,4 +195,5 @@
     <string name="equil_replace_reservoir">The reservoir is empty. Please replace the reservoir</string>
     <string name="sixhexanumber" translatable="false">^[A-F0-9]{6}$</string>
     <string name="error_mustbe6hexadidits">Must be 6 characters of ABCDEF0123456789</string>
+    <string name="equil_removed_anyway">Unpair command failed. Pump will be removed anyway. Password set during pairing is not removed from the pump.</string>
 </resources>

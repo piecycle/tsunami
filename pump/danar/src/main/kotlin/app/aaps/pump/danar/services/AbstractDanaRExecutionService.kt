@@ -8,16 +8,16 @@ import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
 import androidx.core.app.ActivityCompat
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.Profile
+import app.aaps.core.interfaces.pump.BolusProgressData
+import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.pump.PumpSync
 import app.aaps.core.interfaces.resources.ResourceHelper
@@ -25,7 +25,6 @@ import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppExit
 import app.aaps.core.interfaces.rx.events.EventBTChange
-import app.aaps.core.interfaces.rx.events.EventOverviewBolusProgress
 import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
@@ -57,6 +56,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -78,7 +78,7 @@ abstract class AbstractDanaRExecutionService : DaggerService() {
     @Inject lateinit var pumpSync: PumpSync
     @Inject lateinit var activePlugin: ActivePlugin
     @Inject lateinit var uiInteraction: UiInteraction
-    @Inject lateinit var instantiator: Instantiator
+    @Inject lateinit var pumpEnactResultProvider: Provider<PumpEnactResult>
 
     private val disposable = CompositeDisposable()
     private var mDevName: String? = null
@@ -97,7 +97,7 @@ abstract class AbstractDanaRExecutionService : DaggerService() {
     abstract fun connect()
     abstract fun getPumpStatus()
     abstract fun loadEvents(): PumpEnactResult?
-    abstract fun bolus(amount: Double, carbs: Int, carbTimeStamp: Long, t: EventOverviewBolusProgress.Treatment): Boolean
+    abstract fun bolus(detailedBolusInfo: DetailedBolusInfo): Boolean
     abstract fun highTempBasal(percent: Int, durationInMinutes: Int): Boolean // Rv2 only
     abstract fun tempBasalShortDuration(percent: Int, durationInMinutes: Int): Boolean // Rv2 only
     abstract fun tempBasal(percent: Int, durationInHours: Int): Boolean
@@ -164,7 +164,7 @@ abstract class AbstractDanaRExecutionService : DaggerService() {
 
     protected fun getBTSocketForSelectedPump() {
         mDevName = preferences.get(DanaStringKey.RName)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
             val bluetoothAdapter = (context.getSystemService(BLUETOOTH_SERVICE) as BluetoothManager).adapter
             if (bluetoothAdapter != null) {
                 val bondedDevices = bluetoothAdapter.bondedDevices
@@ -191,7 +191,7 @@ abstract class AbstractDanaRExecutionService : DaggerService() {
     }
 
     fun bolusStop() {
-        aapsLogger.debug(LTag.PUMP, "bolusStop >>>>> @ " + if (danaPump.bolusingTreatment == null) "" else danaPump.bolusingTreatment?.insulin)
+        aapsLogger.debug(LTag.PUMP, "bolusStop >>>>> @ ${BolusProgressData.delivered}")
         val stop = MsgBolusStop(injector)
         danaPump.bolusStopForced = true
         if (isConnected) {
@@ -206,7 +206,7 @@ abstract class AbstractDanaRExecutionService : DaggerService() {
     }
 
     fun loadHistory(type: Byte): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         if (!isConnected) return result
         val msg: MessageBase = when (type) {
             RecordTypes.RECORD_TYPE_ALARM     -> MsgHistoryAlarm(injector)

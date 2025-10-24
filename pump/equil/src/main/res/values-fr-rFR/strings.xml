@@ -3,14 +3,13 @@
     <string name="equil_pump_description">Equil 5.3 ou pompe Patch plus récente</string>
     <!--  start  -->
     <string name="equil_basal_speed">Basale normale</string>
-    <string name="equil_bolus_delivered">%1$.3fU / %2$.3fU injectés</string>
     <string name="equil_btn_cancel">Annuler</string>
     <string name="equil_btn_need">Requis</string>
     <string name="equil_btn_skip">Ignorer</string>
     <string name="equil_date_device">Dernière connexion</string>
     <string name="equil_dressing">Changer le réservoir</string>
     <string name="equil_dressing_onkey_msg">Déplacement automatique du piston vers le bas du réservoir. Il s\'arrêtera automatiquement lorsque le fond sera atteint. Cliquez sur \'Arrêter\' pour interrompre si nécessaire.</string>
-    <string name="equil_finish">Terminé</string>
+    <string name="equil_finish">Terminer</string>
     <string name="equil_next">Suivant</string>
     <string name="equil_hint_dressing">Cette opération arrêtera l\'injection de l\'insuline et fera en sorte que le piston de la pompe se rétracte vers le bas !</string>
     <string name="equil_history">Historique</string>
@@ -156,6 +155,7 @@
     <string name="equil_set_pair_password">Définir le mot de passe d\'appairage</string>
     <string name="equil_hint1">Après avoir installé la pompe sur la base, sélectionnez si vous souhaitez purger l\'air de l\'aiguille.</string>
     <string name="equil_unbind">Dissocier l\'appareil</string>
+    <string name="equil_device_unpaired">Appareil non appairé</string>
     <string name="equil_assemble">Veuillez assembler la pompe, le réservoir rempli et la batterie chargée</string>
     <string name="equil_devices_number">Entrer le nouvel identifiant de la pompe</string>
     <string name="equil_insert">Veuillez amorcer le réservoir jusqu\'à ce qu\'il y ait une goutte d\'insuline sur la pointe de l\'aiguille</string>
@@ -168,4 +168,5 @@
     <string name="equil_maxbolus_tips">Bolus max autorisés dans la pompe [%1$sU]</string>
     <string name="equil_replace_reservoir">Le réservoir est vide. Veuillez remplacer le réservoir</string>
     <string name="error_mustbe6hexadidits">Doit avoir 6 caractères parmi ABCDEF0123456789</string>
+    <string name="equil_removed_anyway">Échec de la commande de dissociation. La pompe sera supprimée de toute façon. Le mot de passe défini lors de l\'appairage n\'est pas supprimé de la pompe.</string>
 </resources>

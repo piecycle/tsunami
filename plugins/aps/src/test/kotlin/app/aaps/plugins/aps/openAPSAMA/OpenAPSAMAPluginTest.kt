@@ -20,9 +20,9 @@ class OpenAPSAMAPluginTest : TestBaseWithProfile() {
 
     @BeforeEach fun prepare() {
         openAPSAMAPlugin = OpenAPSAMAPlugin(
-            injector, aapsLogger, rxBus, constraintChecker, rh, config, profileFunction, activePlugin,
+            aapsLogger, rxBus, constraintChecker, rh, config, profileFunction, activePlugin,
             iobCobCalculator, processedTbrEbData, hardLimits, dateUtil, persistenceLayer, glucoseStatusProvider, preferences, determineBasalAMA,
-            GlucoseStatusCalculatorSMB(aapsLogger, iobCobCalculator, dateUtil, decimalFormatter)
+            GlucoseStatusCalculatorSMB(aapsLogger, iobCobCalculator, dateUtil, decimalFormatter, deltaCalculator), apsResultProvider
         )
     }
 

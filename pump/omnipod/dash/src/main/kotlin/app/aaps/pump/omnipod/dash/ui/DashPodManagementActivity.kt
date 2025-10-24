@@ -21,7 +21,6 @@ import app.aaps.pump.omnipod.dash.driver.pod.definition.ActivationProgress
 import app.aaps.pump.omnipod.dash.driver.pod.state.OmnipodDashPodStateManager
 import app.aaps.pump.omnipod.dash.ui.wizard.activation.DashPodActivationWizardActivity
 import app.aaps.pump.omnipod.dash.ui.wizard.deactivation.DashPodDeactivationWizardActivity
-import dagger.android.HasAndroidInjector
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import javax.inject.Inject
@@ -30,7 +29,6 @@ class DashPodManagementActivity : TranslatedDaggerAppCompatActivity() {
 
     @Inject lateinit var fabricPrivacy: FabricPrivacy
     @Inject lateinit var commandQueue: CommandQueue
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var context: Context
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var podStateManager: OmnipodDashPodStateManager

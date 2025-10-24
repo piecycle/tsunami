@@ -95,6 +95,7 @@ Nếu sau khoảng 5 phút vẫn chưa thiết lập được kết nối:\n\n
     <string name="combov2_setting_tbr_succeeded">Cài đặt TBR thành công</string>
     <string name="combov2_setting_tbr_failed">Cài đặt TBR không thành công</string>
     <string name="combov2_set_emulated_100_tbr">Đặt TBR giả lập 100%</string>
+    <string name="combov2_letting_emulated_100_tbr_finish">Để TBR mô phỏng 100% hoàn tất</string>
     <string name="combov2_ignoring_redundant_100_tbr">Bỏ qua yêu cầu TBR 100% dư thừa</string>
     <string name="combov2_hit_unexpected_tbr_limit">Gặp giới hạn bất ngờ khi điều chỉnh TBR: phần trăm mục tiêu là %1$d%%, nhưng đạt giới hạn ở %2$d%%</string>
     <string name="combov2_cannot_set_absolute_tbr_if_basal_zero">Không thể đặt TBR tuyệt đối khi basal nền bằng 0</string>
@@ -115,6 +116,8 @@ Nếu sau khoảng 5 phút vẫn chưa thiết lập được kết nối:\n\n
     <string name="combov2_automatic_battery_entry">Tự động phát hiện và nhập thay pin</string>
     <string name="combov2_timezone_changed">Múi giờ đã thay đổi</string>
     <string name="combov2_datetime_changed">Ngày và/hoặc giờ đã thay đổi</string>
+    <string name="combov2_dst_started">Giờ mùa hè (DST) đã bắt đầu</string>
+    <string name="combov2_dst_ended">Giờ mùa hè (DST) đã kết thúc</string>
     <string name="combov2_cannot_connect_pump_error_observed">Không thể kết nối với bơm vì bơm báo lỗi. Người dùng cần xử lý lỗi trên bơm, sau đó chờ 5 phút hoặc nhấn nút Làm mới (Refresh) trong tab Driver.</string>
     <string name="combov2_refresh_pump_status_after_error">Cập nhật trạng thái bơm sau khi bơm báo lỗi</string>
     <string name="combov2_go_back">Quay lại</string>

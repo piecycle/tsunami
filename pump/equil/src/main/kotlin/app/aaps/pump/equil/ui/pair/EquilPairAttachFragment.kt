@@ -7,12 +7,9 @@ import androidx.navigation.fragment.findNavController
 import app.aaps.pump.equil.R
 import com.bumptech.glide.Glide
 
-// IMPORTANT: This activity needs to be called from RileyLinkSelectPreference (see pref_medtronic.xml as example)
 class EquilPairAttachFragment : EquilPairFragmentBase() {
 
-    override fun getLayoutId(): Int {
-        return R.layout.equil_pair_attach_fragment
-    }
+    override fun getLayoutId(): Int = R.layout.equil_pair_attach_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,12 +25,7 @@ class EquilPairAttachFragment : EquilPairFragmentBase() {
         }
     }
 
-    override fun getNextPageActionId(): Int {
-        return R.id.action_startEquilActivationFragment_to_startEquilPairAirFragment
-    }
+    override fun getNextPageActionId(): Int = R.id.action_startEquilActivationFragment_to_startEquilPairAirFragment
 
-    override fun getIndex(): Int {
-        return 4
-    }
-
+    override fun getIndex(): Int = 4
 }

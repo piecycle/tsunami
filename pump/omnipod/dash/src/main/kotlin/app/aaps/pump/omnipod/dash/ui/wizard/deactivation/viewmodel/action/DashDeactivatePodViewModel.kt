@@ -3,7 +3,6 @@ package app.aaps.pump.omnipod.dash.ui.wizard.deactivation.viewmodel.action
 import androidx.annotation.StringRes
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.CommandQueue
@@ -16,15 +15,16 @@ import app.aaps.pump.omnipod.common.ui.wizard.deactivation.viewmodel.action.Deac
 import app.aaps.pump.omnipod.dash.driver.pod.state.OmnipodDashPodStateManager
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
+import javax.inject.Provider
 
 class DashDeactivatePodViewModel @Inject constructor(
     private val podStateManager: OmnipodDashPodStateManager,
     private val commandQueue: CommandQueue,
     private val rxBus: RxBus,
-    instantiator: Instantiator,
+    pumpEnactResultProvider: Provider<PumpEnactResult>,
     logger: AAPSLogger,
     aapsSchedulers: AapsSchedulers
-) : DeactivatePodViewModel(instantiator, logger, aapsSchedulers) {
+) : DeactivatePodViewModel(pumpEnactResultProvider, logger, aapsSchedulers) {
 
     override fun doExecuteAction(): Single<PumpEnactResult> = Single.create { source ->
         commandQueue.customCommand(

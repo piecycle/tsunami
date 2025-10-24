@@ -34,6 +34,7 @@ import app.aaps.ui.dialogs.InsulinDialog
 import app.aaps.ui.dialogs.LoopDialog
 import app.aaps.ui.dialogs.ProfileSwitchDialog
 import app.aaps.ui.dialogs.ProfileViewerDialog
+import app.aaps.ui.dialogs.SiteRotationDialog
 import app.aaps.ui.dialogs.TempBasalDialog
 import app.aaps.ui.dialogs.TempTargetDialog
 import app.aaps.ui.dialogs.TreatmentDialog
@@ -43,15 +44,15 @@ import app.aaps.ui.services.AlarmSoundService
 import app.aaps.ui.services.AlarmSoundServiceHelper
 import app.aaps.ui.widget.Widget
 import dagger.Reusable
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
+import javax.inject.Provider
 
 @Reusable
 class UiInteractionImpl @Inject constructor(
     private val context: Context,
     private val rxBus: RxBus,
-    private val injector: HasAndroidInjector,
-    private val alarmSoundServiceHelper: AlarmSoundServiceHelper
+    private val alarmSoundServiceHelper: AlarmSoundServiceHelper,
+    private val notificationWithActionProvider: Provider<NotificationWithAction>
 ) : UiInteraction {
 
     override val mainActivity: Class<*> = MainActivity::class.java
@@ -143,8 +144,13 @@ class UiInteractionImpl @Inject constructor(
     }
 
     override fun runFillDialog(fragmentManager: FragmentManager) {
-        FillDialog()
+        FillDialog(fragmentManager)
             .show(fragmentManager, "FillDialog")
+    }
+
+    override fun runSiteRotationDialog(fragmentManager: FragmentManager) {
+        SiteRotationDialog()
+            .show(fragmentManager, "SiteRotationDialog")
     }
 
     override fun runProfileViewerDialog(fragmentManager: FragmentManager, time: Long, mode: UiInteraction.Mode, customProfile: String?, customProfileName: String?, customProfile2: String?) {
@@ -162,7 +168,7 @@ class UiInteractionImpl @Inject constructor(
     }
 
     override fun runCareDialog(fragmentManager: FragmentManager, options: UiInteraction.EventType, @StringRes event: Int) {
-        CareDialog()
+        CareDialog(fragmentManager)
             .also {
                 it.arguments = Bundle().also { bundle ->
                     bundle.putInt("event", event)
@@ -172,14 +178,10 @@ class UiInteractionImpl @Inject constructor(
             .show(fragmentManager, "CareDialog")
     }
 
-    override fun runBolusProgressDialog(fragmentManager: FragmentManager, insulin: Double, id: Long) {
+    override fun runBolusProgressDialog(fragmentManager: FragmentManager) {
         // Activity may be destroyed before Dialog pop up so try/catch
         try {
-            BolusProgressDialog().also {
-                it.setInsulin(insulin)
-                it.setId(id)
-                it.show(fragmentManager, "BolusProgress")
-            }
+            BolusProgressDialog().show(fragmentManager, "BolusProgress")
         } catch (_: Exception) {
             // do nothing
         }
@@ -206,13 +208,13 @@ class UiInteractionImpl @Inject constructor(
     }
 
     override fun addNotificationWithAction(nsAlarm: NSAlarm) {
-        rxBus.send(EventNewNotification(NotificationWithAction(injector, nsAlarm)))
+        rxBus.send(EventNewNotification(notificationWithActionProvider.get().with(nsAlarm)))
     }
 
     override fun addNotificationWithAction(id: Int, text: String, level: Int, buttonText: Int, action: Runnable, validityCheck: (() -> Boolean)?, @RawRes soundId: Int?, date: Long, validTo: Long) {
         rxBus.send(
             EventNewNotification(
-                NotificationWithAction(injector = injector, id = id, text = text, level = level, validityCheck = validityCheck)
+                notificationWithActionProvider.get().with(id = id, text = text, level = level, validityCheck = validityCheck)
                     .action(buttonText, action)
                     .also {
                         it.date = date
@@ -225,7 +227,7 @@ class UiInteractionImpl @Inject constructor(
     override fun addNotificationWithDialogResponse(id: Int, text: String, level: Int, @StringRes buttonText: Int, title: String, message: String, validityCheck: (() -> Boolean)?) {
         rxBus.send(
             EventNewNotification(
-                NotificationWithAction(injector, id, text, level, validityCheck)
+                notificationWithActionProvider.get().with(id, text, level, validityCheck)
                     .also { n ->
                         n.action(buttonText) {
                             n.contextForAction?.let { OKDialog.show(it, title, message) }
@@ -237,7 +239,7 @@ class UiInteractionImpl @Inject constructor(
     override fun addNotification(id: Int, text: String, level: Int, @StringRes actionButtonId: Int, action: Runnable, validityCheck: (() -> Boolean)?) {
         rxBus.send(
             EventNewNotification(
-                NotificationWithAction(injector, id, text, level, validityCheck).apply {
+                notificationWithActionProvider.get().with(id, text, level, validityCheck).apply {
                     action(actionButtonId, action)
                 })
         )

@@ -10,11 +10,11 @@ import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.pump.BolusProgressData
+import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.pump.PumpSync
 import app.aaps.core.interfaces.queue.Callback
@@ -81,6 +81,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -107,7 +108,7 @@ class DiaconnG8Service : DaggerService() {
     @Inject lateinit var diaconnLogUploader: DiaconnLogUploader
     @Inject lateinit var diaconnHistoryRecordDao: DiaconnHistoryRecordDao
     @Inject lateinit var uiInteraction: UiInteraction
-    @Inject lateinit var instantiator: Instantiator
+    @Inject lateinit var pumpEnactResultProvider: Provider<PumpEnactResult>
 
     private val disposable = CompositeDisposable()
     private val mBinder: IBinder = LocalBinder()
@@ -279,7 +280,7 @@ class DiaconnG8Service : DaggerService() {
 
     fun loadHistory(): PumpEnactResult {
         if (!diaconnG8Plugin.isInitialized()) {
-            val result = instantiator.providePumpEnactResult().success(false)
+            val result = pumpEnactResultProvider.get().success(false)
             result.comment = "pump not initialized"
             return result
         }
@@ -289,7 +290,7 @@ class DiaconnG8Service : DaggerService() {
             sendMessage(IncarnationInquirePacket(injector))
         }
 
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         var apsLastLogNum = 9999
         var apsWrappingCount = -1
         // get saved last log info
@@ -435,7 +436,7 @@ class DiaconnG8Service : DaggerService() {
     }
 
     fun setUserSettings(): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
 
         val msg: DiaconnG8Packet = when (diaconnG8Pump.setUserOptionType) {
             DiaconnG8Pump.ALARM       -> SoundSettingPacket(injector, diaconnG8Pump.beepAndAlarm, diaconnG8Pump.alarmIntensity)
@@ -459,7 +460,7 @@ class DiaconnG8Service : DaggerService() {
         return result.success(true)
     }
 
-    fun bolus(insulin: Double, carbs: Int, carbTime: Long, t: EventOverviewBolusProgress.Treatment): Boolean {
+    fun bolus(detailedBolusInfo: DetailedBolusInfo): Boolean {
         if (!isConnected) return false
         if (BolusProgressData.stopPressed) return false
         rxBus.send(EventPumpStatusChanged(rh.gs(R.string.startingbolus)))
@@ -473,18 +474,15 @@ class DiaconnG8Service : DaggerService() {
             updateBolusSpeedInPump = false
         }
 
+        val insulin = detailedBolusInfo.insulin
         // pump bolus speed inquire
         sendMessage(BolusSpeedInquirePacket(injector))
         diaconnG8Pump.bolusDone = false
-        diaconnG8Pump.bolusingTreatment = t
-        diaconnG8Pump.bolusAmountToBeDelivered = insulin
+        diaconnG8Pump.bolusingDetailedBolusInfo = detailedBolusInfo
         diaconnG8Pump.bolusStopped = false
         diaconnG8Pump.bolusStopForced = false
         diaconnG8Pump.bolusProgressLastTimeStamp = dateUtil.now()
         val start = InjectionSnackSettingPacket(injector, (insulin * 100).toInt())
-        if (carbs > 0) {
-            pumpSync.syncCarbsWithTimestamp(carbTime, carbs.toDouble(), null, PumpType.DIACONN_G8, diaconnG8Pump.serialNo.toString())
-        }
         val bolusStart = System.currentTimeMillis()
         if (insulin > 0) {
             if (!diaconnG8Pump.bolusStopped) {
@@ -492,14 +490,9 @@ class DiaconnG8Service : DaggerService() {
                 // otp process
                 if (!processConfirm(start.msgType)) return false
             } else {
-                t.insulin = 0.0
                 return false
             }
         }
-        val bolusingEvent = EventOverviewBolusProgress
-        bolusingEvent.t = t
-        bolusingEvent.percent = 99
-        //diaconnG8Pump.bolusingTreatment = null
         var speed = 12
         when (diaconnG8Pump.speed) {
             1 -> speed = 60
@@ -521,22 +514,24 @@ class DiaconnG8Service : DaggerService() {
         diaconnG8Pump.bolusingInjAmount = 0.0
 
         if (diaconnG8Pump.isReadyToBolus) {
-            var progressPecent = 0
             while (!diaconnG8Pump.bolusDone) {
                 if (diaconnG8Pump.isPumpVersionGe3_53) {
-                    progressPecent = diaconnG8Pump.bolusingInjProgress
-                    //bolusingEvent.status = String.format(rh.gs(R.string.waitingforestimatedbolusend), progressPecent)
-                    bolusingEvent.status = "볼러스 주입중 ${diaconnG8Pump.bolusingInjAmount}U / ${diaconnG8Pump.bolusingSetAmount}U (${progressPecent}%)"
-                    bolusingEvent.percent = min(progressPecent, 100)
+                    rxBus.send(EventOverviewBolusProgress(rh, delivered = diaconnG8Pump.bolusingInjAmount, id = detailedBolusInfo.id))
                 } else {
+                    var progressPercent = 0
                     val waitTime = (expectedEnd - System.currentTimeMillis()) / 1000
-                    bolusingEvent.status = String.format(rh.gs(R.string.waitingforestimatedbolusend), if (waitTime < 0) 0 else waitTime)
                     if (totalwaitTime > waitTime && totalwaitTime > 0) {
-                        progressPecent = ((totalwaitTime - waitTime) * 100 / totalwaitTime).toInt()
+                        progressPercent = ((totalwaitTime - waitTime) * 100 / totalwaitTime).toInt()
                     }
-                    bolusingEvent.percent = min(progressPecent, 100)
+                    val percent = min(progressPercent, 100)
+                    rxBus.send(
+                        EventOverviewBolusProgress(
+                            status = rh.gs(R.string.waitingforestimatedbolusend),
+                            percent = percent,
+                            id = detailedBolusInfo.id
+                        )
+                    )
                 }
-                rxBus.send(bolusingEvent)
                 SystemClock.sleep(200)
             }
         }
@@ -548,13 +543,10 @@ class DiaconnG8Service : DaggerService() {
                 // reread bolus status
                 rxBus.send(EventPumpStatusChanged(rh.gs(R.string.gettingbolusstatus)))
                 sendMessage(InjectionSnackInquirePacket(injector), 2000) // last bolus
-                // 볼러스 결과 보고패킷에서 처리함.
-                if (!diaconnG8Pump.isPumpVersionGe3_53) {
-                    bolusingEvent.percent = 100
-                }
                 rxBus.send(EventPumpStatusChanged(rh.gs(app.aaps.core.interfaces.R.string.disconnecting)))
             }
         })
+        diaconnG8Pump.bolusingDetailedBolusInfo = null
         return !start.failed
     }
 

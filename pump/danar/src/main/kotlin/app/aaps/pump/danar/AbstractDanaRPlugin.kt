@@ -10,7 +10,6 @@ import app.aaps.core.interfaces.constraints.PluginConstraints
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.OwnDatabasePlugin
 import app.aaps.core.interfaces.plugin.PluginDescription
@@ -47,6 +46,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import org.json.JSONException
 import org.json.JSONObject
+import javax.inject.Provider
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -68,7 +68,7 @@ abstract class AbstractDanaRPlugin protected constructor(
     protected var uiInteraction: UiInteraction,
     protected var danaHistoryDatabase: DanaHistoryDatabase,
     protected var decimalFormatter: DecimalFormatter,
-    protected var instantiator: Instantiator
+    protected var pumpEnactResultProvider: Provider<PumpEnactResult>
 ) : PumpPluginBase(
     pluginDescription = PluginDescription()
         .mainType(PluginType.PUMP)
@@ -120,7 +120,7 @@ abstract class AbstractDanaRPlugin protected constructor(
 
     // Pump interface
     override fun setNewBasalProfile(profile: Profile): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         if (executionService == null) {
             aapsLogger.error("setNewBasalProfile sExecutionService is null")
             result.comment("setNewBasalProfile sExecutionService is null")
@@ -183,7 +183,7 @@ abstract class AbstractDanaRPlugin protected constructor(
 
     override fun setTempBasalPercent(percent: Int, durationInMinutes: Int, profile: Profile, enforceNew: Boolean, tbrType: TemporaryBasalType): PumpEnactResult {
         var percentReq = percent
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         percentReq = constraintChecker.applyBasalPercentConstraints(ConstraintObject(percentReq, aapsLogger), profile).value()
         if (percentReq < 0) {
             result.isTempCancel(false).enacted(false).success(false).comment(app.aaps.core.ui.R.string.invalid_input)
@@ -234,7 +234,7 @@ abstract class AbstractDanaRPlugin protected constructor(
         // needs to be rounded
         val durationInHalfHours = max(durationInMinutes / 30, 1)
         insulinReq = roundTo(insulinReq, pumpDescription.extendedBolusStep)
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         if (danaPump.isExtendedInProgress && abs(danaPump.extendedBolusAmount - insulinReq) < pumpDescription.extendedBolusStep) {
             result.enacted(false)
                 .success(true)
@@ -283,7 +283,7 @@ abstract class AbstractDanaRPlugin protected constructor(
     }
 
     override fun cancelExtendedBolus(): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         if (danaPump.isExtendedInProgress) {
             executionService?.extendedBolusStop()
             if (!danaPump.isExtendedInProgress) {
@@ -383,7 +383,7 @@ abstract class AbstractDanaRPlugin protected constructor(
      * DanaR interface
      */
     override fun loadHistory(type: Byte): PumpEnactResult =
-        executionService?.loadHistory(type) ?: instantiator.providePumpEnactResult()
+        executionService?.loadHistory(type) ?: pumpEnactResultProvider.get()
 
     /**
      * Constraint interface

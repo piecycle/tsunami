@@ -127,7 +127,6 @@
     <!-- Profile -->
     <string name="localprofile">Προφίλ</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">Ορίστε ένα προφίλ που είναι διαθέσιμο εκτός σύνδεσης.</string>
     <string name="a11y_add_new_to_list">προσθήκη νέου στη λίστα</string>
     <string name="do_you_want_switch_profile">Θέλετε να αλλάξετε το προφίλ και να απορρίψετε τις αλλαγές που έγιναν στο τρέχον προφίλ;</string>
     <string name="save_or_reset_changes_first">Αποθήκευση ή επαναφορά των τρεχουσών αλλαγών πρώτα</string>

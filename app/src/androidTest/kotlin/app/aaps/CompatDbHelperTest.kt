@@ -44,12 +44,12 @@ import app.aaps.di.TestApplication
 import app.aaps.helpers.RxHelper
 import app.aaps.plugins.sync.nsShared.NsIncomingDataProcessor
 import com.google.common.truth.Truth.assertThat
-import dagger.android.HasAndroidInjector
 import org.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
+import javax.inject.Provider
 
 class CompatDbHelperTest @Inject constructor() {
 
@@ -58,7 +58,7 @@ class CompatDbHelperTest @Inject constructor() {
     @Inject lateinit var rxHelper: RxHelper
     @Inject lateinit var l: L
     @Inject lateinit var commandQueue: CommandQueue
-    @Inject lateinit var injector: HasAndroidInjector
+    @Inject lateinit var bolusWizardProvider: Provider<BolusWizard>
     @Inject lateinit var persistenceLayer: PersistenceLayer
     @Inject lateinit var profileFunction: ProfileFunction
     @Inject lateinit var nsIncomingDataProcessor: NsIncomingDataProcessor
@@ -175,7 +175,7 @@ class CompatDbHelperTest @Inject constructor() {
         //BCR
         rxHelper.resetState(EventTreatmentChange::class.java)
         rxHelper.resetState(EventNewHistoryData::class.java)
-        val bcr = BolusWizard(injector).doCalc(
+        val bcr = bolusWizardProvider.get().doCalc(
             profile = profileFunction.getProfile() ?: error("No profile"),
             profileName = profileFunction.getProfileName(),
             tempTarget = null,

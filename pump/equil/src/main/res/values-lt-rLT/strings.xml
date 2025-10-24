@@ -3,14 +3,12 @@
     <string name="equil_pump_description">Equil Patch 5.3 ar naujesnė pompa </string>
     <!--  start  -->
     <string name="equil_basal_speed">Bazinis insulinas</string>
-    <string name="equil_bolus_delivered">%1$.3f vv / %2$.3f vv suleista</string>
     <string name="equil_btn_cancel">Atšaukti</string>
     <string name="equil_btn_need">Reikia</string>
     <string name="equil_btn_skip">Praleisti</string>
     <string name="equil_date_device">Paskutinis prisijungimas</string>
     <string name="equil_dressing">Rezervuaro keitimas</string>
     <string name="equil_dressing_onkey_msg">Stūmoklis automatiškai perkeliamas į rezervuaro dugną. Pasiekus dugną, jis automatiškai sustos. Jei reikia, spustelėkite „Stop“, kad nutrauktumėte veiksmą.</string>
-    <string name="equil_finish">Atlikta</string>
     <string name="equil_next">Toliau</string>
     <string name="equil_hint_dressing">Ši operacija sustabdys insulino leidimą ir inicijuos pompos stūmoklio atitraukimą iki apačios!</string>
     <string name="equil_history">Istorija</string>

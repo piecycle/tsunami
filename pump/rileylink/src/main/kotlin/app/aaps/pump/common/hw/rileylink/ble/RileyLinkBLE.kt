@@ -12,7 +12,6 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.SystemClock
 import androidx.core.content.ContextCompat
 import app.aaps.core.interfaces.configuration.Config
@@ -115,6 +114,7 @@ class RileyLinkBLE @Inject constructor(
         radioResponseCountNotified = notifier
     }
 
+    @SuppressLint("MissingPermission")
     fun discoverServices(): Boolean {
         // shouldn't happen, but if it does we exit
         bluetoothConnectionGatt ?: return false
@@ -171,9 +171,7 @@ class RileyLinkBLE @Inject constructor(
             aapsLogger.error(LTag.PUMPBTCOMM, "RileyLink device is null, can't do connectGatt.")
             return
         }
-        if (config.PUMPDRIVERS && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            ContextCompat.checkSelfPermission(context, "android.permission.BLUETOOTH_CONNECT") != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (config.PUMPDRIVERS && ContextCompat.checkSelfPermission(context, "android.permission.BLUETOOTH_CONNECT") != PackageManager.PERMISSION_GRANTED) {
             aapsLogger.debug(LTag.PUMPBTCOMM, "no permission")
             return
         } else bluetoothConnectionGatt = rileyLinkDevice?.connectGatt(context, true, bluetoothGattCallback)
@@ -192,6 +190,7 @@ class RileyLinkBLE @Inject constructor(
         }
     }
 
+    @SuppressLint("MissingPermission")
     fun disconnect() {
         isConnected = false
         aapsLogger.warn(LTag.PUMPBTCOMM, "Closing GATT connection")
@@ -203,11 +202,13 @@ class RileyLinkBLE @Inject constructor(
         }
     }
 
+    @SuppressLint("MissingPermission")
     fun close() {
         bluetoothConnectionGatt?.close()
         bluetoothConnectionGatt = null
     }
 
+    @SuppressLint("MissingPermission")
     fun setNotificationBlocking(serviceUUID: UUID?, charaUUID: UUID?): BLECommOperationResult {
         val retValue = BLECommOperationResult()
         if (bluetoothConnectionGatt == null) {
@@ -394,12 +395,12 @@ class RileyLinkBLE @Inject constructor(
                     aapsLogger.warn(LTag.PUMPBTCOMM, "onConnectionStateChange " + getGattStatusMessage(status) + " " + stateMessage)
                 }
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
-                    if (status == BluetoothGatt.GATT_SUCCESS) rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.BluetoothConnected, context)
+                    if (status == BluetoothGatt.GATT_SUCCESS) rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.BluetoothConnected)
                     else aapsLogger.debug(LTag.PUMPBTCOMM, "BT State connected, GATT status $status (${getGattStatusMessage(status)})")
                 } else if (newState == BluetoothProfile.STATE_CONNECTING || newState == BluetoothProfile.STATE_DISCONNECTING) {
                     aapsLogger.debug(LTag.PUMPBTCOMM, "We are in ${if (status == BluetoothProfile.STATE_CONNECTING) "Connecting" else "Disconnecting"} state.")
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkDisconnected, context)
+                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkDisconnected)
                     if (manualDisconnect) close()
                     aapsLogger.warn(LTag.PUMPBTCOMM, "RileyLink Disconnected.")
                 } else {
@@ -465,7 +466,7 @@ class RileyLinkBLE @Inject constructor(
                     aapsLogger.info(LTag.PUMPBTCOMM, "Gatt device is RileyLink device: $rileyLinkFound")
                     if (rileyLinkFound) {
                         isConnected = true
-                        rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkReady, context)
+                        rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkReady)
                     } else {
                         isConnected = false
                         rileyLinkServiceData.setServiceState(
@@ -475,7 +476,7 @@ class RileyLinkBLE @Inject constructor(
                     }
                 } else {
                     aapsLogger.debug(LTag.PUMPBTCOMM, "onServicesDiscovered " + getGattStatusMessage(status))
-                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkGattFailed, context)
+                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkGattFailed)
                 }
             }
         }

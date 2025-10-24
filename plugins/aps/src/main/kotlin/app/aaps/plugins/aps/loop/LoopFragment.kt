@@ -29,7 +29,6 @@ import app.aaps.plugins.aps.R
 import app.aaps.plugins.aps.databinding.LoopFragmentBinding
 import app.aaps.plugins.aps.extensions.toHtml
 import app.aaps.plugins.aps.loop.events.EventLoopSetLastRunGui
-import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -46,7 +45,6 @@ class LoopFragment : DaggerFragment(), MenuProvider {
     @Inject lateinit var loop: Loop
     @Inject lateinit var dateUtil: DateUtil
     @Inject lateinit var decimalFormatter: DecimalFormatter
-    @Inject lateinit var injector: HasAndroidInjector
 
     @Suppress("PrivatePropertyName")
     private val ID_MENU_RUN = 501

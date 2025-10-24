@@ -1,10 +1,19 @@
 package app.aaps.plugins.constraints.objectives.objectives
 
+import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.utils.DateUtil
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.plugins.constraints.R
-import dagger.android.HasAndroidInjector
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Suppress("SpellCheckingInspection")
-class Objective2(injector: HasAndroidInjector) : Objective(injector, "exam", R.string.objectives_exam_objective, R.string.objectives_exam_gate) {
+@Singleton
+class Objective2 @Inject constructor(
+    preferences: Preferences,
+    rh: ResourceHelper,
+    dateUtil: DateUtil,
+) : Objective(preferences, rh, dateUtil, "exam", R.string.objectives_exam_objective, R.string.objectives_exam_gate) {
 
     init {
         tasks.add(

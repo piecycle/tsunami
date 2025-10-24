@@ -7,32 +7,22 @@ import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.receivers.Intents
-import app.aaps.core.interfaces.resources.ResourceHelper
-import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.keys.BooleanKey
-import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.utils.receivers.DataWorkerStorage
-import app.aaps.shared.impl.utils.DateUtilImpl
 import app.aaps.shared.tests.BundleMock
-import app.aaps.shared.tests.TestBase
+import app.aaps.shared.tests.TestBaseWithProfile
 import com.google.common.truth.Truth.assertThat
-import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
-class XdripSourcePluginTest : TestBase() {
-
-    abstract class ContextWithInjector : Context(), HasAndroidInjector
+class XdripSourcePluginTest : TestBaseWithProfile() {
 
     private lateinit var xdripSourcePlugin: XdripSourcePlugin
-    private lateinit var dateUtil: DateUtil
     private lateinit var dataWorkerStorage: DataWorkerStorage
 
-    private val injector = HasAndroidInjector {
-        AndroidInjector {
+    init {
+        addInjector {
             if (it is XdripSourcePlugin.XdripSourceWorker) {
                 it.dataWorkerStorage = dataWorkerStorage
                 it.dateUtil = dateUtil
@@ -41,16 +31,9 @@ class XdripSourcePluginTest : TestBase() {
         }
     }
 
-    @Mock lateinit var rh: ResourceHelper
-    @Mock lateinit var context: ContextWithInjector
-    @Mock lateinit var preferences: Preferences
-
     @BeforeEach
     fun setup() {
-        `when`(context.applicationContext).thenReturn(context)
-        `when`(context.androidInjector()).thenReturn(injector.androidInjector())
         xdripSourcePlugin = XdripSourcePlugin(rh, aapsLogger)
-        dateUtil = DateUtilImpl(context)
         dataWorkerStorage = DataWorkerStorage(context)
     }
 

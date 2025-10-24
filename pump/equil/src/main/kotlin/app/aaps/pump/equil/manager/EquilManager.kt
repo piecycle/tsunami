@@ -2,12 +2,10 @@ package app.aaps.pump.equil.manager
 
 import android.os.SystemClock
 import android.text.TextUtils
-import app.aaps.core.data.model.BS
 import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.profile.Profile.ProfileValue
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.PumpEnactResult
@@ -21,7 +19,6 @@ import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.pump.equil.EquilConst
 import app.aaps.pump.equil.R
 import app.aaps.pump.equil.ble.EquilBLE
-import app.aaps.pump.equil.data.AlarmMode
 import app.aaps.pump.equil.data.BolusProfile
 import app.aaps.pump.equil.data.RunMode
 import app.aaps.pump.equil.database.BolusType
@@ -69,7 +66,9 @@ import java.util.Arrays
 import java.util.Calendar
 import java.util.Optional
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
+import kotlin.math.min
 
 @Singleton
 class EquilManager @Inject constructor(
@@ -81,7 +80,7 @@ class EquilManager @Inject constructor(
     private val equilBLE: EquilBLE,
     private val equilHistoryRecordDao: EquilHistoryRecordDao,
     private val equilHistoryPumpDao: EquilHistoryPumpDao,
-    private val instantiator: Instantiator
+    private val pumpEnactResultProvider: Provider<PumpEnactResult>
 ) {
 
     private val gsonInstance: Gson = createGson()
@@ -122,7 +121,7 @@ class EquilManager @Inject constructor(
     }
 
     fun closeBle(): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             equilBLE.disconnect()
         } catch (ex: Exception) {
@@ -132,7 +131,7 @@ class EquilManager @Inject constructor(
     }
 
     fun readStatus(): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             equilBLE.checkEquilStatus()
         } catch (ex: Exception) {
@@ -142,7 +141,7 @@ class EquilManager @Inject constructor(
     }
 
     fun getTempBasalPump(): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val command = CmdTempBasalGet(aapsLogger, preferences, this)
             equilBLE.writeCmd(command)
@@ -160,7 +159,7 @@ class EquilManager @Inject constructor(
     }
 
     fun setTempBasal(insulin: Double, time: Int, cancel: Boolean): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val command = CmdTempBasalSet(insulin, time, aapsLogger, preferences, this)
             command.cancel = cancel
@@ -210,7 +209,7 @@ class EquilManager @Inject constructor(
     }
 
     fun setExtendedBolus(insulin: Double, time: Int, cancel: Boolean): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val command = CmdExtendedBolusSet(insulin, time, cancel, aapsLogger, preferences, this)
             val equilHistoryRecord = addHistory(command)
@@ -254,9 +253,7 @@ class EquilManager @Inject constructor(
     }
 
     fun bolus(detailedBolusInfo: DetailedBolusInfo, bolusProfile: BolusProfile): PumpEnactResult {
-        val progressUpdateEvent = EventOverviewBolusProgress
-        progressUpdateEvent.t = EventOverviewBolusProgress.Treatment(0.0, 0, detailedBolusInfo.bolusType == BS.Type.SMB, detailedBolusInfo.id)
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val command = CmdLargeBasalSet(detailedBolusInfo.insulin, aapsLogger, preferences, this)
             val equilHistoryRecord = addHistory(command)
@@ -265,8 +262,7 @@ class EquilManager @Inject constructor(
                 (command as Object).wait(command.timeOut.toLong())
             }
             bolusProfile.stop = false
-            var sleep = command.stepTime / 20 * 200
-            sleep = 2000
+            val sleep = 2000
             val percent1 = (5f / detailedBolusInfo.insulin).toFloat()
             aapsLogger.debug(LTag.PUMPCOMM, "sleep===" + detailedBolusInfo.insulin + "===" + percent1)
             var percent = 0f
@@ -274,17 +270,13 @@ class EquilManager @Inject constructor(
                 result.success = true
                 result.enacted(true)
                 while (!bolusProfile.stop && percent < 100) {
-                    progressUpdateEvent.percent = percent.toInt()
-                    progressUpdateEvent.status = this.rh.gs(
-                        R.string.equil_bolus_delivered,
-                        percent / 100.0 * detailedBolusInfo.insulin,
-                        detailedBolusInfo.insulin
-                    )
-                    rxBus.send(progressUpdateEvent)
+                    rxBus.send(EventOverviewBolusProgress(rh, percent / 100.0 * detailedBolusInfo.insulin, id = detailedBolusInfo.id))
                     SystemClock.sleep(sleep.toLong())
                     percent = percent + percent1
                     aapsLogger.debug(LTag.PUMPCOMM, "isCmdStatus===" + percent + "====" + bolusProfile.stop)
                 }
+                // constraint percent.
+                percent = min(percent, 100.0f)
                 result.comment = rh.gs(app.aaps.core.ui.R.string.virtualpump_resultok)
             } else {
                 result.success = false
@@ -318,7 +310,7 @@ class EquilManager @Inject constructor(
     }
 
     fun stopBolus(bolusProfile: BolusProfile): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val command: BaseCmd = CmdLargeBasalSet(0.0, aapsLogger, preferences, this)
             val equilHistoryRecord = addHistory(command)
@@ -422,7 +414,7 @@ class EquilManager @Inject constructor(
     }
 
     fun readEquilStatus(): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val command: BaseCmd = CmdModelGet(aapsLogger, preferences, this)
             equilBLE.writeCmd(command)
@@ -444,7 +436,7 @@ class EquilManager @Inject constructor(
     }
 
     fun loadEquilHistory(): PumpEnactResult {
-        val pumpEnactResult = instantiator.providePumpEnactResult()
+        val pumpEnactResult = pumpEnactResultProvider.get()
         var startIndex = getStartHistoryIndex() ?: return pumpEnactResult
         val index = getHistoryIndex() ?: return pumpEnactResult
         aapsLogger.debug(LTag.PUMPCOMM, "return ===$index====$startIndex")
@@ -471,7 +463,7 @@ class EquilManager @Inject constructor(
     }
 
     fun executeCmd(command: BaseCmd): PumpEnactResult {
-        val result = instantiator.providePumpEnactResult()
+        val result = pumpEnactResultProvider.get()
         try {
             val equilHistoryRecord = addHistory(command)
             equilBLE.writeCmd(command)
@@ -674,14 +666,12 @@ class EquilManager @Inject constructor(
         var firmwareVersion: String? = null
 
         var lastDataTime: Long = 0
-        var devicesTime: Long = 0
         var currentInsulin = 0
         var startInsulin = 0
         var battery = 0
         var tempBasal: EquilTempBasalRecord? = null
         var bolusRecord: EquilBolusRecord? = null
         var runMode: RunMode? = null
-        var alarmMode = AlarmMode.TONE_AND_SHAKE
         var rate = 0f
         var historyIndex = 0
 

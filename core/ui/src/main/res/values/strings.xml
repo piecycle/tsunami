@@ -5,7 +5,6 @@
     <string name="error">Error</string>
     <string name="profile_set_ok">Basal profile in pump updated</string>
     <string name="invalid_input">Invalid input data</string>
-    <string name="bolus_delivering">Delivering %1$.2f U</string>
     <string name="constraint_applied">Constraint applied!</string>
     <string name="tempbasals_iobtotal_label_string">Total IOB:</string>
     <string name="tt_label">TT</string>
@@ -14,7 +13,6 @@
     <string name="pump_base_basal_rate">%1$.2f U/h</string>
     <string name="pump_not_initialized_profile_not_set">Pump not initialized, profile not set!</string>
     <string name="failed_update_basal_profile">Failed to update basal profile</string>
-    <string name="bolus_delivered_successfully">Bolus %1$.2f U delivered successfully</string>
     <string name="no_valid_basal_rate">No valid basal rate read from pump</string>
     <string name="limiting_iob">Limiting IOB to %1$.1f U because of %2$s</string>
     <string name="loop_disabled">LOOP DISABLED BY CONSTRAINTS</string>
@@ -105,7 +103,7 @@
     <string name="name_short">Name:</string>
     <string name="time">Time</string>
     <string name="ns_wifi_ssids">WiFi SSID</string>
-    <string name="loading">Loading …</string>
+    <string name="loading">Loading…</string>
     <string name="notes_label">Notes</string>
     <string name="remove_button">Remove</string>
     <string name="add_new">Add new</string>
@@ -159,6 +157,7 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="prime_fill">Prime/Fill</string>
+    <string name="site_rotation">Site Rotation</string>
     <string name="overview_insulin_label">Insulin</string>
     <string name="stoptemptarget">Stop temp target</string>
     <string name="closedloop">Closed Loop</string>
@@ -232,6 +231,8 @@
     <string name="careportal_exercise_message">Exercise : %1$s</string>
     <string name="careportal_pump_site_change">Pump Site Change</string>
     <string name="cgm_sensor_insert">CGM Sensor Insert</string>
+    <string name="careportal_pump_site_management">Pump Sites</string>
+    <string name="careportal_cgm_site_management">CGM Sites</string>
     <string name="careportal_cgmsensorstart">CGM Sensor Start</string>
     <string name="careportal_cgm_sensor_stop">CGM Sensor Stop</string>
     <string name="careportal_dad_alert">D.A.D. Alert</string>
@@ -265,6 +266,40 @@
     <string name="loop">Loop</string>
     <string name="ns">NS</string>
     <string name="record">Record</string>
+    <string name="location_front_right_upper_chest">Right Chest</string>
+    <string name="location_front_left_upper_chest">Left Chest</string>
+    <string name="location_side_right_upper_arm">Upper Right Outer Arm</string>
+    <string name="location_side_left_upper_arm">Upper Left Outer Arm</string>
+    <string name="location_back_right_upper_arm">Upper Right Back Arm</string>
+    <string name="location_back_left_upper_arm">Upper Left Back Arm</string>
+    <string name="location_side_right_upper_abdomen">Upper Right Outer Abdomen</string>
+    <string name="location_side_left_upper_abdomen">Upper Left Outer Abdomen</string>
+    <string name="location_side_right_lower_abdomen">Lower Right Outer Abdomen</string>
+    <string name="location_side_left_lower_abdomen">Lower Left Outer Abdomen</string>
+    <string name="location_front_right_upper_abdomen">Upper Right Front Abdomen</string>
+    <string name="location_front_left_upper_abdomen">Upper Left Front Abdomen</string>
+    <string name="location_front_right_lower_abdomen">Lower Right Front Abdomen</string>
+    <string name="location_front_left_lower_abdomen">Lower Left Front Abdomen</string>
+    <string name="location_back_right_buttock">Right Buttock</string>
+    <string name="location_back_left_buttock">Left Buttock</string>
+    <string name="location_side_right_upper_thigh">Upper Right Outer Thigh</string>
+    <string name="location_side_left_upper_thigh">Upper Left Outer Thigh</string>
+    <string name="location_side_right_lower_thigh">Lower Right Outer Thigh</string>
+    <string name="location_side_left_lower_thigh">Lower Left Outer Thigh</string>
+    <string name="location_front_right_upper_thigh">Upper Right Front Thigh</string>
+    <string name="location_front_left_upper_thigh">Upper Left Front Thigh</string>
+    <string name="location_front_right_lower_thigh">Lower Right Front Thigh</string>
+    <string name="location_front_left_lower_thigh">Lower Left Front Thigh</string>
+    <string name="arrow_up">Up</string>
+    <string name="arrow_up_right">Up Right</string>
+    <string name="arrow_right">Right</string>
+    <string name="arrow_down_right">Down Right</string>
+    <string name="arrow_down">Down</string>
+    <string name="arrow_down_left">Down Left</string>
+    <string name="arrow_left">Left</string>
+    <string name="arrow_up_left">Up Left</string>
+    <string name="arrow_center">Center</string>
+
 
     <!--    Command-->
     <string name="connectiontimedout">Connection timed out</string>
@@ -330,7 +365,9 @@
     <string name="uel_cancel_extended_bolus">CANCEL EXTENDED BOLUS</string>
     <string name="uel_cancel_tt">CANCEL TEMP TARGET</string>
     <string name="uel_careportal">CAREPORTAL</string>
+    <string name="uel_sensor_location">SENSOR LOCATION</string>
     <string name="uel_site_change">SITE CHANGE</string>
+    <string name="uel_site_location">SITE LOCATION</string>
     <string name="uel_reservoir_change">RESERVOIR CHANGE</string>
     <string name="uel_calibration">CALIBRATION</string>
     <string name="uel_prime_bolus">PRIME BOLUS</string>

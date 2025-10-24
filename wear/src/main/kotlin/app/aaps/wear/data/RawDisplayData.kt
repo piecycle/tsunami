@@ -14,7 +14,7 @@ import app.aaps.wear.interaction.utils.Persistence
  */
 class RawDisplayData {
 
-    var singleBg = arrayOf<EventData.SingleBg>(
+    var singleBg = arrayOf(
         EventData.SingleBg(
             dataset = 0,
             timeStamp = 0,
@@ -70,7 +70,7 @@ class RawDisplayData {
     )
 
     // status bundle
-    var status = arrayOf<EventData.Status>(
+    var status = arrayOf(
         EventData.Status(
             dataset = 0,
             externalStatus = "no status",

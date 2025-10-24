@@ -62,7 +62,9 @@ data class UserEntry(
         CANCEL_EXTENDED_BOLUS,
         CANCEL_TT,
         CAREPORTAL,
+        SENSOR_LOCATION,
         SITE_CHANGE,
+        SITE_LOCATION,
         RESERVOIR_CHANGE,
         CALIBRATION,
         PRIME_BOLUS,
@@ -136,6 +138,7 @@ data class UserEntry(
         CalibrationDialog,
         FillDialog,
         TsunamiDialog,      //MP Tsunami
+        SiteRotationDialog,
         BgCheck,
         SensorInsert,
         BatteryChange,

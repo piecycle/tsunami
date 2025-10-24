@@ -54,7 +54,7 @@ class OmnipodErosPumpPluginTest : TestBaseWithProfile() {
         val plugin = OmnipodErosPumpPlugin(
             aapsLogger, rh, preferences, commandQueue, TestAapsSchedulers(), rxBus, context,
             erosPodStateManager, aapsOmnipodErosManager, fabricPrivacy, rileyLinkServiceData, dateUtil, aapsOmnipodUtil,
-            rileyLinkUtil, omnipodAlertUtil, profileFunction, pumpSync, uiInteraction, erosHistoryDatabase, decimalFormatter, instantiator
+            rileyLinkUtil, omnipodAlertUtil, profileFunction, pumpSync, uiInteraction, erosHistoryDatabase, decimalFormatter, pumpEnactResultProvider
         )
         val pumpState = PumpSync.PumpState(null, null, null, null, "")
         `when`(pumpSync.expectedPumpState()).thenReturn(pumpState)

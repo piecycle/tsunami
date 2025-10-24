@@ -27,7 +27,7 @@ class ActionAlarmTest : TestBaseWithProfile() {
                 it.timerUtil = timerUtil
                 it.dateUtil = dateUtil
                 it.config = config
-                it.instantiator = instantiator
+                it.pumpEnactResultProvider = pumpEnactResultProvider
             }
         }
     }

@@ -2,6 +2,9 @@
 <resources>
     <!-- PhoneChecker -->
     <!-- DST Helper -->
+    <string name="dst_in_24h_warning">Sẽ đổi sang giờ mùa hè trong vòng 24 giờ tới</string>
+    <string name="dst_loop_disabled_warning">Thay đổi giờ mùa hè cách đây chưa đến 3 giờ - Vòng lặp kín đã bị vô hiệu</string>
+    <string name="dst_loop_disabled_error">Thay đổi giờ mùa hè (DST) xảy ra cách đây chưa đến 3 giờ. Vòng lặp kín đã bị tạm vô hiệu và sẽ tự động bật lại sau 3 giờ kể từ khi thay đổi giờ DST</string>
     <!-- Storage constraint -->
     <string name="disk_full">Giải phóng ít nhất %1$d MB từ bộ nhớ trong! Đã tắt vòng lặp!</string>
     <!-- Version Checker -->

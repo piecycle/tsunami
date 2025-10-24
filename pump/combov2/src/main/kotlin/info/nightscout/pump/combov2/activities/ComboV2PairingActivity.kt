@@ -2,7 +2,6 @@ package info.nightscout.pump.combov2.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -126,23 +125,21 @@ class ComboV2PairingActivity : TranslatedDaggerAppCompatActivity() {
         binding.combov2PairingSectionInitial.visibility = View.GONE
         binding.combov2PairingSectionCannotPairDriverNotInitialized.visibility = View.VISIBLE
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            // Launch the BluetoothPermissionChecks in the CREATED lifecycle state.
-            // This is important, because registering an activity (which the
-            // BluetoothPermissionChecks class does) must take place _before_ the
-            // STARTED state is reached.
-            lifecycleScope.launch {
-                lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                    aapsLogger.debug(LTag.PUMP, "Creating and registering BT permissions check object")
-                    bluetoothPermissionChecks = BluetoothPermissionChecks(
-                        thisActivity,
-                        listOf(
-                            Manifest.permission.BLUETOOTH_SCAN,
-                            Manifest.permission.BLUETOOTH_CONNECT
-                        ),
-                        aapsLogger
-                    )
-                }
+        // Launch the BluetoothPermissionChecks in the CREATED lifecycle state.
+        // This is important, because registering an activity (which the
+        // BluetoothPermissionChecks class does) must take place _before_ the
+        // STARTED state is reached.
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                aapsLogger.debug(LTag.PUMP, "Creating and registering BT permissions check object")
+                bluetoothPermissionChecks = BluetoothPermissionChecks(
+                    thisActivity,
+                    listOf(
+                        Manifest.permission.BLUETOOTH_SCAN,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                    ),
+                    aapsLogger
+                )
             }
 
             // Unregister any activity that BluetoothPermissionChecks previously

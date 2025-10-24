@@ -278,10 +278,8 @@ class OmnipodDashBleManagerImpl @Inject constructor(
 
     override fun removeBond() {
         try {
-            if (preferences.get(DashBooleanPreferenceKey.UseBonding) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.BLUETOOTH_CONNECT
-                ) == PackageManager.PERMISSION_GRANTED
+            if (preferences.get(DashBooleanPreferenceKey.UseBonding) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
             ) {
                 val device = bluetoothAdapter?.getRemoteDevice(podState.bluetoothAddress) ?: throw IllegalStateException("MAC address not found")
                 // At time of writing (2021-12-06), the removeBond method

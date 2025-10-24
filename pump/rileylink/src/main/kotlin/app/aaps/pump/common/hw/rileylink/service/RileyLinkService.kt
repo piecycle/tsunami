@@ -2,7 +2,6 @@ package app.aaps.pump.common.hw.rileylink.service
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
-import android.content.Context
 import android.content.Intent
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
@@ -20,7 +19,6 @@ import app.aaps.pump.common.hw.rileylink.defs.RileyLinkError
 import app.aaps.pump.common.hw.rileylink.defs.RileyLinkServiceState
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkDoubleKey
 import dagger.android.DaggerService
-import dagger.android.HasAndroidInjector
 import java.util.Locale
 import javax.inject.Inject
 
@@ -32,17 +30,15 @@ abstract class RileyLinkService : DaggerService() {
 
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var preferences: Preferences
-    @Inject lateinit var context: Context
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var rileyLinkUtil: RileyLinkUtil
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var rileyLinkServiceData: RileyLinkServiceData
     @Inject lateinit var activePlugin: ActivePlugin
     @Inject lateinit var rileyLinkBLE: RileyLinkBLE     // android-bluetooth management
     @Inject lateinit var rfSpy: RFSpy // interface for RL xxx Mhz radio.
 
-    private val bluetoothAdapter: BluetoothAdapter? get() = (context.getSystemService(BLUETOOTH_SERVICE) as BluetoothManager?)?.adapter
+    private val bluetoothAdapter: BluetoothAdapter? get() = (getSystemService(BLUETOOTH_SERVICE) as BluetoothManager?)?.adapter
     private var broadcastReceiver: RileyLinkBroadcastReceiver? = null
     private var bluetoothStateReceiver: RileyLinkBluetoothStateReceiver? = null
 
@@ -65,15 +61,6 @@ abstract class RileyLinkService : DaggerService() {
      * If you have customized RileyLinkServiceData you need to override this
      */
     abstract fun initRileyLinkServiceData()
-    override fun onUnbind(intent: Intent): Boolean {
-        //aapsLogger.warn(LTag.PUMPBTCOMM, "onUnbind");
-        return super.onUnbind(intent)
-    }
-
-    override fun onRebind(intent: Intent) {
-        //aapsLogger.warn(LTag.PUMPBTCOMM, "onRebind");
-        super.onRebind(intent)
-    }
 
     override fun onDestroy() {
         super.onDestroy()

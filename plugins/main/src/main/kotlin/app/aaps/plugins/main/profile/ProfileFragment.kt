@@ -94,7 +94,7 @@ class ProfileFragment : DaggerFragment() {
     private fun sumLabel(): String {
         val profile = profilePlugin.getEditedProfile()
         val sum = profile?.let { ProfileSealed.Pure(profile, null).baseBasalSum() } ?: 0.0
-        return " ∑" + decimalFormatter.to2Decimal(sum) + rh.gs(app.aaps.core.ui.R.string.insulin_unit_shortname)
+        return " ∑" + decimalFormatter.to2Decimal(sum) + " " + rh.gs(app.aaps.core.ui.R.string.insulin_unit_shortname)
     }
 
     private var _binding: ProfileFragmentBinding? = null

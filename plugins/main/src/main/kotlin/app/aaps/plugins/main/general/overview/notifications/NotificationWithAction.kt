@@ -6,31 +6,23 @@ import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
 import app.aaps.core.interfaces.nsclient.NSAlarm
 import app.aaps.core.interfaces.plugin.ActivePlugin
-import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.LongComposedKey
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.plugins.main.R
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 @Suppress("SpellCheckingInspection")
-class NotificationWithAction(
-    injector: HasAndroidInjector
+class NotificationWithAction @Inject constructor(
+    private val aapsLogger: AAPSLogger,
+    private val preferences: Preferences,
+    private val activePlugin: ActivePlugin
 ) : Notification() {
 
-    @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var rh: ResourceHelper
-    @Inject lateinit var preferences: Preferences
-    @Inject lateinit var activePlugin: ActivePlugin
 
     var validityCheck: (() -> Boolean)? = null
 
-    init {
-        injector.androidInjector().inject(this)
-    }
-
-    constructor(injector: HasAndroidInjector, id: Int, text: String, level: Int, validityCheck: (() -> Boolean)?) : this(injector) {
+    fun with(id: Int, text: String, level: Int, validityCheck: (() -> Boolean)?) = this.also {
         this.id = id
         date = System.currentTimeMillis()
         this.text = text
@@ -38,7 +30,7 @@ class NotificationWithAction(
         this.validityCheck = validityCheck
     }
 
-    constructor (injector: HasAndroidInjector, nsAlarm: NSAlarm) : this(injector) {
+    fun with (nsAlarm: NSAlarm) = this.also {
         date = System.currentTimeMillis()
         when (nsAlarm.level()) {
             0 -> {

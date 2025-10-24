@@ -139,7 +139,7 @@
     <!-- Profile -->
     <string name="localprofile">Profile</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">Define a profile which is available offline.</string>
+    <string name="description_profile_local">Define a profile describing your insulin needs.</string>
     <string name="a11y_add_new_to_list">add new to list</string>
     <string name="do_you_want_switch_profile">Do you want to switch profile and discard changes made to current profile?</string>
     <string name="save_or_reset_changes_first">Save or reset current changes first</string>
@@ -173,6 +173,7 @@
     <string name="extended_bolus_button">Extended Bolus</string>
     <string name="extended_bolus_cancel_button">Cancel Extended Bolus</string>
     <string name="tools">Tools</string>
+    <string name="site_rotation">Site Rotation</string>
     <string name="nav_history_browser">History browser</string>
     <string name="sensor_label">Sensor</string>
     <string name="age_label">age:</string>

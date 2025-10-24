@@ -6,7 +6,7 @@ import android.hardware.SensorManager
 import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.weardata.EventData.ActionHeartRate
 import app.aaps.core.interfaces.sharedPreferences.SP
-import app.aaps.shared.tests.AAPSLoggerTest
+import app.aaps.wear.AAPSLoggerTest
 import app.aaps.wear.R
 import com.google.common.truth.Truth.assertThat
 import io.reactivex.rxjava3.core.Scheduler

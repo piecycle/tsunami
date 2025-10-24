@@ -37,6 +37,7 @@
     <string name="format_cob_ic">%1$.1fгр Чувств: %2$.1f</string>
     <string name="format_carbs_ic">%1$.0fгр Чувств: %2$.1f</string>
     <string name="treatments_wizard_total_label">Общо</string>
+    <!-- SiteRotationDialog -->
     <!-- FillDialog -->
     <string name="fill_warning">Моля, уверете се, че стойността съответсва на вашият сет! Този инсулин не се включва в IOB!</string>
     <string name="record_pump_site_change">Запис смяна на сет</string>

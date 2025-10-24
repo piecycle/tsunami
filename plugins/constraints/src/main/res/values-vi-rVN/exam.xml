@@ -20,6 +20,8 @@
     <string name="pumpdisconnect_notstop">Nó sẽ không dừng việc bơm insulin nếu bơm vẫn được kết nối với cơ thể bạn.</string>
     <string name="pumpdisconnect_openloop">Thao tác này sẽ chuyển AAPS sang chế độ vòng lặp mở (open loop).</string>
     <string name="pumpdisconnect_hint1">https://wiki.aaps.app/en/latest/DailyLifeWithAaps/AapsScreens.html#loop-status</string>
+    <string name="objectives_label">Cài đặt AAPS</string>
+    <string name="objectives2_label">Cài đặt AAPS</string>
     <string name="objectives_howtosave">Những cách tốt nhất để sao lưu cài đặt của bạn là gì?</string>
     <string name="objectives_notesettings">Bạn không cần xuất cài đặt nếu đã ghi chú lại chúng.</string>
     <string name="objectives_afterobjective">Hãy xuất cài đặt sau khi bạn hoàn thành một mục tiêu.</string>
@@ -31,6 +33,7 @@
     <string name="objectives2_easyrestore">Nếu điện thoại của bạn bị hỏng hoặc mất, vẫn có cách dễ dàng để khôi phục cài đặt từ xa mà không cần bản sao lưu.</string>
     <string name="objectives_hint1">https://wiki.aaps.app/en/latest/Maintenance/ExportImportSettings.html</string>
     <string name="objectives_hint2">https://wiki.aaps.app/en/latest/UsefulLinks/FAQ.html#what-emergency-equipment-is-recommended-to-take-with-me</string>
+    <string name="noisycgm_label">Dữ liệu CGM không ổn định</string>
     <string name="noisycgm_whattodo">Xử lý thế nào khi dữ liệu CGM nhiễu?</string>
     <string name="noisycgm_nothing">Không cần làm gì – AAPS sẽ tự xử lý.</string>
     <string name="noisycgm_pause">Tắt vòng lặp kín để tránh nguy cơ bơm quá liều hoặc thiếu liều.</string>
@@ -51,6 +54,7 @@
     <string name="exercise_setunchanged">Giữ nguyên mục tiêu đường huyết của bạn.</string>
     <string name="exercise_15g">Chờ cho đến khi đường huyết giảm xuống dưới mục tiêu tạm cho hạ đường huyết, sau đó ăn 15 g carbohydrate tác dụng nhanh.</string>
     <string name="exercise_hint1">https://wiki.aaps.app/en/latest/DailyLifeWithAaps/TempTargets.html</string>
+    <string name="basaltest_label">Kiểm tra Basal, ISF và I:C</string>
     <string name="basaltest_when">Khi nào các giá trị này cần được xác nhận?</string>
     <string name="basaltest_beforeloop">Trước khi bắt đầu chạy vòng lặp.</string>
     <string name="basaltest_havingregularhighlow">Khi thường xuyên gặp tình trạng đường huyết cao hoặc thấp.</string>
@@ -95,6 +99,7 @@
     <string name="insulin_humalog">Humalog®</string>
     <string name="insulin_actrapid">Actrapid®/Humulin R®/\"regular\" human insulin.</string>
     <string name="insulin_hint1">https://wiki.aaps.app/en/latest/SettingUpAaps/ConfigBuilder.html#insulin</string>
+    <string name="sensitivity_label">Plugin độ nhạy Insulin</string>
     <string name="sensitivity_adjust">Các plugin về độ nhạy cho phép AAPS điều chỉnh khi có những thay đổi tạm thời hoặc ngắn hạn trong độ nhạy insulin (ví dụ như thay đổi nội tiết tố hoặc vấn đề hấp thu tại vị trí truyền).</string>
     <string name="sensitivity_edit">Các plugin về độ nhạy cung cấp cho người dùng những gợi ý thay đổi về tốc độ nền (basal rates), tỷ lệ I:C và ISF để có thể chỉnh sửa Cấu hình.</string>
     <string name="sensitivity_cannula">Ghi lại việc thay kim (cannula) sẽ đặt lại tỷ lệ Autosens về 100%.</string>
@@ -130,6 +135,7 @@
     <string name="iob_hightemp">Basal tạm thời cao sẽ không được bơm khi đường huyết của bạn thấp hơn mục tiêu.</string>
     <string name="iob_negiob">IOB âm trong một khoảng thời gian dài, khi không có vận động, cho thấy Cấu hình của bạn quá mạnh và cần giảm lượng insulin trong phần cài đặt.</string>
     <string name="iob_posiob">IOB dương trong một khoảng thời gian dài cho thấy tình trạng kháng insulin hoặc có bữa ăn chưa được ghi nhận.</string>
+    <string name="breadgrams_label">Nhập carbs và bolus</string>
     <string name="breadgrams_grams">Chỉ nên sử dụng đơn vị gam để ước tính và ghi lại lượng carbohydrate đã tiêu thụ.</string>
     <string name="breadgrams_exchange">Lượng carbohydrate tiêu thụ có thể được ghi lại bằng cách sử dụng hệ thống quy đổi phù hợp (ví dụ: đơn vị trao đổi ‘CHO’ của DAFNE hoặc ‘Đơn vị Bánh mì’ theo chuẩn châu Âu).</string>
     <string name="breadgrams_decay">AAPS sử dụng một mô hình động để ước tính quá trình hấp thu carbohydrate và tính toán lượng carb còn lại (COB).</string>
@@ -143,6 +149,7 @@
     <string name="extendedcarbs_fat">e-carbs (được phân bổ trong tương lai) có thể hỗ trợ AAPS trong việc xử lý các bữa ăn nhiều chất béo/đạm.</string>
     <string name="extendedcarbs_rescue">Để ghi lại lượng carbs cứu nguy được dùng để xử lý khi hạ đường huyết.</string>
     <string name="extendedcarbs_hint1">https://wiki.aaps.app/en/latest/DailyLifeWithAaps/ExtendedCarbs.html</string>
+    <string name="nsclient_label">Giám sát từ xa</string>
     <string name="nsclient_howcanyou">Làm thế nào bạn có thể theo dõi AAPS từ xa (ví dụ cho con bạn)?</string>
     <string name="nsclient_nightscout">Ứng dụng AAPSClient, ứng dụng Nightscout và trang web Nightscout đều cho phép bạn theo dõi AAPS từ xa.</string>
     <string name="nsclient_dexcomfollow">Các ứng dụng khác (ví dụ: Dexcom Follow, xDrip chạy ở chế độ theo dõi) cho phép bạn theo dõi một số thông số từ xa (như giá trị đường huyết/cảm biến), nhưng sử dụng thuật toán khác nên có thể dẫn đến giá trị IOB hoặc COB không chính xác.</string>

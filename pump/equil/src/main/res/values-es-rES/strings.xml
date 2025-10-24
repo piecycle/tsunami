@@ -3,14 +3,13 @@
     <string name="equil_pump_description">Integración de bomba parche Equil 5.3 o superior</string>
     <!--  start  -->
     <string name="equil_basal_speed">Basal base</string>
-    <string name="equil_bolus_delivered">%1$.3f U / %2$.3f U Entregado</string>
     <string name="equil_btn_cancel">Cancelar</string>
     <string name="equil_btn_need">Necesitas</string>
     <string name="equil_btn_skip">Saltar</string>
     <string name="equil_date_device">Última conexión</string>
     <string name="equil_dressing">Cambiar reservorio</string>
     <string name="equil_dressing_onkey_msg">Desplazamiento automático del émbolo hasta el fondo del depósito. Se detendrá automáticamente al llegar al fondo. Haga clic en \"Detener\" para interrumpir si es necesario.</string>
-    <string name="equil_finish">Completado</string>
+    <string name="equil_finish">Finalizar</string>
     <string name="equil_next">Siguiente</string>
     <string name="equil_hint_dressing">Esta operación detendrá la infusión de insulina y hará que el émbolo de la bomba se retraiga hasta el fondo</string>
     <string name="equil_history">Historial</string>
@@ -156,6 +155,7 @@
     <string name="equil_set_pair_password">Establecer la contraseña de emparejamiento</string>
     <string name="equil_hint1">Después de instalar la bomba en su base, selecciona si deseas purgar el aire de la aguja.</string>
     <string name="equil_unbind">Desemparejar dispositivo</string>
+    <string name="equil_device_unpaired">Dispositivo desemparejado</string>
     <string name="equil_assemble">Por favor, monta la bomba, el reservorio lleno y la batería cargada</string>
     <string name="equil_devices_number">Introducir nuevo ID de la bomba</string>
     <string name="equil_insert">Ceba el depósito hasta que haya una gota de insulina en la punta de la aguja</string>
@@ -168,4 +168,5 @@
     <string name="equil_maxbolus_tips">Bolo máximo permitido en la bomba [%1$sU]</string>
     <string name="equil_replace_reservoir">El reservorio está vacío. Por favor, sustituya el reservorio</string>
     <string name="error_mustbe6hexadidits">Debe contener 6 caracteres de ABCDEF0123456789</string>
+    <string name="equil_removed_anyway">Comando de desemparejamiento fallido. La bomba se eliminará de todos modos. La contraseña establecida durante el emparejamiento no se eliminará de la bomba.</string>
 </resources>

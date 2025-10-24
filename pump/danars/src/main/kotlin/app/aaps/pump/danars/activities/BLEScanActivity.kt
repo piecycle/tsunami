@@ -11,7 +11,6 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -151,7 +150,7 @@ class BLEScanActivity : TranslatedDaggerAppCompatActivity() {
             override fun onClick(v: View) {
                 preferences.put(DanaStringKey.MacAddress, item.device.address)
                 preferences.put(DanaStringKey.RsName, name.text.toString())
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
                     item.device.createBond()
                     rxBus.send(EventDanaRSDeviceChange())
                 } else {

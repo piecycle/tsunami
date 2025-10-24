@@ -8,7 +8,6 @@ import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBaseWithPreferences
 import app.aaps.core.interfaces.plugin.PluginDescription
@@ -27,11 +26,7 @@ import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.HardLimits
 import app.aaps.core.keys.LongNonKey
-import app.aaps.core.keys.interfaces.BooleanComposedNonPreferenceKey
-import app.aaps.core.keys.interfaces.DoubleComposedNonPreferenceKey
-import app.aaps.core.keys.interfaces.IntNonPreferenceKey
 import app.aaps.core.keys.interfaces.Preferences
-import app.aaps.core.keys.interfaces.StringComposedNonPreferenceKey
 import app.aaps.core.objects.extensions.blockFromJsonArray
 import app.aaps.core.objects.extensions.pureProfileFromJson
 import app.aaps.core.objects.profile.ProfileSealed
@@ -48,6 +43,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.TimeZone
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -62,7 +58,7 @@ class ProfilePlugin @Inject constructor(
     private val hardLimits: HardLimits,
     private val dateUtil: DateUtil,
     private val config: Config,
-    private val instantiator: Instantiator,
+    private val profileStoreProvider: Provider<ProfileStore>,
     private val decimalFormatter: DecimalFormatter,
     private val uiInteraction: UiInteraction
 ) : PluginBaseWithPreferences(
@@ -203,7 +199,7 @@ class ProfilePlugin @Inject constructor(
         preferences.put(LongNonKey.LocalProfileLastChange, timestamp)
         createAndStoreConvertedProfile()
         isEdited = false
-        aapsLogger.debug(LTag.PROFILE, "Storing settings: " + rawProfile?.data.toString())
+        aapsLogger.debug(LTag.PROFILE, "Storing settings: " + rawProfile?.getData().toString())
         rxBus.send(EventProfileStoreChanged())
         var namesOK = true
         profiles.forEach { if (it.name.contains(".")) namesOK = false }
@@ -428,7 +424,7 @@ class ProfilePlugin @Inject constructor(
             aapsLogger.error("Unhandled exception", e)
         }
 
-        return instantiator.provideProfileStore(json)
+        return profileStoreProvider.get().with(json)
     }
 
     override val profile: ProfileStore?

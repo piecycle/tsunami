@@ -9,14 +9,11 @@ import app.aaps.pump.medtronic.comm.history.pump.PumpHistoryEntry
 import app.aaps.pump.medtronic.comm.history.pump.PumpHistoryEntryType
 import app.aaps.pump.medtronic.util.MedtronicUtil
 import app.aaps.shared.tests.TestBaseWithProfile
-import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
+import org.junit.jupiter.api.BeforeEach
 import org.mockito.Answers
 import org.mockito.Mock
 
 open class MedtronicTestBase : TestBaseWithProfile() {
-
-    var rileyLinkUtil = RileyLinkUtil(aapsLogger)
 
     @Mock lateinit var pumpSync: PumpSync
     @Mock lateinit var pumpSyncStorage: PumpSyncStorage
@@ -24,8 +21,12 @@ open class MedtronicTestBase : TestBaseWithProfile() {
 
     lateinit var medtronicUtil: MedtronicUtil
     lateinit var decoder: MedtronicPumpHistoryDecoder
+    lateinit var rileyLinkUtil: RileyLinkUtil
 
-    val packetInjector = HasAndroidInjector { AndroidInjector { } }
+    @BeforeEach
+    fun mock() {
+        rileyLinkUtil = RileyLinkUtil(aapsLogger, context)
+    }
 
     fun preProcessListTBR(inputList: MutableList<PumpHistoryEntry>) {
 
@@ -52,7 +53,7 @@ open class MedtronicTestBase : TestBaseWithProfile() {
     fun getPumpHistoryEntryFromData(vararg elements: Int): PumpHistoryEntry {
         val data: MutableList<Byte> = ArrayList()
         for (item in elements) {
-            var b = if (item > 128) item - 256 else item
+            val b = if (item > 128) item - 256 else item
             data.add(b.toByte())
         }
 

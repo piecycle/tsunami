@@ -2,7 +2,6 @@ package app.aaps.pump.omnipod.eros.ui.wizard.deactivation.viewmodel.action
 
 import androidx.annotation.StringRes
 import app.aaps.core.interfaces.logging.AAPSLogger
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.CommandQueue
@@ -13,14 +12,15 @@ import app.aaps.pump.omnipod.common.ui.wizard.deactivation.viewmodel.action.Deac
 import app.aaps.pump.omnipod.eros.manager.AapsOmnipodErosManager
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
+import javax.inject.Provider
 
 class ErosDeactivatePodViewModel @Inject constructor(
     private val aapsOmnipodManager: AapsOmnipodErosManager,
     private val commandQueue: CommandQueue,
-    instantiator: Instantiator,
+    pumpEnactResultProvider: Provider<PumpEnactResult>,
     logger: AAPSLogger,
     aapsSchedulers: AapsSchedulers
-) : DeactivatePodViewModel(instantiator, logger, aapsSchedulers) {
+) : DeactivatePodViewModel(pumpEnactResultProvider, logger, aapsSchedulers) {
 
     override fun doExecuteAction(): Single<PumpEnactResult> =
         Single.create { source ->

@@ -84,7 +84,6 @@ fun allCommitted(): Boolean {
 android {
 
     namespace = "app.aaps"
-    ndkVersion = Versions.ndkVersion
 
     defaultConfig {
         minSdk = Versions.minSdk

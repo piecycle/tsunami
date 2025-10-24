@@ -41,7 +41,6 @@ import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.ui.R
 import app.aaps.ui.databinding.DialogLoopBinding
-import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerDialogFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -65,7 +64,6 @@ class LoopDialog : DaggerDialogFragment() {
     @Inject lateinit var persistenceLayer: PersistenceLayer
     @Inject lateinit var protectionCheck: ProtectionCheck
     @Inject lateinit var uiInteraction: UiInteraction
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var config: Config
     @Inject lateinit var translator: Translator
 

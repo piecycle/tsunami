@@ -6,7 +6,6 @@ import android.widget.TextView
 import app.aaps.pump.equil.R
 import com.bumptech.glide.Glide
 
-// IMPORTANT: This activity needs to be called from RileyLinkSelectPreference (see pref_medtronic.xml as example)
 class EquilPairAssembleFragment : EquilPairFragmentBase() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,23 +19,12 @@ class EquilPairAssembleFragment : EquilPairFragmentBase() {
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.equil_pair_assemble_fragment
-    }
+    override fun getLayoutId(): Int = R.layout.equil_pair_assemble_fragment
 
-    override fun getNextPageActionId(): Int {
-        if ((activity as? EquilPairActivity)?.pair == false) {
-            return R.id.action_startEquilActivationFragment_to_startEquilPairFillFragment
+    override fun getNextPageActionId(): Int =
+        if ((activity as? EquilPairActivity)?.pair == false) R.id.action_startEquilActivationFragment_to_startEquilPairFillFragment
+        else R.id.action_startEquilActivationFragment_to_startEquilSerialNumberFragment
 
-        }
-        return R.id.action_startEquilActivationFragment_to_startEquilSerialNumberFragment
-    }
-
-    override fun getIndex(): Int {
-        if ((activity as? EquilPairActivity)?.pair == false) {
-            return 2
-        }
-        return 1
-    }
-
+    override fun getIndex(): Int =
+        if ((activity as? EquilPairActivity)?.pair == false) 2 else 1
 }

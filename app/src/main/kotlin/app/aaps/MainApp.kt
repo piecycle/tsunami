@@ -29,6 +29,8 @@ import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.ui.UiInteraction
+import app.aaps.core.interfaces.ui.compose.ComposeUi
+import app.aaps.core.interfaces.ui.compose.ComposeUiProvider
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.SafeParse
 import app.aaps.core.interfaces.versionChecker.VersionCheckerUtils
@@ -42,6 +44,7 @@ import app.aaps.core.ui.extensions.runOnUiThread
 import app.aaps.core.ui.locale.LocaleHelper
 import app.aaps.core.utils.JsonHelper
 import app.aaps.database.persistence.CompatDBHelper
+import app.aaps.di.AppComponent
 import app.aaps.di.DaggerAppComponent
 import app.aaps.implementation.lifecycle.ProcessLifecycleListener
 import app.aaps.implementation.plugin.PluginStore
@@ -80,7 +83,7 @@ import javax.inject.Provider
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.declaredMemberProperties
 
-class MainApp : DaggerApplication() {
+class MainApp : DaggerApplication(), ComposeUiProvider {
 
     private val disposable = CompositeDisposable()
 
@@ -103,6 +106,7 @@ class MainApp : DaggerApplication() {
     @Inject lateinit var rh: Provider<ResourceHelper>
     @Inject lateinit var loop: Loop
     @Inject lateinit var profileFunction: ProfileFunction
+    lateinit var appComponent: AppComponent
 
     private var handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
     private lateinit var refreshWidget: Runnable
@@ -380,10 +384,18 @@ class MainApp : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent
+        appComponent = DaggerAppComponent
             .builder()
             .application(this)
             .build()
+        return appComponent
+    }
+
+    override fun getComposeUiModule(moduleName: String): ComposeUi {
+        val factory = appComponent.composeUiFactories()[moduleName]
+            ?: throw IllegalArgumentException("No ComposeUiFactory for moduleName=$moduleName")
+
+        return factory.create()
     }
 
     private fun registerLocalBroadcastReceiver() {

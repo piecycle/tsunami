@@ -15,6 +15,7 @@ import app.aaps.core.interfaces.aps.OapsProfile
 import app.aaps.core.interfaces.aps.OapsProfileAutoIsf
 import app.aaps.core.interfaces.aps.OapsProfileTsunami
 import app.aaps.core.interfaces.aps.Predictions
+import app.aaps.core.interfaces.aps.RT
 import app.aaps.core.interfaces.constraints.Constraint
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.db.ProcessedTbrEbData
@@ -49,9 +50,9 @@ open class APSResultObject(protected val injector: HasAndroidInjector) : APSResu
     @Inject lateinit var profileFunction: ProfileFunction
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var decimalFormatter: DecimalFormatter
+    override fun with(result: RT): APSResult = this
 
     init {
-        @Suppress("LeakingThis")
         injector.androidInjector().inject(this)
     }
 

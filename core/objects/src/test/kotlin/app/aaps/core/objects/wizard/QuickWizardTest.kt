@@ -1,24 +1,24 @@
 package app.aaps.core.objects.wizard
 
 import app.aaps.core.interfaces.aps.Loop
-import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.iob.GlucoseStatusProvider
 import app.aaps.core.keys.StringNonKey
-import app.aaps.core.keys.interfaces.Preferences
-import app.aaps.shared.tests.TestBase
+import app.aaps.shared.tests.TestBaseWithProfile
 import com.google.common.truth.Truth.assertThat
-import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
 import org.json.JSONArray
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import javax.inject.Provider
 
-class QuickWizardTest : TestBase() {
+class QuickWizardTest : TestBaseWithProfile() {
 
-    @Mock lateinit var preferences: Preferences
-    @Mock lateinit var profileFunction: ProfileFunction
     @Mock lateinit var loop: Loop
+    @Mock lateinit var persistenceLayer: PersistenceLayer
+    @Mock lateinit var glucoseStatusProvider: GlucoseStatusProvider
+    @Mock lateinit var bolusWizardProvider: Provider<BolusWizard>
 
     private val data1 = "{\"buttonText\":\"Meal\",\"carbs\":36,\"validFrom\":0,\"validTo\":18000," +
         "\"useBG\":0,\"useCOB\":0,\"useBolusIOB\":0,\"useBasalIOB\":0,\"useTrend\":0,\"useSuperBolus\":0,\"useTemptarget\":0}"
@@ -32,25 +32,15 @@ class QuickWizardTest : TestBase() {
     }
 
     private val mockedTime = MockedTime()
-
-    private val injector = HasAndroidInjector {
-        AndroidInjector {
-            if (it is QuickWizardEntry) {
-                it.aapsLogger = aapsLogger
-                it.preferences = preferences
-                it.profileFunction = profileFunction
-                it.loop = loop
-                it.time = mockedTime
-            }
-        }
-    }
-
     private lateinit var quickWizard: QuickWizard
 
     @BeforeEach
     fun setup() {
         `when`(preferences.get(StringNonKey.QuickWizard)).thenReturn("[]")
-        quickWizard = QuickWizard(preferences, injector)
+        val quickWizardEntry = QuickWizardEntry(aapsLogger, preferences, profileFunction, loop, iobCobCalculator, persistenceLayer, dateUtil, glucoseStatusProvider, bolusWizardProvider)
+        quickWizardEntry.time = mockedTime
+        val quickWizardEntryProvider = Provider { quickWizardEntry }
+        quickWizard = QuickWizard(preferences, quickWizardEntryProvider)
     }
 
     @Test

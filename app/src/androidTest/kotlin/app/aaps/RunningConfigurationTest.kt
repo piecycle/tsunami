@@ -8,17 +8,11 @@ import app.aaps.core.data.time.T
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.data.ue.ValueWithUnit
-import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.db.PersistenceLayer
-import app.aaps.core.interfaces.logging.L
-import app.aaps.core.interfaces.plugin.ActivePlugin
-import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.database.AppRepository
 import app.aaps.di.TestApplication
-import app.aaps.helpers.RxHelper
 import com.google.common.truth.Truth.assertThat
-import dagger.android.HasAndroidInjector
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -26,14 +20,8 @@ import javax.inject.Inject
 
 class RunningConfigurationTest @Inject constructor() {
 
-    @Inject lateinit var loop: Loop
     @Inject lateinit var dateUtil: DateUtil
-    @Inject lateinit var rxHelper: RxHelper
-    @Inject lateinit var l: L
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var persistenceLayer: PersistenceLayer
-    @Inject lateinit var profileFunction: ProfileFunction
-    @Inject lateinit var activePlugin: ActivePlugin
     @Inject lateinit var repository: AppRepository
 
     private val context = ApplicationProvider.getApplicationContext<TestApplication>()
@@ -49,7 +37,6 @@ class RunningConfigurationTest @Inject constructor() {
 
     @After
     fun tearDown() {
-        rxHelper.clear()
         repository.clearDatabases()
     }
 

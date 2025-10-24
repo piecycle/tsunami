@@ -3,13 +3,13 @@ package app.aaps.pump.medtrum
 import app.aaps.core.data.model.TE
 import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.time.T
+import app.aaps.core.interfaces.pump.BolusProgressData
 import app.aaps.core.interfaces.pump.PumpSync
-import app.aaps.core.interfaces.rx.events.EventOverviewBolusProgress
 import app.aaps.core.objects.extensions.pureProfileFromJson
 import app.aaps.core.objects.profile.ProfileSealed
-import com.google.common.truth.Truth.assertThat
 import app.aaps.pump.medtrum.comm.enums.BasalType
 import app.aaps.pump.medtrum.comm.enums.ModelType
+import com.google.common.truth.Truth.assertThat
 import org.json.JSONObject
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -118,15 +118,13 @@ class MedtrumPumpTest : MedtrumTestBase() {
         val bolusCompleted = false
         val amount = 1.4
 
-        medtrumPump.bolusingTreatment = EventOverviewBolusProgress.Treatment(0.0, 0, true, 0)
-
         // Call
         medtrumPump.handleBolusStatusUpdate(bolusType, bolusCompleted, amount)
 
         // Expected values
         assertThat(medtrumPump.bolusDone).isEqualTo(bolusCompleted)
         assertThat(medtrumPump.bolusAmountDeliveredFlow.value).isWithin(0.01).of(amount)
-        assertThat(medtrumPump.bolusingTreatment!!.insulin).isWithin(0.01).of(amount)
+        assertThat(BolusProgressData.delivered).isWithin(0.01).of(amount)
     }
 
     @Test fun handleBasalStatusUpdateWhenBasalTypeIsAbsoluteTempAndTemporaryBasalInfoThenExpectNewData() {
@@ -599,6 +597,7 @@ class MedtrumPumpTest : MedtrumTestBase() {
 
         // Expected values
         Mockito.verify(pumpSync, Mockito.never()).syncStopTemporaryBasalWithPumpId(
+            anyOrNull(),
             anyOrNull(),
             anyOrNull(),
             anyOrNull(),

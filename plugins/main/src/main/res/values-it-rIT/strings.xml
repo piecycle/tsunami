@@ -129,7 +129,7 @@
     <!-- Profile -->
     <string name="localprofile">Profilo</string>
     <string name="localprofile_shortname">PL</string>
-    <string name="description_profile_local">Definisci un profilo che è disponibile offline.</string>
+    <string name="description_profile_local">Definire un profilo che descriva il tuo fabbisogno di insulina.</string>
     <string name="a11y_add_new_to_list">aggiungi nuovo alla lista</string>
     <string name="do_you_want_switch_profile">Vuoi cambiare profilo e scartare le modifiche apportate al profilo corrente?</string>
     <string name="save_or_reset_changes_first">Salva o resetta prima le modifiche correnti</string>
@@ -162,6 +162,7 @@
     <string name="extended_bolus_button">Bolo esteso</string>
     <string name="extended_bolus_cancel_button">Cancella bolo esteso</string>
     <string name="tools">Strumenti</string>
+    <string name="site_rotation">Rotazione del Sito</string>
     <string name="nav_history_browser">Storico</string>
     <string name="sensor_label">Sensore</string>
     <string name="age_label">età:</string>

@@ -26,7 +26,7 @@ class RileyLinkBluetoothStateReceiver : DaggerBroadcastReceiver() {
 
                 BluetoothAdapter.STATE_ON                                                                         -> {
                     aapsLogger.debug("RileyLinkBluetoothStateReceiver: Bluetooth back on. Sending broadcast to RileyLink Framework")
-                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.BluetoothReconnected, context)
+                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.BluetoothReconnected)
                 }
             }
         }

@@ -559,7 +559,7 @@ class DataSyncSelectorXdripImpl @Inject constructor(
         if (lastChange > lastSync) {
             if (activePlugin.activeProfileSource.profile?.allProfilesValid != true) return
             val profileStore = activePlugin.activeProfileSource.profile
-            val profileJson = profileStore?.data ?: return
+            val profileJson = profileStore?.getData() ?: return
             // add for v3
             if (JsonHelper.safeGetLongAllowNull(profileJson, "date") == null)
                 profileJson.put("date", profileStore.getStartDate())

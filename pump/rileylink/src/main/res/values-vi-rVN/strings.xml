@@ -37,6 +37,7 @@
     <string name="rileylink_address">Địa chỉ:</string>
     <string name="rileylink_name">Tên:</string>
     <string name="rileylink_battery_level">Mức pin:</string>
+    <string name="rileylink_battery_level_value">%1$d%%</string>
     <string name="rileylink_connection_status">Trạng thái kết nối:</string>
     <string name="rileylink_connection_error">Lỗi kết nối:</string>
     <string name="rileylink_device">Thiết bị</string>

@@ -28,7 +28,7 @@ class ActionNotificationTest : TestBaseWithProfile() {
                 it.rxBus = rxBus
                 it.persistenceLayer = persistenceLayer
                 it.dateUtil = dateUtil
-                it.instantiator = instantiator
+                it.pumpEnactResultProvider = pumpEnactResultProvider
             }
         }
     }

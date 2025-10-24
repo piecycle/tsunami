@@ -18,7 +18,6 @@ import app.aaps.core.interfaces.source.BgSource
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.workflow.LoggingWorker
-import dagger.android.HasAndroidInjector
 import kotlinx.coroutines.Dispatchers
 import org.json.JSONArray
 import org.json.JSONException
@@ -50,7 +49,6 @@ class MM640gPlugin @Inject constructor(
     ) : LoggingWorker(context, params, Dispatchers.IO) {
 
         @Inject lateinit var mM640gPlugin: MM640gPlugin
-        @Inject lateinit var injector: HasAndroidInjector
         @Inject lateinit var dateUtil: DateUtil
         @Inject lateinit var persistenceLayer: PersistenceLayer
 

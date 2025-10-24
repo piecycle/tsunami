@@ -127,7 +127,6 @@
     <!-- Profile -->
     <string name="localprofile">Perfil</string>
     <string name="localprofile_shortname">PL</string>
-    <string name="description_profile_local">Defina um perfil que está disponível offline.</string>
     <string name="a11y_add_new_to_list">adicionar novo à lista</string>
     <string name="do_you_want_switch_profile">Deseja mudar de perfil e descartar as alterações feitas no perfil atual?</string>
     <string name="save_or_reset_changes_first">Salve ou redefina as alterações atuais primeiro</string>

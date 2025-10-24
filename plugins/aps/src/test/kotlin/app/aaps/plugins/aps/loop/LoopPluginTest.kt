@@ -48,7 +48,7 @@ class LoopPluginTest : TestBaseWithProfile() {
         loopPlugin = LoopPlugin(
             aapsLogger, aapsSchedulers, rxBus, preferences, config,
             constraintChecker, rh, profileFunction, context, commandQueue, activePlugin, virtualPumpPlugin, iobCobCalculator, processedTbrEbData, receiverStatusStore, fabricPrivacy, dateUtil, uel,
-            persistenceLayer, runningConfiguration, uiInteraction, instantiator, processedDeviceStatusData
+            persistenceLayer, runningConfiguration, uiInteraction, pumpEnactResultProvider, processedDeviceStatusData
         )
         `when`(activePlugin.activePump).thenReturn(virtualPumpPlugin)
         `when`(context.getSystemService(Context.NOTIFICATION_SERVICE)).thenReturn(notificationManager)

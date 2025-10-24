@@ -29,7 +29,6 @@ import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.workflow.LoggingWorker
 import app.aaps.core.utils.receivers.DataWorkerStorage
 import app.aaps.plugins.source.activities.RequestDexcomPermissionActivity
-import dagger.android.HasAndroidInjector
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -73,7 +72,6 @@ class DexcomPlugin @Inject constructor(
         params: WorkerParameters
     ) : LoggingWorker(context, params, Dispatchers.IO) {
 
-        @Inject lateinit var injector: HasAndroidInjector
         @Inject lateinit var dexcomPlugin: DexcomPlugin
         @Inject lateinit var preferences: Preferences
         @Inject lateinit var dateUtil: DateUtil

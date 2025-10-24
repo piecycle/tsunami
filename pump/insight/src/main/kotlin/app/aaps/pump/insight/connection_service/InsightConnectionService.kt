@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Binder
-import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import androidx.core.app.ActivityCompat
@@ -227,7 +226,7 @@ class InsightConnectionService : DaggerService(), ConnectionEstablisher.Callback
 
     @Synchronized override fun onCreate() {
         super.onCreate()
-        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.S) || (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED)) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
             bluetoothAdapter = (applicationContext.getSystemService(BLUETOOTH_SERVICE) as BluetoothManager).adapter
         }
         pairingDataStorage = PairingDataStorage(this)

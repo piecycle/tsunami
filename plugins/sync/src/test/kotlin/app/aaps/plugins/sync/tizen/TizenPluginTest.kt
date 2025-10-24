@@ -52,7 +52,7 @@ internal class TizenPluginTest : TestBaseWithProfile() {
         Mockito.`when`(processedDeviceStatusData.uploaderStatus).thenReturn("100%")
         Mockito.`when`(loop.lastRun).thenReturn(Loop.LastRun().also {
             it.lastTBREnact = 1000
-            it.tbrSetByPump = instantiator.providePumpEnactResult().success(true).enacted(true)
+            it.tbrSetByPump = pumpEnactResultProvider.get().success(true).enacted(true)
         }
         )
         Mockito.`when`(activePlugin.activePump).thenReturn(testPumpPlugin)
@@ -68,10 +68,7 @@ internal class TizenPluginTest : TestBaseWithProfile() {
     @Test
     fun prepareDataTestAPS() {
         Mockito.`when`(config.APS).thenReturn(true)
-        val event = EventOverviewBolusProgress.also {
-            it.status = "Some status"
-            it.percent = 100
-        }
+        val event = EventOverviewBolusProgress(status = "Some status", percent = 100)
         val bundle = BundleMock.mock()
         sut.prepareData(event, bundle)
         assertThat(bundle.containsKey("progressPercent")).isTrue()
@@ -110,10 +107,7 @@ internal class TizenPluginTest : TestBaseWithProfile() {
     @Test
     fun prepareDataTestAAPSClient() {
         Mockito.`when`(config.APS).thenReturn(false)
-        val event = EventOverviewBolusProgress.also {
-            it.status = "Some status"
-            it.percent = 100
-        }
+        val event = EventOverviewBolusProgress(status = "Some status", percent = 100)
         val bundle = BundleMock.mock()
         sut.prepareData(event, bundle)
         assertThat(bundle.containsKey("progressPercent")).isTrue()

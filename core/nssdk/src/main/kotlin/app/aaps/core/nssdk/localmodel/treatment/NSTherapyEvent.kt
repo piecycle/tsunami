@@ -22,6 +22,8 @@ data class NSTherapyEvent(
     override val pumpSerial: String?,
     override var app: String? = null,
     /** Duration in milliseconds */
+    var location: String? = null,
+    var arrow: String? = null,
     val duration: Long,
     var enteredBy: String? = null,
     var glucose: Double? = null,

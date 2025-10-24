@@ -50,7 +50,6 @@ import app.aaps.core.objects.extensions.round
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.utils.HtmlHelper
 import app.aaps.core.utils.JsonHelper
-import dagger.android.HasAndroidInjector
 import java.util.Calendar
 import java.util.LinkedList
 import javax.inject.Inject
@@ -59,36 +58,29 @@ import kotlin.math.max
 import kotlin.math.min
 
 class BolusWizard @Inject constructor(
-    val injector: HasAndroidInjector
+    private val aapsLogger: AAPSLogger,
+    private val rh: ResourceHelper,
+    private val rxBus: RxBus,
+    private val preferences: Preferences,
+    private val profileFunction: ProfileFunction,
+    private val profileUtil: ProfileUtil,
+    private val constraintChecker: ConstraintsChecker,
+    private val activePlugin: ActivePlugin,
+    private val commandQueue: CommandQueue,
+    private val loop: Loop,
+    private val iobCobCalculator: IobCobCalculator,
+    private val dateUtil: DateUtil,
+    private val config: Config,
+    private val uel: UserEntryLogger,
+    private val automation: Automation,
+    private val glucoseStatusProvider: GlucoseStatusProvider,
+    private val uiInteraction: UiInteraction,
+    private val persistenceLayer: PersistenceLayer,
+    private val decimalFormatter: DecimalFormatter,
+    private val processedDeviceStatusData: ProcessedDeviceStatusData
 ) {
 
-    @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var rh: ResourceHelper
-    @Inject lateinit var rxBus: RxBus
-    @Inject lateinit var preferences: Preferences
-    @Inject lateinit var profileFunction: ProfileFunction
-    @Inject lateinit var profileUtil: ProfileUtil
-    @Inject lateinit var constraintChecker: ConstraintsChecker
-    @Inject lateinit var activePlugin: ActivePlugin
-    @Inject lateinit var commandQueue: CommandQueue
-    @Inject lateinit var loop: Loop
-    @Inject lateinit var iobCobCalculator: IobCobCalculator
-    @Inject lateinit var dateUtil: DateUtil
-    @Inject lateinit var config: Config
-    @Inject lateinit var uel: UserEntryLogger
-    @Inject lateinit var automation: Automation
-    @Inject lateinit var glucoseStatusProvider: GlucoseStatusProvider
-    @Inject lateinit var uiInteraction: UiInteraction
-    @Inject lateinit var persistenceLayer: PersistenceLayer
-    @Inject lateinit var decimalFormatter: DecimalFormatter
-    @Inject lateinit var processedDeviceStatusData: ProcessedDeviceStatusData
-
-    var timeStamp: Long
-
-    init {
-        injector.androidInjector().inject(this)
-        timeStamp = dateUtil.now()
-    }
+    var timeStamp = dateUtil.now()
 
     // Intermediate
     var sens = 0.0
@@ -407,9 +399,10 @@ class BolusWizard @Inject constructor(
             if (carbs > 0.0)
                 automation.removeAutomationEventEatReminder()
             if (preferences.get(BooleanKey.OverviewUseBolusAdvisor) && profileUtil.convertToMgdl(bg, profile.units) > 180 && carbs > 0 && carbTime >= 0)
-                OKDialog.showYesNoCancel(ctx, rh.gs(app.aaps.core.ui.R.string.bolus_advisor), rh.gs(app.aaps.core.ui.R.string.bolus_advisor_message),
-                                         { bolusAdvisorProcessing(ctx) },
-                                         { commonProcessing(ctx, quickWizardEntry) }
+                OKDialog.showYesNoCancel(
+                    ctx, rh.gs(app.aaps.core.ui.R.string.bolus_advisor), rh.gs(app.aaps.core.ui.R.string.bolus_advisor_message),
+                    { bolusAdvisorProcessing(ctx) },
+                    { commonProcessing(ctx, quickWizardEntry) }
                 )
             else
                 commonProcessing(ctx, quickWizardEntry)

@@ -63,7 +63,7 @@ class QueueWorkerTest : TestBaseWithProfile() {
         commandQueue = CommandQueueImplementation(
             injector, aapsLogger, rxBus, aapsSchedulers, rh, constraintChecker,
             profileFunction, activePlugin, context, preferences, config, dateUtil, fabricPrivacy, androidPermission,
-            uiInteraction, persistenceLayer, decimalFormatter, instantiator, jobName, workManager
+            uiInteraction, persistenceLayer, decimalFormatter, pumpEnactResultProvider, jobName, workManager
         )
 
         val pumpDescription = PumpDescription()

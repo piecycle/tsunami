@@ -2,7 +2,6 @@ package app.aaps.pump.omnipod.eros.ui.wizard.activation.viewmodel.action
 
 import androidx.annotation.StringRes
 import app.aaps.core.interfaces.logging.AAPSLogger
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.rx.AapsSchedulers
@@ -12,15 +11,16 @@ import app.aaps.pump.omnipod.eros.manager.AapsErosPodStateManager
 import app.aaps.pump.omnipod.eros.manager.AapsOmnipodErosManager
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
+import javax.inject.Provider
 
 class ErosInsertCannulaViewModel @Inject constructor(
     private val aapsOmnipodManager: AapsOmnipodErosManager,
     private val podStateManager: AapsErosPodStateManager,
     private val profileFunction: ProfileFunction,
-    instantiator: Instantiator,
+    pumpEnactResultProvider: Provider<PumpEnactResult>,
     logger: AAPSLogger,
     aapsSchedulers: AapsSchedulers
-) : InsertCannulaViewModel(instantiator, logger, aapsSchedulers) {
+) : InsertCannulaViewModel(pumpEnactResultProvider, logger, aapsSchedulers) {
 
     override fun isPodInAlarm(): Boolean = podStateManager.isPodFaulted
 

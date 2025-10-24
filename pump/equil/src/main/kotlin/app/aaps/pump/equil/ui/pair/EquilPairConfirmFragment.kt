@@ -8,6 +8,7 @@ import app.aaps.core.data.model.TE
 import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.queue.Callback
+import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.pump.equil.EquilConst
 import app.aaps.pump.equil.R
 import app.aaps.pump.equil.data.RunMode
@@ -17,12 +18,9 @@ import app.aaps.pump.equil.driver.definition.ActivationProgress
 import app.aaps.pump.equil.manager.command.CmdInsulinGet
 import app.aaps.pump.equil.manager.command.CmdModelSet
 
-// IMPORTANT: This activity needs to be called from RileyLinkSelectPreference (see pref_medtronic.xml as example)
 class EquilPairConfirmFragment : EquilPairFragmentBase() {
 
-    override fun getLayoutId(): Int {
-        return R.layout.equil_pair_confirm_fragment
-    }
+    override fun getLayoutId(): Int = R.layout.equil_pair_confirm_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,13 +70,9 @@ class EquilPairConfirmFragment : EquilPairFragmentBase() {
         }
     }
 
-    override fun getNextPageActionId(): Int? {
-        return null
-    }
+    override fun getNextPageActionId(): Int? = null
 
-    override fun getIndex(): Int {
-        return 6
-    }
+    override fun getIndex(): Int = 6
 
     private fun setModel() {
         showLoading()
@@ -86,14 +80,11 @@ class EquilPairConfirmFragment : EquilPairFragmentBase() {
             override fun run() {
                 if (activity == null) return
                 aapsLogger.debug(LTag.PUMPCOMM, "setModel result====" + result.success + "====")
+                dismissLoading()
                 if (result.success) {
-                    dismissLoading()
                     equilManager.setRunMode(RunMode.RUN)
                     toSave()
-                } else {
-                    dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
-                }
+                } else ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
             }
         })
     }
@@ -103,16 +94,11 @@ class EquilPairConfirmFragment : EquilPairFragmentBase() {
         commandQueue.customCommand(CmdInsulinGet(aapsLogger, preferences, equilManager), object : Callback() {
             override fun run() {
                 if (activity == null) return
+                dismissLoading()
                 if (result.success) {
-                    if (activity == null)
-                        return
                     SystemClock.sleep(EquilConst.EQUIL_BLE_NEXT_CMD)
-                    dismissLoading()
                     setModel()
-                } else {
-                    dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
-                }
+                } else ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
             }
         })
     }

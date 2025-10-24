@@ -3,7 +3,6 @@ package app.aaps.pump.omnipod.dash.ui.wizard.activation.viewmodel.action
 import androidx.annotation.StringRes
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.AapsSchedulers
@@ -24,10 +23,11 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import javax.inject.Inject
+import javax.inject.Provider
 
 class DashInitializePodViewModel @Inject constructor(
     private val omnipodManager: OmnipodDashManager,
-    instantiator: Instantiator,
+    pumpEnactResultProvider: Provider<PumpEnactResult>,
     logger: AAPSLogger,
     private val preferences: Preferences,
     private val podStateManager: OmnipodDashPodStateManager,
@@ -35,7 +35,7 @@ class DashInitializePodViewModel @Inject constructor(
     private val history: DashHistory,
     aapsSchedulers: AapsSchedulers
 
-) : InitializePodViewModel(instantiator, logger, aapsSchedulers) {
+) : InitializePodViewModel(pumpEnactResultProvider, logger, aapsSchedulers) {
 
     override fun isPodInAlarm(): Boolean = false // TODO
 
@@ -67,14 +67,14 @@ class DashInitializePodViewModel @Inject constructor(
                     onError = { throwable ->
                         logger.error(LTag.PUMP, "Error in Pod activation part 1", throwable)
                         source.onSuccess(
-                            instantiator.providePumpEnactResult()
+                            pumpEnactResultProvider.get()
                                 .success(false)
                                 .comment(I8n.textFromException(throwable, rh))
                         )
                     },
                     onComplete = {
                         logger.debug("Pod activation part 1 completed")
-                        source.onSuccess(instantiator.providePumpEnactResult().success(true))
+                        source.onSuccess(pumpEnactResultProvider.get().success(true))
                     }
                 )
         }

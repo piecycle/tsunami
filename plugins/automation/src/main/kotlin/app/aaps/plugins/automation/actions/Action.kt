@@ -3,19 +3,20 @@ package app.aaps.plugins.automation.actions
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import app.aaps.core.interfaces.logging.AAPSLogger
-import app.aaps.core.interfaces.objects.Instantiator
+import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.plugins.automation.triggers.Trigger
 import dagger.android.HasAndroidInjector
 import org.json.JSONObject
 import javax.inject.Inject
+import javax.inject.Provider
 
 abstract class Action(val injector: HasAndroidInjector) {
 
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var rh: ResourceHelper
-    @Inject lateinit var instantiator: Instantiator
+    @Inject lateinit var pumpEnactResultProvider: Provider<PumpEnactResult>
 
     var precondition: Trigger? = null
 

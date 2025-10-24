@@ -13,7 +13,6 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
-import app.aaps.core.data.model.BS
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.data.pump.defs.ManufacturerType
 import app.aaps.core.data.pump.defs.PumpDescription
@@ -24,9 +23,9 @@ import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.Profile
+import app.aaps.core.interfaces.pump.BolusProgressData
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.Medtrum
 import app.aaps.core.interfaces.pump.Pump
@@ -45,7 +44,6 @@ import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppExit
 import app.aaps.core.interfaces.rx.events.EventDismissNotification
-import app.aaps.core.interfaces.rx.events.EventOverviewBolusProgress
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
@@ -77,6 +75,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import org.json.JSONException
 import org.json.JSONObject
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.math.abs
 import kotlin.math.min
@@ -97,7 +96,7 @@ import kotlin.math.min
     private val pumpSync: PumpSync,
     private val temporaryBasalStorage: TemporaryBasalStorage,
     private val decimalFormatter: DecimalFormatter,
-    private val instantiator: Instantiator
+    private val pumpEnactResultProvider: Provider<PumpEnactResult>
 ) : PumpPluginBase(
     pluginDescription = PluginDescription()
         .mainType(PluginType.PUMP)
@@ -289,15 +288,15 @@ import kotlin.math.min
 
     override fun setNewBasalProfile(profile: Profile): PumpEnactResult {
         // New profile will be set when patch is activated
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(true).enacted(true)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(true).enacted(true)
 
         return if (medtrumService?.updateBasalsInPump(profile) == true) {
             rxBus.send(EventDismissNotification(Notification.FAILED_UPDATE_PROFILE))
             uiInteraction.addNotificationValidFor(Notification.PROFILE_SET_OK, rh.gs(app.aaps.core.ui.R.string.profile_set_ok), Notification.INFO, 60)
-            instantiator.providePumpEnactResult().success(true).enacted(true)
+            pumpEnactResultProvider.get().success(true).enacted(true)
         } else {
             uiInteraction.addNotification(Notification.FAILED_UPDATE_PROFILE, rh.gs(app.aaps.core.ui.R.string.failed_update_basal_profile), Notification.URGENT)
-            instantiator.providePumpEnactResult()
+            pumpEnactResultProvider.get()
         }
     }
 
@@ -334,14 +333,13 @@ import kotlin.math.min
         require(detailedBolusInfo.insulin > 0) { detailedBolusInfo.toString() }
 
         aapsLogger.debug(LTag.PUMP, "deliverTreatment: " + detailedBolusInfo.insulin + "U")
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
         detailedBolusInfo.insulin = constraintChecker.applyBolusConstraints(ConstraintObject(detailedBolusInfo.insulin, aapsLogger)).value()
         aapsLogger.debug(LTag.PUMP, "deliverTreatment: Delivering bolus: " + detailedBolusInfo.insulin + "U")
-        val t = EventOverviewBolusProgress.Treatment(0.0, 0, detailedBolusInfo.bolusType == BS.Type.SMB, detailedBolusInfo.id)
-        val connectionOK = medtrumService?.setBolus(detailedBolusInfo, t) == true
-        val result = instantiator.providePumpEnactResult()
-        result.success = connectionOK && abs(detailedBolusInfo.insulin - t.insulin) < pumpDescription.bolusStep
-        result.bolusDelivered = t.insulin
+        val connectionOK = medtrumService?.setBolus(detailedBolusInfo) == true
+        val result = pumpEnactResultProvider.get()
+        result.success = connectionOK && abs(detailedBolusInfo.insulin - BolusProgressData.delivered) < pumpDescription.bolusStep
+        result.bolusDelivered = BolusProgressData.delivered
         if (!result.success) {
             result.comment(medtrumPump.bolusErrorReason ?: rh.gs(R.string.bolus_error_reason_pump_error))
         } else {
@@ -360,7 +358,7 @@ import kotlin.math.min
 
     @Synchronized
     override fun setTempBasalAbsolute(absoluteRate: Double, durationInMinutes: Int, profile: Profile, enforceNew: Boolean, tbrType: PumpSync.TemporaryBasalType): PumpEnactResult {
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
 
         aapsLogger.info(LTag.PUMP, "setTempBasalAbsolute - absoluteRate: $absoluteRate, durationInMinutes: $durationInMinutes, enforceNew: $enforceNew")
         // round rate to pump rate
@@ -372,7 +370,7 @@ import kotlin.math.min
             && abs(medtrumPump.tempBasalAbsoluteRate - pumpRate) <= 0.05
         ) {
 
-            instantiator.providePumpEnactResult().success(true).enacted(true).duration(durationInMinutes).absolute(medtrumPump.tempBasalAbsoluteRate)
+            pumpEnactResultProvider.get().success(true).enacted(true).duration(durationInMinutes).absolute(medtrumPump.tempBasalAbsoluteRate)
                 .isPercent(false)
                 .isTempCancel(false)
         } else {
@@ -380,35 +378,35 @@ import kotlin.math.min
                 LTag.PUMP,
                 "setTempBasalAbsolute failed, connectionOK: $connectionOK, tempBasalInProgress: ${medtrumPump.tempBasalInProgress}, tempBasalAbsoluteRate: ${medtrumPump.tempBasalAbsoluteRate}"
             )
-            instantiator.providePumpEnactResult().success(false).enacted(false).comment("Medtrum setTempBasalAbsolute failed")
+            pumpEnactResultProvider.get().success(false).enacted(false).comment("Medtrum setTempBasalAbsolute failed")
         }
     }
 
     override fun setTempBasalPercent(percent: Int, durationInMinutes: Int, profile: Profile, enforceNew: Boolean, tbrType: PumpSync.TemporaryBasalType): PumpEnactResult {
         aapsLogger.info(LTag.PUMP, "setTempBasalPercent - percent: $percent, durationInMinutes: $durationInMinutes, enforceNew: $enforceNew")
-        return instantiator.providePumpEnactResult().success(false).enacted(false).comment("Medtrum driver does not support percentage temp basals")
+        return pumpEnactResultProvider.get().success(false).enacted(false).comment("Medtrum driver does not support percentage temp basals")
     }
 
     override fun setExtendedBolus(insulin: Double, durationInMinutes: Int): PumpEnactResult {
         aapsLogger.info(LTag.PUMP, "setExtendedBolus - insulin: $insulin, durationInMinutes: $durationInMinutes")
-        return instantiator.providePumpEnactResult().success(false).enacted(false).comment("Medtrum driver does not support extended boluses")
+        return pumpEnactResultProvider.get().success(false).enacted(false).comment("Medtrum driver does not support extended boluses")
     }
 
     override fun cancelTempBasal(enforceNew: Boolean): PumpEnactResult {
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
 
         aapsLogger.info(LTag.PUMP, "cancelTempBasal - enforceNew: $enforceNew")
         val connectionOK = medtrumService?.cancelTempBasal() == true
         return if (connectionOK && !medtrumPump.tempBasalInProgress) {
-            instantiator.providePumpEnactResult().success(true).enacted(true).isTempCancel(true)
+            pumpEnactResultProvider.get().success(true).enacted(true).isTempCancel(true)
         } else {
             aapsLogger.error(LTag.PUMP, "cancelTempBasal failed, connectionOK: $connectionOK, tempBasalInProgress: ${medtrumPump.tempBasalInProgress}")
-            instantiator.providePumpEnactResult().success(false).enacted(false).comment("Medtrum cancelTempBasal failed")
+            pumpEnactResultProvider.get().success(false).enacted(false).comment("Medtrum cancelTempBasal failed")
         }
     }
 
     override fun cancelExtendedBolus(): PumpEnactResult {
-        return instantiator.providePumpEnactResult()
+        return pumpEnactResultProvider.get()
     }
 
     override fun getJSONStatus(profile: Profile, profileName: String, version: String): JSONObject {
@@ -488,7 +486,7 @@ import kotlin.math.min
     override val isFakingTempsByExtendedBoluses: Boolean = false
 
     override fun loadTDDs(): PumpEnactResult {
-        return instantiator.providePumpEnactResult() // Note: Can implement this if we implement history fully (no priority)
+        return pumpEnactResultProvider.get() // Note: Can implement this if we implement history fully (no priority)
     }
 
     override fun getCustomActions(): List<CustomAction>? {
@@ -524,32 +522,32 @@ import kotlin.math.min
 
     // Medtrum interface
     override fun loadEvents(): PumpEnactResult {
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
         val connectionOK = medtrumService?.loadEvents() == true
-        return instantiator.providePumpEnactResult().success(connectionOK)
+        return pumpEnactResultProvider.get().success(connectionOK)
     }
 
     override fun setUserOptions(): PumpEnactResult {
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
         val connectionOK = medtrumService?.setUserSettings() == true
-        return instantiator.providePumpEnactResult().success(connectionOK)
+        return pumpEnactResultProvider.get().success(connectionOK)
     }
 
     override fun clearAlarms(): PumpEnactResult {
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
         val connectionOK = medtrumService?.clearAlarms() == true
-        return instantiator.providePumpEnactResult().success(connectionOK)
+        return pumpEnactResultProvider.get().success(connectionOK)
     }
 
     override fun deactivate(): PumpEnactResult {
         val connectionOK = medtrumService?.deactivatePatch() == true
-        return instantiator.providePumpEnactResult().success(connectionOK)
+        return pumpEnactResultProvider.get().success(connectionOK)
     }
 
     override fun updateTime(): PumpEnactResult {
-        if (!isInitialized()) return instantiator.providePumpEnactResult().success(false).enacted(false)
+        if (!isInitialized()) return pumpEnactResultProvider.get().success(false).enacted(false)
         val connectionOK = medtrumService?.updateTimeIfNeeded() == true
-        return instantiator.providePumpEnactResult().success(connectionOK)
+        return pumpEnactResultProvider.get().success(connectionOK)
     }
 
     override fun addPreferenceScreen(preferenceManager: PreferenceManager, parent: PreferenceScreen, context: Context, requiredKey: String?) {

@@ -2,7 +2,6 @@ package app.aaps.implementation.queue
 
 import android.bluetooth.BluetoothManager
 import android.content.Context
-import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
 import androidx.work.WorkerParameters
@@ -24,6 +23,7 @@ import app.aaps.core.keys.LongNonKey
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.workflow.LoggingWorker
 import app.aaps.core.ui.R
+import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.core.utils.extensions.safeDisable
 import app.aaps.core.utils.extensions.safeEnable
 import kotlinx.coroutines.Dispatchers
@@ -55,14 +55,16 @@ class QueueWorker internal constructor(
         var connectionStartTime = lastCommandTime
         try {
             while (true) {
+                if (isStopped) return Result.failure()
                 val secondsElapsed = (System.currentTimeMillis() - connectionStartTime) / 1000
                 val pump = activePlugin.activePump
                 //  Manifest.permission.BLUETOOTH_CONNECT
-                if (config.PUMPDRIVERS && pump !is VirtualPump && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                    if (androidPermission.permissionNotGranted(context, "android.permission.BLUETOOTH_CONNECT")) {
+                if (config.PUMPDRIVERS && pump !is VirtualPump)
+                    if (androidPermission.permissionNotGranted(context, "android.permission.BLUETOOTH_CONNECT") || androidPermission.permissionNotGranted(context, "android.permission.BLUETOOTH_SCAN")) {
+                        ToastUtils.errorToast(context, R.string.need_connect_permission)
                         aapsLogger.debug(LTag.PUMPQUEUE, "no permission")
                         rxBus.send(EventPumpStatusChanged(EventPumpStatusChanged.Status.CONNECTING))
-                        SystemClock.sleep(1000)
+                        SystemClock.sleep(5000)
                         continue
                     }
                 if (!pump.isConnected() && secondsElapsed > Constants.PUMP_MAX_CONNECTION_TIME_IN_SECONDS) {

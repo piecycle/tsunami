@@ -25,7 +25,7 @@ ActionsTestBase : TestBaseWithProfile() {
             if (it is Action) {
                 it.aapsLogger = aapsLogger
                 it.rh = rh
-                it.instantiator = instantiator
+                it.pumpEnactResultProvider = pumpEnactResultProvider
             }
             if (it is ActionStopTempTarget) {
                 it.dateUtil = dateUtil

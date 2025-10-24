@@ -129,7 +129,7 @@
     <!-- Profile -->
     <string name="localprofile">設定檔</string>
     <string name="localprofile_shortname">設定</string>
-    <string name="description_profile_local">定義一個可離線使用的配置。</string>
+    <string name="description_profile_local">建立描述你胰島素需求的設定檔。</string>
     <string name="a11y_add_new_to_list">添加新項到列表</string>
     <string name="do_you_want_switch_profile">您是否要切換設定檔，並放棄對目前設定檔所做的更改？</string>
     <string name="save_or_reset_changes_first">首先儲存或重置目前更改</string>
@@ -162,6 +162,7 @@
     <string name="extended_bolus_button">延長注射</string>
     <string name="extended_bolus_cancel_button">取消延長注射</string>
     <string name="tools">工具</string>
+    <string name="site_rotation">部位輪替</string>
     <string name="nav_history_browser">歷史瀏覽器</string>
     <string name="sensor_label">傳感器</string>
     <string name="age_label">時間：</string>

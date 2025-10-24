@@ -52,11 +52,11 @@ class ActionRunAutotune(injector: HasAndroidInjector) : Action(injector) {
                     message = R.string.autotune_run_with_error
                     aapsLogger.error(LTag.AUTOMATION, "Error during Autotune Run")
                 }
-                callback.result(instantiator.providePumpEnactResult().success(autotunePlugin.lastRunSuccess).comment(message)).run()
+                callback.result(pumpEnactResultProvider.get().success(autotunePlugin.lastRunSuccess).comment(message)).run()
             } else {
                 message = R.string.autotune_run_cancelled
                 aapsLogger.debug(LTag.AUTOMATION, "Autotune run detected, Autotune Run Cancelled")
-                callback.result(instantiator.providePumpEnactResult().success(false).comment(message)).run()
+                callback.result(pumpEnactResultProvider.get().success(false).comment(message)).run()
             }
         }.start()
         return

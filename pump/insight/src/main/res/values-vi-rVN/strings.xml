@@ -39,6 +39,7 @@
     <string name="short_status_last_connected">Kết nối gần nhất: cách đây %1$d phút</string>
     <string name="short_status_tbr">TBR: %1$d%% trong %2$d / %3$d phút</string>
     <string name="short_status_extended">Mở rộng: %1$.2f / %2$.2f U trong %3$d phút</string>
+    <string name="short_status_multiwave">Multiwave: %1$.2f / %2$.2f U trong %3$d phút</string>
     <string name="short_status_tdd">Tổng liều hàng ngày (TDD): %1$.2f</string>
     <string name="short_status_reservoir">Reser.: %1$.2f U</string>
     <string name="short_status_battery">Pin: %1$d%%</string>
@@ -51,4 +52,19 @@
     <string name="bluetooth_address">Địa chỉ Bluetooth</string>
     <string name="system_id_appendix">Phụ lục ID hệ thống</string>
     <string name="manufacturing_date">Ngày sản xuất</string>
+    <string name="delete_pairing">Xóa ghép nối</string>
+    <string name="log_site_changes">Ghi lại thay đổi vị trí kim truyền</string>
+    <string name="log_reservoir_changes">Ghi lại thay đổi bình chứa insulin</string>
+    <string name="log_tube_changes">Ghi lại thay đổi dây truyền</string>
+    <string name="log_battery_changes">Ghi lại thay đổi Pin</string>
+    <string name="log_operating_mode_changes">Ghi lại thay đổi chế độ hoạt động</string>
+    <string name="log_alerts">Ghi lại cảnh báo</string>
+    <string name="enable_tbr_emulation">Bật mô phỏng TBR</string>
+    <string name="enable_tbr_emulation_summary">Sử dụng liều bolus mở rộng thay vì TBR để vượt qua giới hạn 250%</string>
+    <string name="disconnect_delay">Thời gian trễ ngắt kết nối [giây]</string>
+    <string name="max_recovery_duration">Thời gian hồi phục tối đa [giây]</string>
+    <string name="min_recovery_duration">Thời gian hồi phục tối thiểu [giây]</string>
+    <string name="pump_alert">Cảnh báo pump</string>
+    <string name="pairing_information">Thông tin ghép nối</string>
+    <string name="last_connection">%1$s (%2$s)</string>
 </resources>

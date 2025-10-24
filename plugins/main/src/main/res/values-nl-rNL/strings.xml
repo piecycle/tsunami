@@ -128,7 +128,6 @@
     <!-- Profile -->
     <string name="localprofile">Profiel</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">Gebruik profiel(en) die je in AAPS aanmaakt en offline kunt gebruiken.</string>
     <string name="a11y_add_new_to_list">nieuwe toevoegen aan lijst</string>
     <string name="do_you_want_switch_profile">Wilt u van profiel wisselen en gemaakte wijzigingen aan het huidige profiel negeren?</string>
     <string name="save_or_reset_changes_first">Huidige wijzigingen eerst opslaan of resetten</string>

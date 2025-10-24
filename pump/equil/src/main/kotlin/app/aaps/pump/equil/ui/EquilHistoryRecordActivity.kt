@@ -47,7 +47,6 @@ import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.abs
 
-// IMPORTANT: This activity needs to be called from RileyLinkSelectPreference (see pref_medtronic.xml as example)
 class EquilHistoryRecordActivity : TranslatedDaggerAppCompatActivity() {
 
     @Inject lateinit var blePreCheck: BlePreCheck

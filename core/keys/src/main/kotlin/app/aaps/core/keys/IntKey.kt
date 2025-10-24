@@ -71,6 +71,8 @@ enum class IntKey(
     NsClientAlarmStaleData("ns_alarm_stale_data_value", 16, 15, 120),
     NsClientUrgentAlarmStaleData("ns_alarm_urgent_stale_data_value", 31, 30, 180),
 
+    SiteRotationUserProfile("site_rotation_user_profile", 0, 0, 2),
+
     //Tsunami
     TsuDefaultDuration("key_tsunami_default_duration", 0, 0, 300, defaultedBySM = true),
     TsuActivityTarget("key_tsu_activity_target", 75, 50, 100, defaultedBySM = true),

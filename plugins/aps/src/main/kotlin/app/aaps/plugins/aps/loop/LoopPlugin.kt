@@ -41,13 +41,13 @@ import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
 import app.aaps.core.interfaces.notifications.Notification
 import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
+import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.pump.PumpSync
 import app.aaps.core.interfaces.pump.VirtualPump
 import app.aaps.core.interfaces.queue.Callback
@@ -90,6 +90,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.math.abs
 
@@ -116,7 +117,7 @@ class LoopPlugin @Inject constructor(
     private val persistenceLayer: PersistenceLayer,
     private val runningConfiguration: RunningConfiguration,
     private val uiInteraction: UiInteraction,
-    private val instantiator: Instantiator,
+    private val pumpEnactResultProvider: Provider<PumpEnactResult>,
     private val processedDeviceStatusData: ProcessedDeviceStatusData
 ) : PluginBase(
     PluginDescription()
@@ -218,7 +219,7 @@ class LoopPlugin @Inject constructor(
             RM.Mode.DISCONNECTED_PUMP ->
                 mutableListOf(RM.Mode.RESUME)
 
-            RM.Mode.SUSPENDED_BY_PUMP -> mutableListOf<RM.Mode>() // handled independently
+            RM.Mode.SUSPENDED_BY_PUMP -> mutableListOf() // handled independently
             RM.Mode.SUSPENDED_BY_USER ->
                 mutableListOf(RM.Mode.DISCONNECTED_PUMP, RM.Mode.RESUME, RM.Mode.SUSPENDED_BY_USER)
 
@@ -243,8 +244,8 @@ class LoopPlugin @Inject constructor(
             return false
         }
         // Preconditions (hardcoded logic)
-        if (newRM.mustBeTemporary() == true) assert(durationInMinutes > 0)
-        if (newRM.isLoopRunning() == true) assert(durationInMinutes == 0)
+        if (newRM.mustBeTemporary()) assert(durationInMinutes > 0)
+        if (newRM.isLoopRunning()) assert(durationInMinutes == 0)
         if (newRM == RM.Mode.RESUME) assert(currentRM.isTemporary())
 
         // Change running mode
@@ -270,7 +271,7 @@ class LoopPlugin @Inject constructor(
                     listValues = listValues
                 ).blockingGet()
                 if (newRM == RM.Mode.DISABLED_LOOP) {
-                    commandQueue.cancelTempBasal(true, object : Callback() {
+                    commandQueue.cancelTempBasal(enforceNew = true, callback = object : Callback() {
                         override fun run() {
                             if (!result.success) {
                                 ToastUtils.errorToast(context, rh.gs(app.aaps.core.ui.R.string.temp_basal_delivery_error))
@@ -303,7 +304,7 @@ class LoopPlugin @Inject constructor(
                     source = source
                 ).blockingGet()
                 rxBus.send(EventRefreshOverview("handleRunningModeChange"))
-                commandQueue.cancelTempBasal(true, object : Callback() {
+                commandQueue.cancelTempBasal(enforceNew = true, callback = object : Callback() {
                     override fun run() {
                         if (!result.success) {
                             uiInteraction.runAlarm(result.comment, rh.gs(app.aaps.core.ui.R.string.temp_basal_delivery_error), app.aaps.core.ui.R.raw.boluserror)
@@ -420,10 +421,10 @@ class LoopPlugin @Inject constructor(
     override fun applyMaxIOBConstraints(maxIob: Constraint<Double>): Constraint<Double> {
         if (runningMode == RM.Mode.CLOSED_LOOP_LGS)
             maxIob.setIfSmaller(
-            HardLimits.MAX_IOB_LGS,
-            rh.gs(app.aaps.core.ui.R.string.limiting_iob, HardLimits.MAX_IOB_LGS, rh.gs(app.aaps.core.ui.R.string.lowglucosesuspend)),
-            this
-        )
+                HardLimits.MAX_IOB_LGS,
+                rh.gs(app.aaps.core.ui.R.string.limiting_iob, HardLimits.MAX_IOB_LGS, rh.gs(app.aaps.core.ui.R.string.lowglucosesuspend)),
+                this
+            )
         return maxIob
     }
 
@@ -452,7 +453,7 @@ class LoopPlugin @Inject constructor(
     override fun invoke(initiator: String, allowNotification: Boolean, tempBasalFallback: Boolean) {
         try {
             aapsLogger.debug(LTag.APS, "invoke from $initiator")
-            var currentMode = runningModeRecord
+            val currentMode = runningModeRecord
             if (runningMode == RM.Mode.DISABLED_LOOP) {
                 val message = rh.gs(app.aaps.core.ui.R.string.loop_disabled) + "\n" + currentMode.reasons
                 aapsLogger.debug(LTag.APS, message)
@@ -612,7 +613,7 @@ class LoopPlugin @Inject constructor(
                     if (resultAfterConstraints.isChangeRequested
                         && !commandQueue.bolusInQueue()
                     ) {
-                        val waiting = instantiator.providePumpEnactResult()
+                        val waiting = pumpEnactResultProvider.get()
                         waiting.queued = true
                         if (resultAfterConstraints.isTempBasalRequested) lastRun.tbrSetByPump = waiting
                         if (resultAfterConstraints.isBolusRequested) lastRun.smbSetByPump =
@@ -765,18 +766,18 @@ class LoopPlugin @Inject constructor(
      */
     private fun applyTBRRequest(request: APSResult, profile: Profile, callback: Callback?) {
         if (!request.isTempBasalRequested) {
-            callback?.result(instantiator.providePumpEnactResult().enacted(false).success(true).comment(app.aaps.core.ui.R.string.nochangerequested))?.run()
+            callback?.result(pumpEnactResultProvider.get().enacted(false).success(true).comment(app.aaps.core.ui.R.string.nochangerequested))?.run()
             return
         }
         val pump = activePlugin.activePump
         if (!pump.isInitialized()) {
             aapsLogger.debug(LTag.APS, "applyAPSRequest: " + rh.gs(R.string.pump_not_initialized))
-            callback?.result(instantiator.providePumpEnactResult().comment(R.string.pump_not_initialized).enacted(false).success(false))?.run()
+            callback?.result(pumpEnactResultProvider.get().comment(R.string.pump_not_initialized).enacted(false).success(false))?.run()
             return
         }
         if (pump.isSuspended()) {
             aapsLogger.debug(LTag.APS, "applyAPSRequest: " + rh.gs(app.aaps.core.ui.R.string.pumpsuspended))
-            callback?.result(instantiator.providePumpEnactResult().comment(app.aaps.core.ui.R.string.pumpsuspended).enacted(false).success(false))?.run()
+            callback?.result(pumpEnactResultProvider.get().comment(app.aaps.core.ui.R.string.pumpsuspended).enacted(false).success(false))?.run()
             return
         }
         aapsLogger.debug(LTag.APS, "applyAPSRequest: $request")
@@ -786,11 +787,11 @@ class LoopPlugin @Inject constructor(
             if (activeTemp != null) {
                 aapsLogger.debug(LTag.APS, "applyAPSRequest: cancelTempBasal()")
                 uel.log(Action.CANCEL_TEMP_BASAL, Sources.Loop)
-                commandQueue.cancelTempBasal(false, callback)
+                commandQueue.cancelTempBasal(enforceNew = false, callback = callback)
             } else {
                 aapsLogger.debug(LTag.APS, "applyAPSRequest: Basal set correctly")
                 callback?.result(
-                    instantiator.providePumpEnactResult().absolute(request.rate).duration(0)
+                    pumpEnactResultProvider.get().absolute(request.rate).duration(0)
                         .enacted(false).success(true).comment(R.string.basal_set_correctly)
                 )?.run()
             }
@@ -799,11 +800,11 @@ class LoopPlugin @Inject constructor(
                 if (activeTemp != null) {
                     aapsLogger.debug(LTag.APS, "applyAPSRequest: cancelTempBasal()")
                     uel.log(Action.CANCEL_TEMP_BASAL, Sources.Loop)
-                    commandQueue.cancelTempBasal(false, callback)
+                    commandQueue.cancelTempBasal(enforceNew = false, callback = callback)
                 } else {
                     aapsLogger.debug(LTag.APS, "applyAPSRequest: Basal set correctly")
                     callback?.result(
-                        instantiator.providePumpEnactResult().percent(request.percent).duration(0)
+                        pumpEnactResultProvider.get().percent(request.percent).duration(0)
                             .enacted(false).success(true).comment(R.string.basal_set_correctly)
                     )?.run()
                 }
@@ -814,7 +815,7 @@ class LoopPlugin @Inject constructor(
             ) {
                 aapsLogger.debug(LTag.APS, "applyAPSRequest: Temp basal set correctly")
                 callback?.result(
-                    instantiator.providePumpEnactResult().percent(request.percent)
+                    pumpEnactResultProvider.get().percent(request.percent)
                         .enacted(false).success(true).duration(activeTemp.plannedRemainingMinutes)
                         .comment(app.aaps.core.ui.R.string.let_temp_basal_run)
                 )?.run()
@@ -840,7 +841,7 @@ class LoopPlugin @Inject constructor(
             ) {
                 aapsLogger.debug(LTag.APS, "applyAPSRequest: Temp basal set correctly")
                 callback?.result(
-                    instantiator.providePumpEnactResult().absolute(activeTemp.convertedToAbsolute(now, profile))
+                    pumpEnactResultProvider.get().absolute(activeTemp.convertedToAbsolute(now, profile))
                         .enacted(false).success(true).duration(activeTemp.plannedRemainingMinutes)
                         .comment(app.aaps.core.ui.R.string.let_temp_basal_run)
                 )?.run()
@@ -865,7 +866,7 @@ class LoopPlugin @Inject constructor(
         if (lastBolusTime != 0L && lastBolusTime + T.mins(preferences.get(IntKey.ApsMaxSmbFrequency).toLong()).msecs() > dateUtil.now()) {
             aapsLogger.debug(LTag.APS, "SMB requested but still in ${preferences.get(IntKey.ApsMaxSmbFrequency)} min interval")
             callback?.result(
-                instantiator.providePumpEnactResult()
+                pumpEnactResultProvider.get()
                     .comment(R.string.smb_frequency_exceeded)
                     .enacted(false).success(false)
             )?.run()
@@ -873,12 +874,12 @@ class LoopPlugin @Inject constructor(
         }
         if (!pump.isInitialized()) {
             aapsLogger.debug(LTag.APS, "applySMBRequest: " + rh.gs(R.string.pump_not_initialized))
-            callback?.result(instantiator.providePumpEnactResult().comment(R.string.pump_not_initialized).enacted(false).success(false))?.run()
+            callback?.result(pumpEnactResultProvider.get().comment(R.string.pump_not_initialized).enacted(false).success(false))?.run()
             return
         }
         if (runningMode.isSuspended()) {
             aapsLogger.debug(LTag.APS, "applySMBRequest: " + rh.gs(app.aaps.core.ui.R.string.pumpsuspended))
-            callback?.result(instantiator.providePumpEnactResult().comment(app.aaps.core.ui.R.string.pumpsuspended).enacted(false).success(false))?.run()
+            callback?.result(pumpEnactResultProvider.get().comment(app.aaps.core.ui.R.string.pumpsuspended).enacted(false).success(false))?.run()
             return
         }
         aapsLogger.debug(LTag.APS, "applySMBRequest: $request")
@@ -958,7 +959,7 @@ class LoopPlugin @Inject constructor(
             note = note,
             listValues = listValues
         ).blockingGet()
-        commandQueue.cancelTempBasal(true, object : Callback() {
+        commandQueue.cancelTempBasal(enforceNew = false, autoForced = autoForced, callback = object : Callback() {
             override fun run() {
                 if (!result.success) {
                     uiInteraction.runAlarm(result.comment, rh.gs(app.aaps.core.ui.R.string.temp_basal_delivery_error), app.aaps.core.ui.R.raw.boluserror)

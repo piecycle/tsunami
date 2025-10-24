@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Events-->
+    <string name="bolus_delivering">正在注射 %1$.2fU</string>
+    <string name="bolus_delivered_successfully">注射 %1$.2fU 已成功完成</string>
     <!-- PumpPluginBase -->
     <string name="pump_driver_changed" comment="26 characters max for translation">幫浦驅動程式已更改。</string>
     <!--    DateUtil-->
     <string name="minago">%1$d 分鐘前</string>
-    <string name="secago">%1$d秒前</string>
+    <string name="secago">%1$d 秒前</string>
     <string name="minago_long">%1$d 分鐘前</string>
     <string name="hoursago">%1$.1f 小時前</string>
     <string name="days_ago">%1$.1f 天前</string>

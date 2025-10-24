@@ -321,8 +321,8 @@ class PumpSyncImplementation @Inject constructor(
             .blockingGet()
     }
 
-    override fun syncStopTemporaryBasalWithPumpId(timestamp: Long, endPumpId: Long, pumpType: PumpType, pumpSerial: String): Boolean {
-        if (!confirmActivePump(timestamp, pumpType, pumpSerial)) return false
+    override fun syncStopTemporaryBasalWithPumpId(timestamp: Long, endPumpId: Long, pumpType: PumpType, pumpSerial: String, ignorePumpIds: Boolean): Boolean {
+        if (!ignorePumpIds && !confirmActivePump(timestamp, pumpType, pumpSerial)) return false
         return persistenceLayer.syncPumpCancelTemporaryBasalIfAny(timestamp, endPumpId, pumpType, pumpSerial)
             .map { result -> result.updated.isNotEmpty() }
             .blockingGet()

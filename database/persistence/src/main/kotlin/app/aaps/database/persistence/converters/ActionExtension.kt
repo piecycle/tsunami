@@ -25,9 +25,9 @@ fun UserEntry.Action.fromDb(): Action =
         UserEntry.Action.LGS_LOOP_MODE                   -> Action.LGS_LOOP_MODE
         UserEntry.Action.OPEN_LOOP_MODE                  -> Action.OPEN_LOOP_MODE
         UserEntry.Action.LOOP_DISABLED                   -> Action.LOOP_DISABLED
-        UserEntry.Action.LOOP_RESUME  -> Action.LOOP_RESUME
+        UserEntry.Action.LOOP_RESUME                     -> Action.LOOP_RESUME
         UserEntry.Action.LOOP_CHANGE                     -> Action.LOOP_CHANGE
-        UserEntry.Action.PUMP_RUNNING -> Action.PUMP_RUNNING
+        UserEntry.Action.PUMP_RUNNING                    -> Action.PUMP_RUNNING
         UserEntry.Action.LOOP_REMOVED                    -> Action.LOOP_REMOVED
         UserEntry.Action.RECONNECT                       -> Action.RECONNECT
         UserEntry.Action.DISCONNECT                      -> Action.DISCONNECT
@@ -41,7 +41,9 @@ fun UserEntry.Action.fromDb(): Action =
         UserEntry.Action.CANCEL_EXTENDED_BOLUS           -> Action.CANCEL_EXTENDED_BOLUS
         UserEntry.Action.CANCEL_TT                       -> Action.CANCEL_TT
         UserEntry.Action.CAREPORTAL                      -> Action.CAREPORTAL
+        UserEntry.Action.SENSOR_LOCATION                 -> Action.SENSOR_LOCATION
         UserEntry.Action.SITE_CHANGE                     -> Action.SITE_CHANGE
+        UserEntry.Action.SITE_LOCATION                   -> Action.SITE_LOCATION
         UserEntry.Action.RESERVOIR_CHANGE                -> Action.RESERVOIR_CHANGE
         UserEntry.Action.CALIBRATION                     -> Action.CALIBRATION
         UserEntry.Action.PRIME_BOLUS                     -> Action.PRIME_BOLUS
@@ -138,7 +140,9 @@ fun Action.toDb(): UserEntry.Action =
         Action.CANCEL_EXTENDED_BOLUS           -> UserEntry.Action.CANCEL_EXTENDED_BOLUS
         Action.CANCEL_TT                       -> UserEntry.Action.CANCEL_TT
         Action.CAREPORTAL                      -> UserEntry.Action.CAREPORTAL
+        Action.SENSOR_LOCATION                 -> UserEntry.Action.SENSOR_LOCATION
         Action.SITE_CHANGE                     -> UserEntry.Action.SITE_CHANGE
+        Action.SITE_LOCATION                   -> UserEntry.Action.SITE_LOCATION
         Action.RESERVOIR_CHANGE                -> UserEntry.Action.RESERVOIR_CHANGE
         Action.CALIBRATION                     -> UserEntry.Action.CALIBRATION
         Action.PRIME_BOLUS                     -> UserEntry.Action.PRIME_BOLUS

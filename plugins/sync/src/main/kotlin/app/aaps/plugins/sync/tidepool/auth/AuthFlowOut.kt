@@ -75,7 +75,7 @@ class AuthFlowOut @Inject constructor(
                 else ConnectionStatus.NOT_LOGGED_IN
             } else field
 
-    lateinit var authState: AuthState
+    var authState = AuthState()
 
     fun updateConnectionStatus(newStatus: ConnectionStatus? = null, message: String? = null) {
         aapsLogger.debug(LTag.TIDEPOOL, "updateConnectionStatus: $newStatus $message")

@@ -27,7 +27,6 @@ abstract class OverviewModule {
 
     @ContributesAndroidInjector abstract fun contributesDismissNotificationReceiver(): DismissNotificationReceiver
     @ContributesAndroidInjector abstract fun contributesOverviewFragment(): OverviewFragment
-    @ContributesAndroidInjector abstract fun notificationWithActionInjector(): NotificationWithAction
     @ContributesAndroidInjector abstract fun graphDataInjector(): GraphData
 
     @Module

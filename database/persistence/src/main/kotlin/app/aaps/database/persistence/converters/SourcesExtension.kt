@@ -17,6 +17,7 @@ fun UserEntry.Sources.fromDb(): Sources =
         UserEntry.Sources.TempBasalDialog     -> Sources.TempBasalDialog
         UserEntry.Sources.CalibrationDialog   -> Sources.CalibrationDialog
         UserEntry.Sources.FillDialog          -> Sources.FillDialog
+        UserEntry.Sources.SiteRotationDialog  -> Sources.SiteRotationDialog
         UserEntry.Sources.BgCheck             -> Sources.BgCheck
         UserEntry.Sources.SensorInsert        -> Sources.SensorInsert
         UserEntry.Sources.BatteryChange       -> Sources.BatteryChange
@@ -97,6 +98,7 @@ fun Sources.toDb(): UserEntry.Sources =
         Sources.TempBasalDialog     -> UserEntry.Sources.TempBasalDialog
         Sources.CalibrationDialog   -> UserEntry.Sources.CalibrationDialog
         Sources.FillDialog          -> UserEntry.Sources.FillDialog
+        Sources.SiteRotationDialog  -> UserEntry.Sources.SiteRotationDialog
         Sources.BgCheck             -> UserEntry.Sources.BgCheck
         Sources.SensorInsert        -> UserEntry.Sources.SensorInsert
         Sources.BatteryChange       -> UserEntry.Sources.BatteryChange

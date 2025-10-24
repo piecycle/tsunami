@@ -10,7 +10,6 @@ import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.interfaces.constraints.PluginConstraints
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.Profile
@@ -41,6 +40,7 @@ import com.google.gson.GsonBuilder
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.json.JSONException
 import org.json.JSONObject
+import javax.inject.Provider
 
 /**
  * Created by andy on 23.04.18.
@@ -63,7 +63,7 @@ abstract class PumpPluginAbstract protected constructor(
     var pumpSync: PumpSync,
     var pumpSyncStorage: PumpSyncStorage,
     var decimalFormatter: DecimalFormatter,
-    protected val instantiator: Instantiator
+    protected val pumpEnactResultProvider: Provider<PumpEnactResult>
 ) : PumpPluginBase(pluginDescription, ownPreferences, aapsLogger, rh, preferences, commandQueue), Pump, PluginConstraints, PumpSyncEntriesCreator {
 
     protected val disposable = CompositeDisposable()
@@ -328,7 +328,7 @@ abstract class PumpPluginAbstract protected constructor(
     protected abstract fun triggerUIChange()
 
     private fun getOperationNotSupportedWithCustomText(resourceId: Int): PumpEnactResult =
-        instantiator.providePumpEnactResult().success(false).enacted(false).comment(resourceId)
+        pumpEnactResultProvider.get().success(false).enacted(false).comment(resourceId)
 
     init {
         pumpDescription.fillFor(pumpType)

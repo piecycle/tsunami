@@ -148,7 +148,7 @@ class DateUtilImpl @Inject constructor(private val context: Context) : DateUtil 
 
     override fun timeString(): String = timeString(now())
     override fun timeString(mills: Long): String {
-        var format = "hh:mma"
+        var format = "hh:mm a"
         if (android.text.format.DateFormat.is24HourFormat(context)) {
             format = "HH:mm"
         }
@@ -193,7 +193,7 @@ class DateUtilImpl @Inject constructor(private val context: Context) : DateUtil 
         DateTime(mills).toString(DateTimeFormat.forPattern("ww"))
 
     override fun timeStringWithSeconds(mills: Long): String {
-        var format = "hh:mm:ssa"
+        var format = "hh:mm:ss a"
         if (android.text.format.DateFormat.is24HourFormat(context)) {
             format = "HH:mm:ss"
         }
@@ -226,7 +226,7 @@ class DateUtilImpl @Inject constructor(private val context: Context) : DateUtil 
         if (time == null) return ""
         //val minutes = ((now() - time) / 1000 / 60).toInt()
         val seconds = (now() - time) / 1000
-        if (seconds > 99) {
+        if (seconds > 119) {
             return rh.gs(R.string.minago, (seconds / 60).toInt())
         } else {
             return rh.gs(R.string.secago, seconds.toInt())
@@ -357,9 +357,9 @@ class DateUtilImpl @Inject constructor(private val context: Context) : DateUtil 
         var hours = " " + rh.gs(R.string.hours) + " "
         var minutes = " " + rh.gs(R.string.unit_minutes) + " "
         if (useShortText) {
-            days = rh.gs(R.string.shortday)
-            hours = rh.gs(R.string.shorthour)
-            minutes = rh.gs(R.string.shortminute)
+            days = " " + rh.gs(R.string.shortday) + " "
+            hours = " " + rh.gs(R.string.shorthour) + " "
+            minutes = " " + rh.gs(R.string.shortminute) + " "
         }
         if (T.msecs(milliseconds).days() > 1000) return rh.gs(R.string.forever)
         var result = ""

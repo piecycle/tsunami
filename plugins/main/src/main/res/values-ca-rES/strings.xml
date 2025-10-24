@@ -111,7 +111,6 @@
     <!-- Profile -->
     <string name="localprofile">Perfil</string>
     <string name="localprofile_shortname">PL</string>
-    <string name="description_profile_local">Definir un perfil disponible fora de línia.</string>
     <string name="do_you_want_switch_profile">Voleu canviar de perfil i descartar els canvis fets a l\'actual?</string>
     <string name="save_or_reset_changes_first">Gravar o restablir primer els canvis</string>
     <string name="delete_current_profile">Eliminar perfil actual?</string>

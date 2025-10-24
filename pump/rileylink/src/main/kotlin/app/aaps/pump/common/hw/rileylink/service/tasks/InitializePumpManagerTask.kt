@@ -1,9 +1,9 @@
 package app.aaps.pump.common.hw.rileylink.service.tasks
 
-import android.content.Context
 import app.aaps.core.data.pump.defs.ManufacturerType
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
+import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.utils.Round
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.pump.common.hw.rileylink.RileyLinkConst
@@ -13,19 +13,19 @@ import app.aaps.pump.common.hw.rileylink.defs.RileyLinkError
 import app.aaps.pump.common.hw.rileylink.defs.RileyLinkServiceState
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkDoubleKey
 import app.aaps.pump.common.hw.rileylink.service.RileyLinkServiceData
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 import kotlin.math.roundToLong
 
 /**
  * This class is intended to be run by the Service, for the Service. Not intended for clients to run.
  */
-class InitializePumpManagerTask(injector: HasAndroidInjector, private val context: Context) : ServiceTask(injector) {
-
-    @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var preferences: Preferences
-    @Inject lateinit var rileyLinkServiceData: RileyLinkServiceData
-    @Inject lateinit var rileyLinkUtil: RileyLinkUtil
+class InitializePumpManagerTask @Inject constructor(
+    private val aapsLogger: AAPSLogger,
+    private val preferences: Preferences,
+    private val rileyLinkServiceData: RileyLinkServiceData,
+    private val rileyLinkUtil: RileyLinkUtil,
+    activePlugin: ActivePlugin
+) : ServiceTask(activePlugin) {
 
     override fun run() {
         if (!isRileyLinkDevice) return
@@ -46,9 +46,9 @@ class InitializePumpManagerTask(injector: HasAndroidInjector, private val contex
                 if (rileyLinkCommunicationManager.tryToConnectToDevice()) rileyLinkServiceData.setServiceState(RileyLinkServiceState.PumpConnectorReady)
                 else {
                     rileyLinkServiceData.setServiceState(RileyLinkServiceState.PumpConnectorError, RileyLinkError.NoContactWithDevice)
-                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.IPC.MSG_PUMP_tunePump, context)
+                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.IPC.MSG_PUMP_tunePump)
                 }
-            } else rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.IPC.MSG_PUMP_tunePump, context)
+            } else rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.IPC.MSG_PUMP_tunePump)
         } else {
             if (!Round.isSame(lastGoodFrequency, RileyLinkTargetFrequency.Omnipod.scanFrequencies[0])) {
                 lastGoodFrequency = RileyLinkTargetFrequency.Omnipod.scanFrequencies[0]

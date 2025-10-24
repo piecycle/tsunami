@@ -1,13 +1,11 @@
 package app.aaps.pump.common.hw.rileylink.service.tasks
 
+import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventRefreshButtonState
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class WakeAndTuneTask(injector: HasAndroidInjector) : PumpTask(injector) {
-
-    @Inject lateinit var rxBus: RxBus
+class WakeAndTuneTask @Inject constructor(activePlugin: ActivePlugin, private val rxBus: RxBus) : PumpTask(activePlugin) {
 
     override fun run() {
         rxBus.send(EventRefreshButtonState(false))

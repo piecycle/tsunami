@@ -14,6 +14,7 @@ enum class Sources {
     CalibrationDialog,
     FillDialog,
     TsunamiDialog,      //MP Tsunami
+    SiteRotationDialog,
     BgCheck,
     SensorInsert,
     BatteryChange,

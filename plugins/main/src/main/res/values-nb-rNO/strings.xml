@@ -129,7 +129,7 @@
     <!-- Profile -->
     <string name="localprofile">Profil</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">Definer en profil som er tilgjengelig offline.</string>
+    <string name="description_profile_local">Definer en profil som beskriver ditt insulinbehov.</string>
     <string name="a11y_add_new_to_list">legg til ny i liste</string>
     <string name="do_you_want_switch_profile">Ønsker du å bytte profil og forkaste endringer i gjeldende profil?</string>
     <string name="save_or_reset_changes_first">Lagre eller nullstill gjeldende endringer først</string>
@@ -162,6 +162,7 @@
     <string name="extended_bolus_button">Forlenget bolus</string>
     <string name="extended_bolus_cancel_button">Avbryt forlenget bolus</string>
     <string name="tools">Verktøy</string>
+    <string name="site_rotation">Rotasjon av stedsområder</string>
     <string name="nav_history_browser">Historikk</string>
     <string name="sensor_label">Sensor</string>
     <string name="age_label">alder:</string>

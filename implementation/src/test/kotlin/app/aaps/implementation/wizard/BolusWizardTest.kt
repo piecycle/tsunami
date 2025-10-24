@@ -4,13 +4,17 @@ import app.aaps.core.data.pump.defs.PumpDescription
 import app.aaps.core.interfaces.aps.AutosensDataStore
 import app.aaps.core.interfaces.aps.IobTotal
 import app.aaps.core.interfaces.aps.Loop
+import app.aaps.core.interfaces.automation.Automation
 import app.aaps.core.interfaces.constraints.Constraint
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
+import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.iob.GlucoseStatusProvider
+import app.aaps.core.interfaces.logging.UserEntryLogger
 import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.queue.CommandQueue
+import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.objects.wizard.BolusWizard
-import app.aaps.implementation.iob.GlucoseStatusProviderImpl
 import app.aaps.plugins.aps.openAPSSMB.OpenAPSSMBPlugin
 import app.aaps.shared.tests.TestBaseWithProfile
 import com.google.common.truth.Truth.assertThat
@@ -31,32 +35,17 @@ class BolusWizardTest : TestBaseWithProfile() {
     @Mock lateinit var autosensDataStore: AutosensDataStore
     @Mock lateinit var processedDeviceStatusData: ProcessedDeviceStatusData
     @Mock lateinit var openAPSSMBPlugin: OpenAPSSMBPlugin
-
-    init {
-        addInjector {
-            if (it is BolusWizard) {
-                it.aapsLogger = aapsLogger
-                it.rh = rh
-                it.rxBus = rxBus
-                it.profileFunction = profileFunction
-                it.constraintChecker = constraintChecker
-                it.activePlugin = activePlugin
-                it.commandQueue = commandQueue
-                it.loop = loop
-                it.dateUtil = dateUtil
-                it.iobCobCalculator = iobCobCalculator
-                it.glucoseStatusProvider = GlucoseStatusProviderImpl(activePlugin)
-                it.profileUtil = profileUtil
-                it.config = config
-                it.processedDeviceStatusData = processedDeviceStatusData
-            }
-        }
-    }
+    @Mock lateinit var uel: UserEntryLogger
+    @Mock lateinit var automation: Automation
+    @Mock lateinit var glucoseStatusProvider: GlucoseStatusProvider
+    @Mock lateinit var uiInteraction: UiInteraction
+    @Mock lateinit var persistenceLayer: PersistenceLayer
 
     @BeforeEach
     fun prepareMocking() {
         Mockito.`when`(activePlugin.activeAPS).thenReturn(openAPSSMBPlugin)
     }
+
     @Suppress("SameParameterValue")
     private fun setupProfile(targetLow: Double, targetHigh: Double, insulinSensitivityFactor: Double, insulinToCarbRatio: Double): Profile {
         val profile = Mockito.mock(Profile::class.java)
@@ -83,7 +72,11 @@ class BolusWizardTest : TestBaseWithProfile() {
     fun shouldCalculateTheSameBolusWhenBGsInRange() {
         val profile = setupProfile(4.0, 8.0, 20.0, 12.0)
         var bw =
-            BolusWizard(injector).doCalc(
+            BolusWizard(
+                aapsLogger, rh, rxBus, preferences, profileFunction, profileUtil, constraintChecker, activePlugin,
+                commandQueue, loop, iobCobCalculator, dateUtil, config, uel, automation, glucoseStatusProvider, uiInteraction,
+                persistenceLayer, decimalFormatter, processedDeviceStatusData
+            ).doCalc(
                 profile,
                 "",
                 null,
@@ -103,7 +96,11 @@ class BolusWizardTest : TestBaseWithProfile() {
             )
         val bolusForBg42 = bw.calculatedTotalInsulin
         bw =
-            BolusWizard(injector).doCalc(
+            BolusWizard(
+                aapsLogger, rh, rxBus, preferences, profileFunction, profileUtil, constraintChecker, activePlugin,
+                commandQueue, loop, iobCobCalculator, dateUtil, config, uel, automation, glucoseStatusProvider, uiInteraction,
+                persistenceLayer, decimalFormatter, processedDeviceStatusData
+            ).doCalc(
                 profile,
                 "",
                 null,
@@ -129,7 +126,11 @@ class BolusWizardTest : TestBaseWithProfile() {
     fun shouldCalculateHigherBolusWhenHighBG() {
         val profile = setupProfile(4.0, 8.0, 20.0, 12.0)
         var bw =
-            BolusWizard(injector).doCalc(
+            BolusWizard(
+                aapsLogger, rh, rxBus, preferences, profileFunction, profileUtil, constraintChecker, activePlugin,
+                commandQueue, loop, iobCobCalculator, dateUtil, config, uel, automation, glucoseStatusProvider, uiInteraction,
+                persistenceLayer, decimalFormatter, processedDeviceStatusData
+            ).doCalc(
                 profile,
                 "",
                 null,
@@ -149,7 +150,11 @@ class BolusWizardTest : TestBaseWithProfile() {
             )
         val bolusForHighBg = bw.calculatedTotalInsulin
         bw =
-            BolusWizard(injector).doCalc(
+            BolusWizard(
+                aapsLogger, rh, rxBus, preferences, profileFunction, profileUtil, constraintChecker, activePlugin,
+                commandQueue, loop, iobCobCalculator, dateUtil, config, uel, automation, glucoseStatusProvider, uiInteraction,
+                persistenceLayer, decimalFormatter, processedDeviceStatusData
+            ).doCalc(
                 profile,
                 "",
                 null,
@@ -175,7 +180,11 @@ class BolusWizardTest : TestBaseWithProfile() {
     fun shouldCalculateLowerBolusWhenLowBG() {
         val profile = setupProfile(4.0, 8.0, 20.0, 12.0)
         var bw =
-            BolusWizard(injector).doCalc(
+            BolusWizard(
+                aapsLogger, rh, rxBus, preferences, profileFunction, profileUtil, constraintChecker, activePlugin,
+                commandQueue, loop, iobCobCalculator, dateUtil, config, uel, automation, glucoseStatusProvider, uiInteraction,
+                persistenceLayer, decimalFormatter, processedDeviceStatusData
+            ).doCalc(
                 profile,
                 "",
                 null,
@@ -195,7 +204,11 @@ class BolusWizardTest : TestBaseWithProfile() {
             )
         val bolusForLowBg = bw.calculatedTotalInsulin
         bw =
-            BolusWizard(injector).doCalc(
+            BolusWizard(
+                aapsLogger, rh, rxBus, preferences, profileFunction, profileUtil, constraintChecker, activePlugin,
+                commandQueue, loop, iobCobCalculator, dateUtil, config, uel, automation, glucoseStatusProvider, uiInteraction,
+                persistenceLayer, decimalFormatter, processedDeviceStatusData
+            ).doCalc(
                 profile,
                 "",
                 null,

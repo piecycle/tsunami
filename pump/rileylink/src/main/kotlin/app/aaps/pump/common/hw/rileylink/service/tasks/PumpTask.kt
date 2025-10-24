@@ -1,6 +1,6 @@
 package app.aaps.pump.common.hw.rileylink.service.tasks
 
-import dagger.android.HasAndroidInjector
+import app.aaps.core.interfaces.plugin.ActivePlugin
 
-open class PumpTask(injector: HasAndroidInjector) : ServiceTask(injector)
+open class PumpTask(activePlugin: ActivePlugin) : ServiceTask(activePlugin)
 

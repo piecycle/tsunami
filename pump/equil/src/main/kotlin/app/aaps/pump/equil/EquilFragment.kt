@@ -14,7 +14,6 @@ import androidx.fragment.app.DialogFragment
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.protection.ProtectionCheck
 import app.aaps.core.interfaces.pump.BlePreCheck
 import app.aaps.core.interfaces.queue.Callback
@@ -34,8 +33,9 @@ import app.aaps.pump.equil.databinding.EquilFraBinding
 import app.aaps.pump.equil.events.EventEquilDataChanged
 import app.aaps.pump.equil.events.EventEquilModeChanged
 import app.aaps.pump.equil.manager.EquilManager
-import app.aaps.pump.equil.manager.command.*
-import app.aaps.pump.equil.ui.*
+import app.aaps.pump.equil.manager.command.CmdModelSet
+import app.aaps.pump.equil.ui.EquilHistoryRecordActivity
+import app.aaps.pump.equil.ui.EquilUnPairDetachActivity
 import app.aaps.pump.equil.ui.dlg.LoadingDlg
 import app.aaps.pump.equil.ui.pair.EquilPairActivity
 import dagger.android.support.DaggerFragment
@@ -50,7 +50,6 @@ class EquilFragment : DaggerFragment() {
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var fabricPrivacy: FabricPrivacy
     @Inject lateinit var commandQueue: CommandQueue
-    @Inject lateinit var activePlugin: ActivePlugin
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var preferences: Preferences
     @Inject lateinit var dateUtil: DateUtil

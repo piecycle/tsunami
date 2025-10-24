@@ -56,8 +56,6 @@ abstract class EquilPairFragmentBase : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // binding.fragmentTitle.setText(getTitleId())
-
         val nextPage = getNextPageActionId()
 
         if (nextPage == null) {
@@ -86,6 +84,7 @@ abstract class EquilPairFragmentBase : DaggerFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _progressIndicationBinding = null
     }
 
     private fun updateProgressIndication() {
@@ -104,11 +103,6 @@ abstract class EquilPairFragmentBase : DaggerFragment() {
 
     @IdRes
     protected abstract fun getNextPageActionId(): Int?
-
-    // @StringRes
-    // protected fun getTitleId(): Int = viewModel.getTitleId()
-    //
-    // @StringRes protected fun getTextId(): Int = viewModel.getTextId()
 
     protected abstract fun getIndex(): Int
 

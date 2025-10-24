@@ -27,7 +27,6 @@ class NSClientV3ServiceTest : TestBaseWithProfile() {
     @BeforeEach
     fun init() {
         sut = NSClientV3Service().also {
-            it.injector = injector
             it.aapsLogger = aapsLogger
             it.rxBus = rxBus
             it.rh = rh

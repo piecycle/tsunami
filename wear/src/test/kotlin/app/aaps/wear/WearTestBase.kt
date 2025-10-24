@@ -4,22 +4,28 @@ import android.content.Context
 import android.content.SharedPreferences
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.utils.DateUtil
-import app.aaps.shared.tests.TestBase
 import app.aaps.wear.interaction.utils.Constants
 import app.aaps.wear.interaction.utils.Persistence
 import app.aaps.wear.interaction.utils.WearUtil
 import app.aaps.wear.testing.mocks.SharedPreferencesMock
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.junit.jupiter.MockitoSettings
+import org.mockito.quality.Strictness
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-open class WearTestBase : TestBase() {
+@ExtendWith(MockitoExtension::class)
+@MockitoSettings(strictness = Strictness.LENIENT)
+open class WearTestBase {
 
     private var clockNow: Long = REF_NOW
+    private val aapsLogger = AAPSLoggerTest()
     @Mock lateinit var context: Context
     @Mock lateinit var sp: SP
     @Mock lateinit var dateUtil: DateUtil

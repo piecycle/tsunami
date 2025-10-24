@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Events-->
     <!-- PumpPluginBase -->
     <string name="pump_driver_changed" comment="26 characters max for translation">Ovládač pumpy zmenený.</string>
     <!--    DateUtil-->
-    <string name="minago">pred %1$d min</string>
-    <string name="secago">pred %1$d s</string>
     <string name="minago_long">pred %1$d minútami</string>
-    <string name="hoursago">pred %1$.1f h</string>
     <string name="days_ago">Pred %1$.1f dňami</string>
     <string name="days_ago_round">Pred %1$.0f dňami</string>
     <string name="in_days">za %1$.0f dní</string>

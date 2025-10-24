@@ -35,6 +35,10 @@ sealed class ValueWithUnit {          //I use a sealed class because of StringRe
 
     data class TEMeterType(val value: TE.MeterType) : ValueWithUnit()
 
+    data class TELocation(val value: TE.Location) : ValueWithUnit()
+
+    data class TEArrow(val value: TE.Arrow) : ValueWithUnit()
+
     data class TETTReason(val value: TT.Reason) : ValueWithUnit()
 
     data class RMMode(val value: RM.Mode) : ValueWithUnit()

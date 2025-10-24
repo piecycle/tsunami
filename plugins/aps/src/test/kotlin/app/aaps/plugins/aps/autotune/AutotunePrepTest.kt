@@ -192,8 +192,8 @@ class AutotunePrepTest : TestBaseWithProfile() {
                 timeZone = timezone,
                 dia = dia
             )
-            return ATProfile(ProfileSealed.Pure(pure, activePlugin), localInsulin, injector).also { it.dateUtil = dateUtil }
-        } catch (ignored: Exception) {
+            return ATProfile(activePlugin, preferences, profileUtil, dateUtil, rh, profileStoreProvider, aapsLogger).with(ProfileSealed.Pure(pure, activePlugin), localInsulin)
+        } catch (_: Exception) {
             return null
         }
     }
@@ -216,7 +216,7 @@ class AutotunePrepTest : TestBaseWithProfile() {
             val lastTas = last.getInt("minutes") * 60
             val value = last.getDouble("rate")
             ret.add(jsonArray.length() - 1, Block((T.hours(24).secs() - lastTas) * 1000L, value))
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return null
         }
         return ret

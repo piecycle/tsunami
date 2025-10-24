@@ -4,6 +4,7 @@
     <string name="setupwizard_units_prompt">Chọn đơn vị mà bạn muốn hiển thị giá trị</string>
     <string name="next_button">Tiếp theo</string>
     <string name="previous_button">Trước đó</string>
+    <string name="nav_setupwizard">Hướng dẫn thiết lập</string>
     <string name="setupwizard_finish">KẾT THÚC</string>
     <string name="welcome">Chào mừng</string>
     <string name="welcometosetupwizard">Chào mừng đến với trình hướng dẫn cài đặt. Nó sẽ hướng dẫn bạn từng bước trong quá trình thiết lập.\n</string>
@@ -31,6 +32,7 @@
     <string name="patient_name">Tên người dùng</string>
     <string name="patient_name_summary">Vui lòng cung cấp tên bệnh nhân hoặc biệt danh để phân biệt giữa nhiều thiết lập</string>
     <string name="diawarning">Lưu ý: các Cấu hình insulin mới yêu cầu DIA ít nhất 5 giờ. DIA 5–6 giờ trên Cấu hình mới tương đương với DIA 3 giờ trên hồ sơ insulin cũ.</string>
+    <string name="profile">Cấu hình</string>
     <string name="doprofileswitch">Thực hiện chuyển Cấu hình</string>
     <string name="exitwizard">Bỏ qua cài đặt nhanh</string>
     <string name="setupwizard_sensitivity_description">Plugin Sensitivity được sử dụng để phát hiện độ nhạy và tính toán COB. Để biết thêm thông tin, hãy truy cập:</string>
@@ -43,6 +45,7 @@
     <string name="readstatus">Đọc trạng thái</string>
     <string name="data_choices">Lựa chọn dữ liệu</string>
     <string name="fabric_upload">Tải lên Fabric</string>
+    <string name="unattended_settings_export">Xuất cài đặt tự động</string>
     <string name="unattended_settings_export_summary">Bật tùy chọn này sẽ lưu mật khẩu của bạn một cách an toàn trên điện thoại</string>
     <string name="identification">Nhận dạng (email, Facebook hoặc Discord, v.v.)</string>
     <string name="request">Yêu cầu</string>
@@ -50,25 +53,36 @@
     <string name="error_asking_for_permissions">Lỗi khi yêu cầu cấp quyền</string>
     <string name="alert_dialog_permission_battery_optimization_failed">Thiết bị này dường như không hỗ trợ loại trừ khỏi tối ưu pin – bạn có thể gặp các vấn đề về hiệu suất.</string>
     <!--    ConfigBuilder-->
+    <string name="config_builder">Config Builder</string>
+    <string name="configbuilder_pump">Pump</string>
     <string name="configbuilder_pump_description">Bạn muốn sử dụng loại bơm nào với AAPS?</string>
     <string name="configbuilder_profile">Cấu hình</string>
     <string name="configbuilder_profile_description">AAPS nên dùng Cấu hình điều trị nào?</string>
     <string name="configbuilder_aps">APS</string>
     <string name="configbuilder_aps_description">Thuật toán APS nào sẽ thực hiện điều chỉnh điều trị?</string>
+    <string name="configbuilder_general">General</string>
     <string name="configbuilder_general_description">Đây là một số plugin chung mà bạn có thể thấy hữu ích.</string>
+    <string name="configbuilder_sync">Synchronization</string>
     <string name="configbuilder_sync_description">Các plugin dùng để tải lên và đồng bộ dữ liệu.</string>
     <string name="configbuilder_constraints_description">Những giới hạn nào đang được áp dụng?</string>
+    <string name="configbuilder_loop">Loop</string>
     <string name="configbuilder_loop_description">Sử dụng tùy chọn này để kích hoạt tích hợp vòng lặp của AAPS.</string>
     <string name="configbuilder_insulin_description">Bạn đang dùng loại insulin gì?</string>
+    <string name="configbuilder_bgsource">BG Source</string>
     <string name="configbuilder_bgsource_description">Bạn muốn AAPS lấy dữ liệu từ đâu?</string>
+    <string name="configbuilder_smoothing">Smoothing</string>
     <string name="configbuilder_smoothing_description">Chọn thuật toán làm mượt</string>
+    <string name="configbuilder_sensitivity">Sensitivity detection</string>
     <string name="configbuilder_sensitivity_description">Bạn muốn chọn thuật toán độ nhạy nào?</string>
+    <string name="config_builder_shortname">CONF</string>
     <string name="description_config_builder">Được dùng để thiết lập các plugin đang chạy</string>
     <string name="allow_hardware_pump_text">Chú ý: Nếu bạn kích hoạt và kết nối với phần cứng bơm insulin, AAPS sẽ sao chép các thiết lập basal từ Cấu hình sang bơm, ghi đè lên tốc độ basal hiện có được lưu trên bơm. Hãy đảm bảo rằng bạn đã có thiết lập basal chính xác trong AAPS. Nếu bạn không chắc chắn hoặc không muốn ghi đè các thiết lập basal trên bơm, hãy nhấn Hủy và thực hiện lại việc chuyển sang bơm sau.</string>
+    <string name="a11y_open_settings">mở cài đặt</string>
     <string name="nsclient_version_does_not_match">Phiên bản AAPSClient không khớp với phiên bản AAPS. Vui lòng cập nhật.</string>
     <string name="expand_category">Mở rộng danh mục</string>
     <string name="collapse_category">Thu gọn danh mục</string>
     <!--ImportExport-->
+    <string name="nav_preferences">Cài đặt tùy chọn</string>
     <string name="password_preferences_encrypt_prompt">Hệ thống sẽ yêu cầu mật khẩu chính để mã hóa các thiết lập bạn xuất ra.</string>
     <string name="preferences_export_canceled">Xuất dữ liệu đã bị hủy! Tùy chọn KHÔNG được xuất dữ liệu!</string>
     <string name="preferences_import_canceled">Nhập dữ liệu đã bị hủy! Tùy chọn KHÔNG được nhập dữ liệu!</string>
@@ -89,7 +103,7 @@
     <string name="old_master_password">Mật khẩu chính cũ</string>
     <string name="different_password_used">Tệp này đã được xuất và mã hóa bằng mật khẩu khác. Vui lòng nhập mật khẩu cũ để giải mã tệp.</string>
     <string name="master_password_will_be_replaced">Khi nhập thành công, mật khẩu chính hiện tại SẼ BỊ THAY THẾ bằng mật khẩu chính cũ!</string>
-    <string name="exported">Xuất cài đặt thành công</string>
+    <string name="exported">Tùy chọn đã xuất</string>
     <string name="exported_failed">Xuất tùy cài đặt thất bại!</string>
     <string name="filenotfound">Không tìm thấy tệp</string>
     <string name="goto_main_try_again">Vui lòng quay lại màn hình chính và thử lại.</string>
@@ -98,6 +112,8 @@
     <string name="protection">Bảo mật</string>
     <string name="master_password_missing">Chưa thiết lập mật khẩu chính!\n\nVui lòng đặt mật khẩu chính trong Tùy chọn cài đặt (%1$s)</string>
     <!--    Maintenance-->
+    <string name="maintenance">Maintenance</string>
+    <string name="maintenance_shortname">MAINT</string>
     <string name="description_maintenance">Cung cấp một số chức năng bảo trì (ví dụ: gửi nhật ký, xóa nhật ký).</string>
     <string name="database_cleanup">Dọn dẹp cơ sở dữ liệu</string>
     <string name="reset_db_confirm">Bạn có thật sự muốn đặt lại cơ sở dữ liệu không?</string>

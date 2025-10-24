@@ -53,17 +53,16 @@ import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.core.utils.HtmlHelper
 import app.aaps.ui.R
 import app.aaps.ui.databinding.DialogWizardBinding
-import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerDialogFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import java.text.DecimalFormat
 import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.math.abs
 
 class WizardDialog : DaggerDialogFragment() {
 
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var constraintChecker: ConstraintsChecker
@@ -80,7 +79,7 @@ class WizardDialog : DaggerDialogFragment() {
     @Inject lateinit var dateUtil: DateUtil
     @Inject lateinit var protectionCheck: ProtectionCheck
     @Inject lateinit var decimalFormatter: DecimalFormatter
-
+    @Inject lateinit var bolusWizardProvider: Provider<BolusWizard>
     private val handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
 
     private var queryingProtection = false
@@ -464,7 +463,7 @@ class WizardDialog : DaggerDialogFragment() {
 
         val carbTime = SafeParse.stringToInt(binding.carbTimeInput.text)
 
-        wizard = BolusWizard(injector).doCalc(
+        wizard = bolusWizardProvider.get().doCalc(
             specificProfile, profileName, tempTarget, carbsAfterConstraint, cob, bg, correction, preferences.get(IntKey.OverviewBolusPercentage),
             binding.bgCheckbox.isChecked,
             binding.cobCheckbox.isChecked,

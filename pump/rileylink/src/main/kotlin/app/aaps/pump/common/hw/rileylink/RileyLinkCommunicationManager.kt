@@ -21,10 +21,8 @@ import app.aaps.pump.common.hw.rileylink.keys.RileyLinkLongKey
 import app.aaps.pump.common.hw.rileylink.service.RileyLinkServiceData
 import app.aaps.pump.common.hw.rileylink.service.tasks.ServiceTaskExecutor
 import app.aaps.pump.common.hw.rileylink.service.tasks.WakeAndTuneTask
-import dagger.android.HasAndroidInjector
-import java.lang.StringBuilder
 import java.util.Locale
-import javax.inject.Inject
+import javax.inject.Provider
 
 /**
  * This is abstract class for RileyLink Communication, this one needs to be extended by specific "Pump" class.
@@ -32,19 +30,20 @@ import javax.inject.Inject
  *
  * Created by andy on 5/10/18.
  */
-abstract class RileyLinkCommunicationManager<T : RLMessage> {
+abstract class RileyLinkCommunicationManager<T : RLMessage>(
+    val aapsLogger: AAPSLogger,
+    val preferences: Preferences,
+    val rileyLinkServiceData: RileyLinkServiceData,
+    val serviceTaskExecutor: ServiceTaskExecutor,
+    val rfspy: RFSpy,
+    val activePlugin: ActivePlugin,
+    val rileyLinkUtil: RileyLinkUtil,
+    val wakeAndTuneTaskProvider: Provider<WakeAndTuneTask>,
+    val radioResponseProvider: Provider<RadioResponse>
+) {
 
     @Suppress("PrivatePropertyName")
     private val ALLOWED_PUMP_UNREACHABLE = 10 * 60 * 1000 // 10 minutes
-
-    @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var preferences: Preferences
-    @Inject lateinit var rileyLinkServiceData: RileyLinkServiceData
-    @Inject lateinit var serviceTaskExecutor: ServiceTaskExecutor
-    @Inject lateinit var rfspy: RFSpy
-    @Inject lateinit var injector: HasAndroidInjector
-    @Inject lateinit var activePlugin: ActivePlugin
-    @Inject lateinit var rileyLinkUtil: RileyLinkUtil
 
     protected var receiverDeviceAwakeForMinutes: Int = 1 // override this in constructor of specific implementation
     protected var receiverDeviceID: String? = null // String representation of receiver device (ex. Pump (xxxxxx) or Pod (yyyyyy))
@@ -77,7 +76,7 @@ abstract class RileyLinkCommunicationManager<T : RLMessage> {
             0.toByte(), repeatCount.toByte(), 0.toByte(), 0.toByte(), timeoutMs, retryCount.toByte(), extendPreambleMs
         )
 
-        val radioResponse = rfSpyResponse?.getRadioResponse(injector) ?: throw RileyLinkCommunicationException(RileyLinkBLEError.Interrupted, null)
+        val radioResponse = rfSpyResponse?.getRadioResponse() ?: throw RileyLinkCommunicationException(RileyLinkBLEError.Interrupted, null)
         val response = createResponseMessage(radioResponse.getPayload())
 
         if (response.isValid()) {
@@ -99,7 +98,7 @@ abstract class RileyLinkCommunicationManager<T : RLMessage> {
 
                     if (diff > ALLOWED_PUMP_UNREACHABLE) {
                         aapsLogger.warn(LTag.PUMPBTCOMM, "We reached max time that Pump can be unreachable. Starting Tuning.")
-                        serviceTaskExecutor.startTask(WakeAndTuneTask(injector))
+                        serviceTaskExecutor.startTask(wakeAndTuneTaskProvider.get())
                         timeoutCount = 0
                     }
                 }
@@ -113,7 +112,7 @@ abstract class RileyLinkCommunicationManager<T : RLMessage> {
         }
 
         if (showPumpMessages) {
-            aapsLogger.info(LTag.PUMPBTCOMM, "Received:" + shortHexString(rfSpyResponse.getRadioResponse(injector).getPayload()))
+            aapsLogger.info(LTag.PUMPBTCOMM, "Received:" + shortHexString(rfSpyResponse.getRadioResponse().getPayload()))
         }
 
         return response
@@ -223,7 +222,7 @@ abstract class RileyLinkCommunicationManager<T : RLMessage> {
                 if (resp?.wasTimeout() == true) {
                     aapsLogger.error(LTag.PUMPBTCOMM, String.format(Locale.ENGLISH, "scanForPump: Failed to find pump at frequency %.3f", frequencies[i]))
                 } else if (resp?.looksLikeRadioPacket() == true) {
-                    val radioResponse = RadioResponse(injector)
+                    val radioResponse = radioResponseProvider.get()
 
                     try {
                         radioResponse.init(resp.raw)

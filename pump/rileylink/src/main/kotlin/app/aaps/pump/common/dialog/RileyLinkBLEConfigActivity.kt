@@ -12,7 +12,6 @@ import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -68,7 +67,7 @@ class RileyLinkBLEConfigActivity : TranslatedDaggerAppCompatActivity() {
     private val stopScanAfterTimeoutRunnable = Runnable {
         if (scanning) {
             stopLeDeviceScan()
-            rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet, this) // Reconnect current RL
+            rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet) // Reconnect current RL
         }
     }
 
@@ -98,13 +97,13 @@ class RileyLinkBLEConfigActivity : TranslatedDaggerAppCompatActivity() {
         }
         binding.rileyLinkBleConfigScanStart.setOnClickListener {
             // disable currently selected RL, so that we can discover it
-            rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkDisconnect, this)
+            rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkDisconnect)
             startLeDeviceScan()
         }
         binding.rileyLinkBleConfigButtonScanStop.setOnClickListener {
             if (scanning) {
                 stopLeDeviceScan()
-                rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet, this) // Reconnect current RL
+                rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet) // Reconnect current RL
             }
         }
         binding.rileyLinkBleConfigButtonRemoveRileyLink.setOnClickListener {
@@ -112,8 +111,8 @@ class RileyLinkBLEConfigActivity : TranslatedDaggerAppCompatActivity() {
                 this@RileyLinkBLEConfigActivity,
                 rh.gs(R.string.riley_link_ble_config_remove_riley_link_confirmation_title),
                 rh.gs(R.string.riley_link_ble_config_remove_riley_link_confirmation),
-                Runnable {
-                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkDisconnect, this@RileyLinkBLEConfigActivity)
+                {
+                    rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkDisconnect)
                     preferences.remove(RileyLinkStringPreferenceKey.MacAddress)
                     preferences.remove(RileyLinkStringKey.Name)
                     updateCurrentlySelectedRileyLink()
@@ -145,7 +144,7 @@ class RileyLinkBLEConfigActivity : TranslatedDaggerAppCompatActivity() {
         super.onDestroy()
         if (scanning) {
             stopLeDeviceScan()
-            rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet, this) // Reconnect current RL
+            rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet) // Reconnect current RL
         }
     }
 
@@ -220,7 +219,7 @@ class RileyLinkBLEConfigActivity : TranslatedDaggerAppCompatActivity() {
             binding.rileyLinkBleConfigButtonScanStop.visibility = View.VISIBLE
         }
         scanning = true
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
             if (bluetoothAdapter?.isEnabled == true && bluetoothAdapter?.state == BluetoothAdapter.STATE_ON) {
                 bleScanner?.startScan(filters, settings, bleScanCallback)
                 aapsLogger.debug(LTag.PUMPBTCOMM, "startLeDeviceScan: Scanning Start")
@@ -233,7 +232,7 @@ class RileyLinkBLEConfigActivity : TranslatedDaggerAppCompatActivity() {
         if (scanning) {
             scanning = false
             if (bluetoothAdapter?.isEnabled == true && bluetoothAdapter?.state == BluetoothAdapter.STATE_ON)
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
                     bleScanner?.stopScan(bleScanCallback)
                 }
             aapsLogger.debug(LTag.PUMPBTCOMM, "stopLeDeviceScan: Scanning Stop")

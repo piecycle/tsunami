@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.rx.AapsSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import javax.inject.Provider
 
 abstract class ActionViewModelBase(
-    protected val instantiator: Instantiator,
+    protected val pumpEnactResultProvider: Provider<PumpEnactResult>,
     protected val logger: AAPSLogger,
     private val aapsSchedulers: AapsSchedulers
 ) : ViewModelBase() {
@@ -40,7 +40,7 @@ abstract class ActionViewModelBase(
                     logger.error(LTag.PUMP, "Caught exception in while executing action in ActionViewModelBase", throwable)
                     _isActionExecutingLiveData.postValue(false)
                     _actionResultLiveData.postValue(
-                        instantiator.providePumpEnactResult().success(false).comment(
+                        pumpEnactResultProvider.get().success(false).comment(
                             throwable.message ?: "Caught exception in while executing action in ActionViewModelBase"
                         )
                     )

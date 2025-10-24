@@ -9,6 +9,7 @@ import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.ui.extensions.runOnUiThread
+import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.pump.equil.EquilConst
 import app.aaps.pump.equil.R
 import app.aaps.pump.equil.driver.definition.BasalSchedule
@@ -20,35 +21,22 @@ import app.aaps.pump.equil.manager.command.CmdStepSet
 import app.aaps.pump.equil.manager.command.CmdTimeSet
 import javax.inject.Inject
 
-// IMPORTANT: This activity needs to be called from RileyLinkSelectPreference (see pref_medtronic.xml as example)
 class EquilPairAirFragment : EquilPairFragmentBase() {
 
     @Inject lateinit var profileFunction: ProfileFunction
 
-    override fun getLayoutId(): Int {
-        return R.layout.equil_pair_air_fragment
-    }
+    override fun getLayoutId(): Int = R.layout.equil_pair_air_fragment
 
-    override fun getNextPageActionId(): Int {
-        return R.id.action_startEquilActivationFragment_to_startEquilPairConfirmFragment
-    }
+    override fun getNextPageActionId(): Int = R.id.action_startEquilActivationFragment_to_startEquilPairConfirmFragment
 
-    override fun getIndex(): Int {
-        if ((activity as? EquilPairActivity)?.pair == false) {
-            return 4
-        }
-        return 5
-    }
-
-    private lateinit var buttonNext: Button
-    private lateinit var lytAction: View
+    override fun getIndex(): Int = if ((activity as? EquilPairActivity)?.pair == false) 4 else 5
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buttonNext = view.findViewById(R.id.button_next)
-        lytAction = view.findViewById(R.id.lyt_action)
-        buttonNext.alpha = 0.3f
-        buttonNext.isClickable = false
+        view.findViewById<Button>(R.id.button_next)?.let { buttonNext ->
+            buttonNext.alpha = 0.3f
+            buttonNext.isClickable = false
+        }
         view.findViewById<Button>(R.id.button_air).setOnClickListener {
             context?.let {
                 showLoading()
@@ -58,15 +46,9 @@ class EquilPairAirFragment : EquilPairFragmentBase() {
         view.findViewById<Button>(R.id.button_finish).setOnClickListener {
             context?.let {
                 showLoading()
-                if ((activity as? EquilPairActivity)?.pair == true) {
-                    setAlarmMode()
-                } else {
-                    if (equilManager.equilState?.basalSchedule == null) {
-                        setProfile()
-                    } else {
-                        setTime()
-                    }
-                }
+                if ((activity as? EquilPairActivity)?.pair == true) setAlarmMode()
+                else if (equilManager.equilState?.basalSchedule == null) setProfile()
+                else setTime()
             }
         }
     }
@@ -76,12 +58,9 @@ class EquilPairAirFragment : EquilPairFragmentBase() {
             override fun run() {
                 if (activity == null) return
                 aapsLogger.debug(LTag.PUMPCOMM, "result====" + result.success)
-                if (result.success) {
-                    dismissLoading()
-                } else {
-                    dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
-                }
+                dismissLoading()
+                if (!result.success)
+                    ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
             }
         })
     }
@@ -91,14 +70,11 @@ class EquilPairAirFragment : EquilPairFragmentBase() {
         commandQueue.customCommand(CmdTimeSet(aapsLogger, preferences, equilManager), object : Callback() {
             override fun run() {
                 if (activity == null) return
+                dismissLoading()
                 if (result.success) {
                     SystemClock.sleep(EquilConst.EQUIL_BLE_NEXT_CMD)
-                    dismissLoading()
                     readFM()
-                } else {
-                    dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
-                }
+                } else ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
             }
         })
     }
@@ -109,14 +85,11 @@ class EquilPairAirFragment : EquilPairFragmentBase() {
         commandQueue.customCommand(CmdAlarmSet(mode, aapsLogger, preferences, equilManager), object : Callback() {
             override fun run() {
                 if (activity == null) return
+                dismissLoading()
                 if (result.success) {
                     SystemClock.sleep(EquilConst.EQUIL_BLE_NEXT_CMD)
-                    dismissLoading()
                     setProfile()
-                } else {
-                    dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
-                }
+                } else ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
             }
         })
     }
@@ -126,17 +99,13 @@ class EquilPairAirFragment : EquilPairFragmentBase() {
             override fun run() {
                 if (activity == null) return
                 aapsLogger.debug(LTag.PUMPCOMM, "CmdGetDevices result====" + result.success)
+                dismissLoading()
                 if (result.success) {
-                    dismissLoading()
                     runOnUiThread {
-                        // binding.navButtonsLayout.buttonNext.performClick()
                         val nextPage = getNextPageActionId()
                         findNavController().navigate(nextPage)
                     }
-                } else {
-                    dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
-                }
+                } else ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
             }
         })
     }
@@ -164,7 +133,7 @@ class EquilPairAirFragment : EquilPairFragmentBase() {
                     setTime()
                 } else {
                     dismissLoading()
-                    equilPumpPlugin.showToast(rh.gs(R.string.equil_error))
+                    ToastUtils.errorToast(requireContext(), rh.gs(R.string.equil_error))
                 }
 
             }

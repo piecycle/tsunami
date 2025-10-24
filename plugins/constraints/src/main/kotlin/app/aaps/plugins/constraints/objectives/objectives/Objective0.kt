@@ -7,23 +7,31 @@ import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.protection.PasswordCheck
 import app.aaps.core.interfaces.pump.VirtualPump
+import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.sync.Tidepool
+import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.BooleanNonKey
 import app.aaps.core.keys.StringKey
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.plugins.constraints.R
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class Objective0(injector: HasAndroidInjector) : Objective(injector, "config", R.string.objectives_0_objective, R.string.objectives_0_gate) {
+@Singleton
+class Objective0 @Inject constructor(
+    preferences: Preferences,
+    rh: ResourceHelper,
+    dateUtil: DateUtil,
+    private val activePlugin: ActivePlugin,
+    private val virtualPumpPlugin: VirtualPump,
+    private val persistenceLayer: PersistenceLayer,
+    private val loop: Loop,
+    private val iobCobCalculator: IobCobCalculator,
+    private val passwordCheck: PasswordCheck,
+) : Objective(preferences, rh, dateUtil, "config", R.string.objectives_0_objective, R.string.objectives_0_gate) {
 
-    @Inject lateinit var activePlugin: ActivePlugin
-    @Inject lateinit var virtualPumpPlugin: VirtualPump
-    @Inject lateinit var persistenceLayer: PersistenceLayer
-    @Inject lateinit var loop: Loop
-    @Inject lateinit var iobCobCalculator: IobCobCalculator
-    @Inject lateinit var passwordCheck: PasswordCheck
 
     val tidepoolPlugin get() = activePlugin.getSpecificPluginsListByInterface(Tidepool::class.java).firstOrNull() as Tidepool?
 

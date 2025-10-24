@@ -1,3 +1,5 @@
+import kotlin.math.min
+
 plugins {
     alias(libs.plugins.android.library)
     id("kotlin-android")
@@ -12,7 +14,7 @@ android {
 
     namespace = "app.aaps.core.interfaces"
     defaultConfig {
-        minSdk = Versions.wearMinSdk  // for wear
+        minSdk = min(Versions.minSdk, Versions.wearMinSdk)
     }
 }
 

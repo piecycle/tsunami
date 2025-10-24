@@ -3,7 +3,6 @@ package app.aaps.implementation.queue
 import android.content.Context
 import android.os.Handler
 import android.os.PowerManager
-import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -14,10 +13,10 @@ import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.logging.AAPSLogger
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
+import app.aaps.core.interfaces.pump.PumpEnactResult
 import app.aaps.core.interfaces.pump.PumpSync
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.Command
@@ -59,6 +58,7 @@ import org.mockito.Mockito.mock
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 import java.util.Calendar
+import javax.inject.Provider
 
 class CommandQueueImplementationTest : TestBaseWithProfile() {
 
@@ -89,13 +89,13 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         uiInteraction: UiInteraction,
         persistenceLayer: PersistenceLayer,
         decimalFormatter: DecimalFormatter,
-        instantiator: Instantiator,
+        pumpEnactResultProvider: Provider<PumpEnactResult>,
         jobName: CommandQueueName,
         workManager: WorkManager
     ) : CommandQueueImplementation(
         injector, aapsLogger, rxBus, aapsSchedulers, rh, constraintChecker, profileFunction,
         activePlugin, context, preferences, config, dateUtil, fabricPrivacy, androidPermission,
-        uiInteraction, persistenceLayer, decimalFormatter, instantiator, jobName, workManager
+        uiInteraction, persistenceLayer, decimalFormatter, pumpEnactResultProvider, jobName, workManager
     ) {
 
         override fun notifyAboutNewCommand(): Boolean = true
@@ -190,7 +190,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
     fun prepare() {
         commandQueue = CommandQueueMocked(
             injector, aapsLogger, rxBus, aapsSchedulers, rh, constraintChecker, profileFunction, activePlugin, context,
-            preferences, config, dateUtil, fabricPrivacy, androidPermission, uiInteraction, persistenceLayer, decimalFormatter, instantiator, jobName, workManager
+            preferences, config, dateUtil, fabricPrivacy, androidPermission, uiInteraction, persistenceLayer, decimalFormatter, pumpEnactResultProvider, jobName, workManager
         )
         testPumpPlugin.pumpDescription.basalMinimumRate = 0.1
         testPumpPlugin.connected = true
@@ -226,8 +226,8 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
                 runBlocking { work.doWorkAndLog() }
             }.start()
             null
-        } as Answer<*>).`when`(workManager).enqueueUniqueWork(anyObject<String>(), anyObject<ExistingWorkPolicy>(), anyObject<OneTimeWorkRequest>())
-        Mockito.`when`(infos.get()).thenReturn(emptyList<WorkInfo>())
+        } as Answer<*>).`when`(workManager).enqueueUniqueWork(anyObject(), anyObject(), anyObject<OneTimeWorkRequest>())
+        Mockito.`when`(infos.get()).thenReturn(emptyList())
     }
 
     @Test
@@ -235,7 +235,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue = CommandQueueImplementation(
             injector, aapsLogger, rxBus, aapsSchedulers, rh,
             constraintChecker, profileFunction, activePlugin, context, preferences,
-            config, dateUtil, fabricPrivacy, androidPermission, uiInteraction, persistenceLayer, decimalFormatter, instantiator, jobName, workManager
+            config, dateUtil, fabricPrivacy, androidPermission, uiInteraction, persistenceLayer, decimalFormatter, pumpEnactResultProvider, jobName, workManager
         )
         val handler = mock(Handler::class.java)
         Mockito.`when`(handler.post(anyObject())).thenAnswer { invocation: InvocationOnMock ->
@@ -288,7 +288,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         assertThat(commandQueue.size()).isEqualTo(1)
 
         // cancel tempbasal it should replace previous TEMPBASAL
-        commandQueue.cancelTempBasal(false, null)
+        commandQueue.cancelTempBasal(enforceNew = false, autoForced = false, callback = null)
         assertThat(commandQueue.size()).isEqualTo(1)
 
         // add extended bolus
@@ -421,7 +421,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.setUserOptions(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.SET_USER_SETTINGS)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
         // next should be ignored
         commandQueue.setUserOptions(null)
@@ -437,7 +437,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.loadEvents(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.LOAD_EVENTS)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
         // next should be ignored
         commandQueue.loadEvents(null)
@@ -453,7 +453,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.clearAlarms(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.CLEAR_ALARMS)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
         // next should be ignored
         commandQueue.clearAlarms(null)
@@ -469,7 +469,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.deactivate(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.DEACTIVATE)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
         // next should be ignored
         commandQueue.deactivate(null)
@@ -485,7 +485,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.updateTime(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.UPDATE_TIME)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
         // next should be ignored
         commandQueue.updateTime(null)
@@ -516,7 +516,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.loadHistory(0, null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.LOAD_HISTORY)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
         // next should be ignored
         commandQueue.loadHistory(0, null)
@@ -568,7 +568,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.stopPump(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.STOP_PUMP)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
     }
 
@@ -581,7 +581,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.startPump(null)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.START_PUMP)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
     }
 
@@ -594,7 +594,7 @@ class CommandQueueImplementationTest : TestBaseWithProfile() {
         commandQueue.setTBROverNotification(null, true)
 
         // then
-        assertThat(commandQueue.isLastScheduled(Command.CommandType.INSIGHT_SET_TBR_OVER_ALARM)).isTrue()
+        assertThat(commandQueue.isReadStatusScheduled()).isFalse()
         assertThat(commandQueue.size()).isEqualTo(1)
     }
 

@@ -8,7 +8,6 @@ import app.aaps.pump.common.hw.rileylink.ble.data.encoding.Encoding4b6b
 import app.aaps.pump.common.hw.rileylink.ble.data.encoding.Encoding4b6bGeoff
 import app.aaps.pump.common.hw.rileylink.ble.defs.RileyLinkEncodingType
 import app.aaps.pump.common.hw.rileylink.data.RLHistoryItem
-import java.util.ArrayList
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,10 +16,11 @@ import javax.inject.Singleton
  */
 @Singleton
 class RileyLinkUtil @Inject constructor(
-    private val aapsLogger: AAPSLogger
+    private val aapsLogger: AAPSLogger,
+    private val context: Context
 ) {
 
-    val rileyLinkHistory: MutableList<RLHistoryItem> = ArrayList<RLHistoryItem>()
+    val rileyLinkHistory: MutableList<RLHistoryItem> = ArrayList()
     var encoding: RileyLinkEncodingType? = null
         set(value) {
             field = value
@@ -30,7 +30,7 @@ class RileyLinkUtil @Inject constructor(
 
     var encoding4b6b: Encoding4b6b = Encoding4b6bGeoff(aapsLogger)
 
-    fun sendBroadcastMessage(message: String?, context: Context) {
+    fun sendBroadcastMessage(message: String?) {
         val intent = Intent(message)
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
     }

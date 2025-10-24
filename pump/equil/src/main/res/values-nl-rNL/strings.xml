@@ -3,14 +3,12 @@
     <string name="equil_pump_description">Equil 5.3 of nieuwere Patch Pomp </string>
     <!--  start  -->
     <string name="equil_basal_speed">Basis basaal</string>
-    <string name="equil_bolus_delivered">%1$.3f E / %2$.3f E toegediend</string>
     <string name="equil_btn_cancel">Annuleren</string>
     <string name="equil_btn_need">Nodig</string>
     <string name="equil_btn_skip">Overslaan</string>
     <string name="equil_date_device">Laatste verbinding</string>
     <string name="equil_dressing">Vervang reservoir</string>
     <string name="equil_dressing_onkey_msg">De zuiger automatisch naar de bodem van het reservoir aan het verplaatsen. Deze zal automatisch stoppen in de eindstand. Klik op \'Stop\' om te onderbreken indien nodig.</string>
-    <string name="equil_finish">Voltooid</string>
     <string name="equil_next">Volgende</string>
     <string name="equil_hint_dressing">Deze operatie zal de toediening van de insuline stopzetten en de zuiger van de pomp terugplaatsen naar de bodem van het reservoir!</string>
     <string name="equil_history">Geschiedenis</string>

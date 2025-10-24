@@ -14,7 +14,6 @@ import app.aaps.core.data.pump.defs.TimeChangeType
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
@@ -68,6 +67,7 @@ import org.joda.time.Duration
 import org.json.JSONException
 import org.json.JSONObject
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -84,7 +84,7 @@ class EquilPumpPlugin @Inject constructor(
     private val pumpSync: PumpSync,
     private val equilManager: EquilManager,
     private val decimalFormatter: DecimalFormatter,
-    private val instantiator: Instantiator
+    private val pumpEnactResultProvider: Provider<PumpEnactResult>
 ) : PumpPluginBase(
     pluginDescription = PluginDescription()
         .mainType(PluginType.PUMP)
@@ -106,7 +106,7 @@ class EquilPumpPlugin @Inject constructor(
     private val bolusProfile: BolusProfile = BolusProfile()
 
     private val disposable = CompositeDisposable()
-    private lateinit var statusChecker: Runnable
+    private var statusChecker: Runnable
 
     override fun onStart() {
         super.onStart()
@@ -121,7 +121,7 @@ class EquilPumpPlugin @Inject constructor(
             .toObservable(EventEquilAlarm::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({ eventEquilError ->
-                           var cmd = commandQueue.performing()
+                           val cmd = commandQueue.performing()
                            cmd?.let {
                                if (it.commandType == Command.CommandType.BOLUS) {
                                    aapsLogger.info(
@@ -239,7 +239,7 @@ class EquilPumpPlugin @Inject constructor(
             }
             return pumpEnactResult
         }
-        return instantiator.providePumpEnactResult().enacted(false).success(false)
+        return pumpEnactResultProvider.get().enacted(false).success(false)
             .comment(rh.gs(R.string.equil_pump_not_run))
     }
 
@@ -274,25 +274,25 @@ class EquilPumpPlugin @Inject constructor(
         if (detailedBolusInfo.insulin == 0.0) {
             // bolus requested
             aapsLogger.error("deliverTreatment: Invalid input: neither carbs nor insulin are set in treatment")
-            return instantiator.providePumpEnactResult().success(false).enacted(false)
+            return pumpEnactResultProvider.get().success(false).enacted(false)
                 .bolusDelivered(0.0).comment("Invalid input")
         }
         val maxBolus = preferences.get(EquilDoublePreferenceKey.EquilMaxBolus)
         if (detailedBolusInfo.insulin > maxBolus) {
             val formattedValue = "%.2f".format(maxBolus)
             val comment = rh.gs(R.string.equil_maxbolus_tips, formattedValue)
-            return instantiator.providePumpEnactResult().success(false).enacted(false)
+            return pumpEnactResultProvider.get().success(false).enacted(false)
                 .bolusDelivered(0.0).comment(comment)
 
         }
         val mode = equilManager.equilState?.runMode
         if (mode !== RunMode.RUN) {
-            return instantiator.providePumpEnactResult().enacted(false).success(false)
+            return pumpEnactResultProvider.get().enacted(false).success(false)
                 .bolusDelivered(0.0).comment(rh.gs(R.string.equil_pump_not_run))
         }
-        var lastInsulin = equilManager.equilState?.currentInsulin ?: 0
+        val lastInsulin = equilManager.equilState?.currentInsulin ?: 0
         return if (detailedBolusInfo.insulin > lastInsulin) {
-            instantiator.providePumpEnactResult().success(false).enacted(false).bolusDelivered(0.0)
+            pumpEnactResultProvider.get().success(false).enacted(false).bolusDelivered(0.0)
                 .comment(R.string.equil_not_enough_insulin)
         } else deliverBolus(detailedBolusInfo)
     }
@@ -314,7 +314,7 @@ class EquilPumpPlugin @Inject constructor(
             "setTempBasalAbsolute=====$absoluteRate====$durationInMinutes===$enforceNew"
         )
         if (durationInMinutes <= 0 || durationInMinutes % BASAL_STEP_DURATION.standardMinutes != 0L) {
-            return instantiator.providePumpEnactResult().success(false).comment(
+            return pumpEnactResultProvider.get().success(false).comment(
                 rh.gs(
                     R.string.equil_error_set_temp_basal_failed_validation,
                     BASAL_STEP_DURATION.standardMinutes
@@ -323,10 +323,10 @@ class EquilPumpPlugin @Inject constructor(
         }
         val mode = equilManager.equilState?.runMode
         if (mode !== RunMode.RUN) {
-            return instantiator.providePumpEnactResult().enacted(false).success(false)
+            return pumpEnactResultProvider.get().enacted(false).success(false)
                 .comment(rh.gs(R.string.equil_pump_not_run))
         }
-        var pumpEnactResult = instantiator.providePumpEnactResult()
+        var pumpEnactResult = pumpEnactResultProvider.get()
         pumpEnactResult.success(false)
         pumpEnactResult = equilManager.getTempBasalPump()
         if (pumpEnactResult.success) {
@@ -511,7 +511,7 @@ class EquilPumpPlugin @Inject constructor(
 
     override fun loadTDDs(): PumpEnactResult {
         aapsLogger.debug(LTag.PUMPCOMM, "loadTDDs")
-        return instantiator.providePumpEnactResult().success(false).enacted(false)
+        return pumpEnactResultProvider.get().success(false).enacted(false)
     }
 
     override fun isBatteryChangeLoggingEnabled(): Boolean = false
@@ -520,10 +520,6 @@ class EquilPumpPlugin @Inject constructor(
         aapsLogger.debug(LTag.PUMPCOMM, "deliverBolus")
         bolusProfile.insulin = detailedBolusInfo.insulin
         return equilManager.bolus(detailedBolusInfo, bolusProfile)
-    }
-
-    fun showToast(s: String) {
-        ToastUtils.showToastInUiThread(context, s)
     }
 
     fun resetData() {

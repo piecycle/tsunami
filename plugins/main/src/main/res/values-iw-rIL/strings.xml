@@ -128,7 +128,6 @@
     <!-- Profile -->
     <string name="localprofile">פרופיל</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">הגדירו פרופיל שזמין באופן לא מקוון.</string>
     <string name="a11y_add_new_to_list">הוסף לרשימה</string>
     <string name="do_you_want_switch_profile">האם ברצונכם להחליף את הפרופיל ולזנוח את השינויים שבוצעו בפרופיל הנוכחי?</string>
     <string name="save_or_reset_changes_first">יש לשמור או לאפס תחילה את השינויים הנוכחיים</string>

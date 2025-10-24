@@ -127,7 +127,6 @@
     <!-- Profile -->
     <string name="localprofile">Профил</string>
     <string name="localprofile_shortname">ЛПр</string>
-    <string name="description_profile_local">Този тип профил е достъпен в офлайн режим.</string>
     <string name="a11y_add_new_to_list">Добавяне към списък</string>
     <string name="do_you_want_switch_profile">Искате да смените профила и премахнете на промените, направени в текущия профил?</string>
     <string name="save_or_reset_changes_first">Първо запазете или се откажете от промените</string>

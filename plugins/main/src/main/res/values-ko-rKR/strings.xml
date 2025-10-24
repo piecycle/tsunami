@@ -127,7 +127,6 @@
     <!-- Profile -->
     <string name="localprofile">프로파일</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">오프라인에서 사용 가능한 프로파일을 정의하십시오.</string>
     <string name="a11y_add_new_to_list">목록에 새로운 것 추가하기</string>
     <string name="do_you_want_switch_profile">프로파일을 변경하고 현재 프로파일에 대한 변경 사항을 버리시겠습니까?</string>
     <string name="save_or_reset_changes_first">우선 현재 변경사항을을 저장하거나 재설정하세요</string>

@@ -3,14 +3,12 @@
     <string name="equil_pump_description">Pompa Equil 5.3 lub nowsza </string>
     <!--  start  -->
     <string name="equil_basal_speed">Baza podstawowa</string>
-    <string name="equil_bolus_delivered">Podano %1$.3f U / %2$.3f U</string>
     <string name="equil_btn_cancel">Anuluj</string>
     <string name="equil_btn_need">Potrzeba</string>
     <string name="equil_btn_skip">Pomiń</string>
     <string name="equil_date_device">Ostatnie połączenie</string>
     <string name="equil_dressing">Zmień zbiornik</string>
     <string name="equil_dressing_onkey_msg">Automatycznie przesuwam tłok na dno zbiornika. Zatrzyma się sam po dotarciu na dół. Kliknij \'Zatrzymaj\', aby w razie potrzeby przerwać.</string>
-    <string name="equil_finish">Ukończono</string>
     <string name="equil_next">Dalej</string>
     <string name="equil_hint_dressing">Ta operacja zatrzyma podawanie insuliny i spowoduje cofnięcie tłoka pompy do dołu!</string>
     <string name="equil_history">Historia</string>

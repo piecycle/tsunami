@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Events-->
     <!-- PumpPluginBase -->
     <string name="pump_driver_changed" comment="26 characters max for translation">Pumpedriver er endret.</string>
     <!--    DateUtil-->
-    <string name="minago">%1$d min siden</string>
-    <string name="secago">%1$d s siden</string>
+    <string name="minago">%1$dm siden</string>
+    <string name="secago">%1$ds siden</string>
     <string name="minago_long">%1$d minutter siden</string>
-    <string name="hoursago">%1$.1f timer siden</string>
+    <string name="hoursago">%1$.1ft siden</string>
     <string name="days_ago">%1$.1f dager siden</string>
     <string name="days_ago_round">%1$.0f dager siden</string>
     <string name="in_days">i %1$.0f dager</string>

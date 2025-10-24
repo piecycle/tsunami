@@ -13,9 +13,9 @@ import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
 import app.aaps.core.interfaces.nsclient.StoreDataForDb
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.ProfileSource
+import app.aaps.core.interfaces.profile.ProfileStore
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventDismissNotification
 import app.aaps.core.interfaces.rx.events.EventNSClientNewLog
@@ -56,6 +56,7 @@ import app.aaps.plugins.sync.nsclientV3.extensions.toTherapyEvent
 import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -68,7 +69,7 @@ class NsIncomingDataProcessor @Inject constructor(
     private val activePlugin: ActivePlugin,
     private val storeDataForDb: StoreDataForDb,
     private val config: Config,
-    private val instantiator: Instantiator,
+    private val profileStoreProvider: Provider<ProfileStore>,
     private val profileSource: ProfileSource,
     private val uiInteraction: UiInteraction
 ) {
@@ -282,7 +283,7 @@ class NsIncomingDataProcessor @Inject constructor(
 
     fun processProfile(profileJson: JSONObject, doFullSync: Boolean) {
         if (preferences.get(BooleanKey.NsClientAcceptProfileStore) || config.AAPSCLIENT || doFullSync) {
-            val store = instantiator.provideProfileStore(profileJson)
+            val store = profileStoreProvider.get().with(profileJson)
             val createdAt = store.getStartDate()
             val lastLocalChange = preferences.get(LongNonKey.LocalProfileLastChange)
             aapsLogger.debug(LTag.PROFILE, "Received profileStore: createdAt: $createdAt Local last modification: $lastLocalChange")

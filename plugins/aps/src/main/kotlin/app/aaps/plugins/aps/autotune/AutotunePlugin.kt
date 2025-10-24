@@ -18,12 +18,12 @@ import app.aaps.core.interfaces.insulin.Insulin
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
-import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBaseWithPreferences
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
+import app.aaps.core.interfaces.profile.ProfileStore
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventLocalProfileChanged
@@ -45,11 +45,11 @@ import app.aaps.plugins.aps.autotune.data.LocalInsulin
 import app.aaps.plugins.aps.autotune.data.PreppedGlucose
 import app.aaps.plugins.aps.autotune.events.EventAutotuneUpdateGui
 import app.aaps.plugins.aps.autotune.keys.AutotuneStringKey
-import dagger.android.HasAndroidInjector
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.TimeZone
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 /*
@@ -60,7 +60,6 @@ import javax.inject.Singleton
 
 @Singleton
 class AutotunePlugin @Inject constructor(
-    private val injector: HasAndroidInjector,
     aapsLogger: AAPSLogger,
     rh: ResourceHelper,
     preferences: Preferences,
@@ -74,7 +73,8 @@ class AutotunePlugin @Inject constructor(
     private val autotuneCore: AutotuneCore,
     private val config: Config,
     private val uel: UserEntryLogger,
-    private val instantiator: Instantiator
+    private val profileStoreProvider: Provider<ProfileStore>,
+    private val atProfileProvider: Provider<ATProfile>
 ) : PluginBaseWithPreferences(
     pluginDescription = PluginDescription()
         .mainType(PluginType.GENERAL)
@@ -83,7 +83,7 @@ class AutotunePlugin @Inject constructor(
         .pluginName(app.aaps.core.ui.R.string.autotune)
         .shortName(R.string.autotune_shortname)
         .preferencesId(PluginDescription.PREFERENCE_SCREEN)
-        .showInList { config.isEngineeringMode() && config.isDev() }
+        .showInList { config.isEngineeringMode() && config.isDev() || config.enableAutotune() }
         .description(R.string.autotune_description),
     ownPreferences = listOf(AutotuneStringKey::class.java),
     aapsLogger, rh, preferences
@@ -102,6 +102,8 @@ class AutotunePlugin @Inject constructor(
     private lateinit var profile: Profile
     val days = WeekDay()
     val autotuneStartHour: Int = 4
+
+    override fun specialEnableCondition(): Boolean = config.isEngineeringMode() && config.isDev() || config.enableAutotune()
 
     override fun aapsAutotune(daysBack: Int, autoSwitch: Boolean, profileToTune: String, weekDays: BooleanArray?) {
         lastRunSuccess = false
@@ -157,10 +159,10 @@ class AutotunePlugin @Inject constructor(
         if (endTime > lastRun) endTime -= 24 * 60 * 60 * 1000L      // Check if 4 AM is before now
         val startTime = endTime - daysBack * 24 * 60 * 60 * 1000L
         autotuneFS.exportSettings(settings(lastRun, daysBack, startTime, endTime))
-        tunedProfile = ATProfile(profile, localInsulin, injector).also {
+        tunedProfile = atProfileProvider.get().with(profile, localInsulin).also {
             it.profileName = rh.gs(R.string.autotune_tunedprofile_name)
         }
-        pumpProfile = ATProfile(profile, localInsulin, injector).also {
+        atProfileProvider.get().with(profile, localInsulin).also {
             it.profileName = selectedProfile
         }
         autotuneFS.exportPumpProfile(pumpProfile)
@@ -366,7 +368,7 @@ class AutotunePlugin @Inject constructor(
         if (newProfile == null) return
         val profilePlugin = activePlugin.activeProfileSource
         val circadian = preferences.get(BooleanKey.AutotuneCircadianIcIsf)
-        val profileStore = activePlugin.activeProfileSource.profile ?: instantiator.provideProfileStore(JSONObject())
+        val profileStore = activePlugin.activeProfileSource.profile ?: profileStoreProvider.get().with(JSONObject())
         val profileList: ArrayList<CharSequence> = profileStore.getProfileList()
         var indexLocalProfile = -1
         for (p in profileList.indices)
@@ -423,7 +425,7 @@ class AutotunePlugin @Inject constructor(
             selectedProfile = JsonHelper.safeGetString(json, "pumpProfileName", "")
             val profile = JsonHelper.safeGetJSONObject(json, "pumpProfile", null)?.let { pureProfileFromJson(it, dateUtil) }
                 ?: return
-            pumpProfile = ATProfile(ProfileSealed.Pure(value = profile, activePlugin = null), localInsulin, injector).also { it.profileName = selectedProfile }
+            pumpProfile = atProfileProvider.get().with(ProfileSealed.Pure(value = profile, activePlugin = null), localInsulin).also { it.profileName = selectedProfile }
             val tunedPeak = JsonHelper.safeGetInt(json, "tunedPeak")
             val tunedDia = JsonHelper.safeGetDouble(json, "tunedDia")
             localInsulin = LocalInsulin("PumpInsulin", tunedPeak, tunedDia)
@@ -432,7 +434,7 @@ class AutotunePlugin @Inject constructor(
                 ?: return
             val circadianTuned = JsonHelper.safeGetJSONObject(json, "tunedCircadianProfile", null)?.let { pureProfileFromJson(it, dateUtil) }
                 ?: return
-            tunedProfile = ATProfile(ProfileSealed.Pure(value = tuned, activePlugin = null), localInsulin, injector).also { atProfile ->
+            tunedProfile = atProfileProvider.get().with(ProfileSealed.Pure(value = tuned, activePlugin = null), localInsulin).also { atProfile ->
                 atProfile.profileName = tunedProfileName
                 atProfile.circadianProfile = ProfileSealed.Pure(value = circadianTuned, activePlugin = null)
                 for (i in 0..23) {
@@ -464,8 +466,6 @@ class AutotunePlugin @Inject constructor(
     private fun log(message: String) {
         atLog("[Plugin] $message")
     }
-
-    override fun specialEnableCondition(): Boolean = config.isEngineeringMode() && config.isDev()
 
     override fun atLog(message: String) {
         autotuneFS.atLog(message)

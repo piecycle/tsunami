@@ -2,6 +2,7 @@ package app.aaps.plugins.main.general.smsCommunicator
 
 import app.aaps.core.data.configuration.Constants
 import app.aaps.core.data.time.T
+import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.smsCommunicator.Sms
 import app.aaps.core.interfaces.smsCommunicator.SmsCommunicator
@@ -11,8 +12,6 @@ import app.aaps.plugins.main.general.smsCommunicator.otp.OneTimePassword
 import app.aaps.plugins.main.general.smsCommunicator.otp.OneTimePasswordValidationResult
 import app.aaps.shared.tests.TestBase
 import com.google.common.truth.Truth.assertThat
-import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
@@ -27,18 +26,7 @@ class AuthRequestTest : TestBase() {
     @Mock lateinit var rh: ResourceHelper
     @Mock lateinit var otp: OneTimePassword
     @Mock lateinit var dateUtil: DateUtil
-
-    private var injector: HasAndroidInjector = HasAndroidInjector {
-        AndroidInjector {
-            if (it is AuthRequest) {
-                it.aapsLogger = aapsLogger
-                it.rh = rh
-                it.smsCommunicator = smsCommunicator
-                it.otp = otp
-                it.dateUtil = dateUtil
-            }
-        }
-    }
+    @Mock lateinit var commandQueue: CommandQueue
 
     private var sentSms: Sms? = null
     private var actionCalled = false
@@ -60,7 +48,7 @@ class AuthRequestTest : TestBase() {
         }
 
         // Check if SMS requesting code is sent
-        var authRequest = AuthRequest(injector, requester, "Request text", "ABC", action)
+        var authRequest = AuthRequest(aapsLogger, smsCommunicator, rh, otp, dateUtil, commandQueue).with(requester, "Request text", "ABC", action)
         assertThat(sentSms!!.phoneNumber).isEqualTo("aNumber")
         assertThat(sentSms!!.text).isEqualTo("Request text")
 
@@ -72,7 +60,7 @@ class AuthRequestTest : TestBase() {
         assertThat(actionCalled).isFalse()
 
         // correct reply
-        authRequest = AuthRequest(injector, requester, "Request text", "ABC", action)
+        authRequest = AuthRequest(aapsLogger, smsCommunicator, rh, otp, dateUtil, commandQueue).with(requester, "Request text", "ABC", action)
         actionCalled = false
         `when`(otp.checkOTP(anyObject())).thenReturn(OneTimePasswordValidationResult.OK)
         authRequest.action("ABC")
@@ -85,7 +73,7 @@ class AuthRequestTest : TestBase() {
         // test timed out message
         val now: Long = 10000
         `when`(dateUtil.now()).thenReturn(now)
-        authRequest = AuthRequest(injector, requester, "Request text", "ABC", action)
+        authRequest = AuthRequest(aapsLogger, smsCommunicator, rh, otp, dateUtil, commandQueue).with(requester, "Request text", "ABC", action)
         actionCalled = false
         `when`(dateUtil.now()).thenReturn(now + T.mins(Constants.SMS_CONFIRM_TIMEOUT).msecs() + 1)
         authRequest.action("ABC")

@@ -83,12 +83,12 @@ public class RileyLinkOmnipodService extends RileyLinkService {
     }
 
     @Override
-    public void setPumpDeviceState(PumpDeviceState pumpDeviceState) {
+    public void setPumpDeviceState(@NonNull PumpDeviceState pumpDeviceState) {
         // Intentionally left blank
         // We don't use PumpDeviceState in the Omnipod driver
     }
 
-    public String getErrorDescription() {
+    @Nullable public String getErrorDescription() {
         return errorDescription;
     }
 
@@ -137,7 +137,7 @@ public class RileyLinkOmnipodService extends RileyLinkService {
     private boolean reconfigureService(boolean forceRileyLinkAddressRenewal) {
         if (!inPreInit) {
             if (rileyLinkAddressChanged || forceRileyLinkAddressRenewal) {
-                rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet, this);
+                rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet);
                 rileyLinkAddressChanged = false;
             }
         }

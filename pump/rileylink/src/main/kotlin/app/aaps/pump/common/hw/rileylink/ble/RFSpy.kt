@@ -3,7 +3,6 @@ package app.aaps.pump.common.hw.rileylink.ble
 import android.os.SystemClock
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventRefreshOverview
 import app.aaps.core.keys.interfaces.Preferences
@@ -31,11 +30,11 @@ import app.aaps.pump.common.hw.rileylink.ble.operations.BLECommOperationResult
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkStringPreferenceKey
 import app.aaps.pump.common.hw.rileylink.service.RileyLinkServiceData
 import org.apache.commons.lang3.ArrayUtils
-import java.lang.Exception
 import java.util.Locale
 import java.util.Optional
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.math.pow
 
@@ -45,12 +44,12 @@ import kotlin.math.pow
 @Singleton
 class RFSpy @Inject constructor(
     private val aapsLogger: AAPSLogger,
-    private val rh: ResourceHelper,
     private val preferences: Preferences,
     private val rxBus: RxBus,
     private val rileyLinkBle: RileyLinkBLE,
     private val rileyLinkServiceData: RileyLinkServiceData,
-    private val rileyLinkUtil: RileyLinkUtil
+    private val rileyLinkUtil: RileyLinkUtil,
+    private val rfSpyResponseProvider: Provider<RFSpyResponse>
 ) {
 
     private val radioServiceUUID: UUID = UUID.fromString(GattAttributes.SERVICE_RADIO)
@@ -70,7 +69,7 @@ class RFSpy @Inject constructor(
     // Call this after the RL services are discovered.
     // Starts an async task to read when data is available
     fun startReader() {
-        rileyLinkBle.registerRadioResponseCountNotification(Runnable { this.newDataIsAvailable() })
+        rileyLinkBle.registerRadioResponseCountNotification { this.newDataIsAvailable() }
         reader.start()
     }
 
@@ -199,7 +198,7 @@ class RFSpy @Inject constructor(
             notConnectedCount++
             return null
         }
-        val resp = RFSpyResponse(command, rawResponse)
+        val resp = rfSpyResponseProvider.get().with(command, rawResponse)
         if (resp.wasInterrupted()) {
             aapsLogger.error(LTag.PUMPBTCOMM, "writeToData: RileyLink was interrupted")
         } else if (resp.wasTimeout()) {

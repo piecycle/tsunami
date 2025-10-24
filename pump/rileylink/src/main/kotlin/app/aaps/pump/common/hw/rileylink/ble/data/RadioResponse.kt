@@ -13,29 +13,29 @@ import app.aaps.pump.common.hw.rileylink.ble.defs.RileyLinkEncodingType
 import app.aaps.pump.common.hw.rileylink.ble.defs.RileyLinkFirmwareVersion
 import app.aaps.pump.common.hw.rileylink.service.RileyLinkServiceData
 import app.aaps.pump.common.utils.CRC
-import dagger.android.HasAndroidInjector
 import org.apache.commons.lang3.NotImplementedException
-import java.lang.NumberFormatException
 import javax.inject.Inject
 
 /**
  * Created by geoff on 5/30/16.
  */
-class RadioResponse(injector: HasAndroidInjector, var command: RileyLinkCommand? = null) {
+class RadioResponse @Inject constructor(
+    private val aapsLogger: AAPSLogger,
+    private val rileyLinkServiceData: RileyLinkServiceData,
+    private val rileyLinkUtil: RileyLinkUtil
+) {
 
     var rssi: Int = 0
 
-    @Inject lateinit var aapsLogger: AAPSLogger
-    @Inject lateinit var rileyLinkServiceData: RileyLinkServiceData
-    @Inject lateinit var rileyLinkUtil: RileyLinkUtil
-
+    var command: RileyLinkCommand? = null
     private var decodedOK = false
     private var responseNumber = 0
     private var decodedPayload: ByteArray = ByteArray(0)
     private var receivedCRC: Byte = 0
 
-    init {
-        injector.androidInjector().inject(this)
+    fun with(command: RileyLinkCommand? = null): RadioResponse {
+        this.command = command
+        return this
     }
 
     fun isValid(): Boolean {

@@ -127,7 +127,6 @@
     <!-- Profile -->
     <string name="localprofile">Profil</string>
     <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">Definér en profil, der er tilgængelig offline.</string>
     <string name="a11y_add_new_to_list">tilføj ny til listen</string>
     <string name="do_you_want_switch_profile">Vil du skifte profil og kassere ændringer, der er foretaget i den aktuelle profil?</string>
     <string name="save_or_reset_changes_first">Gem eller nulstil aktuelle ændringer først</string>

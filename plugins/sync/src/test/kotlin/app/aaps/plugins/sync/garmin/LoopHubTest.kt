@@ -246,7 +246,7 @@ class LoopHubTest : TestBase() {
         whenever(persistenceLayer.cancelCurrentRunningMode(clock.millis(), Action.RECONNECT, Sources.Garmin)).thenReturn(Single.just(PersistenceLayer.TransactionResult()))
         loopHub.connectPump()
         verify(persistenceLayer).cancelCurrentRunningMode(clock.millis(), Action.RECONNECT, Sources.Garmin)
-        verify(commandQueue).cancelTempBasal(true, null)
+        verify(commandQueue).cancelTempBasal(enforceNew = true, autoForced = false, callback = null)
     }
 
     @Test

@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -70,7 +69,6 @@ import app.aaps.plugins.configuration.maintenance.dialogs.PrefImportSummaryDialo
 import app.aaps.plugins.configuration.maintenance.formats.EncryptedPrefsFormat
 import app.aaps.shared.impl.weardata.ZipWatchfaceFormat
 import dagger.Reusable
-import dagger.android.HasAndroidInjector
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import kotlinx.coroutines.Dispatchers
@@ -144,9 +142,8 @@ class ImportExportPrefsImpl @Inject constructor(
     private fun detectUserName(context: Context): String {
         // based on https://medium.com/@pribble88/how-to-get-an-android-device-nickname-4b4700b3068c
         val n1 = Settings.System.getString(context.contentResolver, "bluetooth_name")
-        val n2 = if (context.applicationContext.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.S) Settings.Secure.getString(context.contentResolver, "bluetooth_name") else null
         val n3 = try {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
                 (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?)?.adapter?.name
             } else null
         } catch (_: Exception) {
@@ -161,7 +158,7 @@ class ImportExportPrefsImpl @Inject constructor(
         val defaultPatientName = rh.gs(app.aaps.core.ui.R.string.patient_name_default)
 
         // name we detect from OS
-        val systemName = n1 ?: n2 ?: n3 ?: n4 ?: n5 ?: n6 ?: defaultPatientName
+        val systemName = n1 ?: n3 ?: n4 ?: n5 ?: n6 ?: defaultPatientName
         return if (patientName.isNotEmpty() && patientName != defaultPatientName) patientName else systemName
     }
 
@@ -224,7 +221,7 @@ class ImportExportPrefsImpl @Inject constructor(
         // Ask for entering password and store when successfully entered
         TwoMessagesAlertDialog.showAlert(
             activity, rh.gs(app.aaps.core.ui.R.string.nav_export),
-            rh.gs(R.string.export_to) + " " + fileToExport.name + " ?",
+            rh.gs(R.string.export_to) + " " + fileToExport.name + "?",
             rh.gs(R.string.password_preferences_encrypt_prompt), {
                 askForMasterPassIfNeeded(activity, R.string.preferences_export_canceled)
                 { password ->
@@ -238,7 +235,7 @@ class ImportExportPrefsImpl @Inject constructor(
         if (!assureMasterPasswordSet(activity, R.string.import_setting)) return
         TwoMessagesAlertDialog.showAlert(
             activity, rh.gs(R.string.import_setting),
-            rh.gs(R.string.import_from) + " " + fileToImport.name + " ?",
+            rh.gs(R.string.import_from) + " " + fileToImport.name + "?",
             rh.gs(app.aaps.core.ui.R.string.password_preferences_decrypt_prompt), {
                 askForMasterPass(activity, R.string.preferences_import_canceled, then)
             }, null, R.drawable.ic_header_import
@@ -460,7 +457,6 @@ class ImportExportPrefsImpl @Inject constructor(
         params: WorkerParameters
     ) : LoggingWorker(context, params, Dispatchers.IO) {
 
-        @Inject lateinit var injector: HasAndroidInjector
         @Inject lateinit var rh: ResourceHelper
         @Inject lateinit var prefFileList: FileListProvider
         @Inject lateinit var userEntryPresentationHelper: UserEntryPresentationHelper

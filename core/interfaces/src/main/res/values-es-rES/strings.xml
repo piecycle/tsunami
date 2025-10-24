@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Events-->
     <!-- PumpPluginBase -->
     <string name="pump_driver_changed" comment="26 characters max for translation">Controlador de bomba cambiado</string>
     <!--    DateUtil-->
-    <string name="minago">hace %1$d m</string>
-    <string name="secago">hace %1$d s</string>
+    <string name="minago">Hace %1$dm</string>
+    <string name="secago">Hace %1$ds</string>
     <string name="minago_long">Hace %1$d minutos</string>
-    <string name="hoursago">hace %1$.1f h</string>
+    <string name="hoursago">Hace %1$.1fh</string>
     <string name="days_ago">Hace %1$.1f día</string>
     <string name="days_ago_round">Hace %1$.0f días</string>
     <string name="in_days">en %1$.0f días</string>

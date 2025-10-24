@@ -34,10 +34,10 @@ import app.aaps.pump.omnipod.eros.manager.AapsOmnipodErosManager
 import app.aaps.pump.omnipod.eros.queue.command.CommandReadPulseLog
 import app.aaps.pump.omnipod.eros.ui.wizard.activation.ErosPodActivationWizardActivity
 import app.aaps.pump.omnipod.eros.ui.wizard.deactivation.ErosPodDeactivationWizardActivity
-import dagger.android.HasAndroidInjector
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import javax.inject.Inject
+import javax.inject.Provider
 
 /**
  * Created by andy on 30/08/2019
@@ -47,7 +47,6 @@ class ErosPodManagementActivity : TranslatedDaggerAppCompatActivity() {
     @Inject lateinit var fabricPrivacy: FabricPrivacy
     @Inject lateinit var commandQueue: CommandQueue
     @Inject lateinit var podStateManager: ErosPodStateManager
-    @Inject lateinit var injector: HasAndroidInjector
     @Inject lateinit var rileyLinkServiceData: RileyLinkServiceData
     @Inject lateinit var aapsOmnipodManager: AapsOmnipodErosManager
     @Inject lateinit var context: Context
@@ -58,6 +57,7 @@ class ErosPodManagementActivity : TranslatedDaggerAppCompatActivity() {
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var rxBus: RxBus
+    @Inject lateinit var resetRileyLinkConfigurationTaskProvider: Provider<ResetRileyLinkConfigurationTask>
 
     private var disposables: CompositeDisposable = CompositeDisposable()
     private val handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
@@ -93,8 +93,9 @@ class ErosPodManagementActivity : TranslatedDaggerAppCompatActivity() {
         }
 
         binding.buttonDiscardPod.setOnClickListener {
-            OKDialog.showConfirmation(this,
-                                      rh.gs(app.aaps.pump.omnipod.common.R.string.omnipod_common_pod_management_discard_pod_confirmation), Thread {
+            OKDialog.showConfirmation(
+                this,
+                rh.gs(app.aaps.pump.omnipod.common.R.string.omnipod_common_pod_management_discard_pod_confirmation), Thread {
                     aapsOmnipodManager.discardPodState()
                 })
         }
@@ -109,7 +110,7 @@ class ErosPodManagementActivity : TranslatedDaggerAppCompatActivity() {
 
         binding.buttonResetRileylinkConfig.setOnClickListener {
             // TODO improvement: properly disable button until task is finished
-            handler.post { serviceTaskExecutor.startTask(ResetRileyLinkConfigurationTask(injector)) }
+            handler.post { serviceTaskExecutor.startTask(resetRileyLinkConfigurationTaskProvider.get()) }
         }
 
         binding.buttonPlayTestBeep.setOnClickListener {

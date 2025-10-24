@@ -51,6 +51,8 @@ internal data class RemoteTreatment(
     @SerializedName("profile") val profile: String? = null,            // string Name of the profile to which the pump has been switched.
     @SerializedName("reason") val reason: String? = null,              // string For example the reason why the profile has been switched or why the temporary target has been set.
     @SerializedName("mode") val mode: String? = null,                  // string RunningMode
+    @SerializedName("location") val location: String? = null,              // string Location for site management defined in TE.Location
+    @SerializedName("arrow") val arrow: String? = null,                 // string Arrow for site management defined in TE.Arrow
     @SerializedName("autoForced") val autoForced: Boolean? = null,     // boolean RunningMode
     @SerializedName("reasons") val reasons: String? = null,            // string RunningMode
     @SerializedName("notes") val notes: String? = null,                // string Description/notes of treatment.

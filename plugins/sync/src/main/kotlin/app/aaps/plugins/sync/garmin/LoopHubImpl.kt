@@ -111,7 +111,7 @@ class LoopHubImpl @Inject constructor(
     /** Tells the loop algorithm that the pump is physically connected. */
     override fun connectPump() {
         disposable += persistenceLayer.cancelCurrentRunningMode(clock.millis(), Action.RECONNECT, Sources.Garmin).subscribe()
-        commandQueue.cancelTempBasal(true, null)
+        commandQueue.cancelTempBasal(enforceNew = true, callback = null)
     }
 
     /** Tells the loop algorithm that the pump will be physically disconnected

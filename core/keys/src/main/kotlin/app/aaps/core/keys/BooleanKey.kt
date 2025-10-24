@@ -117,6 +117,9 @@ enum class BooleanKey(
     WizardCorrectionPercent("wizard_correction_percent", defaultValue = false),
     WizardIncludeCob("wizard_include_cob", defaultValue = false),
     WizardIncludeTrend("wizard_include_trend_bg", defaultValue = false),
+    SiteRotationManagePump("site_rotation_manage_pump", defaultValue = false),
+    SiteRotationManageCgm("site_rotation_manage_cgm", defaultValue = false),
+
 
     //Tsunami
     TsuSMBscaling(key = "key_tsu_SMB_scaling", defaultValue = false),

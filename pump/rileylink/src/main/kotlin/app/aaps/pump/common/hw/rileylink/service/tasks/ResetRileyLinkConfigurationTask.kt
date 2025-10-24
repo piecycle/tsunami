@@ -1,15 +1,12 @@
 package app.aaps.pump.common.hw.rileylink.service.tasks
 
+import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventRefreshButtonState
 import app.aaps.pump.common.hw.rileylink.ble.RFSpy
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class ResetRileyLinkConfigurationTask(injector: HasAndroidInjector) : PumpTask(injector) {
-
-    @Inject lateinit var rxBus: RxBus
-    @Inject lateinit var rfSpy: RFSpy
+class ResetRileyLinkConfigurationTask @Inject constructor(activePlugin: ActivePlugin, private val rxBus: RxBus, private val rfSpy: RFSpy) : PumpTask(activePlugin) {
 
     override fun run() {
         if (!isRileyLinkDevice) return

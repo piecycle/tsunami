@@ -63,8 +63,8 @@ class ActionStartTempTarget(injector: HasAndroidInjector) : Action(injector) {
                 ValueWithUnit.Minute(TimeUnit.MILLISECONDS.toMinutes(tt().duration).toInt())
             )
         ).subscribe(
-            { callback.result(instantiator.providePumpEnactResult().success(true).comment(app.aaps.core.ui.R.string.ok)).run() },
-            { callback.result(instantiator.providePumpEnactResult().success(false).comment(app.aaps.core.ui.R.string.error)).run() }
+            { callback.result(pumpEnactResultProvider.get().success(true).comment(app.aaps.core.ui.R.string.ok)).run() },
+            { callback.result(pumpEnactResultProvider.get().success(false).comment(app.aaps.core.ui.R.string.error)).run() }
         )
     }
 

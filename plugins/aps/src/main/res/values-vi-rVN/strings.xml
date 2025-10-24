@@ -35,11 +35,12 @@
     <string name="openapsma_last_run_label">Lần chạy gần nhất</string>
     <string name="openapsma_input_parameters_label">Tham số đầu vào</string>
     <string name="openapsma_glucose_status_label">Trạng thái đường huyết</string>
+    <string name="openapsma_current_temp_label">Current temp</string>
     <string name="openapsma_iob_data_label">Dữ liệu IOB</string>
     <string name="openapsma_profile_label">Cấu hình</string>
     <string name="openapsma_meal_data_label">Dữ liệu bữa ăn</string>
     <string name="openapsma_request_label">Yêu cầu</string>
-    <string name="constraints">Constraints</string>
+    <string name="constraints">Giới hạn</string>
     <string name="openapsma_autosensdata_label">Dữ liệu Autosens</string>
     <string name="openapsma_script_debug_data_label">Gỡ lỗi script</string>
     <string name="openapsama_use_autosens">Sử dụng tính năng Autosens</string>
@@ -167,7 +168,7 @@
     <string name="pump_disconnected">Pump đã ngắt kết nối</string>
     <!--    autoISF -->
     <string name="half_basal_exercise_target_title">Mục tiêu tập luyện với 50% basal</string>
-    <string name="half_basal_exercise_target_summary">Đặt thành một số, ví dụ 160, có nghĩa là khi mục tiêu tạm thời (temp target) là 160 mg/dL và tùy chọn \'High temptarget raises sensitivity=true\' được bật, Aaps sẽ chạy 50% basal ở mức này (120 = 75%; 140 = 60%).</string>
+    <string name="half_basal_exercise_target_summary">Đặt thành một số, ví dụ 160, có nghĩa là khi mục tiêu tạm thời (temp target) là 160 mg/dL và tùy chọn \'High temptarget raises sensitivity=true\' được bật, Aaps sẽ chạy 50%% basal ở mức này (120 = 75%%; 140 = 60%%).</string>
     <string name="autoISF_settings_title">Cài đặt AutoISF</string>
     <string name="autoISF_settings_summary">AutoISF cho phép điều chỉnh Hệ số độ nhạy insulin (ISF) trong nhiều tình huống thay đổi đường huyết. \n\nNó cũng có thể điều chỉnh cài đặt phân phối SMB</string>
     <string name="smb_delivery_settings_title">Cài đặt phân phối SMB</string>
@@ -183,6 +184,12 @@
     <string name="openapsama_bgBrake_ISF_weight_summary">Đây là trọng số được áp dụng khi đường huyết giảm tốc, giúp làm yếu ISF và do đó có thể làm giảm lượng insulin được phân phối.\n\nGiá trị mặc định 0,0 về cơ bản tắt hiệu ứng này.</string>
     <string name="openapsama_autoISF_max">Tỷ lệ AutoISF tối đa\n(autoISF_max)</string>
     <string name="openapsama_autoISF_min">Tỷ lệ AutoISF tối thiểu\n(autoISF_min)</string>
+    <string name="openapsama_lower_ISFrange_weight">Lower ISF-range weight\n(lower_ISFrange_weight)</string>
+    <string name="openapsama_higher_ISFrange_weight">Higher ISF-range weight\n(higher_ISFrange_weight)</string>
+    <string name="openapsama_pp_ISF_weight">Postprandial ISF weight\n(pp_ISF_weight)</string>
+    <string name="openapsama_bgAccel_ISF_weight">Weight while BG accelerates\n(bgAccel_ISF_weight)</string>
+    <string name="openapsama_bgBrake_ISF_weight">Weight while BG decelerates\n(bgBrake_ISF_weight)</string>
+    <string name="openapsama_dura_ISF_weight">Dura_ISF weight\n(dura_ISF_weight)</string>
     <string name="openapsama_smb_delivery_ratio">Tỷ lệ phân phối SMB cố định\n(smb_delivery_ratio)</string>
     <string name="openapsama_smb_delivery_ratio_min">Tỷ lệ phân phối SMB tối thiểu\n(smb_delivery_ratio_min)</string>
     <string name="openapsama_smb_delivery_ratio_max">Tỷ lệ phân phối SMB tối đa\n(smb_delivery_ratio_max)</string>

@@ -137,7 +137,7 @@ class ActionSettingsExport(injector: HasAndroidInjector) : Action(injector) {
         }
 
         rxBus.send(EventRefreshOverview("ActionSettingsExport"))
-        callback.result(instantiator.providePumpEnactResult().success(true).comment(exportResultComment)).run()
+        callback.result(pumpEnactResultProvider.get().success(true).comment(exportResultComment)).run()
     }
 
     override fun toJSON(): String {

@@ -2,12 +2,15 @@ package app.aaps.pump.common.hw.rileylink.ble.data
 
 import app.aaps.pump.common.hw.rileylink.ble.command.RileyLinkCommand
 import app.aaps.pump.common.hw.rileylink.ble.defs.RFSpyRLResponse
-import dagger.android.HasAndroidInjector
+import javax.inject.Inject
+import javax.inject.Provider
 
 /**
  * Created by geoff on 5/26/16.
  */
-class RFSpyResponse(private val command: RileyLinkCommand?, var raw: ByteArray) {
+class RFSpyResponse @Inject constructor(
+    private val radioResponseProvider: Provider<RadioResponse>
+) {
 
     // 0xaa == timeout
     // 0xbb == interrupted
@@ -15,14 +18,22 @@ class RFSpyResponse(private val command: RileyLinkCommand?, var raw: ByteArray) 
     // 0xdd == success
     // 0x11 == invalidParam
     // 0x22 == unknownCommand
-    var radioResponse: RadioResponse? = null
+    private var radioResponse: RadioResponse? = null
+    private var command: RileyLinkCommand? = null
+    lateinit var raw: ByteArray
 
-    fun getRadioResponse(injector: HasAndroidInjector): RadioResponse {
+    fun with(command: RileyLinkCommand?, raw: ByteArray): RFSpyResponse {
+        this.command = command
+        this.raw = raw
+        return this
+    }
+
+    fun getRadioResponse(): RadioResponse {
         if (looksLikeRadioPacket()) {
-            radioResponse = RadioResponse(injector, command)
+            radioResponse = radioResponseProvider.get().with(command)
             radioResponse?.init(raw)
         } else {
-            radioResponse = RadioResponse(injector)
+            radioResponse = radioResponseProvider.get()
         }
         return radioResponse ?: throw IllegalStateException()
     }
@@ -73,7 +84,7 @@ class RFSpyResponse(private val command: RileyLinkCommand?, var raw: ByteArray) 
             return "Radio packet"
         } else {
             val r = RFSpyRLResponse.fromByte(raw[0])
-            return if (r == null) "" else r.toString()
+            return r?.toString() ?: ""
         }
     }
 }

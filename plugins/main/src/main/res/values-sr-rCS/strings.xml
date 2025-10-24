@@ -50,7 +50,6 @@
     <!-- Theme switcher dark and light mode-->
     <!-- Profile -->
     <string name="localprofile">Profil</string>
-    <string name="description_profile_local">Definiši profil koji je dostupan bez internet veze.</string>
     <!-- Actions -->
     <string name="description_actions">Neke tipke za brzi pristup uobičajenim funkcijama</string>
     <string name="tempbasal_button">Privremeni Basal</string>

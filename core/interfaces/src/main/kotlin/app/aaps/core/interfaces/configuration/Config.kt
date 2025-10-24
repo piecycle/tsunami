@@ -33,4 +33,5 @@ interface Config {
     fun showUserActionsOnWatchOnly(): Boolean
     fun ignoreNightscoutV3Errors(): Boolean
     fun doNotSendSmsOnProfileChange(): Boolean
+    fun enableAutotune(): Boolean
 }

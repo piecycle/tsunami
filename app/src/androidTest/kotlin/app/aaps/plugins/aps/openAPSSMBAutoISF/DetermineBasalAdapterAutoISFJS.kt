@@ -159,7 +159,7 @@ class DetermineBasalAdapterAutoISFJS(private val scriptReader: ScriptReader, pri
             } else {
                 aapsLogger.error(LTag.APS, "Problem loading JS Functions")
             }
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             aapsLogger.error(LTag.APS, "IOException")
         } catch (e: RhinoException) {
             aapsLogger.error(LTag.APS, "RhinoException: (" + e.lineNumber() + "," + e.columnNumber() + ") " + e.toString())
@@ -180,7 +180,7 @@ class DetermineBasalAdapterAutoISFJS(private val scriptReader: ScriptReader, pri
         return determineBasalResultSMB
     }
 
-    @Suppress("SpellCheckingInspection")
+    @Suppress("SpellCheckingInspection", "KotlinConstantConditions")
     override fun setData(
         profile: Profile,
         maxIob: Double,
@@ -190,7 +190,7 @@ class DetermineBasalAdapterAutoISFJS(private val scriptReader: ScriptReader, pri
         targetBg: Double,
         basalRate: Double,
         iobArray: Array<IobTotal>,
-        glucoseStatusParam: GlucoseStatus,
+        glucoseStatus: GlucoseStatus,
         mealData: MealData,
         autosensDataRatio: Double,
         tempTargetSet: Boolean,
@@ -206,7 +206,7 @@ class DetermineBasalAdapterAutoISFJS(private val scriptReader: ScriptReader, pri
     ) {
         val pump = activePlugin.activePump
         val pumpBolusStep = pump.pumpDescription.bolusStep
-        val glucoseStatus = glucoseStatusParam as GlucoseStatusAutoIsf
+        val glucoseStatusAutoIsf = glucoseStatus as GlucoseStatusAutoIsf
         this.profile.put("max_iob", maxIob)
         //mProfile.put("dia", profile.getDia());
         this.profile.put("type", "current")
@@ -290,23 +290,23 @@ class DetermineBasalAdapterAutoISFJS(private val scriptReader: ScriptReader, pri
         if (tb != null) currentTemp.put("minutesrunning", tb.getPassedDurationToTimeInMinutes(now))
 
         iobData = iobArray.convertToJSONArray(dateUtil)
-        this.glucoseStatus.put("glucose", glucoseStatus.glucose)
-        this.glucoseStatus.put("noise", glucoseStatus.noise)
+        this.glucoseStatus.put("glucose", glucoseStatusAutoIsf.glucose)
+        this.glucoseStatus.put("noise", glucoseStatusAutoIsf.noise)
         if (preferences.get(BooleanKey.ApsAlwaysUseShortDeltas)) {
-            this.glucoseStatus.put("delta", glucoseStatus.shortAvgDelta)
+            this.glucoseStatus.put("delta", glucoseStatusAutoIsf.shortAvgDelta)
         } else {
-            this.glucoseStatus.put("delta", glucoseStatus.delta)
+            this.glucoseStatus.put("delta", glucoseStatusAutoIsf.delta)
         }
-        this.glucoseStatus.put("short_avgdelta", glucoseStatus.shortAvgDelta)
-        this.glucoseStatus.put("long_avgdelta", glucoseStatus.longAvgDelta)
-        this.glucoseStatus.put("date", glucoseStatus.date)
-        this.glucoseStatus.put("duraISFminutes", glucoseStatus.duraISFminutes)
-        this.glucoseStatus.put("duraISFaverage", glucoseStatus.duraISFaverage)
-        this.glucoseStatus.put("a0", glucoseStatus.a0)
-        this.glucoseStatus.put("a1", glucoseStatus.a1)
-        this.glucoseStatus.put("a2", glucoseStatus.a2)
-        this.glucoseStatus.put("bgAcceleration", glucoseStatus.bgAcceleration)
-        this.glucoseStatus.put("corrSqu", glucoseStatus.corrSqu)
+        this.glucoseStatus.put("short_avgdelta", glucoseStatusAutoIsf.shortAvgDelta)
+        this.glucoseStatus.put("long_avgdelta", glucoseStatusAutoIsf.longAvgDelta)
+        this.glucoseStatus.put("date", glucoseStatusAutoIsf.date)
+        this.glucoseStatus.put("duraISFminutes", glucoseStatusAutoIsf.duraISFminutes)
+        this.glucoseStatus.put("duraISFaverage", glucoseStatusAutoIsf.duraISFaverage)
+        this.glucoseStatus.put("a0", glucoseStatusAutoIsf.a0)
+        this.glucoseStatus.put("a1", glucoseStatusAutoIsf.a1)
+        this.glucoseStatus.put("a2", glucoseStatusAutoIsf.a2)
+        this.glucoseStatus.put("bgAcceleration", glucoseStatusAutoIsf.bgAcceleration)
+        this.glucoseStatus.put("corrSqu", glucoseStatusAutoIsf.corrSqu)
         this.mealData.put("carbs", mealData.carbs)
         this.mealData.put("mealCOB", mealData.mealCOB)
         this.mealData.put("slopeFromMaxDeviation", mealData.slopeFromMaxDeviation)

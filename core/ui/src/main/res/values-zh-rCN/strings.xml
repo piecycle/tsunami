@@ -5,7 +5,6 @@
     <string name="error">错误</string>
     <string name="profile_set_ok">泵基础率配置文件更新了</string>
     <string name="invalid_input">无效的输入数据</string>
-    <string name="bolus_delivering">正在输注 %1$.2f U</string>
     <string name="constraint_applied">应用约束!</string>
     <string name="tempbasals_iobtotal_label_string">总 IOB:</string>
     <string name="tt_label">临时目标</string>
@@ -95,7 +94,6 @@
     <string name="name_short">名称:</string>
     <string name="time">时间</string>
     <string name="ns_wifi_ssids">WiFi SSID</string>
-    <string name="loading">正在加载…</string>
     <string name="notes_label">备注</string>
     <string name="remove_button">删除</string>
     <string name="addnew_above">在顶部新增</string>

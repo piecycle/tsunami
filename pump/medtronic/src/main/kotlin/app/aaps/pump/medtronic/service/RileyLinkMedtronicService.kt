@@ -216,7 +216,7 @@ class RileyLinkMedtronicService : RileyLinkService() {
                 serialChanged = false
             }
             if (rileyLinkAddressChanged || forceRileyLinkAddressRenewal) {
-                rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet, this)
+                rileyLinkUtil.sendBroadcastMessage(RileyLinkConst.Intents.RileyLinkNewAddressSet)
                 rileyLinkAddressChanged = false
             }
             if (encodingChanged) {
