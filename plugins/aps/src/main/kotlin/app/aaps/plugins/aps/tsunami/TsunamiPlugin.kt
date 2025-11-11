@@ -55,7 +55,6 @@ import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.IntentKey
 import app.aaps.core.keys.UnitDoubleKey
 import app.aaps.core.keys.interfaces.Preferences
-import app.aaps.core.objects.aps.DetermineBasalResult
 import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.core.objects.extensions.convertedToAbsolute
 import app.aaps.core.objects.extensions.getPassedDurationToTimeInMinutes
@@ -75,10 +74,10 @@ import app.aaps.plugins.aps.R
 import app.aaps.plugins.aps.events.EventOpenAPSUpdateGui
 import app.aaps.plugins.aps.events.EventResetOpenAPSGui
 import app.aaps.plugins.aps.openAPS.TddStatus
-import app.aaps.plugins.aps.tsunami.GlucoseStatusCalculatorTsunami
 import dagger.android.HasAndroidInjector
 import org.json.JSONObject
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.math.floor
 import kotlin.math.ln
@@ -106,7 +105,8 @@ open class TsunamiPlugin @Inject constructor(
     private val uiInteraction: UiInteraction,
     private val determineBasalTsunami: DetermineBasalTsunami,
     private val profiler: Profiler,
-    private val glucoseStatusCalculatorTsunami: GlucoseStatusCalculatorTsunami
+    private val glucoseStatusCalculatorTsunami: GlucoseStatusCalculatorTsunami,
+    private val apsResultProvider: Provider<APSResult>
 ) : PluginBase(
     PluginDescription()
         .mainType(PluginType.APS)
@@ -141,7 +141,7 @@ override fun onStart() {
     // last values
     override var lastAPSRun: Long = 0
     override val algorithm = APSResult.Algorithm.TSUNAMI
-    override var lastAPSResult: DetermineBasalResult? = null
+    override var lastAPSResult: APSResult? = null
     override fun supportsDynamicIsf(): Boolean = preferences.get(BooleanKey.ApsUseDynamicSensitivity)
 
     override fun getIsfMgdl(profile: Profile, caller: String): Double? {
@@ -626,7 +626,7 @@ override fun onStart() {
             recentGlucoseHistory = recentGlucoseHistory,
             rawGlucoseHistory = rawGlucoseHistory,
         ).also {
-            val determineBasalResult = DetermineBasalResult(injector, it)
+            val determineBasalResult = apsResultProvider.get().with(it)
             // Preserve input data
             determineBasalResult.inputConstraints = inputConstraints
             determineBasalResult.autosensResult = autosensResult

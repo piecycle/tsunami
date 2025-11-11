@@ -45,7 +45,7 @@ package app.aaps.database
  import app.aaps.database.entities.UserEntry
  import app.aaps.database.entities.VersionChange
 
-const val DATABASE_VERSION = 31
+const val DATABASE_VERSION = 32
 
 @Database(
     version = DATABASE_VERSION,

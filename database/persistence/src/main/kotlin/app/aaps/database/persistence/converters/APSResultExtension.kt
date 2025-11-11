@@ -51,7 +51,7 @@ fun app.aaps.database.entities.APSResult.fromDb(apsResultProvider: Provider<APSR
             }
 
         app.aaps.database.entities.APSResult.Algorithm.TSUNAMI ->
-            DetermineBasalResult(injector, Json.decodeFromString(this.resultJson)).also { result ->
+            apsResultProvider.get().with(Json.decodeFromString(this.resultJson)).also { result ->
                 result.date = this.timestamp
                 result.glucoseStatus = try {
                     this.glucoseStatusJson?.let { Json.decodeFromString(it) }

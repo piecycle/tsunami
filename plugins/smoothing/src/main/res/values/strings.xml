@@ -9,7 +9,7 @@
     <string name="no_smoothing_name">No smoothing</string>
     <string name="description_no_smoothing">"No smoothing performed on input glucose data. Use this when you already have filtered data e.g. from BYODA G6."</string>
     <string name="UKF_name">UKF</string>
-    <string name="description_UKF">"Unscented Kalman Filter algorithm"</string>
+    <string name="description_UKF">"Unscented Kalman Filter with noise-adaptive glucose prediction and RTS smoothing"</string>
 
 
 </resources>
