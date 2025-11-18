@@ -184,7 +184,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedCarbs() {
+    @OpenForTesting
+    suspend fun processChangedCarbs() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -226,7 +227,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedBolusCalculatorResults() {
+    @OpenForTesting
+    suspend fun processChangedBolusCalculatorResults() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -276,7 +278,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedTempTargets() {
+    @OpenForTesting
+    suspend fun processChangedTempTargets() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -318,7 +321,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedFoods() {
+    @OpenForTesting
+    suspend fun processChangedFoods() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -360,7 +364,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedGlucoseValues() {
+    @OpenForTesting
+    suspend fun processChangedGlucoseValues() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -404,7 +409,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedTherapyEvents() {
+    @OpenForTesting
+    suspend fun processChangedTherapyEvents() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -446,7 +452,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedDeviceStatuses() {
+    @OpenForTesting
+    suspend fun processChangedDeviceStatuses() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -476,7 +483,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedTemporaryBasals() {
+    @OpenForTesting
+    suspend fun processChangedTemporaryBasals() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -519,7 +527,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedExtendedBoluses() {
+    @OpenForTesting
+    suspend fun processChangedExtendedBoluses() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -564,7 +573,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedProfileSwitches() {
+    @OpenForTesting
+    suspend fun processChangedProfileSwitches() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -606,7 +616,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedEffectiveProfileSwitches() {
+    @OpenForTesting
+    suspend fun processChangedEffectiveProfileSwitches() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -648,7 +659,8 @@ class DataSyncSelectorV3 @Inject constructor(
         }
     }
 
-    private suspend fun processChangedRunningModes() {
+    @OpenForTesting
+    suspend fun processChangedRunningModes() {
         var cont = true
         while (cont) {
             if (isPaused) return
@@ -692,7 +704,8 @@ class DataSyncSelectorV3 @Inject constructor(
         preferences.put(NsclientLongKey.ProfileStoreLastSyncedId, timestamp)
     }
 
-    private suspend fun processChangedProfileStore() {
+    @OpenForTesting
+    suspend fun processChangedProfileStore() {
         if (isPaused) return
         val lastSync = preferences.get(NsclientLongKey.ProfileStoreLastSyncedId)
         val lastChange = preferences.get(LongNonKey.LocalProfileLastChange)

@@ -11,7 +11,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.kotlin.whenever
 
 class OverviewPluginTest : TestBaseWithProfile() {
 
@@ -28,7 +28,7 @@ class OverviewPluginTest : TestBaseWithProfile() {
             aapsLogger, rh, preferences, notificationStore, fabricPrivacy, rxBus,
             aapsSchedulers, overviewData, overviewMenus, context, constraintsChecker, uiInteraction, nsSettingsStatus, config
         )
-        Mockito.`when`(uiInteraction.quickWizardListActivity).thenReturn(Activity::class.java)
+        whenever(uiInteraction.quickWizardListActivity).thenReturn(Activity::class.java)
     }
 
     @Test

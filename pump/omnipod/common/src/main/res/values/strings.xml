@@ -126,7 +126,7 @@
     <string name="omnipod_common_preferences_notification_uncertain_tbr_sound_enabled">Sound for uncertain TBR notifications enabled</string>
     <string name="omnipod_common_preferences_notification_uncertain_smb_sound_enabled">Sound for uncertain SMB notifications enabled</string>
     <string name="omnipod_common_preferences_notification_uncertain_bolus_sound_enabled">Sound for uncertain bolus notifications enabled</string>
-    <string name="omnipod_dash_use_bonding">Bond BT device on Android 15+ (Pixel phones workaround)</string>
+    <string name="omnipod_dash_use_bonding">Bond BT device on Android 15</string>
 
     <!-- Omnipod - Pod Status -->
     <string name="omnipod_common_pod_status_no_active_pod">No Active Pod</string>
@@ -172,14 +172,6 @@
     <string name="omnipod_common_alert_shutdown_imminent">Shutdown is imminent</string>
     <string name="omnipod_common_alert_low_reservoir">Low Reservoir</string>
     <string name="omnipod_common_alert_unknown_alert">Unknown Alert</string>
-
-    <!-- Omnipod - Short status -->
-    <string name="omnipod_common_short_status_no_active_pod">No Active Pod</string>
-    <string name="omnipod_common_short_status_last_connection">LastConn: %1$d min ago</string>
-    <string name="omnipod_common_short_status_last_bolus">LastBolus: %1$s U @ %2$s</string>
-    <string name="omnipod_common_short_status_temp_basal">Temp: %1$s</string>
-    <string name="omnipod_common_short_status_extended_bolus">Extended: %1$s</string>
-    <string name="omnipod_common_short_status_reservoir">Reserv: %1$sU</string>
 
     <!-- Omnipod - Other -->
     <string name="omnipod_common_yes">Yes</string>

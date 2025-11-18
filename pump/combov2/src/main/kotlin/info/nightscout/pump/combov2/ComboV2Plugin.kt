@@ -44,7 +44,6 @@ import app.aaps.core.interfaces.rx.events.EventRefreshOverview
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
-import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.core.ui.dialogs.OKDialog
@@ -96,10 +95,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.joda.time.DateTime
-import org.json.JSONException
 import org.json.JSONObject
 import java.util.Locale
 import javax.inject.Inject
@@ -133,7 +129,6 @@ class ComboV2Plugin @Inject constructor(
     private val uiInteraction: UiInteraction,
     private val androidPermission: AndroidPermission,
     private val config: Config,
-    private val decimalFormatter: DecimalFormatter,
     private val pumpEnactResultProvider: Provider<PumpEnactResult>
 ) :
     PumpPluginBase(
@@ -930,8 +925,11 @@ class ComboV2Plugin @Inject constructor(
         return (activeBasalProfile == profile.toComboCtlBasalProfile())
     }
 
-    override fun lastDataTime(): Long = lastConnectionTimestamp
+    override val lastDataTime: Long get() = lastConnectionTimestamp
 
+    @OptIn(ExperimentalTime::class)
+    override val lastBolusTime: Long? get() = lastBolusUIFlow.value?.timestamp?.toEpochMilliseconds()
+    override val lastBolusAmount: Double? get() = lastBolusUIFlow.value?.bolusAmount?.cctlBolusToIU()
     override val baseBasalRate: Double
         get() {
             val currentHour = DateTime().hourOfDay().get()
@@ -1311,103 +1309,16 @@ class ComboV2Plugin @Inject constructor(
     override fun cancelExtendedBolus(): PumpEnactResult =
         createFailurePumpEnactResult(R.string.combov2_extended_bolus_not_supported)
 
-    @OptIn(ExperimentalTime::class)
-    override fun getJSONStatus(profile: Profile, profileName: String, version: String): JSONObject {
-        if (!isInitialized())
-            return JSONObject()
+    override fun updateExtendedJsonStatus(extendedStatus: JSONObject) {
+        when (val alert = lastComboAlert) {
+            is AlertScreenContent.Warning ->
+                extendedStatus.put("WarningCode", alert.code)
 
-        val now = dateUtil.now()
-        if ((lastConnectionTimestamp != 0L) && ((now - lastConnectionTimestamp) > 60 * 60 * 1000)) {
-            return JSONObject()
+            is AlertScreenContent.Error   ->
+                extendedStatus.put("ErrorCode", alert.code)
+
+            else                          -> Unit
         }
-        val pumpJson = JSONObject()
-
-        try {
-            pumpJson.apply {
-                put("clock", dateUtil.toISOString(now))
-                // NOTE: This is called "status" because this is what the
-                // Nightscout pump plugin API schema expects. It is not to
-                // be confused with the "status" in the ComboCtl Pump class.
-                // Also not to be confused with the "status" field inside
-                // this "status" JSON object.
-                // See the Nightscout /devicestatus/ API docs for more.
-                put("status", JSONObject().apply {
-                    val driverState = driverStateFlow.value
-                    val suspended = isSuspended()
-                    val bolusing = (driverState is DriverState.ExecutingCommand) &&
-                        (driverState.description is ComboCtlPump.DeliveringBolusCommandDesc)
-                    // The value of the "status" string isn't well defined.
-                    // Commonly used ones seem to be "normal", "suspended",
-                    // and "bolusing". The latter two are already enforced
-                    // by the corresponding boolean flags, but we set them
-                    // in this string anyway. It may be a legacy feature
-                    // from older Nightscout iterations. Furthermore, we do
-                    // set this to "error" in case of pump errors to alert
-                    // users of Nightscout to possible problems with the pump.
-                    val statusLabel = if (bolusing)
-                        "bolusing"
-                    else if (suspended)
-                        "suspended"
-                    else if (driverState == DriverState.Error)
-                        "error"
-                    else
-                        "normal"
-                    put("status", statusLabel)
-                    put("suspended", suspended)
-                    put("bolusing", bolusing)
-                    put("timestamp", dateUtil.toISOString(lastConnectionTimestamp))
-                })
-                pumpStatus?.let {
-                    // Battery level is set inside this let-block as well. Even though
-                    // batteryLevel is not a direct pumpStatus member, it is a property
-                    // that *does* access pumpStatus (with null check).
-                    put("battery", JSONObject().apply {
-                        put("percent", batteryLevel)
-                    })
-                    put("reservoir", it.availableUnitsInReservoir)
-                } ?: aapsLogger.info(
-                    LTag.PUMP,
-                    "Cannot include reservoir level in JSON status " +
-                        "since no such level is currently known"
-                )
-                put("extended", JSONObject().apply {
-                    put("Version", version)
-                    lastBolusUIFlow.value?.let {
-                        put("LastBolus", dateUtil.dateAndTimeString(it.timestamp.toEpochMilliseconds()))
-                        put("LastBolusAmount", it.bolusAmount.cctlBolusToIU())
-                    }
-                    val tb = pumpSync.expectedPumpState().temporaryBasal
-                    tb?.let {
-                        put("TempBasalAbsoluteRate", tb.convertedToAbsolute(now, profile))
-                        put("TempBasalStart", dateUtil.dateAndTimeString(tb.timestamp))
-                        put("TempBasalRemaining", tb.plannedRemainingMinutes)
-                    }
-                    if (activeBasalProfile != null)
-                        put("BaseBasalRate", baseBasalRate)
-                    else
-                        aapsLogger.info(
-                            LTag.PUMP,
-                            "Cannot include base basal rate in JSON status " +
-                                "since no basal profile is currently active"
-                        )
-                    put("ActiveProfile", profileName)
-                    when (val alert = lastComboAlert) {
-                        is AlertScreenContent.Warning ->
-                            put("WarningCode", alert.code)
-
-                        is AlertScreenContent.Error   ->
-                            put("ErrorCode", alert.code)
-
-                        else                          -> Unit
-                    }
-                })
-            }
-        } catch (e: JSONException) {
-            aapsLogger.error(LTag.PUMP, "Unhandled JSON exception", e)
-        }
-        aapsLogger.info(LTag.PUMP, "Produced pump JSON status: $pumpJson")
-
-        return pumpJson
     }
 
     override fun manufacturer() = ManufacturerType.Roche
@@ -1426,15 +1337,8 @@ class ComboV2Plugin @Inject constructor(
     override val pumpDescription: PumpDescription
         get() = _pumpDescription
 
-    @OptIn(ExperimentalTime::class)
-    override fun shortStatus(veryShort: Boolean): String {
+    override fun pumpSpecificShortStatus(veryShort: Boolean): String {
         val lines = mutableListOf<String>()
-
-        if (lastConnectionTimestamp != 0L) {
-            val agoMsec: Long = System.currentTimeMillis() - lastConnectionTimestamp
-            val agoMin = (agoMsec / 60.0 / 1000.0).toInt()
-            lines += rh.gs(R.string.combov2_short_status_last_connection, agoMin)
-        }
 
         val alertCodeString = when (val alert = lastComboAlert) {
             is AlertScreenContent.Warning -> "W${alert.code}"
@@ -1444,43 +1348,7 @@ class ComboV2Plugin @Inject constructor(
         if (alertCodeString != null)
             lines += rh.gs(R.string.combov2_short_status_alert, alertCodeString)
 
-        lastBolusUIFlow.value?.let {
-            val localBolusTimestamp = it.timestamp.toLocalDateTime(TimeZone.currentSystemDefault())
-            lines += rh.gs(
-                R.string.combov2_short_status_last_bolus, decimalFormatter.to2Decimal(it.bolusAmount.cctlBolusToIU()),
-                String.format(Locale.getDefault(), "%02d:%02d", localBolusTimestamp.hour, localBolusTimestamp.minute)
-            )
-        }
-
-        val temporaryBasal = pumpSync.expectedPumpState().temporaryBasal
-        temporaryBasal?.let {
-            lines += rh.gs(
-                R.string.combov2_short_status_temp_basal,
-                it.toStringFull(dateUtil, rh)
-            )
-        }
-
-        pumpStatus?.let {
-            lines += rh.gs(
-                R.string.combov2_short_status_reservoir,
-                it.availableUnitsInReservoir
-            )
-            val batteryStateDesc = when (it.batteryState) {
-                BatteryState.NO_BATTERY   -> rh.gs(R.string.combov2_short_status_battery_state_empty)
-                BatteryState.LOW_BATTERY  -> rh.gs(R.string.combov2_short_status_battery_state_low)
-                BatteryState.FULL_BATTERY -> rh.gs(R.string.combov2_short_status_battery_state_full)
-            }
-            lines += rh.gs(
-                R.string.combov2_short_status_battery_state,
-                batteryStateDesc
-            )
-        }
-
-        val shortStatusString = lines.joinToString("\n")
-
-        aapsLogger.debug(LTag.PUMP, "Produced short status: [$shortStatusString]")
-
-        return shortStatusString
+        return lines.joinToString("\n")
     }
 
     override val isFakingTempsByExtendedBoluses = false

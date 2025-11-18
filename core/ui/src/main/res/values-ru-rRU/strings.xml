@@ -120,6 +120,7 @@
     <string name="pump_running">Помпа работает</string>
     <string name="notconfigured">Не настроено</string>
     <string name="loopsuspended">ЗЦ остановлен</string>
+    <string name="loop_suspended_by_dst">Помпа остановлена при переходе времени</string>
     <string name="trend_arrow">Стрелка тренда</string>
     <string name="a11y_autosens_label">Auto sens</string>
     <string name="required">надо</string>
@@ -264,6 +265,33 @@
     <string name="location_side_left_upper_arm">Верхняя внешняя часть левого плеча</string>
     <string name="location_back_right_upper_arm">Верхняя внутренняя часть правого плеча</string>
     <string name="location_back_left_upper_arm">Верхняя внутренняя часть левого плеча</string>
+    <string name="location_side_right_upper_abdomen">Верхняя правая наружная часть живота</string>
+    <string name="location_side_left_upper_abdomen">Верхняя левая наружная часть живота</string>
+    <string name="location_side_right_lower_abdomen">Нижняя правая наружная часть живота</string>
+    <string name="location_side_left_lower_abdomen">Нижняя левая сторона живота</string>
+    <string name="location_front_right_upper_abdomen">Верхняя правая передняя часть живота</string>
+    <string name="location_front_left_upper_abdomen">Верхняя левая передняя часть живота</string>
+    <string name="location_front_right_lower_abdomen">Нижняя правая передняя часть живота</string>
+    <string name="location_front_left_lower_abdomen">Нижняя левая передняя часть живота</string>
+    <string name="location_back_right_buttock">Правая ягодица</string>
+    <string name="location_back_left_buttock">Левая ягодица</string>
+    <string name="location_side_right_upper_thigh">Верхняя часть правой наружной поверхности бедра</string>
+    <string name="location_side_left_upper_thigh">Верхняя часть левой наружной поверхности бедра</string>
+    <string name="location_side_right_lower_thigh">Нижняя часть правой внешней поверхности бедра</string>
+    <string name="location_side_left_lower_thigh">Нижняя часть левой наружной поверхности бедра</string>
+    <string name="location_front_right_upper_thigh">Верхняя часть правой передней части бедра</string>
+    <string name="location_front_left_upper_thigh">Верхняя часть левой передней части бедра</string>
+    <string name="location_front_right_lower_thigh">Нижняя часть правой передней части бедра</string>
+    <string name="location_front_left_lower_thigh">Нижняя часть левой передней части бедра</string>
+    <string name="arrow_up">Вверх</string>
+    <string name="arrow_up_right">Вверх вправо</string>
+    <string name="arrow_right">Вправо</string>
+    <string name="arrow_down_right">Вниз вправо</string>
+    <string name="arrow_down">Вниз</string>
+    <string name="arrow_down_left">Вниз влево</string>
+    <string name="arrow_left">Влево</string>
+    <string name="arrow_up_left">Вверх влево</string>
+    <string name="arrow_center">По центру</string>
     <!--    Command-->
     <string name="connectiontimedout">Истекло время ожидания соединения</string>
     <!--    PumpEnactResult-->
@@ -323,7 +351,9 @@
     <string name="uel_cancel_extended_bolus">ОТМЕНИТЬ ПРОЛОНГИРОВАННЫЙ БОЛЮС</string>
     <string name="uel_cancel_tt">ОТМЕНИТЬ ВРЕМЕННУЮ ЦЕЛЬ</string>
     <string name="uel_careportal">ПОРТАЛ ТЕРАПИИ</string>
+    <string name="uel_sensor_location">РАСПОЛОЖЕНИЕ СЕНСОРА</string>
     <string name="uel_site_change">СМЕНА МЕСТА КАТЕТЕРА</string>
+    <string name="uel_site_location">РАСПОЛОЖЕНИЕ МЕСТА УСТАНОВКИ</string>
     <string name="uel_reservoir_change">ЗАМЕНА РЕЗЕРВУАРА</string>
     <string name="uel_calibration">КАЛИБРОВКА</string>
     <string name="uel_prime_bolus">НАЧАТЬ БОЛЮС</string>
@@ -615,4 +645,5 @@
     <string name="rate_percent_duration">Скорость: %1$.2fед/ч (%2$.2f%%) Продолжительность %3$d мин</string>
     <string name="percent_rate_duration_formatted"><![CDATA[<b>Скорость</b>:%1$.2f %% (%2$.2f ед/ч)<br><b> Продолжительность</b> %3$d мин<br>]]></string>
     <string name="rate_percent_duration_formatted"><![CDATA[<b>Скорость</b>: %1$.2f ед/ч (%2$.2f%%) <br><b>Продолжительность</b>: %3$d мин<br>]]></string>
+    <!--    Playback-->
 </resources>

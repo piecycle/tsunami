@@ -107,7 +107,6 @@
 
     <string name="equil_command__unknown">The unknown status of the command</string>
     <string name="equil_install">Implant the pump into the body"</string>
-    <string name="equil_settings">Settings</string>
     <string name="equil_settings_alarm_battery">Low battery alarm</string>
     <string name="equil_settings_alarm_insulin">Low drug storage alarm</string>
     <string name="equil_init_insulin_error">Initialization of the reservoir is not complete</string>
@@ -142,11 +141,6 @@
     <string name="equil_history_item18">Abnormal infusion stopped</string>
 
 
-    <string name="equil_common_short_status_last_connection">LastConn: %1$d min ago</string>
-    <string name="equil_common_short_status_last_bolus">LastBolus: %1$s @ %2$s</string>
-    <string name="equil_common_short_status_temp_basal">Temp: %1$s</string>
-    <string name="equil_common_short_status_extended_bolus">Extended: %1$s</string>
-    <string name="equil_common_short_status_reservoir">Reservoir: %1$sU</string>
     <string name="equil_common_overview_button_suspend_delivery">Suspend</string>
     <string name="equil_common_overview_button_resume_delivery">Resume delivery</string>
     <string name="equil_common_overview_temp_basal_value">%1$.2fU/h @%2$s (%3$d/%4$d min)</string>
@@ -191,7 +185,6 @@
     <string name="equil_unpair">Deactivate old pump %1$s?</string>
     <string name="equil_pump_updated">Pump updated</string>
 
-    <string name="equil_maxbolus_tips">Max allowed bolus in pump [%1$sU]</string>
     <string name="equil_replace_reservoir">The reservoir is empty. Please replace the reservoir</string>
     <string name="sixhexanumber" translatable="false">^[A-F0-9]{6}$</string>
     <string name="error_mustbe6hexadidits">Must be 6 characters of ABCDEF0123456789</string>

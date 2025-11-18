@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.text.format.DateFormat
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceManager
@@ -71,8 +70,6 @@ import app.aaps.pump.danars.events.EventDanaRSDeviceChange
 import app.aaps.pump.danars.services.DanaRSService
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
-import org.json.JSONException
-import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -295,13 +292,12 @@ class DanaRSPlugin @Inject constructor(
         return true
     }
 
-    override fun lastDataTime(): Long = danaPump.lastConnection
-    override val baseBasalRate: Double
-        get() = danaPump.currentBasal
-    override val reservoirLevel: Double
-        get() = danaPump.reservoirRemainingUnits
-    override val batteryLevel: Int
-        get() = danaPump.batteryRemaining
+    override val lastDataTime get() = danaPump.lastConnection
+    override val lastBolusTime get() = danaPump.lastBolusTime
+    override val lastBolusAmount get() = danaPump.lastBolusAmount
+    override val baseBasalRate get() = danaPump.currentBasal
+    override val reservoirLevel get() = danaPump.reservoirRemainingUnits
+    override val batteryLevel get() = danaPump.batteryRemaining
 
     @Synchronized
     override fun deliverTreatment(detailedBolusInfo: DetailedBolusInfo): PumpEnactResult {
@@ -326,7 +322,7 @@ class DanaRSPlugin @Inject constructor(
         var connectionOK = false
         if (detailedBolusInfo.insulin > 0) connectionOK = danaRSService?.bolus(detailedBolusInfo) == true
         val result = pumpEnactResultProvider.get()
-        result.success = connectionOK && abs(detailedBolusInfo.insulin - BolusProgressData.delivered) < pumpDescription.bolusStep
+        result.success = connectionOK && (abs(detailedBolusInfo.insulin - BolusProgressData.delivered) < pumpDescription.bolusStep || danaPump.bolusStopped)
         result.bolusDelivered = BolusProgressData.delivered
         if (!result.success) {
             var error = "" + danaPump.bolusStartErrorCode
@@ -568,85 +564,19 @@ class DanaRSPlugin @Inject constructor(
         }
     }
 
-    override fun getJSONStatus(profile: Profile, profileName: String, version: String): JSONObject {
-        val now = System.currentTimeMillis()
-        if (danaPump.lastConnection + 60 * 60 * 1000L < System.currentTimeMillis()) {
-            return JSONObject()
-        }
-        val pumpJson = JSONObject()
-        val battery = JSONObject()
-        val status = JSONObject()
-        val extended = JSONObject()
-        try {
-            battery.put("percent", danaPump.batteryRemaining)
-            status.put("status", if (danaPump.pumpSuspended) "suspended" else "normal")
-            status.put("timestamp", dateUtil.toISOString(danaPump.lastConnection))
-            extended.put("Version", version)
-            if (danaPump.lastBolusTime != 0L) {
-                extended.put("LastBolus", dateUtil.dateAndTimeString(danaPump.lastBolusTime))
-                extended.put("LastBolusAmount", danaPump.lastBolusAmount)
-            }
-            val tb = pumpSync.expectedPumpState().temporaryBasal
-            if (tb != null) {
-                extended.put("TempBasalAbsoluteRate", tb.convertedToAbsolute(now, profile))
-                extended.put("TempBasalStart", dateUtil.dateAndTimeString(tb.timestamp))
-                extended.put("TempBasalRemaining", tb.plannedRemainingMinutes)
-            }
-            val eb = pumpSync.expectedPumpState().extendedBolus
-            if (eb != null) {
-                extended.put("ExtendedBolusAbsoluteRate", eb.rate)
-                extended.put("ExtendedBolusStart", dateUtil.dateAndTimeString(eb.timestamp))
-                extended.put("ExtendedBolusRemaining", eb.plannedRemainingMinutes)
-            }
-            extended.put("BaseBasalRate", baseBasalRate)
-            try {
-                extended.put("ActiveProfile", profileFunction.getProfileName())
-            } catch (e: Exception) {
-                aapsLogger.error("Unhandled exception", e)
-            }
-            pumpJson.put("battery", battery)
-            pumpJson.put("status", status)
-            pumpJson.put("extended", extended)
-            pumpJson.put("reservoir", danaPump.reservoirRemainingUnits.toInt())
-            pumpJson.put("clock", dateUtil.toISOString(now))
-        } catch (e: JSONException) {
-            aapsLogger.error("Unhandled exception", e)
-        }
-        return pumpJson
-    }
-
     override fun manufacturer(): ManufacturerType = ManufacturerType.Sooil
     override fun model(): PumpType = danaPump.pumpType()
     override fun serialNumber(): String = danaPump.serialNumber
 
-    @Suppress("SpellCheckingInspection")
-    override fun shortStatus(veryShort: Boolean): String {
-        var ret = ""
-        if (danaPump.lastConnection != 0L) {
-            val agoMillis = System.currentTimeMillis() - danaPump.lastConnection
-            val agoMin = (agoMillis / 60.0 / 1000.0).toInt()
-            ret += "LastConn: $agoMin minAgo\n"
-        }
-        if (danaPump.lastBolusTime != 0L)
-            ret += "LastBolus: ${decimalFormatter.to2Decimal(danaPump.lastBolusAmount)}U @${DateFormat.format("HH:mm", danaPump.lastBolusTime)}"
-
-        if (danaPump.isTempBasalInProgress)
-            ret += "Temp: ${danaPump.temporaryBasalToString()}"
-
-        if (danaPump.isExtendedInProgress)
-            ret += "Extended: ${danaPump.extendedBolusToString()}\n"
-
-        if (!veryShort) {
-            ret += "TDD: ${decimalFormatter.to0Decimal(danaPump.dailyTotalUnits)} / ${danaPump.maxDailyTotalUnits} U"
-        }
-        ret += "Reserv: ${decimalFormatter.to0Decimal(danaPump.reservoirRemainingUnits)} U"
-        ret += "Batt: ${danaPump.batteryRemaining}"
-        return ret
+    override fun pumpSpecificShortStatus(veryShort: Boolean): String {
+        if (!veryShort)
+            return "TDD: ${decimalFormatter.to0Decimal(danaPump.dailyTotalUnits)} / ${danaPump.maxDailyTotalUnits} U"
+        return ""
     }
 
     override val isFakingTempsByExtendedBoluses: Boolean = false
     override fun loadTDDs(): PumpEnactResult = loadHistory(RecordTypes.RECORD_TYPE_DAILY)
-    override fun canHandleDST(): Boolean = false
+    override fun canHandleDST(): Boolean = danaPump.usingUTC
     override fun clearPairing() {
         aapsLogger.debug(LTag.PUMPCOMM, "Pairing keys cleared")
         preferences.remove(DanaStringComposedKey.ParingKey, mDeviceName)

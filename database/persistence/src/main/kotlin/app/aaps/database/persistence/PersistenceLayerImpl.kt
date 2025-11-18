@@ -43,7 +43,7 @@ import app.aaps.database.transactions.CgmSourceTransaction
 import app.aaps.database.transactions.CutCarbsTransaction
 import app.aaps.database.transactions.InsertAndCancelCurrentTemporaryTargetTransaction
 import app.aaps.database.transactions.InsertBolusWithTempIdTransaction
-import app.aaps.database.transactions.InsertEffectiveProfileSwitch
+import app.aaps.database.transactions.InsertEffectiveProfileSwitchTransaction
 import app.aaps.database.transactions.InsertIfNewByTimestampCarbsTransaction
 import app.aaps.database.transactions.InsertIfNewByTimestampTherapyEventTransaction
 import app.aaps.database.transactions.InsertOrUpdateApsResultTransaction
@@ -52,8 +52,8 @@ import app.aaps.database.transactions.InsertOrUpdateBolusTransaction
 import app.aaps.database.transactions.InsertOrUpdateCachedTotalDailyDoseTransaction
 import app.aaps.database.transactions.InsertOrUpdateCarbsTransaction
 import app.aaps.database.transactions.InsertOrUpdateHeartRateTransaction
-import app.aaps.database.transactions.InsertOrUpdateProfileSwitch
-import app.aaps.database.transactions.InsertOrUpdateRunningMode
+import app.aaps.database.transactions.InsertOrUpdateProfileSwitchTransaction
+import app.aaps.database.transactions.InsertOrUpdateRunningModeTransaction
 import app.aaps.database.transactions.InsertOrUpdateStepsCountTransaction
 import app.aaps.database.transactions.InsertOrUpdateTherapyEventTransaction
 import app.aaps.database.transactions.InsertTemporaryBasalWithTempIdTransaction
@@ -749,7 +749,7 @@ class PersistenceLayerImpl @Inject constructor(
 
     override fun getLastEffectiveProfileSwitchId(): Long? = repository.getLastEffectiveProfileSwitchId()
     override fun insertEffectiveProfileSwitch(effectiveProfileSwitch: EPS): Single<PersistenceLayer.TransactionResult<EPS>> =
-        repository.runTransactionForResult(InsertEffectiveProfileSwitch(effectiveProfileSwitch.toDb()))
+        repository.runTransactionForResult(InsertEffectiveProfileSwitchTransaction(effectiveProfileSwitch.toDb()))
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while inserting EffectiveProfileSwitch", it) }
             .map { result ->
                 val transactionResult = PersistenceLayer.TransactionResult<EPS>()
@@ -860,7 +860,7 @@ class PersistenceLayerImpl @Inject constructor(
 
     override fun getLastRunningModeId(): Long? = repository.getLastRunningModeId()
     override fun insertOrUpdateRunningMode(runningMode: RM, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): Single<PersistenceLayer.TransactionResult<RM>> =
-        repository.runTransactionForResult(InsertOrUpdateRunningMode(runningMode.toDb()))
+        repository.runTransactionForResult(InsertOrUpdateRunningModeTransaction(runningMode.toDb()))
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while inserting RunningMode", it) }
             .map { result ->
                 val transactionResult = PersistenceLayer.TransactionResult<RM>()
@@ -990,7 +990,7 @@ class PersistenceLayerImpl @Inject constructor(
 
     override fun getLastProfileSwitchId(): Long? = repository.getLastProfileSwitchId()
     override fun insertOrUpdateProfileSwitch(profileSwitch: PS, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): Single<PersistenceLayer.TransactionResult<PS>> =
-        repository.runTransactionForResult(InsertOrUpdateProfileSwitch(profileSwitch.toDb()))
+        repository.runTransactionForResult(InsertOrUpdateProfileSwitchTransaction(profileSwitch.toDb()))
             .doOnError { aapsLogger.error(LTag.DATABASE, "Error while inserting ProfileSwitch", it) }
             .map { result ->
                 val transactionResult = PersistenceLayer.TransactionResult<PS>()

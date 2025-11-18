@@ -42,8 +42,6 @@ import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.StringKey
 import app.aaps.core.keys.interfaces.Preferences
-import app.aaps.core.objects.extensions.convertedToAbsolute
-import app.aaps.core.objects.extensions.plannedRemainingMinutes
 import app.aaps.core.utils.fabric.InstanceId
 import app.aaps.core.validators.preferences.AdaptiveListPreference
 import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
@@ -52,8 +50,6 @@ import app.aaps.pump.virtual.extensions.toText
 import app.aaps.pump.virtual.keys.VirtualBooleanNonPreferenceKey
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
-import org.json.JSONException
-import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -95,7 +91,7 @@ open class VirtualPumpPlugin @Inject constructor(
 
     var pumpType: PumpType? = null
         private set
-    private var lastDataTime: Long = 0
+    override var lastDataTime: Long = 0
     override val pumpDescription = PumpDescription().also {
         it.isBolusCapable = true
         it.bolusStep = 0.1
@@ -168,10 +164,9 @@ open class VirtualPumpPlugin @Inject constructor(
 
     override fun isThisProfileSet(profile: Profile): Boolean = pumpSync.expectedPumpState().profile?.isEqual(profile) == true
 
-    override fun lastDataTime(): Long = lastDataTime
-
-    override val baseBasalRate: Double
-        get() = profileFunction.getProfile()?.getBasal() ?: 0.0
+    override val lastBolusTime: Long? get() = pumpSync.expectedPumpState().bolus?.timestamp
+    override val lastBolusAmount: Double? get() = pumpSync.expectedPumpState().bolus?.amount
+    override val baseBasalRate: Double get() = profileFunction.getProfile()?.getBasal() ?: 0.0
 
     override val reservoirLevel: Double
         get() =
@@ -342,56 +337,9 @@ open class VirtualPumpPlugin @Inject constructor(
         return result
     }
 
-    override fun getJSONStatus(profile: Profile, profileName: String, version: String): JSONObject {
-        val now = System.currentTimeMillis()
-        if (!preferences.get(BooleanKey.VirtualPumpStatusUpload)) {
-            return JSONObject()
-        }
-        val pump = JSONObject()
-        val battery = JSONObject()
-        val status = JSONObject()
-        val extended = JSONObject()
-        try {
-            battery.put("percent", batteryPercent)
-            status.put("status", "normal")
-            extended.put("Version", version)
-            try {
-                extended.put("ActiveProfile", profileName)
-            } catch (_: Exception) {
-                // ignore
-            }
-            val tb = persistenceLayer.getTemporaryBasalActiveAt(now)
-            if (tb != null) {
-                extended.put("TempBasalAbsoluteRate", tb.convertedToAbsolute(now, profile))
-                extended.put("TempBasalStart", dateUtil.dateAndTimeString(tb.timestamp))
-                extended.put("TempBasalRemaining", tb.plannedRemainingMinutes)
-            }
-            val eb = persistenceLayer.getExtendedBolusActiveAt(now)
-            if (eb != null) {
-                extended.put("ExtendedBolusAbsoluteRate", eb.rate)
-                extended.put("ExtendedBolusStart", dateUtil.dateAndTimeString(eb.timestamp))
-                extended.put("ExtendedBolusRemaining", eb.plannedRemainingMinutes)
-            }
-            status.put("timestamp", dateUtil.toISOString(now))
-            pump.put("battery", battery)
-            pump.put("status", status)
-            pump.put("extended", extended)
-            pump.put("reservoir", reservoirInUnits)
-            pump.put("clock", dateUtil.toISOString(now))
-        } catch (e: JSONException) {
-            aapsLogger.error("Unhandled exception", e)
-        }
-        return pump
-    }
-
     override fun manufacturer(): ManufacturerType = pumpDescription.pumpType.manufacturer()
-
     override fun model(): PumpType = pumpDescription.pumpType
-
     override fun serialNumber(): String = InstanceId.instanceId
-
-    override fun shortStatus(veryShort: Boolean): String = "Virtual Pump"
-
     override fun canHandleDST(): Boolean = true
 
     fun refreshConfiguration() {

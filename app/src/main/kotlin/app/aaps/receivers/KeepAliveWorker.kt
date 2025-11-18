@@ -1,6 +1,7 @@
 package app.aaps.receivers
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
@@ -34,6 +35,7 @@ import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.objects.workflow.LoggingWorker
 import app.aaps.plugins.configuration.maintenance.MaintenancePlugin
+import app.aaps.plugins.constraints.dstHelper.DstHelperPlugin
 import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.coroutines.Dispatchers
 import java.util.concurrent.TimeUnit
@@ -58,6 +60,8 @@ class KeepAliveWorker(
     @Inject lateinit var maintenancePlugin: MaintenancePlugin
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var preferences: Preferences
+    @Inject lateinit var dstHelperPlugin: DstHelperPlugin
+    @Inject lateinit var workManager: WorkManager
 
     companion object {
 
@@ -98,7 +102,7 @@ class KeepAliveWorker(
 
         // 15 min interval is WorkManager minimum so schedule another instances to have 5 min interval
         if (inputData.getString("schedule") == KA_0) {
-            WorkManager.getInstance(context).enqueueUniqueWork(
+            workManager.enqueueUniqueWork(
                 KA_5,
                 ExistingWorkPolicy.REPLACE,
                 OneTimeWorkRequest.Builder(KeepAliveWorker::class.java)
@@ -106,7 +110,7 @@ class KeepAliveWorker(
                     .setInitialDelay(5, TimeUnit.MINUTES)
                     .build()
             )
-            WorkManager.getInstance(context).enqueueUniqueWork(
+            workManager.enqueueUniqueWork(
                 KA_10,
                 ExistingWorkPolicy.REPLACE,
                 OneTimeWorkRequest.Builder(KeepAliveWorker::class.java)
@@ -127,6 +131,7 @@ class KeepAliveWorker(
         }
         lastRun = dateUtil.now()
 
+        dstHelperPlugin.dstCheck()
         localAlertUtils.shortenSnoozeInterval()
         localAlertUtils.checkStaleBGAlert()
         checkPump()
@@ -156,10 +161,10 @@ class KeepAliveWorker(
             .fromStates(listOf(WorkInfo.State.FAILED, WorkInfo.State.SUCCEEDED))
             .build()
 
-        val workInfo: ListenableFuture<List<WorkInfo>> = WorkManager.getInstance(context).getWorkInfos(workQuery)
+        val workInfo: ListenableFuture<List<WorkInfo>> = workManager.getWorkInfos(workQuery)
         aapsLogger.debug(LTag.CORE, "WorkManager size is ${workInfo.get().size}")
         if (workInfo.get().size > 1000) {
-            WorkManager.getInstance(context).pruneWork()
+            workManager.pruneWork()
             aapsLogger.debug(LTag.CORE, "WorkManager pruning ....")
         }
     }
@@ -167,7 +172,8 @@ class KeepAliveWorker(
     // Usually deviceStatus is uploaded through LoopPlugin after every loop cycle.
     // if there is no BG available, we have to upload anyway to have correct
     // IOB displayed in NS
-    private fun checkAPS() {
+    @VisibleForTesting
+    fun checkAPS() {
         var shouldUploadStatus = false
         if (config.AAPSCLIENT) return
         if (config.PUMPCONTROL) shouldUploadStatus = true
@@ -179,12 +185,13 @@ class KeepAliveWorker(
         }
     }
 
-    private fun checkPump() {
+    @VisibleForTesting
+    fun checkPump() {
         val pump = activePlugin.activePump
         val ps = profileFunction.getRequestedProfile() ?: return
         val requestedProfile = ProfileSealed.PS(ps, activePlugin)
         val runningProfile = profileFunction.getProfile()
-        val lastConnection = pump.lastDataTime()
+        val lastConnection = pump.lastDataTime
         val now = dateUtil.now()
         val isStatusOutdated = lastConnection + STATUS_UPDATE_FREQUENCY < now
         val isBasalOutdated = abs(requestedProfile.getBasal() - pump.baseBasalRate) > pump.pumpDescription.basalStep
@@ -205,9 +212,15 @@ class KeepAliveWorker(
         }
         if (loop.runningMode == RM.Mode.DISCONNECTED_PUMP) {
             // do nothing if pump is disconnected
-        } else if (runningProfile == null || ((!pump.isThisProfileSet(requestedProfile) || !requestedProfile.isEqual(runningProfile)
-                || (runningProfile is ProfileSealed.EPS && runningProfile.value.originalEnd < dateUtil.now() && runningProfile.value.originalDuration != 0L))
-                && !commandQueue.isRunning(Command.CommandType.BASAL_PROFILE))
+        } else if (
+            runningProfile == null ||
+            (
+                (!pump.isThisProfileSet(requestedProfile) ||
+                    !requestedProfile.isEqual(runningProfile) ||
+                    (runningProfile is ProfileSealed.EPS && runningProfile.value.originalEnd < dateUtil.now() && runningProfile.value.originalDuration != 0L)
+                    )
+                    && !commandQueue.isRunning(Command.CommandType.BASAL_PROFILE)
+                )
         ) {
             rxBus.send(EventProfileSwitchChanged())
         } else if (isStatusOutdated && !pump.isBusy()) {

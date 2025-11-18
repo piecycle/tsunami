@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import java.util.Date
 import java.util.SimpleTimeZone
 import java.util.TimeZone
@@ -88,7 +88,7 @@ class DateUtilImplTest : TestBase() {
     }
     */
     @Test fun timeFrameStringTest() {
-        `when`(rh.gs(app.aaps.core.interfaces.R.string.shorthour)).thenReturn("h")
+        whenever(rh.gs(app.aaps.core.interfaces.R.string.shorthour)).thenReturn("h")
         assertThat(DateUtilImpl(context).timeFrameString(T.hours(1).msecs() + T.mins(1).msecs(), rh)).isEqualTo("(1h 1')")
     }
 }

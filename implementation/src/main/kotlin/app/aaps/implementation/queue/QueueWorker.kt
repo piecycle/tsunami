@@ -171,7 +171,7 @@ class QueueWorker internal constructor(
             }
         } finally {
             if (wakeLock?.isHeld == true) wakeLock.release()
-            aapsLogger.debug(LTag.PUMPQUEUE, "thread end")
+            aapsLogger.debug(LTag.PUMPQUEUE, "work end")
         }
     }
 }

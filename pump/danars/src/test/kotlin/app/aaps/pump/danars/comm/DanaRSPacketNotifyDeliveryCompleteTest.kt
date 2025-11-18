@@ -4,15 +4,15 @@ import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.pump.danars.DanaRSTestBase
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.anyDouble
-import org.mockito.Mockito.anyInt
-import org.mockito.Mockito.`when`
+import org.mockito.ArgumentMatchers.anyDouble
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.kotlin.whenever
 
 class DanaRSPacketNotifyDeliveryCompleteTest : DanaRSTestBase() {
 
     @Test
     fun runTest() {
-        `when`(rh.gs(anyInt(), anyDouble())).thenReturn("SomeString")
+        whenever(rh.gs(anyInt(), anyDouble())).thenReturn("SomeString")
 
         danaPump.bolusingDetailedBolusInfo = DetailedBolusInfo()
         val packet = DanaRSPacketNotifyDeliveryComplete(aapsLogger, rh, rxBus, danaPump)
