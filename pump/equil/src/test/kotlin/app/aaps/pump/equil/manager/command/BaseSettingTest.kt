@@ -218,11 +218,4 @@ class BaseSettingTest : TestBaseWithProfile() {
     fun `statusDescription should be class name`() {
         assertTrue(testSetting.statusDescription.contains("TestBaseSetting"))
     }
-
-    @Test
-    fun `should extend BaseSetting properly`() {
-        assertTrue(testSetting is BaseSetting)
-        assertTrue(testSetting is BaseCmd)
-    }
-
 }

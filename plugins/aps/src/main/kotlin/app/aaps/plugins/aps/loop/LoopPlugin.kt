@@ -169,6 +169,7 @@ class LoopPlugin @Inject constructor(
     override fun onStop() {
         disposable.clear()
         handler?.removeCallbacksAndMessages(null)
+        handler?.looper?.quit()
         handler = null
         super.onStop()
     }

@@ -185,14 +185,12 @@ class NSClientFragment : DaggerFragment(), MenuProvider, PluginFragment {
             else              -> false
         }
 
-    @Synchronized
     override fun onDestroyView() {
         super.onDestroyView()
         binding.recyclerview.adapter = null // avoid leaks
         _binding = null
     }
 
-    @Synchronized
     override fun onResume() {
         super.onResume()
         disposable += rxBus
@@ -217,11 +215,16 @@ class NSClientFragment : DaggerFragment(), MenuProvider, PluginFragment {
         updateLog()
     }
 
-    @Synchronized
     override fun onPause() {
         super.onPause()
         disposable.clear()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+        handler.looper.quitSafely()
     }
 
     private fun updateQueue() {

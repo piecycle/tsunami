@@ -110,7 +110,8 @@ class RandomBgPlugin @Inject constructor(
 
     override fun onStop() {
         super.onStop()
-        handler?.removeCallbacks(refreshLoop)
+        handler?.removeCallbacksAndMessages(null)
+        handler?.looper?.quit()
         handler = null
         if (wakeLock?.isHeld == true) wakeLock?.release()
     }

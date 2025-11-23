@@ -330,6 +330,7 @@ class NSClientV3Plugin @Inject constructor(
 
     override fun onStop() {
         handler?.removeCallbacksAndMessages(null)
+        handler?.looper?.quit()
         handler = null
         disposable.clear()
         stopService()

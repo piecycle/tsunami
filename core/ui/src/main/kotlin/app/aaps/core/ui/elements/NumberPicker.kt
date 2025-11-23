@@ -14,7 +14,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.View.OnTouchListener
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
@@ -44,7 +43,7 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
     var step = 1.0
     var formatter: NumberFormat? = null
     var allowZero = false
-    private var watcher: TextWatcher? = null
+    private var providedTextWatcher: TextWatcher? = null
     var okButton: Button? = null
     protected var focused = false
     private var mUpdater: ScheduledExecutorService? = null
@@ -52,7 +51,19 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
     private var mCustomContentDescription: String? = null
     protected lateinit var binding: NumberPickerViewAdapter
 
-    private var mHandler: Handler = Handler(Looper.getMainLooper(), Handler.Callback { msg: Message ->
+    private val localTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable) {
+            if (focused) currentValue = stringToDouble(binding.editText.text.toString())
+            callValueChangedListener()
+            val inValid = currentValue > maxValue || currentValue < minValue
+            okButton?.visibility = inValid.not().toVisibility()
+            binding.textInputLayout.error = if (inValid) "invalid" else null
+        }
+    }
+
+    private var handler: Handler = Handler(Looper.getMainLooper(), Handler.Callback { msg: Message ->
         when (msg.what) {
             MSG_INC -> {
                 inc(msg.arg1)
@@ -98,7 +109,7 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
             } else {
                 msg.what = MSG_DEC
             }
-            mHandler.sendMessage(msg)
+            handler.sendMessage(msg)
         }
     }
 
@@ -130,17 +141,7 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
         binding.plusButton.setOnTouchListener(this)
         binding.plusButton.setOnKeyListener(this)
         binding.plusButton.setOnClickListener(this)
-        setTextWatcher(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                if (focused) currentValue = stringToDouble(binding.editText.text.toString())
-                callValueChangedListener()
-                val inValid = currentValue > maxValue || currentValue < minValue
-                okButton?.visibility = inValid.not().toVisibility()
-                binding.textInputLayout.error = if (inValid) "invalid" else null
-            }
-        })
+        binding.editText.addTextChangedListener(localTextWatcher)
         binding.editText.setOnFocusChangeListener { _: View?, hasFocus: Boolean ->
             focused = hasFocus
             if (!focused) value // check min/max
@@ -183,8 +184,9 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
     }
 
     fun setTextWatcher(textWatcher: TextWatcher) {
-        watcher = textWatcher
-        binding.editText.addTextChangedListener(textWatcher)
+        providedTextWatcher?.let { binding.editText.removeTextChangedListener(it) }
+        providedTextWatcher = textWatcher
+        binding.editText.addTextChangedListener(providedTextWatcher)
         binding.editText.onFocusChangeListener = OnFocusChangeListener { _: View?, hasFocus: Boolean ->
             if (!hasFocus) {
                 currentValue = stringToDouble(binding.editText.text.toString())
@@ -204,16 +206,9 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
         }
     }
 
-    fun setParams(initValue: Double, minValue: Double, maxValue: Double, step: Double, formatter: NumberFormat?, allowZero: Boolean, okButton: Button?, textWatcher: TextWatcher?) {
-        if (watcher != null) {
-            binding.editText.removeTextChangedListener(watcher)
-        }
-        setParams(initValue, minValue, maxValue, step, formatter, allowZero, okButton)
-        watcher = textWatcher
-        if (textWatcher != null) binding.editText.addTextChangedListener(textWatcher)
-    }
-
-    fun setParams(initValue: Double, minValue: Double, maxValue: Double, step: Double, formatter: NumberFormat?, allowZero: Boolean, okButton: Button?) {
+    fun setParams(initValue: Double, minValue: Double, maxValue: Double, step: Double, formatter: NumberFormat?, allowZero: Boolean, okButton: Button?, textWatcher: TextWatcher? = null) {
+        providedTextWatcher?.let { binding.editText.removeTextChangedListener(providedTextWatcher); providedTextWatcher = null }
+        binding.editText.removeTextChangedListener(localTextWatcher)
         currentValue = initValue
         this.minValue = minValue
         this.maxValue = maxValue
@@ -223,10 +218,10 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
         callValueChangedListener()
         this.okButton = okButton
         binding.editText.keyListener = DigitsKeyListenerWithComma.getInstance(minValue < 0, step != round(step))
-        if (watcher != null) binding.editText.removeTextChangedListener(watcher)
         updateA11yDescription()
         updateEditText()
-        if (watcher != null) binding.editText.addTextChangedListener(watcher)
+        binding.editText.addTextChangedListener(localTextWatcher)
+        textWatcher?.let { setTextWatcher(textWatcher) }
     }
 
     var value: Double
@@ -242,7 +237,8 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
             return currentValue
         }
         set(value) {
-            if (watcher != null) binding.editText.removeTextChangedListener(watcher)
+            providedTextWatcher?.let { binding.editText.removeTextChangedListener(it) }
+            binding.editText.removeTextChangedListener(localTextWatcher)
             currentValue = value
             if (currentValue > maxValue) {
                 currentValue = maxValue
@@ -254,7 +250,8 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
             }
             callValueChangedListener()
             updateEditText()
-            if (watcher != null) binding.editText.addTextChangedListener(watcher)
+            providedTextWatcher?.let { binding.editText.addTextChangedListener(it) }
+            binding.editText.addTextChangedListener(localTextWatcher)
         }
 
     val text: String
@@ -296,10 +293,18 @@ open class NumberPicker(context: Context, attrs: AttributeSet? = null) : LinearL
             return
         }
         mUpdater = Executors.newSingleThreadScheduledExecutor()
-        mUpdater?.scheduleAtFixedRate(
+        mUpdater?.scheduleWithFixedDelay(
             UpdateCounterTask(inc), 200, 200,
             TimeUnit.MILLISECONDS
         )
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        stopUpdating()
+        handler.removeCallbacksAndMessages(null)
+        binding.editText.removeTextChangedListener(providedTextWatcher)
+        binding.editText.removeTextChangedListener(localTextWatcher)
     }
 
     private fun stopUpdating() {

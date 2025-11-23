@@ -161,11 +161,6 @@ class CmdBasalSetTest : TestBaseWithProfile() {
     }
 
     @Test
-    fun `command should extend BaseSetting`() {
-        assert(cmdBasalSet is BaseSetting)
-    }
-
-    @Test
     fun `getFirstData and getNextData should increment pumpReqIndex`() {
         val initialIndex = BaseCmd.pumpReqIndex
 

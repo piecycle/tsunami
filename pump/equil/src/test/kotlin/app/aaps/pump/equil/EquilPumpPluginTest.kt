@@ -197,16 +197,6 @@ class EquilPumpPluginTest : TestBaseWithProfile() {
     }
 
     @Test
-    fun `plugin should implement Pump interface`() {
-        assertTrue(equilPumpPlugin is app.aaps.core.interfaces.pump.Pump)
-    }
-
-    @Test
-    fun `plugin should extend PumpPluginBase`() {
-        assertTrue(equilPumpPlugin is app.aaps.core.interfaces.pump.PumpPluginBase)
-    }
-
-    @Test
     fun `pumpDescription should have correct pump type`() {
         assertEquals(PumpType.EQUIL, equilPumpPlugin.pumpDescription.pumpType)
     }

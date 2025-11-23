@@ -5,7 +5,6 @@ import app.aaps.pump.equil.R
 import app.aaps.pump.equil.ble.EquilBLE
 import app.aaps.pump.equil.database.EquilHistoryPumpDao
 import app.aaps.pump.equil.database.EquilHistoryRecordDao
-import app.aaps.pump.equil.manager.command.PumpEvent
 import app.aaps.shared.tests.TestBaseWithProfile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -107,15 +106,6 @@ class EquilManagerTest : TestBaseWithProfile() {
 
         // List should have 7 events based on initEquilError
         assertEquals(7, equilManager.listEvent.size)
-    }
-
-    @Test
-    fun `listEvent should contain correct pump events`() {
-        equilManager.init()
-
-        // Verify events are PumpEvent instances
-        assertEquals(true, equilManager.listEvent[0] is PumpEvent)
-        assertEquals(true, equilManager.listEvent.all { it is PumpEvent })
     }
 
     @Test

@@ -225,6 +225,13 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
         disposable.clear()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.totalBaseBasal.setOnFocusChangeListener(null)
+        binding.totalBaseBasal.setOnEditorActionListener(null)
+        binding.reload.setOnClickListener(null)
+    }
+
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             val myView = currentFocus

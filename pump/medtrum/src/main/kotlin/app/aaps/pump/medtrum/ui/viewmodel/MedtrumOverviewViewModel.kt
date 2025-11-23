@@ -212,16 +212,10 @@ class MedtrumOverviewViewModel @Inject constructor(
         if (medtrumPump.patchStartTime == 0L) {
             _patchAge.postValue("")
         } else {
-            val currentTime = System.currentTimeMillis()
-            val age = currentTime - medtrumPump.patchStartTime
-            val daysLeft = T.msecs(age).days()
-            val hoursLeft = T.msecs(age).hours() % 24
+            val age = System.currentTimeMillis() - medtrumPump.patchStartTime
+            val agoString = dateUtil.timeAgoFullString(age, rh)
+            val ageString = dateUtil.dateAndTimeString(medtrumPump.patchStartTime) + "\n" + agoString
 
-            val daysString = if (age > 0) "$daysLeft ${rh.gs(app.aaps.core.interfaces.R.string.days)} " else ""
-            val hoursString = "$hoursLeft ${rh.gs(app.aaps.core.interfaces.R.string.hours)}"
-            val agoString = rh.gs(app.aaps.core.interfaces.R.string.time_ago)
-
-            val ageString = dateUtil.dateAndTimeString(medtrumPump.patchStartTime) + "\n" + daysString + hoursString + " " + agoString
             _patchAge.postValue(ageString)
         }
 
