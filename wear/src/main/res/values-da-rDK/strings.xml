@@ -47,11 +47,6 @@
     <string name="pref_3_hours">3 timer</string>
     <string name="pref_4_hours">4 timer</string>
     <string name="pref_5_hours">5 timer</string>
-    <string name="pref_input_design">Input Design</string>
-    <string name="pref_default">Standard</string>
-    <string name="pref_quick_righty">Hurtigt højre</string>
-    <string name="pref_quick_lefty">Hurtig venstre</string>
-    <string name="pref_modern_sparse">Moderne spreder</string>
     <string name="pref_big_numbers">Store Tal</string>
     <string name="pref_ring_history">Ring Historik</string>
     <string name="pref_light_ring_history">Lys Ring Historik</string>
@@ -131,18 +126,13 @@
     <string name="color_name_black">sort</string>
     <string name="color_name_multicolor">multifarvet</string>
     <string name="pref_simplify_ui">Forenklet Brugerflade</string>
-    <string name="pref_simplify_ui_sum">Vis kun tid og BG</string>
     <string name="pref_vibrate_hourly">Vibrér hver time</string>
     <string name="pref_show_weeknumber">Vis ugenummer</string>
     <string name="custom_pref_show_seconds">Vis sekunder</string>
-    <string name="digitalstyle_pref_your_style">Din stil:</string>
     <string name="digitalstyle_style_none">ingen stil</string>
     <string name="digitalstyle_style_minimal">minimalistisk stil</string>
     <string name="digitalstyle_style_shape">form stil</string>
     <string name="digitalstyle_style_full">fuld stil</string>
-    <string name="digitalstyle_pref_your_color">Din farve:</string>
-    <string name="digitalstyle_pref_your_color_saturation">Din farvemætning:</string>
-    <string name="digitalstyle_pref_your_color_opacity">Din farvegennemsigtighed:</string>
     <string name="bolus_progress_channel_name">AAPS Bolus Fremskridt</string>
     <string name="bolus_progress_silent_channel_name">AAPS Bolus Fremskridt Lydløs</string>
     <string name="bolus_progress_channel_description">Bolus fremskridt og annullering</string>
@@ -178,6 +168,5 @@
     <string name="hour_minute_second">%1$s %2$s %3$s</string>
     <string name="old">gammel</string>
     <string name="old_warning">!gammel!</string>
-    <string name="error">!fejl!</string>
     <string name="pref_heartRateSampling">Puls</string>
 </resources>

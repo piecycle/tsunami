@@ -30,10 +30,21 @@
     <string name="bgsource_log_sensor_change_summary">在收到來自血糖資料來源的本地廣播傳感器啟動時，自動在「照護入口」建立「CGM 傳感器植入」事件</string>
     <string name="direction">方向</string>
     <string name="bg_generation_interval_minutes">血糖生成間隔（分鐘）</string>
-    <!-- Patched Ottai App -->
-    <string name="ottai_app">歐態</string>
-    <string name="description_source_patched_ottai_app">從歐態應用程式接收血糖資料。</string>
     <!-- Patched Syai Tag App -->
-    <string name="syai_tag_app">Syai</string>
-    <string name="description_source_patched_syai_tag_app">從 Syai 應用程式接收血糖資料。</string>
+    <string name="syai_tag_app">Syai / 歐態</string>
+    <string name="description_source_patched_syai_tag_app">從 Syai / 與歐態應用程式接收血糖資料。</string>
+    <!-- Patched SI App -->
+    <string name="patched_si_app">SI App</string>
+    <string name="description_source_patched_si_app">從修改版 Sibionic SI App 接收血糖資料。</string>
+    <!-- Patched Sino App -->
+    <string name="patched_sino_app">Sino App</string>
+    <string name="description_source_patched_sino_app">從修改版 Sino App 接收血糖資料。</string>
+    <!-- Notification Reader -->
+    <string name="notification_reader">通知讀取器</string>
+    <string name="description_source_notification_reader">從官方 CGM 應用程式（Dexcom、Medtronic、Eversense 等）發出的通知讀取血糖數值。</string>
+    <!-- Permission rationales -->
+    <string name="permission_dexcom_title">Dexcom CGM</string>
+    <string name="permission_dexcom_description">應用程式需要權限，才能從 Dexcom 應用程式接收 CGM 資料</string>
+    <string name="permission_notification_listener_title">通知存取權</string>
+    <string name="permission_notification_listener_description">為了從 CGM 應用程式的通知讀取血糖數值所必需</string>
 </resources>

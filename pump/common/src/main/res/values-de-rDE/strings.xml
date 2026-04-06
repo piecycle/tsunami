@@ -10,6 +10,7 @@
     <string name="pump_status_busy">Beschäftigt</string>
     <string name="pump_status_suspended">Angehalten</string>
     <string name="pump_status_executing_command">Befehl ausführen</string>
+    <!-- Commands -->
     <!-- PumpCommon - History Group -->
     <string name="history_group_basal">Basal</string>
     <string name="history_group_configuration">Konfigurationen</string>
@@ -45,20 +46,4 @@
     <string name="ble_config_remove">Löschen</string>
     <!-- Pump History -->
     <string name="pump_history_type">Typ:</string>
-    <plurals name="duration_days">
-        <item quantity="one">%1$d Tag</item>
-        <item quantity="other">%1$d Tage</item>
-    </plurals>
-    <plurals name="duration_hours">
-        <item quantity="one">%1$d Stunde</item>
-        <item quantity="other">%1$d Stunden</item>
-    </plurals>
-    <plurals name="hoursago">
-        <item quantity="one">Vor %1$d Stunde(n)</item>
-        <item quantity="other">Vor %1$d Stunden</item>
-    </plurals>
-    <plurals name="daysago">
-        <item quantity="one">Vor %1$d Tage</item>
-        <item quantity="other">Vor %1$d Tagen</item>
-    </plurals>
 </resources>

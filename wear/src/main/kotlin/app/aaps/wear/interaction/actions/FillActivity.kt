@@ -1,71 +1,157 @@
-@file:Suppress("DEPRECATION")
-
 package app.aaps.wear.interaction.actions
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.wear.activity.ConfirmationActivity
+import androidx.wear.compose.foundation.pager.HorizontalPager
+import androidx.wear.compose.foundation.pager.rememberPagerState
+import androidx.wear.compose.material3.HorizontalPageIndicator
+import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.MaterialTheme
+import androidx.wear.compose.material3.Text
+import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventWearToMobile
 import app.aaps.core.interfaces.rx.weardata.EventData.ActionFillPreCheck
-import app.aaps.core.interfaces.utils.SafeParse.stringToDouble
+import app.aaps.core.keys.DoubleKey
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.wear.R
-import app.aaps.wear.interaction.utils.EditPlusMinusViewAdapter
-import app.aaps.wear.interaction.utils.PlusMinusEditText
-import app.aaps.wear.nondeprecated.GridPagerAdapterNonDeprecated
+import dagger.android.support.DaggerAppCompatActivity
 import java.text.DecimalFormat
+import javax.inject.Inject
+import kotlin.math.roundToInt
 
-class FillActivity : ViewSelectorActivity() {
+class FillActivity : DaggerAppCompatActivity() {
 
-    var editInsulin: PlusMinusEditText? = null
+    @Inject lateinit var rxBus: RxBus
+    @Inject lateinit var preferences: Preferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setAdapter(MyGridViewPagerAdapter())
+
+        val increment1 = (preferences.get(DoubleKey.OverviewInsulinButtonIncrement1) * 10).roundToInt() / 10.0
+        val increment2 = (preferences.get(DoubleKey.OverviewInsulinButtonIncrement2) * 10).roundToInt() / 10.0
+        val stepValues = listOf(0.1, increment1, increment2)
+
+        setContent {
+            MaterialTheme {
+                var insulin by remember { mutableStateOf(0.0) }
+                val pagerState = rememberPagerState(pageCount = { 2 })
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    HorizontalPager(state = pagerState) { page ->
+                        when (page) {
+                            0    -> PlusMinusInputScreen(
+                                value = insulin,
+                                onValueChange = { insulin = it },
+                                min = 0.0,
+                                max = 30.0,
+                                stepValues = stepValues,
+                                format = DecimalFormat("#0.0"),
+                                label = stringResource(R.string.action_insulin_units),
+                                allowZero = false,
+                                isActive = pagerState.currentPage == 0,
+                                enabled = !pagerState.isScrollInProgress,
+                                valueColor = InsulinBlue,
+                                title = stringResource(R.string.menu_prime_fill),
+                            )
+                            else -> FillConfirmScreen(
+                                insulin = insulin,
+                                onConfirm = { confirmFill(insulin) },
+                            )
+                        }
+                    }
+                    HorizontalPageIndicator(
+                        pagerState = pagerState,
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp)
+                    )
+                }
+            }
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
+    private fun confirmFill(insulin: Double) {
+        rxBus.send(EventWearToMobile(ActionFillPreCheck(insulin)))
+        startActivity(
+            Intent(this, ConfirmationActivity::class.java).apply {
+                putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION)
+                putExtra(ConfirmationActivity.EXTRA_MESSAGE, getString(R.string.action_fill_confirmation))
+            }
+        )
         finish()
     }
+}
 
-    private inner class MyGridViewPagerAdapter : GridPagerAdapterNonDeprecated() {
+@Composable
+private fun FillConfirmScreen(insulin: Double, onConfirm: () -> Unit) {
+    val fmt = remember { DecimalFormat("#0.0") }
+    val haptic = LocalHapticFeedback.current
+    var confirmationSent by remember { mutableStateOf(false) }
 
-        override fun getColumnCount(arg0: Int): Int = 2
-        override fun getRowCount(): Int = 1
-
-        override fun instantiateItem(container: ViewGroup, row: Int, col: Int): View = when (col) {
-            0    -> {
-                val viewAdapter = EditPlusMinusViewAdapter.getViewAdapter(sp, applicationContext, container, false)
-                val view = viewAdapter.root
-                var initValue = stringToDouble(editInsulin?.editText?.text.toString(), 0.0)
-                editInsulin = PlusMinusEditText(viewAdapter, initValue, 0.0, 30.0, 0.1, DecimalFormat("#0.0"), false, getString(R.string.action_insulin_units))
-                container.addView(view)
-                view.requestFocus()
-                view
-            }
-
-            else -> {
-                val view = LayoutInflater.from(applicationContext).inflate(R.layout.action_confirm_ok, container, false)
-                val confirmButton = view.findViewById<ImageView>(R.id.confirmbutton)
-                confirmButton.setOnClickListener {
-                    // check if it can happen that the fragment is never created that hold data?
-                    // (you have to swipe past them anyways - but still)
-                    rxBus.send(EventWearToMobile(ActionFillPreCheck(stringToDouble(editInsulin?.editText?.text.toString()))))
-                    showToast(this@FillActivity, R.string.action_fill_confirmation)
-                    finishAffinity()
-                }
-                container.addView(view)
-                view
-            }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp, vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = stringResource(R.string.request),
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(Modifier.height(8.dp))
+        Box(
+            modifier = Modifier
+                .size(90.dp)
+                .clip(CircleShape)
+                .clickable(enabled = !confirmationSent) {
+                    confirmationSent = true
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    onConfirm()
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_confirm),
+                contentDescription = stringResource(R.string.confirm),
+                tint = ConfirmGreen,
+                modifier = Modifier.fillMaxSize()
+            )
         }
-
-        override fun destroyItem(container: ViewGroup, row: Int, col: Int, view: Any) {
-            // Handle this to get the data before the view is destroyed?
-            // Object should still be kept by this, just setup for re-init?
-            container.removeView(view as View)
-        }
-
-        override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
+        Spacer(Modifier.height(4.dp))
+        Text(
+            text = "${fmt.format(insulin)} ${stringResource(R.string.insulin_unit_short)}",
+            color = InsulinBlue,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }

@@ -1,51 +1,51 @@
 package app.aaps.database
 
- import androidx.room.Database
- import androidx.room.RoomDatabase
- import androidx.room.TypeConverters
- import app.aaps.database.daos.APSResultDao
- import app.aaps.database.daos.BolusCalculatorResultDao
- import app.aaps.database.daos.BolusDao
- import app.aaps.database.daos.CarbsDao
- import app.aaps.database.daos.DeviceStatusDao
- import app.aaps.database.daos.EffectiveProfileSwitchDao
- import app.aaps.database.daos.ExtendedBolusDao
- import app.aaps.database.daos.FoodDao
- import app.aaps.database.daos.GlucoseValueDao
- import app.aaps.database.daos.HeartRateDao
- import app.aaps.database.daos.PreferenceChangeDao
- import app.aaps.database.daos.ProfileSwitchDao
- import app.aaps.database.daos.RunningModeDao
- import app.aaps.database.daos.StepsCountDao
- import app.aaps.database.daos.TemporaryBasalDao
- import app.aaps.database.daos.TemporaryTargetDao
- import app.aaps.database.daos.TherapyEventDao
- import app.aaps.database.daos.TotalDailyDoseDao
- import app.aaps.database.daos.TsunamiDao
- import app.aaps.database.daos.UserEntryDao
- import app.aaps.database.daos.VersionChangeDao
- import app.aaps.database.entities.Bolus
- import app.aaps.database.entities.BolusCalculatorResult
- import app.aaps.database.entities.Carbs
- import app.aaps.database.entities.DeviceStatus
- import app.aaps.database.entities.EffectiveProfileSwitch
- import app.aaps.database.entities.ExtendedBolus
- import app.aaps.database.entities.Food
- import app.aaps.database.entities.GlucoseValue
- import app.aaps.database.entities.HeartRate
- import app.aaps.database.entities.PreferenceChange
- import app.aaps.database.entities.ProfileSwitch
- import app.aaps.database.entities.RunningMode
- import app.aaps.database.entities.StepsCount
- import app.aaps.database.entities.TemporaryBasal
- import app.aaps.database.entities.TemporaryTarget
- import app.aaps.database.entities.TherapyEvent
- import app.aaps.database.entities.TotalDailyDose
- import app.aaps.database.entities.Tsunami
- import app.aaps.database.entities.UserEntry
- import app.aaps.database.entities.VersionChange
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import app.aaps.database.daos.APSResultDao
+import app.aaps.database.daos.BolusCalculatorResultDao
+import app.aaps.database.daos.BolusDao
+import app.aaps.database.daos.CarbsDao
+import app.aaps.database.daos.DeviceStatusDao
+import app.aaps.database.daos.EffectiveProfileSwitchDao
+import app.aaps.database.daos.ExtendedBolusDao
+import app.aaps.database.daos.FoodDao
+import app.aaps.database.daos.GlucoseValueDao
+import app.aaps.database.daos.HeartRateDao
+import app.aaps.database.daos.PreferenceChangeDao
+import app.aaps.database.daos.ProfileSwitchDao
+import app.aaps.database.daos.RunningModeDao
+import app.aaps.database.daos.StepsCountDao
+import app.aaps.database.daos.TemporaryBasalDao
+import app.aaps.database.daos.TemporaryTargetDao
+import app.aaps.database.daos.TherapyEventDao
+import app.aaps.database.daos.TotalDailyDoseDao
+import app.aaps.database.daos.TsunamiDao
+import app.aaps.database.daos.UserEntryDao
+import app.aaps.database.daos.VersionChangeDao
+import app.aaps.database.entities.Bolus
+import app.aaps.database.entities.BolusCalculatorResult
+import app.aaps.database.entities.Carbs
+import app.aaps.database.entities.DeviceStatus
+import app.aaps.database.entities.EffectiveProfileSwitch
+import app.aaps.database.entities.ExtendedBolus
+import app.aaps.database.entities.Food
+import app.aaps.database.entities.GlucoseValue
+import app.aaps.database.entities.HeartRate
+import app.aaps.database.entities.PreferenceChange
+import app.aaps.database.entities.ProfileSwitch
+import app.aaps.database.entities.RunningMode
+import app.aaps.database.entities.StepsCount
+import app.aaps.database.entities.TemporaryBasal
+import app.aaps.database.entities.TemporaryTarget
+import app.aaps.database.entities.TherapyEvent
+import app.aaps.database.entities.TotalDailyDose
+import app.aaps.database.entities.Tsunami
+import app.aaps.database.entities.UserEntry
+import app.aaps.database.entities.VersionChange
 
-const val DATABASE_VERSION = 32
+const val DATABASE_VERSION = 34
 
 @Database(
     version = DATABASE_VERSION,

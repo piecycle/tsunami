@@ -10,6 +10,7 @@
     <string name="pump_status_busy">В процес на работа</string>
     <string name="pump_status_suspended">Прекратено</string>
     <string name="pump_status_executing_command">Изпълнение на команда</string>
+    <!-- Commands -->
     <!-- PumpCommon - History Group -->
     <string name="history_group_basal">Базали</string>
     <string name="history_group_configuration">Конфигурации</string>
@@ -45,20 +46,4 @@
     <string name="ble_config_remove">Изтрий</string>
     <!-- Pump History -->
     <string name="pump_history_type">Тип:</string>
-    <plurals name="duration_days">
-        <item quantity="one">%1$d ден</item>
-        <item quantity="other">%1$d дни</item>
-    </plurals>
-    <plurals name="duration_hours">
-        <item quantity="one">%1$d часа</item>
-        <item quantity="other">%1$d часа</item>
-    </plurals>
-    <plurals name="hoursago">
-        <item quantity="one">Преди %1$d час</item>
-        <item quantity="other">Преди %1$d часа</item>
-    </plurals>
-    <plurals name="daysago">
-        <item quantity="one">Преди %1$d дни</item>
-        <item quantity="other">Преди %1$d дни</item>
-    </plurals>
 </resources>

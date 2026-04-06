@@ -10,8 +10,11 @@ import app.aaps.plugins.aps.openAPSSMBDynamicISF.DetermineBasalAdapterSMBDynamic
 import app.aaps.plugins.aps.tsunami.DetermineBasalAdapterTsunamiJS
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import dagger.hilt.migration.DisableInstallInCheck
 
+// Used in DaggerTestAppComponent (plain Dagger), not Hilt.
 @Module
+@DisableInstallInCheck
 @Suppress("unused")
 abstract class AlgModule {
 

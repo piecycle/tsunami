@@ -1,6 +1,7 @@
 package app.aaps.core.validators.preferences
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.AttributeSet
 import androidx.annotation.StringRes
 import androidx.preference.ListPreference
@@ -30,6 +31,27 @@ open class AdaptiveListIntPreference(
         (context.applicationContext as HasAndroidInjector).androidInjector().inject(this)
 
         intKey?.let { key = it.key }
+
+        // Migrate old Int values to String for ListPreference compatibility
+        // AdaptiveListIntPreference extends ListPreference which stores values as String,
+        // but old code may have stored IntKey values as actual Integers.
+        // This causes ClassCastException when ListPreference tries to read the value.
+        intKey?.let { prefKey ->
+            val sp = android.preference.PreferenceManager.getDefaultSharedPreferences(ctx)
+            try {
+                val oldValue = sp.getInt(prefKey.key, -1)
+                if (oldValue != -1) {
+                    // Migrate: remove Int value, write as String
+                    sp.edit()
+                        .remove(prefKey.key)
+                        .putString(prefKey.key, oldValue.toString())
+                        .apply()
+                }
+            } catch (e: ClassCastException) {
+                // Already a String, no migration needed
+            }
+        }
+
         title?.let { this.title = context.getString(it) }
         dialogMessage?.let { this.dialogMessage = context.getString(it) }
         dialogTitle?.let { this.dialogTitle = context.getString(it) }
@@ -68,4 +90,21 @@ open class AdaptiveListIntPreference(
             parent?.isEnabled = isEnabled
         }
     }
+
+    // Override to handle Int values stored by compose preferences
+    override fun getPersistedString(defaultReturnValue: String?): String {
+        val sharedPreferences: SharedPreferences = preferenceManager.sharedPreferences ?: return defaultReturnValue ?: ""
+        return try {
+            // Try to read as String first
+            sharedPreferences.getString(key, defaultReturnValue) ?: defaultReturnValue ?: ""
+        } catch (e: ClassCastException) {
+            // Value is stored as Int, convert to String
+            try {
+                sharedPreferences.getInt(key, defaultReturnValue?.toIntOrNull() ?: 0).toString()
+            } catch (e2: Exception) {
+                defaultReturnValue ?: ""
+            }
+        }
+    }
+
 }

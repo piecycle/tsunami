@@ -10,6 +10,7 @@
     <string name="pump_status_busy">사용 중</string>
     <string name="pump_status_suspended">중지됨</string>
     <string name="pump_status_executing_command">명령 실행 중</string>
+    <!-- Commands -->
     <!-- PumpCommon - History Group -->
     <string name="history_group_basal">Basal</string>
     <string name="history_group_configuration">환경설정</string>
@@ -44,16 +45,4 @@
     <string name="ble_config_remove">삭제</string>
     <!-- Pump History -->
     <string name="pump_history_type">종류:</string>
-    <plurals name="duration_days">
-        <item quantity="other">%1$d 일</item>
-    </plurals>
-    <plurals name="duration_hours">
-        <item quantity="other">%1$d 시간</item>
-    </plurals>
-    <plurals name="hoursago">
-        <item quantity="other">%1$d 시간 전</item>
-    </plurals>
-    <plurals name="daysago">
-        <item quantity="other">%1$d 일 전</item>
-    </plurals>
 </resources>

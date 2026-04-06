@@ -1,13 +1,13 @@
 package app.aaps.plugins.sync.tidepool
 
 import android.content.Context
-import android.text.Spanned
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
-import app.aaps.core.data.configuration.Constants
+import app.aaps.core.data.model.GV
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.data.time.T
+import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.PluginBaseWithPreferences
@@ -15,35 +15,42 @@ import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.bus.RxBus
-import app.aaps.core.interfaces.rx.events.EventNSClientNewLog
-import app.aaps.core.interfaces.rx.events.EventNewBG
-import app.aaps.core.interfaces.rx.events.EventPreferenceChange
 import app.aaps.core.interfaces.rx.events.EventSWSyncStatus
 import app.aaps.core.interfaces.sync.Sync
 import app.aaps.core.interfaces.sync.Tidepool
-import app.aaps.core.interfaces.ui.UiInteraction
+import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.StringKey
 import app.aaps.core.keys.interfaces.Preferences
-import app.aaps.core.utils.HtmlHelper
+import app.aaps.core.ui.compose.icons.IcPluginTidepool
+import app.aaps.core.ui.compose.preference.PreferenceSubScreenDef
+import app.aaps.core.validators.DefaultEditTextValidator
 import app.aaps.core.validators.preferences.AdaptiveStringPreference
 import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
 import app.aaps.plugins.sync.R
-import app.aaps.plugins.sync.nsShared.events.EventConnectivityOptionChanged
 import app.aaps.plugins.sync.nsclient.ReceiverDelegate
 import app.aaps.plugins.sync.tidepool.auth.AuthFlowOut
 import app.aaps.plugins.sync.tidepool.comm.TidepoolUploader
 import app.aaps.plugins.sync.tidepool.comm.UploadChunk
+import app.aaps.plugins.sync.tidepool.compose.TidepoolComposeContent
+import app.aaps.plugins.sync.tidepool.compose.TidepoolRepository
 import app.aaps.plugins.sync.tidepool.events.EventTidepoolDoUpload
 import app.aaps.plugins.sync.tidepool.events.EventTidepoolStatus
-import app.aaps.plugins.sync.tidepool.events.EventTidepoolUpdateGUI
 import app.aaps.plugins.sync.tidepool.keys.TidepoolBooleanKey
 import app.aaps.plugins.sync.tidepool.keys.TidepoolLongNonKey
 import app.aaps.plugins.sync.tidepool.keys.TidepoolStringNonKey
 import app.aaps.plugins.sync.tidepool.utils.RateLimit
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,20 +61,35 @@ class TidepoolPlugin @Inject constructor(
     preferences: Preferences,
     private val aapsSchedulers: AapsSchedulers,
     private val rxBus: RxBus,
-    private val context: Context,
     private val fabricPrivacy: FabricPrivacy,
     private val tidepoolUploader: TidepoolUploader,
     private val uploadChunk: UploadChunk,
     private val rateLimit: RateLimit,
     private val receiverDelegate: ReceiverDelegate,
-    private val uiInteraction: UiInteraction,
     private val authFlowOut: AuthFlowOut,
+    private val tidepoolRepository: TidepoolRepository,
+    private val dateUtil: DateUtil,
+    private val persistenceLayer: PersistenceLayer,
 ) : Sync, Tidepool, PluginBaseWithPreferences(
     PluginDescription()
         .mainType(PluginType.SYNC)
         .pluginName(R.string.tidepool)
         .shortName(R.string.tidepool_shortname)
-        .fragmentClass(TidepoolFragment::class.qualifiedName)
+        .pluginIcon(app.aaps.core.ui.R.drawable.ic_tidepool)
+        .icon(IcPluginTidepool)
+        .composeContent {
+            TidepoolComposeContent(
+                dateUtil = dateUtil,
+                onLogin = { authFlowOut.doTidePoolInitialLogin("menu") },
+                onLogout = {
+                    authFlowOut.clearAllSavedData()
+                    tidepoolUploader.resetInstance()
+                },
+                onUploadNow = { rxBus.send(EventTidepoolDoUpload()) },
+                onFullSync = { preferences.put(TidepoolLongNonKey.LastEnd, 0) },
+                onClearLog = { tidepoolRepository.clearLog() }
+            )
+        }
         .preferencesId(PluginDescription.PREFERENCE_SCREEN)
         .description(R.string.description_tidepool),
     ownPreferences = listOf(
@@ -78,21 +100,20 @@ class TidepoolPlugin @Inject constructor(
 ) {
 
     private var disposable: CompositeDisposable = CompositeDisposable()
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val listLog = ArrayList<EventTidepoolStatus>()
-    var textLog: Spanned = HtmlHelper.fromHtml("")
     private val isAllowed get() = receiverDelegate.allowed
 
     override fun onStart() {
         super.onStart()
-        disposable += rxBus
-            .toObservable(EventConnectivityOptionChanged::class.java)
-            .observeOn(aapsSchedulers.io)
-            .subscribe({ ev ->
-                           rxBus.send(EventNSClientNewLog("● CONNECTIVITY", ev.blockingReason))
-                           tidepoolUploader.resetInstance()
-                           if (isAllowed) doUpload(EventConnectivityOptionChanged::class.simpleName)
-                       }, fabricPrivacy::logException)
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        receiverDelegate.connectivityStatusFlow
+            .drop(1) // skip initial value
+            .onEach { ev ->
+                rxBus.send(EventTidepoolStatus("● CONNECTIVITY ${ev.blockingReason}"))
+                tidepoolUploader.resetInstance()
+                if (isAllowed) doUpload("CONNECTIVITY")
+            }.launchIn(scope)
         disposable += rxBus
             .toObservable(EventTidepoolDoUpload::class.java)
             .observeOn(aapsSchedulers.io)
@@ -101,107 +122,163 @@ class TidepoolPlugin @Inject constructor(
             .toObservable(EventTidepoolStatus::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({ event ->
-                           addToLog(event)
+                           tidepoolRepository.addLog(event.status)
+                           tidepoolRepository.updateConnectionStatus(authFlowOut.connectionStatus)
                            // Pass to setup wizard
                            rxBus.send(EventSWSyncStatus(event.status))
                        }, fabricPrivacy::logException)
-        disposable += rxBus
-            .toObservable(EventNewBG::class.java)
-            .observeOn(aapsSchedulers.io)
-            .subscribe({
-                           it.glucoseValueTimestamp?.let { bgReadingTimestamp ->
-                               if (bgReadingTimestamp < uploadChunk.getLastEnd())
-                                   uploadChunk.setLastEnd(bgReadingTimestamp)
-                               if (isAllowed && rateLimit.rateLimit("tidepool-new-data-upload", T.mins(4).secs().toInt()))
-                                   doUpload(EventNewBG::class.simpleName)
-                           }
-                       }, fabricPrivacy::logException)
-        disposable += rxBus
-            .toObservable(EventPreferenceChange::class.java)
-            .observeOn(aapsSchedulers.io)
-            .subscribe({ event ->
-                           if (event.isChanged(TidepoolBooleanKey.UseTestServers.key)) {
-                               authFlowOut.clearAllSavedData()
-                               tidepoolUploader.resetInstance()
-                           }
-                       }, fabricPrivacy::logException)
+        persistenceLayer.observeChanges(GV::class.java)
+            .onEach { gvList ->
+                gvList.maxByOrNull { it.timestamp }?.let { gv ->
+                    if (gv.timestamp < uploadChunk.getLastEnd())
+                        uploadChunk.setLastEnd(gv.timestamp)
+                    if (isAllowed && rateLimit.rateLimit("tidepool-new-data-upload", T.mins(4).secs().toInt()))
+                        doUpload("GlucoseValue")
+                }
+            }.launchIn(scope)
+        preferences.observe(TidepoolBooleanKey.UseTestServers).drop(1).onEach {
+            authFlowOut.clearAllSavedData()
+            tidepoolUploader.resetInstance()
+        }.launchIn(scope)
         authFlowOut.initAuthState()
     }
 
     override fun onStop() {
+        scope.cancel()
         disposable.clear()
         super.onStop()
     }
 
+    /**
+     * Check if connectivity settings allow upload
+     * Separates connectivity constraints from auth state management
+     */
+    private fun isConnectivityAllowed(): Boolean = isAllowed
+
+    /**
+     * Initiate upload with improved state management
+     *
+     * Key improvement: Check connectivity BEFORE auth state
+     * - If blocked by connectivity: skip silently without changing auth state
+     * - If allowed: handle auth state transitions normally
+     * - Auth state no longer gets "stuck" in BLOCKED when connectivity is restored
+     */
     private fun doUpload(from: String?) {
-        //aapsLogger.debug(LTag.TIDEPOOL, "doUpload from $from")
-        return when (authFlowOut.connectionStatus) {
-            AuthFlowOut.ConnectionStatus.NOT_LOGGED_IN       -> tidepoolUploader.doLogin(true, "doUpload $from NOT_LOGGED_IN")
-            AuthFlowOut.ConnectionStatus.FAILED              -> tidepoolUploader.doLogin(true, "doUpload $from FAILED")
-            AuthFlowOut.ConnectionStatus.NO_SESSION          -> tidepoolUploader.doLogin(true, "doUpload $from NO_SESSION")
-            AuthFlowOut.ConnectionStatus.SESSION_ESTABLISHED -> tidepoolUploader.doUpload(from)
+        aapsLogger.debug(LTag.TIDEPOOL, "doUpload from=$from isAllowed=${isConnectivityAllowed()} status=${authFlowOut.connectionStatus}")
 
-            else                                             -> aapsLogger.debug(LTag.TIDEPOOL, "doUpload $from do nothing ${authFlowOut.connectionStatus}")
-        }
-    }
-
-    @Synchronized
-    private fun addToLog(ev: EventTidepoolStatus) {
-        synchronized(listLog) {
-            listLog.add(ev)
-            // remove the first line if log is too large
-            if (listLog.size >= Constants.MAX_LOG_LINES) {
-                listLog.removeAt(0)
+        // IMPROVEMENT: Check connectivity first, before examining auth state
+        // This prevents mixing connectivity constraints with auth state
+        if (!isConnectivityAllowed()) {
+            aapsLogger.debug(LTag.TIDEPOOL, "doUpload $from: Blocked by connectivity settings")
+            // Send status event so user knows why upload is blocked (rate limited to avoid spam)
+            if (rateLimit.rateLimit("tidepool-connectivity-blocked-notification", T.mins(5).secs().toInt())) {
+                rxBus.send(EventTidepoolStatus("Upload blocked by connectivity settings (check WiFi/cellular/battery restrictions)"))
             }
+            // Don't change auth state - just skip this upload attempt
+            // When connectivity is restored, next doUpload() will proceed normally
+            return
         }
-        rxBus.send(EventTidepoolUpdateGUI())
-    }
 
-    @Synchronized
-    fun updateLog() {
-        try {
-            val newTextLog = StringBuilder()
-            synchronized(listLog) {
-                for (log in listLog) {
-                    newTextLog.append(log.toPreparedHtml())
-                }
-            }
-            textLog = HtmlHelper.fromHtml(newTextLog.toString())
-        } catch (_: OutOfMemoryError) {
-            uiInteraction.showToastAndNotification(context, "Out of memory!\nStop using this phone !!!", app.aaps.core.ui.R.raw.error)
+        // IMPROVEMENT: Clean auth state machine without BLOCKED
+        // Connectivity is handled above, so we only deal with authentication states here
+        when (authFlowOut.connectionStatus) {
+            // Authentication needed
+            AuthFlowOut.ConnectionStatus.NOT_LOGGED_IN -> tidepoolUploader.doLogin(true, "doUpload $from NOT_LOGGED_IN")
+            AuthFlowOut.ConnectionStatus.FAILED -> tidepoolUploader.doLogin(true, "doUpload $from FAILED")
+            AuthFlowOut.ConnectionStatus.NO_SESSION -> tidepoolUploader.doLogin(true, "doUpload $from NO_SESSION")
+
+            // Ready to upload
+            AuthFlowOut.ConnectionStatus.SESSION_ESTABLISHED -> scope.launch { tidepoolUploader.doUpload(from) }
+
+            // Transient states - wait for completion
+            AuthFlowOut.ConnectionStatus.FETCHING_TOKEN -> aapsLogger.debug(LTag.TIDEPOOL, "doUpload $from: Already fetching token")
+
+            // REMOVED: BLOCKED case - connectivity is now checked separately above
+            // This prevents the state machine from getting stuck when connectivity changes
+
+            else -> aapsLogger.debug(LTag.TIDEPOOL, "doUpload $from: Unhandled state ${authFlowOut.connectionStatus}")
         }
     }
 
     override val status: String
-        get() = authFlowOut.connectionStatus.name
-    override val hasWritePermission: Boolean
-        get() = authFlowOut.connectionStatus == AuthFlowOut.ConnectionStatus.SESSION_ESTABLISHED
-    override val connected: Boolean
-        get() = authFlowOut.connectionStatus == AuthFlowOut.ConnectionStatus.SESSION_ESTABLISHED
+        get() = if (!isConnectivityAllowed()) {
+            "BLOCKED (connectivity)"
+        } else {
+            authFlowOut.connectionStatus.name
+        }
 
+    /**
+     * IMPROVED: Write permission requires both connectivity AND auth
+     */
+    override val hasWritePermission: Boolean
+        get() = isConnectivityAllowed() &&
+            authFlowOut.connectionStatus == AuthFlowOut.ConnectionStatus.SESSION_ESTABLISHED
+
+    /**
+     * IMPROVED: Connected requires both connectivity AND auth
+     */
+    override val connected: Boolean
+        get() = isConnectivityAllowed() &&
+            authFlowOut.connectionStatus == AuthFlowOut.ConnectionStatus.SESSION_ESTABLISHED
+
+    override fun getPreferenceScreenContent() = PreferenceSubScreenDef(
+        key = "tidepool_settings",
+        titleResId = R.string.tidepool,
+        items = listOf(
+            PreferenceSubScreenDef(
+                key = "tidepool_connection_options",
+                titleResId = R.string.connection_settings_title,
+                items = listOf(
+                    BooleanKey.NsClientUseCellular,
+                    BooleanKey.NsClientUseRoaming,
+                    BooleanKey.NsClientUseWifi,
+                    StringKey.NsClientWifiSsids,
+                    BooleanKey.NsClientUseOnBattery,
+                    BooleanKey.NsClientUseOnCharging
+                )
+            ),
+            PreferenceSubScreenDef(
+                key = "tidepool_advanced",
+                titleResId = app.aaps.core.ui.R.string.advanced_settings_title,
+                items = listOf(
+                    TidepoolBooleanKey.UseTestServers
+                )
+            )
+        ),
+        icon = pluginDescription.icon
+    )
+
+    // TODO: Remove after full migration to Compose preferences (getPreferenceScreenContent)
     override fun addPreferenceScreen(preferenceManager: PreferenceManager, parent: PreferenceScreen, context: Context, requiredKey: String?) {
-        if (requiredKey != null && requiredKey != "tidepool_connection_options" && requiredKey != "tidepool_advanced") return
+        if (requiredKey != null && requiredKey != "tidepool_connection_options") return
         val category = PreferenceCategory(context)
         parent.addPreference(category)
         category.apply {
             key = "tidepool_settings"
             title = rh.gs(R.string.tidepool)
             initialExpandedChildrenCount = 0
+            // Add direct preference to make category expandable (like NSClient pattern)
+            // Without this, category with only nested PreferenceScreens is not clickable
+            addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = TidepoolBooleanKey.UseTestServers, summary = R.string.summary_tidepool_dev_servers, title = R.string.title_tidepool_dev_servers))
             addPreference(preferenceManager.createPreferenceScreen(context).apply {
                 key = "tidepool_connection_options"
                 title = rh.gs(R.string.connection_settings_title)
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.NsClientUseCellular, title = R.string.ns_cellular))
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.NsClientUseRoaming, title = R.string.ns_allow_roaming))
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.NsClientUseWifi, title = R.string.ns_wifi))
-                addPreference(AdaptiveStringPreference(ctx = context, stringKey = StringKey.NsClientWifiSsids, dialogMessage = R.string.ns_wifi_allowed_ssids, title = R.string.ns_wifi_ssids))
+                addPreference(
+                    AdaptiveStringPreference(
+                        ctx = context,
+                        stringKey = StringKey.NsClientWifiSsids,
+                        dialogMessage = app.aaps.core.keys.R.string.ns_wifi_ssids_summary,
+                        title = app.aaps.core.ui.R.string.ns_wifi_ssids,
+                        validatorParams = DefaultEditTextValidator.Parameters(emptyAllowed = true)
+                    )
+                )
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.NsClientUseOnBattery, title = R.string.ns_battery))
                 addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.NsClientUseOnCharging, title = R.string.ns_charging))
             })
-            addPreference(preferenceManager.createPreferenceScreen(context).apply {
-                key = "tidepool_advanced"
-                title = rh.gs(app.aaps.core.ui.R.string.advanced_settings_title)
-                addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = TidepoolBooleanKey.UseTestServers, summary = R.string.summary_tidepool_dev_servers, title = R.string.title_tidepool_dev_servers))
-            })
+            // Advanced screen removed - UseTestServers moved to top level
         }
     }
 }

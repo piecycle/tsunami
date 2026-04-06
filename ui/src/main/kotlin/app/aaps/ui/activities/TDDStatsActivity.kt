@@ -26,7 +26,6 @@ import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.bus.RxBus
-import app.aaps.core.interfaces.rx.events.EventDanaRSyncStatus
 import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged
 import app.aaps.core.interfaces.utils.SafeParse
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
@@ -35,6 +34,7 @@ import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.ui.activities.TranslatedDaggerAppCompatActivity
 import app.aaps.ui.databinding.ActivityTddStatsBinding
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.runBlocking
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -71,7 +71,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
         binding = ActivityTddStatsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        title = rh.gs(app.aaps.core.ui.R.string.tdd)
+        title = rh.gs(app.aaps.core.ui.R.string.tdd_short)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -83,7 +83,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
         binding.totalBaseBasal2.isFocusable = false
         binding.totalBaseBasal2.inputType = 0
         tbb = preferences.get(StringNonKey.TotalBaseBasal)
-        val profile = profileFunction.getProfile()
+        val profile = runBlocking { profileFunction.getProfile() }
         if (profile != null) {
             val cppTBB = profile.baseBasalSum()
             tbb = decimalFormat.format(cppTBB)
@@ -112,7 +112,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
                     labelBolus.setTextColor(rh.gac(this, app.aaps.core.ui.R.attr.defaultTextColor))
                 })
                 trHead.addView(TextView(this).also { labelTdd ->
-                    labelTdd.text = rh.gs(app.aaps.core.ui.R.string.tdd)
+                    labelTdd.text = rh.gs(app.aaps.core.ui.R.string.tdd_short)
                     labelTdd.setTextColor(rh.gac(this, app.aaps.core.ui.R.attr.defaultTextColor))
                 })
                 trHead.addView(TextView(this).also { labelRatio ->
@@ -132,7 +132,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
                     labelCumAmountDays.setTextColor(rh.gac(this, app.aaps.core.ui.R.attr.defaultTextColor))
                 })
                 ctrHead.addView(TextView(this).also { labelCumTdd ->
-                    labelCumTdd.text = rh.gs(app.aaps.core.ui.R.string.tdd)
+                    labelCumTdd.text = rh.gs(app.aaps.core.ui.R.string.tdd_short)
                     labelCumTdd.setTextColor(rh.gac(this, app.aaps.core.ui.R.attr.defaultTextColor))
                 })
                 ctrHead.addView(TextView(this).also { labelCumRatio ->
@@ -152,7 +152,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
                     labelExpWeight.setTextColor(rh.gac(this, app.aaps.core.ui.R.attr.defaultTextColor))
                 })
                 etrHead.addView(TextView(this).also { labelExpTdd ->
-                    labelExpTdd.text = rh.gs(app.aaps.core.ui.R.string.tdd)
+                    labelExpTdd.text = rh.gs(app.aaps.core.ui.R.string.tdd_short)
                     labelExpTdd.setTextColor(rh.gac(this, app.aaps.core.ui.R.attr.defaultTextColor))
                 })
                 etrHead.addView(TextView(this).also { labelExpRatio ->
@@ -209,15 +209,6 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
                 .observeOn(aapsSchedulers.main)
                 .subscribe({ event -> binding.connectionStatus.text = event.getStatus(this@TDDStatsActivity) }, fabricPrivacy::logException)
         )
-        disposable.add(
-            rxBus
-                .toObservable(EventDanaRSyncStatus::class.java)
-                .observeOn(aapsSchedulers.main)
-                .subscribe({ event ->
-                               aapsLogger.debug("EventDanaRSyncStatus: " + event.message)
-                               binding.connectionStatus.text = event.message
-                           }, fabricPrivacy::logException)
-        )
     }
 
     override fun onPause() {
@@ -227,7 +218,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.totalBaseBasal.setOnFocusChangeListener(null)
+        binding.totalBaseBasal.onFocusChangeListener = null
         binding.totalBaseBasal.setOnEditorActionListener(null)
         binding.reload.setOnClickListener(null)
     }
@@ -253,7 +244,7 @@ class TDDStatsActivity : TranslatedDaggerAppCompatActivity() {
     private fun loadDataFromDB() {
         historyList.clear()
         // timestamp DESC sorting!
-        historyList.addAll(persistenceLayer.getLastTotalDailyDoses(10, true))
+        historyList.addAll(runBlocking { persistenceLayer.getLastTotalDailyDoses(10, true) })
 
         //only use newest 10
         historyList = historyList.subList(0, min(10, historyList.size))

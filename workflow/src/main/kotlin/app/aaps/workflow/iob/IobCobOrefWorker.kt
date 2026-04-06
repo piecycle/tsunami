@@ -17,7 +17,6 @@ import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profiling.Profiler
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
-import app.aaps.core.interfaces.rx.events.Event
 import app.aaps.core.interfaces.rx.events.EventAutosensCalculationFinished
 import app.aaps.core.interfaces.rx.events.EventIobCalculationProgress
 import app.aaps.core.interfaces.utils.DateUtil
@@ -60,11 +59,11 @@ class IobCobOrefWorker @Inject internal constructor(
         val reason: String,
         val end: Long,
         val limitDataToOldestAvailable: Boolean,
-        val cause: Event?
+        val triggeredByNewBG: Boolean
     )
 
     override suspend fun doWorkAndLog(): Result {
-        val data = dataWorkerStorage.pickupObject(inputData.getLong(DataWorkerStorage.STORE_KEY, -1)) as IobCobOrefWorkerData?
+        val data = dataWorkerStorage.pickupObject(inputData.getLong(DataWorkerStorage.STORE_KEY, -1)) as? IobCobOrefWorkerData?
             ?: return Result.success(workDataOf("Error" to "missing input data"))
 
         val start = dateUtil.now()
@@ -87,9 +86,9 @@ class IobCobOrefWorker @Inject internal constructor(
             val prevDataTime = ads.roundUpTime(bucketedData[bucketedData.size - 3].timestamp)
             aapsLogger.debug(LTag.AUTOSENS) { "Prev data time: " + dateUtil.dateAndTimeString(prevDataTime) }
             var previous = autosensDataTable[prevDataTime]
-            // start from oldest to be able sub cob
+            // start from oldest to be able to sub cob
             for (i in bucketedData.size - 4 downTo 0) {
-                rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.IOB_COB_OREF, 100 - (100.0 * i / bucketedData.size).toInt(), data.cause))
+                rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.IOB_COB_OREF, 100 - (100.0 * i / bucketedData.size).toInt(), data.triggeredByNewBG))
                 if (isStopped) {
                     aapsLogger.debug(LTag.AUTOSENS) { "Aborting calculation thread (trigger): ${data.reason}" }
                     return Result.failure(workDataOf("Error" to "Aborting calculation thread (trigger): ${data.reason}"))
@@ -149,13 +148,10 @@ class IobCobOrefWorker @Inject internal constructor(
                             // if (ad == null) {
                             //     aapsLogger.debug(LTag.AUTOSENS, autosensDataTable.toString())
                             //     aapsLogger.debug(LTag.AUTOSENS, bucketedData.toString())
-                            //     //aapsLogger.debug(LTag.AUTOSENS, data.iobCobCalculatorPlugin.getBgReadingsDataTable().toString())
-                            //     val notification = Notification(Notification.SEND_LOGFILES, rh.gs(R.string.send_logfiles), Notification.LOW)
-                            //     rxBus.send(EventNewNotification(notification))
                             //     sp.putBoolean("log_AUTOSENS", true)
                             //     break
                             // }
-                            // let it here crash on NPE to get more data as i cannot reproduce this bug
+                            // let it here crash on NPE to get more data as I cannot reproduce this bug
                             val deviationSlope = (ad.avgDeviation - avgDeviation) / (ad.time - bgTime) * 1000 * 60 * 5
                             if (ad.avgDeviation > maxDeviation) {
                                 slopeFromMaxDeviation = min(0.0, deviationSlope)
@@ -172,9 +168,6 @@ class IobCobOrefWorker @Inject internal constructor(
                         //     fabricPrivacy.logException(e)
                         //     aapsLogger.debug(autosensDataTable.toString())
                         //     aapsLogger.debug(bucketedData.toString())
-                        //     //aapsLogger.debug(data.iobCobCalculatorPlugin.getBgReadingsDataTable().toString())
-                        //     val notification = Notification(Notification.SEND_LOGFILES, rh.gs(R.string.send_logfiles), Notification.LOW)
-                        //     rxBus.send(EventNewNotification(notification))
                         //     sp.putBoolean("log_AUTOSENS", true)
                         //     break
                         // }
@@ -182,7 +175,9 @@ class IobCobOrefWorker @Inject internal constructor(
                         aapsLogger.debug(LTag.AUTOSENS) { ">>>>> bucketed_data.size()=${bucketedData.size} i=$i hourAgoData=null" }
                     }
                 }
-                val recentCarbTreatments = persistenceLayer.getCarbsFromTimeToTimeExpanded(bgTime - T.mins(5).msecs(), bgTime, true)
+                // Use exclusive start (+1ms) to avoid double-counting carbs at window boundaries
+                // when consecutive 5-min windows share a boundary timestamp (issue #4596)
+                val recentCarbTreatments = persistenceLayer.getCarbsFromTimeToTimeExpanded(bgTime - T.mins(5).msecs() + 1, bgTime, true)
                 for (recentCarbTreatment in recentCarbTreatments) {
                     autosensData.carbsFromBolus += recentCarbTreatment.amount
                     val isAAPSOrWeighted = activePlugin.activeSensitivity.isMinCarbsAbsorptionDynamic
@@ -265,10 +260,10 @@ class IobCobOrefWorker @Inject internal constructor(
             data.iobCobCalculator.ads = ads
             Thread {
                 SystemClock.sleep(1000)
-                rxBus.send(EventAutosensCalculationFinished(data.cause))
+                rxBus.send(EventAutosensCalculationFinished(data.triggeredByNewBG))
             }.start()
         } finally {
-            rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.IOB_COB_OREF, 100, data.cause))
+            rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.IOB_COB_OREF, 100, data.triggeredByNewBG))
             aapsLogger.debug(LTag.AUTOSENS) { "AUTOSENSDATA thread ended: ${data.reason}" }
             profiler.log(LTag.AUTOSENS, "IobCobThread", start)
         }

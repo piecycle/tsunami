@@ -10,6 +10,7 @@
     <string name="pump_status_busy">忙碌</string>
     <string name="pump_status_suspended">挂起</string>
     <string name="pump_status_executing_command">正在执行指令</string>
+    <!-- Commands -->
     <!-- PumpCommon - History Group -->
     <string name="history_group_basal">基础率</string>
     <string name="history_group_configuration">配置</string>
@@ -45,16 +46,4 @@
     <string name="ble_config_remove">删除</string>
     <!-- Pump History -->
     <string name="pump_history_type">类型：</string>
-    <plurals name="duration_days">
-        <item quantity="other">%1$d 天</item>
-    </plurals>
-    <plurals name="duration_hours">
-        <item quantity="other">%1$d 小时</item>
-    </plurals>
-    <plurals name="hoursago">
-        <item quantity="other">%1$d 小时前</item>
-    </plurals>
-    <plurals name="daysago">
-        <item quantity="other">%1$d 天前</item>
-    </plurals>
 </resources>

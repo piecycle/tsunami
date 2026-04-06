@@ -26,10 +26,9 @@
     <string name="random_bg_short">AG</string>
     <string name="direction">kryptis</string>
     <string name="bg_generation_interval_minutes">KG generavimo intervalas minutėmis</string>
-    <!-- Patched Ottai App -->
-    <string name="ottai_app">Ottai</string>
-    <string name="description_source_patched_ottai_app">Gauti KG duomenis iš Ottai</string>
     <!-- Patched Syai Tag App -->
-    <string name="syai_tag_app">Syai</string>
-    <string name="description_source_patched_syai_tag_app">Gauti KG duomenis iš Syai</string>
+    <!-- Patched SI App -->
+    <!-- Patched Sino App -->
+    <!-- Notification Reader -->
+    <!-- Permission rationales -->
 </resources>

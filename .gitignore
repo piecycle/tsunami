@@ -32,3 +32,5 @@ wear/pumpcontrol/*
 *.preferences_pb
 /buildSrc/.kotlin
 .claude/settings.local.json
+.claude/CLAUDE_COMMANDS.md
+tmpclaude-*

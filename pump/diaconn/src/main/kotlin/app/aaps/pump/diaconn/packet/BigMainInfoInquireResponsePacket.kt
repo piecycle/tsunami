@@ -64,8 +64,8 @@ class BigMainInfoInquireResponsePacket(
         diaconnG8Pump.second = getByteToInt(bufferData) // 초 (0~59)
 
         //4. pump system info
-        diaconnG8Pump.country = getByteToInt(bufferData).toChar().toString().toInt() // ASCII
-        diaconnG8Pump.productType = getByteToInt(bufferData).toChar().toString().toInt() // ASCII
+        diaconnG8Pump.country = Char(getByteToInt(bufferData)).toString().toInt() // ASCII
+        diaconnG8Pump.productType = Char(getByteToInt(bufferData)).toString().toInt() // ASCII
         diaconnG8Pump.makeYear = getByteToInt(bufferData)
         diaconnG8Pump.makeMonth = getByteToInt(bufferData)
         diaconnG8Pump.makeDay = getByteToInt(bufferData)
@@ -213,6 +213,7 @@ class BigMainInfoInquireResponsePacket(
         //incarnation no 처리
         diaconnG8Pump.isPumpVersionGe2_63 = PumpLogUtil.isPumpVersionGe(preferences.get(DiaconnStringNonKey.PumpVersion), 2, 63)
         diaconnG8Pump.isPumpVersionGe3_53 = PumpLogUtil.isPumpVersionGe(preferences.get(DiaconnStringNonKey.PumpVersion), 3, 53)
+        diaconnG8Pump.isPumpVersionGe3_58 = PumpLogUtil.isPumpVersionGe(preferences.get(DiaconnStringNonKey.PumpVersion), 3, 58)
 
         aapsLogger.debug(LTag.PUMPCOMM, "result > " + diaconnG8Pump.result)
         aapsLogger.debug(LTag.PUMPCOMM, "systemRemainInsulin > " + diaconnG8Pump.systemRemainInsulin)

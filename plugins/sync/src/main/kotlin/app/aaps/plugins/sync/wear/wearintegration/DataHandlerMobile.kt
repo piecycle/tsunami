@@ -27,6 +27,9 @@ import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.db.ProcessedTbrEbData
+import app.aaps.core.interfaces.di.ApplicationScope
+import app.aaps.core.interfaces.insulin.ConcentrationHelper
+import app.aaps.core.interfaces.insulin.Insulin
 import app.aaps.core.interfaces.iob.GlucoseStatusProvider
 import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.logging.AAPSLogger
@@ -52,7 +55,11 @@ import app.aaps.core.interfaces.rx.events.EventMobileToWear
 import app.aaps.core.interfaces.rx.events.EventWearUpdateGui
 import app.aaps.core.interfaces.rx.weardata.CwfMetadataKey
 import app.aaps.core.interfaces.rx.weardata.EventData
-import app.aaps.core.interfaces.rx.weardata.EventData.LoopStatesList.AvailableLoopState
+import app.aaps.core.interfaces.rx.weardata.EventData.RunningModeList.AvailableRunningMode
+import app.aaps.core.interfaces.rx.weardata.LoopStatusData
+import app.aaps.core.interfaces.rx.weardata.OapsResultInfo
+import app.aaps.core.interfaces.rx.weardata.TargetRange
+import app.aaps.core.interfaces.rx.weardata.TempTargetInfo
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
@@ -77,9 +84,11 @@ import app.aaps.core.objects.wizard.QuickWizard
 import app.aaps.core.objects.wizard.QuickWizardEntry
 import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.plugins.sync.R
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -96,7 +105,7 @@ import kotlin.math.min
 
 @Singleton
 class DataHandlerMobile @Inject constructor(
-    private val aapsSchedulers: AapsSchedulers,
+    aapsSchedulers: AapsSchedulers,
     private val context: Context,
     private val rxBus: RxBus,
     private val aapsLogger: AAPSLogger,
@@ -117,6 +126,7 @@ class DataHandlerMobile @Inject constructor(
     private val constraintChecker: ConstraintsChecker,
     private val uel: UserEntryLogger,
     private val activePlugin: ActivePlugin,
+    private val insulin: Insulin,
     private val commandQueue: CommandQueue,
     private val fabricPrivacy: FabricPrivacy,
     private val uiInteraction: UiInteraction,
@@ -124,7 +134,9 @@ class DataHandlerMobile @Inject constructor(
     private val importExportPrefs: ImportExportPrefs,
     private val decimalFormatter: DecimalFormatter,
     private val bolusWizardProvider: Provider<BolusWizard>,
-    private val pumpStatusProvider: PumpStatusProvider
+    private val pumpStatusProvider: PumpStatusProvider,
+    private val ch: ConcentrationHelper,
+    @ApplicationScope private val appScope: CoroutineScope
 ) {
 
     @Inject lateinit var automation: Automation
@@ -173,7 +185,7 @@ class DataHandlerMobile @Inject constructor(
                                EventMobileToWear(
                                    EventData.ConfirmAction(
                                        rh.gs(R.string.pump_status).uppercase(),
-                                       pumpStatusProvider.shortStatus(false),
+                                       runBlocking { pumpStatusProvider.shortStatus(false) },
                                        returnCommand = null
                                    )
                                )
@@ -195,25 +207,41 @@ class DataHandlerMobile @Inject constructor(
                            )
                        }, fabricPrivacy::logException)
         disposable += rxBus
-            .toObservable(EventData.LoopStatesRequest::class.java)
+            .toObservable(EventData.ActionLoopStatusDetailed::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({
-                           aapsLogger.debug(LTag.WEAR, "LoopStatesRequest received from ${it.sourceNodeId}")
-                           handleAvailableLoopStates()
+                           aapsLogger.debug(LTag.WEAR, "ActionLoopStatusDetailed received from ${it.sourceNodeId}")
+                           val statusData = buildLoopStatusData()
+                           rxBus.send(
+                               EventMobileToWear(
+                                   EventData.LoopStatusResponse(
+                                       timeStamp = System.currentTimeMillis(),
+                                       data = statusData
+                                   )
+                               )
+                           )
+                       }, fabricPrivacy::logException)
+
+        disposable += rxBus
+            .toObservable(EventData.RunningModeRequest::class.java)
+            .observeOn(aapsSchedulers.io)
+            .subscribe({
+                           aapsLogger.debug(LTag.WEAR, "RunningModeRequest received from ${it.sourceNodeId}")
+                           handleAvailableRunningModes()
                        }, fabricPrivacy::logException)
         disposable += rxBus
-            .toObservable(EventData.LoopStateSelected::class.java)
+            .toObservable(EventData.RunningModeSelected::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({
-                           aapsLogger.debug(LTag.WEAR, "LoopStateSelected received from ${it.sourceNodeId}")
-                           handleLoopStateSelected(it)
+                           aapsLogger.debug(LTag.WEAR, "RunningModeSelected received from ${it.sourceNodeId}")
+                           handleRunningModeSelected(it)
                        }, fabricPrivacy::logException)
         disposable += rxBus
-            .toObservable(EventData.LoopStateConfirmed::class.java)
+            .toObservable(EventData.RunningModeConfirmed::class.java)
             .observeOn(aapsSchedulers.io)
             .subscribe({
-                           aapsLogger.debug(LTag.WEAR, "LoopStateSelected received from ${it.sourceNodeId}")
-                           handleLoopStateConfirmed(it)
+                           aapsLogger.debug(LTag.WEAR, "RunningModeConfirmed received from ${it.sourceNodeId}")
+                           handleRunningModeConfirmed(it)
                        }, fabricPrivacy::logException)
         disposable += rxBus
             .toObservable(EventData.ActionTddStatus::class.java)
@@ -361,6 +389,8 @@ class DataHandlerMobile @Inject constructor(
                                    if (useAlarm && lastBolusWizard.carbs > 0 && carbTimeOffset > 0) {
                                        automation.scheduleTimeToEatReminder(T.mins(carbTimeOffset).secs().toInt())
                                    }
+                                   lastQuickWizardEntry?.markAsUsed()
+                                   sendQuickWizardToWear()
                                }
                            }
                            lastBolusWizard = null
@@ -411,6 +441,180 @@ class DataHandlerMobile @Inject constructor(
                        }, fabricPrivacy::logException)
     }
 
+    private fun maxOfNullable(vararg values: Long?): Long? {
+        return values.filterNotNull().maxOrNull()
+    }
+
+    private fun buildLoopStatusData(): LoopStatusData {
+        val tempTarget = runBlocking { persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now()) }
+        val profile = runBlocking { profileFunction.getProfile() }
+        val usedAPS = activePlugin.activeAPS
+
+        // Get data based on app type
+        val (lastRunTimestamp, lastEnactTimestamp, apsResult) = if (config.APS) {
+            // AAPS - use local loop data
+            val lastRun = loop.lastRun
+
+            // For enacted timestamp, use the LATEST of TBR or SMB
+            val lastTbrEnact = lastRun?.lastTBREnact?.takeIf { it != 0L }
+            val lastSmbEnact = lastRun?.lastSMBEnact?.takeIf { it != 0L }
+            val lastEnact = maxOfNullable(lastTbrEnact, lastSmbEnact)
+
+            Triple(
+                lastRun?.lastAPSRun,
+                lastEnact,
+                lastRun?.constraintsProcessed
+            )
+        } else {
+            // AAPSClient - use data from NS/device status
+            val apsData = processedDeviceStatusData.openAPSData
+
+            // Use clockEnacted only if it's within 30s of clockSuggested or newer
+            val timeWindowMs = 30_000L
+            val apsDataLastEnact = if (apsData.clockEnacted >= apsData.clockSuggested - timeWindowMs) {
+                apsData.clockEnacted
+            } else {
+                null
+            }
+            Triple(
+                apsData.clockSuggested,
+                apsDataLastEnact,
+                processedDeviceStatusData.getAPSResult()
+            )
+        }
+
+        // Map loop mode
+        val loopMode = when (loop.runningMode) {
+            RM.Mode.CLOSED_LOOP       -> LoopStatusData.LoopMode.CLOSED
+            RM.Mode.OPEN_LOOP         -> LoopStatusData.LoopMode.OPEN
+            RM.Mode.CLOSED_LOOP_LGS   -> LoopStatusData.LoopMode.LGS
+            RM.Mode.DISABLED_LOOP     -> LoopStatusData.LoopMode.DISABLED
+            RM.Mode.SUSPENDED_BY_USER -> LoopStatusData.LoopMode.SUSPENDED
+            RM.Mode.SUSPENDED_BY_PUMP -> LoopStatusData.LoopMode.PUMP_SUSPENDED
+            RM.Mode.SUSPENDED_BY_DST  -> LoopStatusData.LoopMode.DST_SUSPENDED
+            RM.Mode.DISCONNECTED_PUMP -> LoopStatusData.LoopMode.DISCONNECTED
+            RM.Mode.SUPER_BOLUS       -> LoopStatusData.LoopMode.SUPERBOLUS
+            else                      -> LoopStatusData.LoopMode.UNKNOWN
+        }
+
+        // Build temp target info
+        val tempTargetInfo = tempTarget?.let {
+            val units = if (profileUtil.units == GlucoseUnit.MGDL) "mg/dL" else "mmol/L"
+            val targetString = profileUtil.toTargetRangeString(
+                it.lowTarget,
+                it.highTarget,
+                GlucoseUnit.MGDL
+            )
+            val durationMin = ((it.end - dateUtil.now()) / 60000).toInt()
+
+            TempTargetInfo(
+                targetDisplay = targetString,
+                endTime = it.end,
+                durationMinutes = durationMin,
+                units = units
+            )
+        }
+
+        // Build default range
+        val defaultRange = if (profile != null) {
+            val units = if (profileUtil.units == GlucoseUnit.MGDL) "mg/dL" else "mmol/L"
+            TargetRange(
+                lowDisplay = profileUtil.fromMgdlToStringInUnits(profile.getTargetLowMgdl()),
+                highDisplay = profileUtil.fromMgdlToStringInUnits(profile.getTargetHighMgdl()),
+                targetDisplay = profileUtil.fromMgdlToStringInUnits(profile.getTargetMgdl()),
+                units = units
+            )
+        } else {
+            TargetRange("--", "--", "--", "")
+        }
+
+        // Build OAPS result info
+        val oapsResultInfo = apsResult?.let { result ->
+            val constrainedRate = result.rate
+            val constrainedDuration = result.duration
+
+            // Check if this is "let temp basal run" scenario
+            // AAPS: rate=0.0 and duration=-1
+            // AAPSClient: rate=-1.0 and duration=-1
+            val isLetTempRun = if (config.APS) {
+                constrainedRate == 0.0 && constrainedDuration == -1
+            } else {
+                constrainedRate == -1.0 && constrainedDuration == -1
+            }
+
+            // Determine what to display
+            val (displayRate, displayDuration, displayPercent) = if (isLetTempRun) {
+                // Get currently running temp basal from database
+                val currentTbr = runBlocking { persistenceLayer.getTemporaryBasalActiveAt(dateUtil.now()) }
+
+                if (currentTbr != null) {
+                    // Calculate absolute rate
+                    val rate = if (currentTbr.isAbsolute) {
+                        currentTbr.rate
+                    } else if (profile != null) {
+                        // Percent-based TBR - convert to absolute
+                        profile.getBasal(dateUtil.now()) * currentTbr.rate / 100.0
+                    } else {
+                        currentTbr.rate
+                    }
+
+                    // Calculate remaining duration
+                    val remainingMin = ((currentTbr.end - dateUtil.now()) / 60000).toInt()
+
+                    val percentValue = if (ch.fromPump(activePlugin.activePump.baseBasalRate) > 0) {
+                        ((rate / ch.fromPump(activePlugin.activePump.baseBasalRate)) * 100).toInt()
+                    } else 0
+
+                    aapsLogger.debug(LTag.WEAR, "Let temp run - rate: $rate U/h ($percentValue%), remaining: $remainingMin min")
+
+                    Triple(rate, remainingMin, percentValue)
+                } else {
+                    aapsLogger.debug(LTag.WEAR, "Let temp run requested but no active TBR found")
+                    Triple(null, null, null)
+                }
+            } else {
+                // Normal case - show the new requested values
+                val percentValue = if (result.usePercent) {
+                    result.percent
+                } else if (ch.fromPump(activePlugin.activePump.baseBasalRate) > 0) {
+                    ((constrainedRate / ch.fromPump(activePlugin.activePump.baseBasalRate)) * 100).toInt()
+                } else null
+
+                // For AAPSClient, use current TBR rate if available, otherwise use constrained rate
+                val finalRate = if (!config.APS) {
+                    val currentTbr = runBlocking { persistenceLayer.getTemporaryBasalActiveAt(dateUtil.now()) }
+                    currentTbr?.rate ?: constrainedRate
+                } else {
+                    constrainedRate
+                }
+
+                Triple(finalRate, constrainedDuration, percentValue)
+            }
+
+            OapsResultInfo(
+                changeRequested = result.isChangeRequested && !isLetTempRun,
+                isLetTempRun = isLetTempRun,
+                rate = displayRate,
+                ratePercent = displayPercent,
+                duration = displayDuration,
+                reason = result.reason,
+                smbAmount = result.smb
+            )
+        }
+
+        return LoopStatusData(
+            timestamp = System.currentTimeMillis(),
+            loopMode = loopMode,
+            apsName = if (loop.runningMode.isLoopRunning())
+                (usedAPS as PluginBase).name else null,
+            lastRun = lastRunTimestamp,
+            lastEnact = lastEnactTimestamp,
+            tempTarget = tempTargetInfo,
+            defaultRange = defaultRange,
+            oapsResult = oapsResultInfo
+        )
+    }
+
     private fun handleTddStatus() {
         val activePump = activePlugin.activePump
         var message: String
@@ -436,7 +640,7 @@ class DataHandlerMobile @Inject constructor(
                         rxBus.send(
                             EventMobileToWear(
                                 EventData.ConfirmAction(
-                                    rh.gs(app.aaps.core.ui.R.string.tdd),
+                                    rh.gs(app.aaps.core.ui.R.string.tdd_short),
                                     reloadMessage,
                                     returnCommand = null
                                 )
@@ -451,7 +655,7 @@ class DataHandlerMobile @Inject constructor(
         rxBus.send(
             EventMobileToWear(
                 EventData.ConfirmAction(
-                    rh.gs(app.aaps.core.ui.R.string.tdd),
+                    rh.gs(app.aaps.core.ui.R.string.tdd_short),
                     message,
                     returnCommand = null
                 )
@@ -472,8 +676,8 @@ class DataHandlerMobile @Inject constructor(
             return
         }
         val percentage = command.percentage
-        val profile = profileFunction.getProfile()
-        val profileName = profileFunction.getProfileName()
+        val profile = runBlocking { profileFunction.getProfile() }
+        val profileName = runBlocking { profileFunction.getProfileName() }
         if (profile == null) {
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_no_active_profile))
             return
@@ -483,31 +687,40 @@ class DataHandlerMobile @Inject constructor(
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_no_actual_bg))
             return
         }
-        val cobInfo = iobCobCalculator.getCobInfo("Wizard wear")
+        val cobInfo = runBlocking { iobCobCalculator.getCobInfo("Wizard wear") }
         if (cobInfo.displayCob == null) {
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_no_cob))
             return
         }
-        val tempTarget = persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now())
+        val tempTarget = runBlocking { persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now()) }
 
-        val bolusWizard = bolusWizardProvider.get().doCalc(
-            profile = profile,
-            profileName = profileName,
-            tempTarget = tempTarget,
-            carbs = carbsAfterConstraints,
-            cob = cobInfo.displayCob!!,
-            bg = bgReading.valueToUnits(profileFunction.getUnits()),
-            correction = 0.0,
-            percentageCorrection = percentage,
-            useBg = preferences.get(BooleanKey.WearWizardBg),
-            useCob = preferences.get(BooleanKey.WearWizardCob),
-            includeBolusIOB = preferences.get(BooleanKey.WearWizardIob),
-            includeBasalIOB = preferences.get(BooleanKey.WearWizardIob),
-            useSuperBolus = false,
-            useTT = preferences.get(BooleanKey.WearWizardTt),
-            useTrend = preferences.get(BooleanKey.WearWizardTrend),
-            useAlarm = false
-        )
+        // Store the preference values before calling doCalc
+        val useBgPref = preferences.get(BooleanKey.WearWizardBg)
+        val useCobPref = preferences.get(BooleanKey.WearWizardCob)
+        val useIobPref = preferences.get(BooleanKey.WearWizardIob)
+        val useTTPref = preferences.get(BooleanKey.WearWizardTt)
+        val useTrendPref = preferences.get(BooleanKey.WearWizardTrend)
+
+        val bolusWizard = runBlocking {
+            bolusWizardProvider.get().doCalc(
+                profile = profile,
+                profileName = profileName,
+                tempTarget = tempTarget,
+                carbs = carbsAfterConstraints,
+                cob = cobInfo.displayCob!!,
+                bg = bgReading.valueToUnits(profileFunction.getUnits()),
+                correction = 0.0,
+                percentageCorrection = percentage,
+                useBg = useBgPref,
+                useCob = useCobPref,
+                includeBolusIOB = useIobPref,
+                includeBasalIOB = useIobPref,
+                useSuperBolus = false,
+                useTT = useTTPref,
+                useTrend = useTrendPref,
+                useAlarm = false
+            )
+        }
         val insulinAfterConstraints = bolusWizard.insulinAfterConstraints
         val minStep = pump.pumpDescription.pumpType.determineCorrectBolusStepSize(insulinAfterConstraints)
         if (abs(insulinAfterConstraints - bolusWizard.calculatedTotalInsulin) >= minStep) {
@@ -518,56 +731,75 @@ class DataHandlerMobile @Inject constructor(
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_no_insulin_required))
             return
         }
-        val message =
-            rh.gs(R.string.wizard_result, bolusWizard.calculatedTotalInsulin, bolusWizard.carbs) + "\n_____________\n" + bolusWizard.explainShort()
+
+        // Format temp target string if present
+        val tempTargetString = if (useTTPref && tempTarget != null) {
+            profileUtil.toTargetRangeString(tempTarget.lowTarget, tempTarget.highTarget, GlucoseUnit.MGDL)
+        } else null
+
+        // Build structured wizard result
+        // Use the public properties that ARE available
+        val wizardResult = EventData.ActionWizardResult(
+            timestamp = bolusWizard.timeStamp,
+            totalInsulin = bolusWizard.calculatedTotalInsulin,
+            carbs = bolusWizard.carbs,
+            ic = bolusWizard.ic,
+            sens = bolusWizard.sens,
+            insulinFromCarbs = bolusWizard.insulinFromCarbs,
+            insulinFromBG = if (useBgPref) bolusWizard.insulinFromBG else null,
+            insulinFromCOB = if (useCobPref) bolusWizard.insulinFromCOB else null,
+            insulinFromBolusIOB = if (useIobPref) -bolusWizard.insulinFromBolusIOB else null,
+            insulinFromBasalIOB = if (useIobPref) -bolusWizard.insulinFromBasalIOB else null,
+            insulinFromTrend = if (useTrendPref) bolusWizard.insulinFromTrend else null,
+            insulinFromSuperBolus = null,
+            tempTarget = tempTargetString,
+            percentageCorrection = if (percentage != 100) percentage else null,
+            totalBeforePercentage = if (percentage != 100) bolusWizard.totalBeforePercentageAdjustment else null,
+            cob = bolusWizard.cob
+        )
         lastBolusWizard = bolusWizard
         lastQuickWizardEntry = null
-        rxBus.send(
-            EventMobileToWear(
-                EventData.ConfirmAction(
-                    rh.gs(app.aaps.core.ui.R.string.confirm).uppercase(), message,
-                    returnCommand = EventData.ActionWizardConfirmed(bolusWizard.timeStamp)
-                )
-            )
-        )
+        rxBus.send(EventMobileToWear(wizardResult))
     }
 
     private fun handleUserActionPreCheck(command: EventData.ActionUserActionPreCheck) {
-        val pump = activePlugin.activePump
-        val profile = profileFunction.getProfile()
-        if (loop.runningMode.isLoopRunning() && pump.isInitialized() && profile != null) {
-            val events = automation.userEvents()
-            events.find { it.hashCode() == command.id }?.let { event ->
-                if (event.isEnabled && event.canRun()) {
-                    rxBus.send(
-                        EventMobileToWear(
-                            EventData.ConfirmAction(
-                                rh.gs(app.aaps.core.ui.R.string.confirm).uppercase(), command.title,
-                                returnCommand = EventData.ActionUserActionConfirmed(command.id, command.title)
+        appScope.launch {
+            val pump = activePlugin.activePump
+            val profile = profileFunction.getProfile()
+            if (loop.runningMode.isLoopRunning() && pump.isInitialized() && profile != null) {
+                val events = automation.userEvents()
+                events.find { it.hashCode() == command.id }?.let { event ->
+                    if (event.isEnabled && event.canRun()) {
+                        rxBus.send(
+                            EventMobileToWear(
+                                EventData.ConfirmAction(
+                                    rh.gs(app.aaps.core.ui.R.string.confirm).uppercase(), command.title,
+                                    returnCommand = EventData.ActionUserActionConfirmed(command.id, command.title)
+                                )
                             )
                         )
-                    )
-                } else {
+                    } else {
+                        sendError(rh.gs(R.string.user_action_not_available, command.title))
+                    }
+                } ?: apply {
                     sendError(rh.gs(R.string.user_action_not_available, command.title))
                 }
-            } ?: apply {
-                sendError(rh.gs(R.string.user_action_not_available, command.title))
+            } else {
+                sendError(rh.gs(app.aaps.core.ui.R.string.wizard_pump_not_available))
             }
-        } else {
-            sendError(rh.gs(app.aaps.core.ui.R.string.wizard_pump_not_available))
         }
     }
 
     private fun handleUserActionConfirmed(command: EventData.ActionUserActionConfirmed) {
-        val pump = activePlugin.activePump
-        val profile = profileFunction.getProfile()
-        if (loop.runningMode.isLoopRunning() && pump.isInitialized() && profile != null) {
-            val events = automation.userEvents()
-            events.find { it.hashCode() == command.id }?.let { event ->
-                if (event.isEnabled && event.canRun()) {
-                    disposable += Completable.fromAction { automation.processEvent(event) }
-                        .subscribeOn(aapsSchedulers.io)
-                        .subscribe()
+        appScope.launch {
+            val pump = activePlugin.activePump
+            val profile = profileFunction.getProfile()
+            if (loop.runningMode.isLoopRunning() && pump.isInitialized() && profile != null) {
+                val events = automation.userEvents()
+                events.find { it.hashCode() == command.id }?.let { event ->
+                    if (event.isEnabled && event.canRun()) {
+                        automation.processEvent(event)
+                    }
                 }
             }
         }
@@ -575,8 +807,8 @@ class DataHandlerMobile @Inject constructor(
 
     private fun handleQuickWizardPreCheck(command: EventData.ActionQuickWizardPreCheck) {
         val actualBg = iobCobCalculator.ads.actualBg()
-        val profile = profileFunction.getProfile()
-        val profileName = profileFunction.getProfileName()
+        val profile = runBlocking { profileFunction.getProfile() }
+        val profileName = runBlocking { profileFunction.getProfileName() }
         val quickWizardEntry = quickWizard.get(command.guid)
         if (quickWizardEntry == null) {
             sendError(rh.gs(R.string.quick_wizard_not_available))
@@ -590,7 +822,7 @@ class DataHandlerMobile @Inject constructor(
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_no_active_profile))
             return
         }
-        val cobInfo = iobCobCalculator.getCobInfo("QuickWizard wear")
+        val cobInfo = runBlocking { iobCobCalculator.getCobInfo("QuickWizard wear") }
         if (cobInfo.displayCob == null) {
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_no_cob))
             return
@@ -601,7 +833,7 @@ class DataHandlerMobile @Inject constructor(
             return
         }
 
-        val wizard = quickWizardEntry.doCalc(profile, profileName, actualBg)
+        val wizard = runBlocking { quickWizardEntry.doCalc(profile, profileName, actualBg) }
 
         val carbsAfterConstraints = constraintChecker.applyCarbsConstraints(ConstraintObject(quickWizardEntry.carbs(), aapsLogger)).value()
         if (carbsAfterConstraints != quickWizardEntry.carbs()) {
@@ -658,6 +890,10 @@ class DataHandlerMobile @Inject constructor(
             sendError(rh.gs(app.aaps.core.ui.R.string.wizard_pump_not_available))
             return
         }
+        if (insulinAfterConstraints == 0.0 && command.carbs == 0) {
+            sendError(rh.gs(app.aaps.core.ui.R.string.bolus_equal_zero_no_action))
+            return
+        }
         // Handle negative carbs constraint
         if (carbsAfterConstraints < 0) {
             if (carbsAfterConstraints < -cob) carbsAfterConstraints = ceil(-cob).toInt()
@@ -673,7 +909,10 @@ class DataHandlerMobile @Inject constructor(
             EventMobileToWear(
                 EventData.ConfirmAction(
                     rh.gs(app.aaps.core.ui.R.string.confirm).uppercase(), message,
-                    returnCommand = EventData.ActionBolusConfirmed(insulinAfterConstraints, carbsAfterConstraints)
+                    returnCommand = EventData.ActionBolusConfirmed(insulinAfterConstraints, carbsAfterConstraints),
+                    insulin = insulinAfterConstraints,
+                    carbs = carbsAfterConstraints,
+                    constraintApplied = insulinAfterConstraints - command.insulin != 0.0 || carbsAfterConstraints - command.carbs != 0,
                 )
             )
         )
@@ -703,7 +942,11 @@ class DataHandlerMobile @Inject constructor(
             EventMobileToWear(
                 EventData.ConfirmAction(
                     rh.gs(app.aaps.core.ui.R.string.confirm).uppercase(), message,
-                    returnCommand = EventData.ActionECarbsConfirmed(carbsAfterConstraints, startTimeStamp, command.duration)
+                    returnCommand = EventData.ActionECarbsConfirmed(carbsAfterConstraints, startTimeStamp, command.duration),
+                    carbs = carbsAfterConstraints,
+                    carbsTimeShift = command.carbsTimeShift,
+                    duration = command.duration,
+                    constraintApplied = carbsAfterConstraints != command.carbs,
                 )
             )
         )
@@ -744,7 +987,7 @@ class DataHandlerMobile @Inject constructor(
     }
 
     private fun handleProfileSwitchSendInitialData() {
-        val activeProfileSwitch = persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now())
+        val activeProfileSwitch = runBlocking { persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now()) }
         if (activeProfileSwitch != null) { // read CPP values
             rxBus.send(
                 EventMobileToWear(EventData.ActionProfileSwitchOpenActivity(T.msecs(activeProfileSwitch.originalTimeshift).hours().toInt(), activeProfileSwitch.originalPercentage, activeProfileSwitch.originalDuration.toInt()))
@@ -757,7 +1000,7 @@ class DataHandlerMobile @Inject constructor(
     }
 
     private fun handleProfileSwitchPreCheck(command: EventData.ActionProfileSwitchPreCheck) {
-        val activeProfileSwitch = persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now())
+        val activeProfileSwitch = runBlocking { persistenceLayer.getEffectiveProfileSwitchActiveAt(dateUtil.now()) }
         if (activeProfileSwitch == null) {
             sendError(rh.gs(R.string.no_active_profile))
         }
@@ -770,13 +1013,17 @@ class DataHandlerMobile @Inject constructor(
         if (command.duration < 0 || command.duration > Constants.MAX_PROFILE_SWITCH_DURATION) {
             sendError(rh.gs(app.aaps.core.ui.R.string.valueoutofrange, "Profile-Duration"))
         }
-        val profileName = profileFunction.getOriginalProfileName()
+        val profileName = runBlocking { profileFunction.getOriginalProfileName() }
         val message = rh.gs(R.string.profile_message, profileName, command.timeShift, command.percentage, command.duration)
         rxBus.send(
             EventMobileToWear(
                 EventData.ConfirmAction(
                     rh.gs(app.aaps.core.ui.R.string.confirm).uppercase(), message,
-                    returnCommand = EventData.ActionProfileSwitchConfirmed(command.timeShift, command.percentage, command.duration)
+                    returnCommand = EventData.ActionProfileSwitchConfirmed(command.timeShift, command.percentage, command.duration),
+                    profileName = profileName,
+                    profilePercentage = command.percentage,
+                    profileTimeshift = command.timeShift,
+                    profileDurationMinutes = command.duration,
                 )
             )
         )
@@ -784,9 +1031,9 @@ class DataHandlerMobile @Inject constructor(
 
     private fun formatGlucose(value: Double, isMgdl: Boolean): String {
         return if (isMgdl)
-            String.format(Locale.getDefault(), "%.0f mg/dl", value)
+            String.format(Locale.getDefault(), "%.0f mg/dL", value)
         else
-            String.format(Locale.getDefault(), "%.1f mmol/l", value)
+            String.format(Locale.getDefault(), "%.1f mmol/L", value)
     }
 
     private fun handleTempTargetPreCheck(action: EventData.ActionTempTargetPreCheck) {
@@ -804,7 +1051,10 @@ class DataHandlerMobile @Inject constructor(
                     EventMobileToWear(
                         EventData.ConfirmAction(
                             title, message,
-                            returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, activityTTDuration, activityTT, activityTT)
+                            returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, activityTTDuration, activityTT, activityTT),
+                            tempTargetLow = activityTT, tempTargetHigh = activityTT,
+                            tempTargetDurationMinutes = activityTTDuration, tempTargetIsMGDL = presetIsMGDL,
+                            tempTargetReason = reason,
                         )
                     )
                 )
@@ -820,7 +1070,10 @@ class DataHandlerMobile @Inject constructor(
                     EventMobileToWear(
                         EventData.ConfirmAction(
                             title, message,
-                            returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, hypoTTDuration, hypoTT, hypoTT)
+                            returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, hypoTTDuration, hypoTT, hypoTT),
+                            tempTargetLow = hypoTT, tempTargetHigh = hypoTT,
+                            tempTargetDurationMinutes = hypoTTDuration, tempTargetIsMGDL = presetIsMGDL,
+                            tempTargetReason = reason,
                         )
                     )
                 )
@@ -836,7 +1089,10 @@ class DataHandlerMobile @Inject constructor(
                     EventMobileToWear(
                         EventData.ConfirmAction(
                             title, message,
-                            returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, eatingSoonTTDuration, eatingSoonTT, eatingSoonTT)
+                            returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, eatingSoonTTDuration, eatingSoonTT, eatingSoonTT),
+                            tempTargetLow = eatingSoonTT, tempTargetHigh = eatingSoonTT,
+                            tempTargetDurationMinutes = eatingSoonTTDuration, tempTargetIsMGDL = presetIsMGDL,
+                            tempTargetReason = reason,
                         )
                     )
                 )
@@ -848,7 +1104,8 @@ class DataHandlerMobile @Inject constructor(
                     EventMobileToWear(
                         EventData.ConfirmAction(
                             title, message,
-                            returnCommand = EventData.ActionTempTargetConfirmed(true, 0, 0.0, 0.0)
+                            returnCommand = EventData.ActionTempTargetConfirmed(true, 0, 0.0, 0.0),
+                            isCancelTempTarget = true,
                         )
                     )
                 )
@@ -865,7 +1122,8 @@ class DataHandlerMobile @Inject constructor(
                         EventMobileToWear(
                             EventData.ConfirmAction(
                                 title, message,
-                                returnCommand = EventData.ActionTempTargetConfirmed(true, 0, 0.0, 0.0)
+                                returnCommand = EventData.ActionTempTargetConfirmed(true, 0, 0.0, 0.0),
+                                isCancelTempTarget = true,
                             )
                         )
                     )
@@ -896,7 +1154,9 @@ class DataHandlerMobile @Inject constructor(
                         EventMobileToWear(
                             EventData.ConfirmAction(
                                 title, message,
-                                returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, action.duration, action.low, action.high)
+                                returnCommand = EventData.ActionTempTargetConfirmed(presetIsMGDL, action.duration, action.low, action.high),
+                                tempTargetLow = action.low, tempTargetHigh = action.high,
+                                tempTargetDurationMinutes = action.duration, tempTargetIsMGDL = action.isMgdl,
                             )
                         )
                     )
@@ -905,106 +1165,126 @@ class DataHandlerMobile @Inject constructor(
         }
     }
 
-    // To make sure WearOS-sent loop state change is constrained
-    private var lastAuthorizedLoopStateChangeTS: Long? = null
-    private var lastLoopStates: List<AvailableLoopState>? = null
+    // To make sure WearOS-sent running mode change is constrained
+    private var lastAuthorizedRunningModeChangeTS: Long? = null
+    private var lastRunningModes: List<AvailableRunningMode>? = null
 
-    private fun handleAvailableLoopStates() {
+    private fun handleAvailableRunningModes() {
         // See LoopDialog for states list building logic
         if (config.AAPSCLIENT) return
 
         val pump = activePlugin.activePump
         val pumpDescription = pump.pumpDescription
-        if (loop.runningMode.isSuspended()) return
-        if (!profileFunction.isProfileValid("WearDataHandler_LoopChangeState")) return
+        if (!runBlocking { profileFunction.isProfileValid("WearDataHandler_LoopChangeState") }) return
 
         val disconnectDurs = arrayListOf<Int>()
         if (pumpDescription.tempDurationStep15mAllowed) disconnectDurs.add(15)
         if (pumpDescription.tempDurationStep30mAllowed) disconnectDurs.add(30)
         for (i in listOf(1, 2, 3)) disconnectDurs.add(i * 60)
 
-        fun mapMode(mode: RM.Mode): AvailableLoopState? =
+        fun mapMode(mode: RM.Mode): AvailableRunningMode? =
             when (mode) {
-                RM.Mode.CLOSED_LOOP       -> AvailableLoopState(AvailableLoopState.LoopState.LOOP_CLOSED)
-                RM.Mode.CLOSED_LOOP_LGS   -> AvailableLoopState(AvailableLoopState.LoopState.LOOP_LGS)
-                RM.Mode.OPEN_LOOP         -> AvailableLoopState(AvailableLoopState.LoopState.LOOP_OPEN)
-                RM.Mode.DISABLED_LOOP     -> AvailableLoopState(AvailableLoopState.LoopState.LOOP_DISABLE)
+                RM.Mode.CLOSED_LOOP       -> AvailableRunningMode(AvailableRunningMode.RunningMode.LOOP_CLOSED)
+                RM.Mode.CLOSED_LOOP_LGS   -> AvailableRunningMode(AvailableRunningMode.RunningMode.LOOP_LGS)
+                RM.Mode.OPEN_LOOP         -> AvailableRunningMode(AvailableRunningMode.RunningMode.LOOP_OPEN)
+                RM.Mode.DISABLED_LOOP     -> AvailableRunningMode(AvailableRunningMode.RunningMode.LOOP_DISABLE)
                 RM.Mode.SUPER_BOLUS       -> null
-                RM.Mode.DISCONNECTED_PUMP -> AvailableLoopState(AvailableLoopState.LoopState.PUMP_DISCONNECT, disconnectDurs)
+                RM.Mode.DISCONNECTED_PUMP -> AvailableRunningMode(AvailableRunningMode.RunningMode.PUMP_DISCONNECT, disconnectDurs)
                 RM.Mode.SUSPENDED_BY_PUMP -> null
-                RM.Mode.SUSPENDED_BY_USER -> AvailableLoopState(AvailableLoopState.LoopState.LOOP_USER_SUSPEND, listOf(1, 2, 3, 10).map { it * 60 })
+                RM.Mode.SUSPENDED_BY_USER -> AvailableRunningMode(AvailableRunningMode.RunningMode.LOOP_USER_SUSPEND, listOf(1, 2, 3, 10).map { it * 60 })
                 RM.Mode.SUSPENDED_BY_DST  -> null
-                RM.Mode.RESUME            -> AvailableLoopState(AvailableLoopState.LoopState.LOOP_RESUME)
+                RM.Mode.RESUME            -> if (loop.runningMode == RM.Mode.DISCONNECTED_PUMP)
+                    AvailableRunningMode(AvailableRunningMode.RunningMode.PUMP_RECONNECT)
+                else
+                    AvailableRunningMode(AvailableRunningMode.RunningMode.LOOP_RESUME)
             }
 
-        val states = loop.allowedNextModes().mapNotNull { mapMode(it) }
-        lastAuthorizedLoopStateChangeTS = System.currentTimeMillis()
-        lastLoopStates = states
+        val allStates = loop.allowedNextModes().mapNotNull { mapMode(it) }
+        val states = if (allStates.any { it.state == AvailableRunningMode.RunningMode.LOOP_USER_SUSPEND })
+            allStates.filter { it.state != AvailableRunningMode.RunningMode.LOOP_DISABLE }
+        else allStates
+        lastAuthorizedRunningModeChangeTS = System.currentTimeMillis()
+        lastRunningModes = states
         rxBus.send(
             EventMobileToWear(
-                EventData.LoopStatesList(lastAuthorizedLoopStateChangeTS!!, states)
+                EventData.RunningModeList(lastAuthorizedRunningModeChangeTS!!, states)
             )
         )
     }
 
-    private fun handleLoopStateSelected(action: EventData.LoopStateSelected) {
-        if (action.timeStamp != lastAuthorizedLoopStateChangeTS) return sendError(rh.gs(R.string.wear_action_loop_state_unauthorized))
-        val newState = lastLoopStates?.elementAtOrNull(action.index) ?: return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
+    private fun handleRunningModeSelected(action: EventData.RunningModeSelected) {
+        if (action.timeStamp != lastAuthorizedRunningModeChangeTS) return sendError(rh.gs(R.string.wear_action_loop_state_unauthorized))
+        val newState = lastRunningModes?.elementAtOrNull(action.index) ?: return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
         val nDuration = action.duration ?: 0
+        val runningModeName = when (newState.state) {
+            AvailableRunningMode.RunningMode.LOOP_CLOSED       -> rh.gs(R.string.wear_action_loop_state_now_closed)
+            AvailableRunningMode.RunningMode.LOOP_LGS          -> rh.gs(R.string.wear_action_loop_state_now_lgs)
+            AvailableRunningMode.RunningMode.LOOP_OPEN         -> rh.gs(R.string.wear_action_loop_state_now_open)
+            AvailableRunningMode.RunningMode.LOOP_RESUME       -> rh.gs(R.string.wear_action_loop_state_now_resumed)
+            AvailableRunningMode.RunningMode.PUMP_RECONNECT    -> rh.gs(R.string.wear_action_loop_state_now_pump_reconnected)
+            AvailableRunningMode.RunningMode.LOOP_DISABLE      -> rh.gs(R.string.wear_action_loop_state_now_disabled)
+            AvailableRunningMode.RunningMode.SUPERBOLUS        -> rh.gs(R.string.wear_action_loop_state_now_superbolus)
+            AvailableRunningMode.RunningMode.LOOP_UNKNOWN      -> rh.gs(R.string.wear_action_loop_state_now_invalid)
+            AvailableRunningMode.RunningMode.LOOP_USER_SUSPEND -> rh.gs(R.string.wear_action_loop_state_now_suspended)
+            AvailableRunningMode.RunningMode.LOOP_PUMP_SUSPEND -> rh.gs(R.string.wear_action_loop_state_now_pump_suspended)
+            AvailableRunningMode.RunningMode.PUMP_DISCONNECT   -> rh.gs(R.string.wear_action_loop_state_now_pump_disconnected)
+        }
+        val runningModeDuration = when (newState.state) {
+            AvailableRunningMode.RunningMode.LOOP_USER_SUSPEND,
+            AvailableRunningMode.RunningMode.PUMP_DISCONNECT   -> if (nDuration > 0) nDuration else null
+            else                                               -> null
+        }
         rxBus.send(
             EventMobileToWear(
                 EventData.ConfirmAction(
-                    rh.gs(R.string.wear_action_loop_state_title),
+                    rh.gs(R.string.wear_action_running_mode_title),
                     when (newState.state) {
-                        AvailableLoopState.LoopState.LOOP_CLOSED       -> rh.gs(R.string.wear_action_loop_state_now_closed)
-                        AvailableLoopState.LoopState.LOOP_LGS          -> rh.gs(R.string.wear_action_loop_state_now_lgs)
-                        AvailableLoopState.LoopState.LOOP_OPEN         -> rh.gs(R.string.wear_action_loop_state_now_open)
-                        AvailableLoopState.LoopState.LOOP_RESUME       -> rh.gs(R.string.wear_action_loop_state_now_resumed)
-                        AvailableLoopState.LoopState.LOOP_DISABLE      -> rh.gs(R.string.wear_action_loop_state_now_disabled)
-                        AvailableLoopState.LoopState.SUPERBOLUS        -> rh.gs(R.string.wear_action_loop_state_now_superbolus)
-                        AvailableLoopState.LoopState.LOOP_UNKNOWN      -> rh.gs(R.string.wear_action_loop_state_now_invalid)
-                        AvailableLoopState.LoopState.LOOP_USER_SUSPEND -> rh.gs(R.string.wear_action_loop_state_changed_with_duration, rh.gs(R.string.wear_action_loop_state_now_suspended), nDuration)
-                        AvailableLoopState.LoopState.LOOP_PUMP_SUSPEND -> rh.gs(R.string.wear_action_loop_state_now_pump_suspended)
-                        AvailableLoopState.LoopState.PUMP_DISCONNECT   -> rh.gs(R.string.wear_action_loop_state_changed_with_duration, rh.gs(R.string.wear_action_loop_state_now_pump_disconnected), nDuration)
+                        AvailableRunningMode.RunningMode.LOOP_USER_SUSPEND -> rh.gs(R.string.wear_action_loop_state_changed_with_duration, runningModeName, nDuration)
+                        AvailableRunningMode.RunningMode.PUMP_DISCONNECT   -> rh.gs(R.string.wear_action_loop_state_changed_with_duration, runningModeName, nDuration)
+                        else                                               -> runningModeName
                     },
-                    EventData.LoopStateConfirmed(action.timeStamp, action.index, action.duration)
+                    EventData.RunningModeConfirmed(action.timeStamp, action.index, action.duration),
+                    runningModeTitle = runningModeName,
+                    runningModeDurationMinutes = runningModeDuration,
+                    runningModeType = newState.state.name,
                 )
             )
         )
     }
 
-    private fun handleLoopStateConfirmed(action: EventData.LoopStateConfirmed) {
-        val profile = profileFunction.getProfile() ?: return sendError(rh.gs(R.string.no_active_profile))
-        if (action.timeStamp != lastAuthorizedLoopStateChangeTS) return sendError(rh.gs(R.string.wear_action_loop_state_unauthorized))
-        lastAuthorizedLoopStateChangeTS = null
-        val newState = lastLoopStates?.elementAtOrNull(action.index) ?: return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
-        lastLoopStates = null
+    private fun handleRunningModeConfirmed(action: EventData.RunningModeConfirmed) {
+        val profile = runBlocking { profileFunction.getProfile() } ?: return sendError(rh.gs(R.string.no_active_profile))
+        if (action.timeStamp != lastAuthorizedRunningModeChangeTS) return sendError(rh.gs(R.string.wear_action_loop_state_unauthorized))
+        lastAuthorizedRunningModeChangeTS = null
+        val newState = lastRunningModes?.elementAtOrNull(action.index) ?: return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
+        lastRunningModes = null
 
         val nDuration = action.duration ?: 0
         val durationValid = action.duration != null && action.duration!! > 0
         when (newState.state) {
-            AvailableLoopState.LoopState.LOOP_CLOSED                                                                                           ->
+            AvailableRunningMode.RunningMode.LOOP_CLOSED                                                                                           ->
                 loop.handleRunningModeChange(newRM = RM.Mode.CLOSED_LOOP, action = Action.CLOSED_LOOP_MODE, source = Sources.Wear, profile = profile)
 
-            AvailableLoopState.LoopState.LOOP_LGS                                                                                              ->
+            AvailableRunningMode.RunningMode.LOOP_LGS                                                                                              ->
                 loop.handleRunningModeChange(newRM = RM.Mode.CLOSED_LOOP_LGS, action = Action.LGS_LOOP_MODE, source = Sources.Wear, profile = profile)
 
-            AvailableLoopState.LoopState.LOOP_OPEN                                                                                             ->
+            AvailableRunningMode.RunningMode.LOOP_OPEN                                                                                             ->
                 loop.handleRunningModeChange(newRM = RM.Mode.OPEN_LOOP, action = Action.OPEN_LOOP_MODE, source = Sources.Wear, profile = profile)
 
-            AvailableLoopState.LoopState.LOOP_DISABLE                                                                                          ->
+            AvailableRunningMode.RunningMode.LOOP_DISABLE                                                                                          ->
                 loop.handleRunningModeChange(newRM = RM.Mode.DISABLED_LOOP, action = Action.LOOP_DISABLED, source = Sources.Wear, profile = profile)
 
-            AvailableLoopState.LoopState.LOOP_RESUME                                                                                           -> {
+            AvailableRunningMode.RunningMode.LOOP_RESUME,
+            AvailableRunningMode.RunningMode.PUMP_RECONNECT                                                                                        -> {
                 loop.handleRunningModeChange(newRM = RM.Mode.RESUME, action = Action.LOOP_RESUME, source = Sources.Wear, profile = profile)
             }
 
-            AvailableLoopState.LoopState.LOOP_USER_SUSPEND                                                                                     -> {
+            AvailableRunningMode.RunningMode.LOOP_USER_SUSPEND                                                                                     -> {
                 if (!durationValid) return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
                 loop.handleRunningModeChange(newRM = RM.Mode.SUSPENDED_BY_USER, durationInMinutes = nDuration, action = Action.SUSPEND, source = Sources.Wear, profile = profile)
             }
 
-            AvailableLoopState.LoopState.PUMP_DISCONNECT                                                                                       -> {
+            AvailableRunningMode.RunningMode.PUMP_DISCONNECT                                                                                       -> {
                 if (!durationValid) return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
                 loop.handleRunningModeChange(
                     newRM = RM.Mode.DISCONNECTED_PUMP,
@@ -1016,10 +1296,21 @@ class DataHandlerMobile @Inject constructor(
                 )
             }
 
-            AvailableLoopState.LoopState.LOOP_UNKNOWN, AvailableLoopState.LoopState.SUPERBOLUS, AvailableLoopState.LoopState.LOOP_PUMP_SUSPEND -> {
+            AvailableRunningMode.RunningMode.LOOP_UNKNOWN, AvailableRunningMode.RunningMode.SUPERBOLUS, AvailableRunningMode.RunningMode.LOOP_PUMP_SUSPEND -> {
                 return sendError(rh.gs(R.string.wear_action_loop_state_invalid))
             }
         }
+        handleAvailableRunningModes()
+    }
+
+    private fun sendQuickWizardToWear() {
+        rxBus.send(
+            EventMobileToWear(
+                EventData.QuickWizard(
+                    ArrayList(quickWizard.list().filter { it.forDevice(QuickWizardEntry.DEVICE_WATCH) }.map { it.toWear() })
+                )
+            )
+        )
     }
 
     private fun QuickWizardEntry.toWear(): EventData.QuickWizard.QuickWizardEntry =
@@ -1028,7 +1319,10 @@ class DataHandlerMobile @Inject constructor(
             buttonText = buttonText(),
             carbs = carbs(),
             validFrom = validFrom(),
-            validTo = validTo()
+            validTo = validTo(),
+            lastUsed = lastUsed(),
+            mode = mode().value,
+            insulin = insulin()
         )
 
     fun resendData(from: String) {
@@ -1053,13 +1347,7 @@ class DataHandlerMobile @Inject constructor(
             )
         )
         // QuickWizard
-        rxBus.send(
-            EventMobileToWear(
-                EventData.QuickWizard(
-                    ArrayList(quickWizard.list().filter { it.forDevice(QuickWizardEntry.DEVICE_WATCH) }.map { it.toWear() })
-                )
-            )
-        )
+        sendQuickWizardToWear()
         //UserAction
         sendUserActions()
         // GraphData
@@ -1071,7 +1359,7 @@ class DataHandlerMobile @Inject constructor(
         // Status
         // Keep status last. Wear start refreshing after status received
         sendStatus(from)
-        handleAvailableLoopStates()
+        handleAvailableRunningModes()
     }
 
     private fun AutomationEvent.toWear(now: Long): EventData.UserAction.UserActionEntry =
@@ -1082,15 +1370,21 @@ class DataHandlerMobile @Inject constructor(
         )
 
     fun sendUserActions() {
-        val now = System.currentTimeMillis()
-        val events = automation.userEvents()
-        rxBus.send(
-            EventMobileToWear(
-                EventData.UserAction(
-                    ArrayList(events.filter { it.isEnabled && it.canRun() }.map { it.toWear(now) })
+        appScope.launch {
+            val now = System.currentTimeMillis()
+            val events = automation.userEvents()
+            val filtered = mutableListOf<AutomationEvent>()
+            for (event in events) {
+                if (event.isEnabled && event.canRun()) filtered.add(event)
+            }
+            rxBus.send(
+                EventMobileToWear(
+                    EventData.UserAction(
+                        ArrayList(filtered.map { it.toWear(now) })
+                    )
                 )
             )
-        )
+        }
     }
 
     private fun sendTreatments() {
@@ -1100,7 +1394,7 @@ class DataHandlerMobile @Inject constructor(
         val temps = arrayListOf<EventData.TreatmentData.TempBasal>()
         val boluses = arrayListOf<EventData.TreatmentData.Treatment>()
         val predictions = arrayListOf<EventData.SingleBg>()
-        val profile = profileFunction.getProfile() ?: return
+        val profile = runBlocking { profileFunction.getProfile() } ?: return
         var beginBasalSegmentTime = startTimeWindow
         var runningTime = startTimeWindow
         var beginBasalValue = profile.getBasal(beginBasalSegmentTime)
@@ -1111,14 +1405,14 @@ class DataHandlerMobile @Inject constructor(
         var tbAmount = beginBasalValue
         var tbStart = runningTime
         if (tb1 != null) {
-            val profileTB = profileFunction.getProfile(runningTime)
+            val profileTB = runBlocking { profileFunction.getProfile(runningTime) }
             if (profileTB != null) {
                 tbAmount = tb1.convertedToAbsolute(runningTime, profileTB)
                 tbStart = runningTime
             }
         }
         while (runningTime < now) {
-            val profileTB = profileFunction.getProfile(runningTime) ?: return
+            val profileTB = runBlocking { profileFunction.getProfile(runningTime) } ?: return
             //basal rate
             endBasalValue = profile.getBasal(runningTime)
             if (endBasalValue != beginBasalValue) {
@@ -1175,7 +1469,7 @@ class DataHandlerMobile @Inject constructor(
                 temps.add(EventData.TreatmentData.TempBasal(tbStart, tbBefore, now - 60 * 1000, endBasalValue, tbAmount))
             } else {
                 //express currently running temp by painting it a bit into the future
-                val profileNow = profileFunction.getProfile(now)
+                val profileNow = runBlocking { profileFunction.getProfile(now) }
                 val currentAmount = tb2.convertedToAbsolute(now, profileNow!!)
                 if (currentAmount != tbAmount) {
                     temps.add(EventData.TreatmentData.TempBasal(tbStart, tbBefore, now, tbAmount, tbAmount))
@@ -1188,18 +1482,19 @@ class DataHandlerMobile @Inject constructor(
             tb2 = processedTbrEbData.getTempBasalIncludingConvertedExtended(now) //use "now" to express current situation
             if (tb2 != null) {
                 //onset at the end
-                val profileTB = profileFunction.getProfile(runningTime)
+                val profileTB = runBlocking { profileFunction.getProfile(runningTime) }
                 val currentAmount = tb2.convertedToAbsolute(runningTime, profileTB!!)
                 temps.add(EventData.TreatmentData.TempBasal(now - 60 * 1000, endBasalValue, runningTime + 5 * 60 * 1000, currentAmount, currentAmount))
             }
         }
-        persistenceLayer.getBolusesFromTimeIncludingInvalid(startTimeWindow, true).blockingGet()
-            .stream()
-            .filter { (_, _, _, _, _, _, _, _, _, type) -> type !== BS.Type.PRIMING }
-            .forEach { (_, _, _, isValid, _, _, timestamp, _, amount, type) -> boluses.add(EventData.TreatmentData.Treatment(timestamp, amount, 0.0, type === BS.Type.SMB, isValid)) }
-        persistenceLayer.getCarbsFromTimeExpanded(startTimeWindow, true)
-            .forEach { (_, _, _, isValid, _, _, timestamp, _, _, amount) -> boluses.add(EventData.TreatmentData.Treatment(timestamp, 0.0, amount, false, isValid)) }
-
+        runBlocking {
+            persistenceLayer.getBolusesFromTimeIncludingInvalid(startTimeWindow, true)
+                .stream()
+                .filter { (_, _, _, _, _, _, _, _, _, type) -> type !== BS.Type.PRIMING }
+                .forEach { (_, _, _, isValid, _, _, timestamp, _, amount, type) -> boluses.add(EventData.TreatmentData.Treatment(timestamp, amount, 0.0, type === BS.Type.SMB, isValid)) }
+            persistenceLayer.getCarbsFromTimeExpanded(startTimeWindow, true)
+                .forEach { (_, _, _, isValid, _, _, timestamp, _, _, amount) -> boluses.add(EventData.TreatmentData.Treatment(timestamp, 0.0, amount, false, isValid)) }
+        }
         val apsResult = if (config.APS) {
             val lastRun = loop.lastRun
             if (lastRun?.request?.hasPredictions == true) {
@@ -1240,7 +1535,7 @@ class DataHandlerMobile @Inject constructor(
     }
 
     private fun sendStatus(caller: String) {
-        val profile = profileFunction.getProfile()
+        val profile = runBlocking { profileFunction.getProfile() }
         var status = rh.gs(app.aaps.core.ui.R.string.noprofile)
         var iobSum = ""
         var iobDetail = ""
@@ -1248,11 +1543,11 @@ class DataHandlerMobile @Inject constructor(
         var currentBasal = ""
         var bgiString = ""
         if (config.appInitialized && profile != null) {
-            val bolusIob = iobCobCalculator.calculateIobFromBolus().round()
-            val basalIob = iobCobCalculator.calculateIobFromTempBasalsIncludingConvertedExtended().round()
+            val bolusIob = runBlocking { iobCobCalculator.calculateIobFromBolus() }.round()
+            val basalIob = runBlocking { iobCobCalculator.calculateIobFromTempBasalsIncludingConvertedExtended() }.round()
             iobSum = decimalFormatter.to2Decimal(bolusIob.iob + basalIob.basaliob)
             iobDetail = "(${decimalFormatter.to2Decimal(bolusIob.iob)}|${decimalFormatter.to2Decimal(basalIob.basaliob)})"
-            cobString = iobCobCalculator.getCobInfo("WatcherUpdaterService").generateCOBString(decimalFormatter)
+            cobString = runBlocking { iobCobCalculator.getCobInfo("WatcherUpdaterService") }.generateCOBString(decimalFormatter)
             currentBasal =
                 processedTbrEbData.getTempBasalIncludingConvertedExtended(System.currentTimeMillis())?.toStringShort(rh) ?: rh.gs(app.aaps.core.ui.R.string.pump_base_basal_rate, profile.getBasal())
 
@@ -1276,10 +1571,10 @@ class DataHandlerMobile @Inject constructor(
         //temptarget
         val units = profileFunction.getUnits()
         var tempTargetLevel = 0
-        val tempTarget = persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now())?.let { tempTarget ->
+        val tempTarget = runBlocking { persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now()) }?.let { tempTarget ->
             tempTargetLevel = 2     // Yellow
             profileUtil.toTargetRangeString(tempTarget.lowTarget, tempTarget.highTarget, GlucoseUnit.MGDL, units)
-        } ?: profileFunction.getProfile()?.let { profile ->
+        } ?: runBlocking { profileFunction.getProfile() }?.let { profile ->
             // If the target is not the same as set in the profile then oref has overridden it
             val targetUsed =
                 if (config.APS) loop.lastRun?.constraintsProcessed?.targetBG ?: 0.0
@@ -1295,8 +1590,9 @@ class DataHandlerMobile @Inject constructor(
         } ?: ""
         // Reservoir Level
         val pump = activePlugin.activePump
-        val maxReading = pump.pumpDescription.maxResorvoirReading.toDouble()
-        val reservoir = pump.reservoirLevel.let { if (pump.pumpDescription.isPatchPump && it > maxReading) maxReading else it }
+        val iCfg = insulin.iCfg
+        val maxReading = pump.pumpDescription.maxReservoirReading.toDouble()
+        val reservoir = pump.reservoirLevel.value.iU(iCfg.concentration).let { if (pump.pumpDescription.isPatchPump && it > maxReading) maxReading else it }
         val reservoirString = if (reservoir > 0) decimalFormatter.to0Decimal(reservoir, rh.gs(app.aaps.core.ui.R.string.insulin_unit_shortname)) else ""
         val resUrgent = preferences.get(IntKey.OverviewResCritical)
         val resWarn = preferences.get(IntKey.OverviewResWarning)
@@ -1385,9 +1681,9 @@ class DataHandlerMobile @Inject constructor(
             if (!config.APS) {
                 return rh.gs(R.string.target_only_aps_mode)
             }
-            val profile = profileFunction.getProfile() ?: return rh.gs(R.string.no_profile)
+            val profile = runBlocking { profileFunction.getProfile() } ?: return rh.gs(R.string.no_profile)
             //Check for Temp-Target:
-            val tempTarget = persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now())
+            val tempTarget = runBlocking { persistenceLayer.getTemporaryTargetActiveAt(dateUtil.now()) }
             if (tempTarget != null) {
                 val target = profileUtil.toTargetRangeString(tempTarget.lowTarget, tempTarget.lowTarget, GlucoseUnit.MGDL)
                 ret += rh.gs(R.string.temp_target) + ": " + target
@@ -1413,7 +1709,7 @@ class DataHandlerMobile @Inject constructor(
             } else if (result.rate == 0.0 && result.duration == 0) {
                 rh.gs(app.aaps.core.ui.R.string.cancel_temp) + "\n"
             } else {
-                rh.gs(R.string.rate_duration, result.rate, result.rate / activePlugin.activePump.baseBasalRate * 100, result.duration) + "\n"
+                rh.gs(R.string.rate_duration, result.rate, result.rate / ch.fromPump(activePlugin.activePump.baseBasalRate) * 100, result.duration) + "\n"
             }
             ret += "\n" + rh.gs(app.aaps.core.ui.R.string.reason) + ": " + result.reason
             return ret
@@ -1453,7 +1749,7 @@ class DataHandlerMobile @Inject constructor(
     }
 
     private fun getTDDList(returnDummies: List<TDD>): MutableList<TDD> {
-        var historyList = persistenceLayer.getLastTotalDailyDoses(10, false).toMutableList()
+        var historyList = runBlocking { persistenceLayer.getLastTotalDailyDoses(10, false) }.toMutableList()
         //var historyList = databaseHelper.getTDDs().toMutableList()
         historyList = historyList.subList(0, min(10, historyList.size))
         // fill single gaps - only needed for Dana*R data
@@ -1478,7 +1774,7 @@ class DataHandlerMobile @Inject constructor(
         get() = if (totalAmount > 0) totalAmount else basalAmount + bolusAmount
 
     private fun generateTDDMessage(historyList: MutableList<TDD>, dummies: List<TDD>): String {
-        val profile = profileFunction.getProfile() ?: return rh.gs(R.string.no_profile)
+        val profile = runBlocking { profileFunction.getProfile() } ?: return rh.gs(R.string.no_profile)
         if (historyList.isEmpty()) {
             return rh.gs(R.string.no_history)
         }
@@ -1532,33 +1828,36 @@ class DataHandlerMobile @Inject constructor(
 
     private fun doTempTarget(command: EventData.ActionTempTargetConfirmed) {
         if (command.duration != 0)
-            disposable += persistenceLayer.insertAndCancelCurrentTemporaryTarget(
-                temporaryTarget = TT(
-                    timestamp = System.currentTimeMillis(),
-                    duration = TimeUnit.MINUTES.toMillis(command.duration.toLong()),
-                    reason = TT.Reason.WEAR,
-                    lowTarget = profileUtil.convertToMgdl(command.low, profileFunction.getUnits()),
-                    highTarget = profileUtil.convertToMgdl(command.high, profileFunction.getUnits())
-                ),
-                action = Action.TT,
-                source = Sources.Wear,
-                note = null,
-                listValues = listOfNotNull(
-                    ValueWithUnit.TETTReason(TT.Reason.WEAR),
-                    ValueWithUnit.fromGlucoseUnit(command.low, profileFunction.getUnits()),
-                    ValueWithUnit.fromGlucoseUnit(command.high, profileFunction.getUnits()).takeIf { command.low != command.high },
-                    ValueWithUnit.Minute(command.duration)
+            appScope.launch {
+                persistenceLayer.insertAndCancelCurrentTemporaryTarget(
+                    temporaryTarget = TT(
+                        timestamp = System.currentTimeMillis(),
+                        duration = TimeUnit.MINUTES.toMillis(command.duration.toLong()),
+                        reason = TT.Reason.WEAR,
+                        lowTarget = profileUtil.convertToMgdl(command.low, profileFunction.getUnits()),
+                        highTarget = profileUtil.convertToMgdl(command.high, profileFunction.getUnits())
+                    ),
+                    action = Action.TT,
+                    source = Sources.Wear,
+                    note = null,
+                    listValues = listOfNotNull(
+                        ValueWithUnit.TETTReason(TT.Reason.WEAR),
+                        ValueWithUnit.fromGlucoseUnit(command.low, profileFunction.getUnits()),
+                        ValueWithUnit.fromGlucoseUnit(command.high, profileFunction.getUnits()).takeIf { command.low != command.high },
+                        ValueWithUnit.Minute(command.duration)
+                    )
                 )
-            ).subscribe()
+            }
         else
-            disposable += persistenceLayer.cancelCurrentTemporaryTargetIfAny(
-                timestamp = dateUtil.now(),
-                action = Action.CANCEL_TT,
-                source = Sources.Wear,
-                note = null,
-                listValues = listOf(ValueWithUnit.TETTReason(TT.Reason.WEAR))
-            )
-                .subscribe()
+            appScope.launch {
+                persistenceLayer.cancelCurrentTemporaryTargetIfAny(
+                    timestamp = dateUtil.now(),
+                    action = Action.CANCEL_TT,
+                    source = Sources.Wear,
+                    note = null,
+                    listValues = listOf(ValueWithUnit.TETTReason(TT.Reason.WEAR))
+                )
+            }
     }
 
     private fun doBolus(amount: Double, carbs: Int, carbsTime: Long?, carbsDuration: Int, bolusCalculatorResult: BCR?, notes: String? = null) {
@@ -1591,10 +1890,10 @@ class DataHandlerMobile @Inject constructor(
                         sendError(rh.gs(app.aaps.core.ui.R.string.treatmentdeliveryerror) + "\n" + result.comment)
                 }
             })
-            bolusCalculatorResult?.let { persistenceLayer.insertOrUpdateBolusCalculatorResult(it).blockingGet() }
+            bolusCalculatorResult?.let { runBlocking { persistenceLayer.insertOrUpdateBolusCalculatorResult(it) } }
             lastQuickWizardEntry?.let { lastQuickWizardEntry ->
                 if (lastQuickWizardEntry.useSuperBolus() == QuickWizardEntry.YES) {
-                    val profile = profileFunction.getProfile() ?: return
+                    val profile = runBlocking { profileFunction.getProfile() } ?: return
                     loop.handleRunningModeChange(
                         newRM = RM.Mode.SUPER_BOLUS,
                         action = Action.SUPERBOLUS_TBR,
@@ -1645,20 +1944,22 @@ class DataHandlerMobile @Inject constructor(
             return
         if (command.duration < 0 || command.duration > Constants.MAX_PROFILE_SWITCH_DURATION)
             return
-        profileFunction.getProfile() ?: return
+        runBlocking { profileFunction.getProfile() } ?: return
         //send profile to pump
-        profileFunction.createProfileSwitch(
-            durationInMinutes = command.duration,
-            percentage = command.percentage,
-            timeShiftInHours = command.timeShift,
-            action = Action.PROFILE_SWITCH,
-            source = Sources.Wear,
-            listValues = listOfNotNull(
-                ValueWithUnit.Percent(command.percentage),
-                ValueWithUnit.Hour(command.timeShift).takeIf { command.timeShift != 0 },
-                ValueWithUnit.Minute(command.duration)
+        runBlocking {
+            profileFunction.createProfileSwitch(
+                durationInMinutes = command.duration,
+                percentage = command.percentage,
+                timeShiftInHours = command.timeShift,
+                action = Action.PROFILE_SWITCH,
+                source = Sources.Wear,
+                listValues = listOfNotNull(
+                    ValueWithUnit.Percent(command.percentage),
+                    ValueWithUnit.Hour(command.timeShift).takeIf { command.timeShift != 0 },
+                    ValueWithUnit.Minute(command.duration)
+                )
             )
-        )
+        }
     }
 
     @Synchronized private fun sendError(errorMessage: String) {
@@ -1674,7 +1975,7 @@ class DataHandlerMobile @Inject constructor(
             beatsPerMinute = actionHeartRate.beatsPerMinute,
             device = actionHeartRate.device
         )
-        disposable += persistenceLayer.insertOrUpdateHeartRate(hr).subscribe()
+        appScope.launch { persistenceLayer.insertOrUpdateHeartRate(hr) }
     }
 
     private fun handleStepsCount(actionStepsRate: EventData.ActionStepsRate) {
@@ -1690,7 +1991,7 @@ class DataHandlerMobile @Inject constructor(
             steps180min = actionStepsRate.steps180min,
             device = actionStepsRate.device
         )
-        disposable += persistenceLayer.insertOrUpdateStepsCount(stepsCount).subscribe()
+        appScope.launch { persistenceLayer.insertOrUpdateStepsCount(stepsCount) }
     }
 
     private fun handleGetCustomWatchface(command: EventData.ActionGetCustomWatchface) {

@@ -2,10 +2,11 @@ package app.aaps.pump.danar.comm
 
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.rx.events.EventDanaRSyncStatus
 import app.aaps.pump.dana.comm.RecordTypes
 import app.aaps.pump.dana.database.DanaHistoryRecord
+import app.aaps.pump.dana.events.EventDanaRSyncStatus
 import dagger.android.HasAndroidInjector
+import kotlinx.coroutines.runBlocking
 
 @Suppress("SpellCheckingInspection")
 open class MsgHistoryAll(
@@ -148,7 +149,7 @@ open class MsgHistoryAll(
             }
             danaHistoryRecordDao.createOrUpdate(danaHistoryRecord)
             if (recordCode == RecordTypes.RECORD_TYPE_DAILY)
-                pumpSync.createOrUpdateTotalDailyDose(date, dailyBolus, dailyBasal, dailyBolus + dailyBasal, date, activePlugin.activePump.model(), danaPump.serialNumber)
+                runBlocking { pumpSync.createOrUpdateTotalDailyDose(date, dailyBolus, dailyBasal, dailyBolus + dailyBasal, date, activePlugin.activePump.model(), danaPump.serialNumber) }
             rxBus.send(EventDanaRSyncStatus(dateUtil.dateAndTimeString(danaHistoryRecord.timestamp) + " " + messageType))
         } catch (e: Exception) {
             // DanaR id sometimes producing invalid date in history

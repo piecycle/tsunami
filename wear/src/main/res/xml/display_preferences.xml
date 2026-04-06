@@ -156,11 +156,7 @@
         app:wear_iconOff="@drawable/settings_off"
         app:wear_iconOn="@drawable/settings_on" />
 
-    <app.aaps.wear.interaction.utils.WatchfaceSettingsPreference
-        android:defaultValue="1"
-        android:entries="@array/input_design"
-        android:entryValues="@array/input_design_values"
+    <app.aaps.wear.preference.WatchfaceSettingsPreference
         android:key="more_settings"
-        android:summary="Input Design"
         android:title="@string/pref_moreWatchfaceSettings" />
 </PreferenceScreen>

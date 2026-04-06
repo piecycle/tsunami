@@ -10,6 +10,7 @@
     <string name="pump_status_busy">Optaget</string>
     <string name="pump_status_suspended">Sat på pause</string>
     <string name="pump_status_executing_command">Udfører Kommando</string>
+    <!-- Commands -->
     <!-- PumpCommon - History Group -->
     <string name="history_group_basal">Basaler</string>
     <string name="history_group_configuration">Konfigurationer</string>
@@ -41,20 +42,4 @@
     <string name="ble_config_scan_error">Scanningsfejl: %1$d</string>
     <string name="ble_config_remove">Fjern</string>
     <!-- Pump History -->
-    <plurals name="duration_days">
-        <item quantity="one">%1$d dag</item>
-        <item quantity="other">%1$d dage</item>
-    </plurals>
-    <plurals name="duration_hours">
-        <item quantity="one">%1$d time</item>
-        <item quantity="other">%1$d timer</item>
-    </plurals>
-    <plurals name="hoursago">
-        <item quantity="one">%1$d time siden</item>
-        <item quantity="other">%1$d timer siden</item>
-    </plurals>
-    <plurals name="daysago">
-        <item quantity="one">%1$d dag siden</item>
-        <item quantity="other">%1$d dage siden</item>
-    </plurals>
 </resources>

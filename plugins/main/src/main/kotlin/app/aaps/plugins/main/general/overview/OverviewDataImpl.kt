@@ -7,7 +7,7 @@ import app.aaps.core.data.model.GV
 import app.aaps.core.data.time.T
 import app.aaps.core.graph.data.BarGraphSeries
 import app.aaps.core.graph.data.DataPointWithLabelInterface
-import app.aaps.core.graph.data.DeviationDataPoint
+import app.aaps.core.graph.data.DeviationDataPointLegacy
 import app.aaps.core.graph.data.FixedLineGraphSeries
 import app.aaps.core.graph.data.LineGraphSeries
 import app.aaps.core.graph.data.PointsWithLabelGraphSeries
@@ -31,9 +31,16 @@ import app.aaps.core.objects.extensions.isInProgress
 import app.aaps.core.objects.extensions.toStringFull
 import app.aaps.core.objects.extensions.toStringShort
 import com.jjoe64.graphview.series.DataPoint
-import java.util.Calendar
+import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Instant
 
 @Singleton
 class OverviewDataImpl @Inject constructor(
@@ -65,7 +72,7 @@ class OverviewDataImpl @Inject constructor(
         basalLineGraphSeries = LineGraphSeries<ScaledDataPoint>()
         absoluteBasalGraphSeries = LineGraphSeries<ScaledDataPoint>()
         temporaryTargetSeries = LineGraphSeries<DataPoint>()
-        runningModesSeries = PointsWithLabelGraphSeries< RunningModeDataPoint>()
+        runningModesSeries = PointsWithLabelGraphSeries<RunningModeDataPoint>()
         maxIAValue = 0.0
         activitySeries = FixedLineGraphSeries<ScaledDataPoint>()
         activityPredictionSeries = FixedLineGraphSeries<ScaledDataPoint>()
@@ -81,7 +88,7 @@ class OverviewDataImpl @Inject constructor(
         cobSeries = FixedLineGraphSeries<ScaledDataPoint>()
         cobMinFailOverSeries = PointsWithLabelGraphSeries<DataPointWithLabelInterface>()
         maxDevValueFound = Double.MIN_VALUE
-        deviationsSeries = BarGraphSeries<DeviationDataPoint>()
+        deviationsSeries = BarGraphSeries<DeviationDataPointLegacy>()
         maxRatioValueFound = 5.0                    //even if sens data equals 0 for all the period, minimum scale is between 95% and 105%
         minRatioValueFound = -maxRatioValueFound
         ratioSeries = LineGraphSeries<ScaledDataPoint>()
@@ -105,15 +112,13 @@ class OverviewDataImpl @Inject constructor(
     override fun initRange() {
         rangeToDisplay = preferences.get(IntNonKey.RangeToDisplay)
 
-        val calendar = Calendar.getInstance().also {
-            it.timeInMillis = System.currentTimeMillis()
-            it[Calendar.MILLISECOND] = 0
-            it[Calendar.SECOND] = 0
-            it[Calendar.MINUTE] = 0
-            it.add(Calendar.HOUR, 1)
-        }
+        val tz = TimeZone.currentSystemDefault()
+        val now = Instant.fromEpochMilliseconds(System.currentTimeMillis())
+        val local = now.toLocalDateTime(tz)
+        val truncatedHour = LocalDateTime(local.year, local.month, local.day, local.hour, 0)
+        val nextFullHour = truncatedHour.toInstant(tz).plus(1, DateTimeUnit.HOUR, tz)
 
-        toTime = calendar.timeInMillis + 100000 // little bit more to avoid wrong rounding - GraphView specific
+        toTime = nextFullHour.toEpochMilliseconds() + 100000 // a little bit more to avoid wrong rounding - GraphView specific
         fromTime = toTime - T.hours(rangeToDisplay.toLong()).msecs()
         endTime = toTime
     }
@@ -135,7 +140,7 @@ class OverviewDataImpl @Inject constructor(
     */
 
     override fun temporaryBasalText(): String =
-        profileFunction.getProfile()?.let { profile ->
+        runBlocking { profileFunction.getProfile() }?.let { profile ->
             var temporaryBasal = processedTbrEbData.getTempBasalIncludingConvertedExtended(dateUtil.now())
             if (temporaryBasal?.isInProgress == false) temporaryBasal = null
             temporaryBasal?.let { rh.gs(app.aaps.plugins.main.R.string.temp_basal_overview_short_name) + " " + it.toStringShort(rh) }
@@ -143,7 +148,7 @@ class OverviewDataImpl @Inject constructor(
         } ?: rh.gs(app.aaps.core.ui.R.string.value_unavailable_short)
 
     override fun temporaryBasalDialogText(): String =
-        profileFunction.getProfile()?.let { profile ->
+        runBlocking { profileFunction.getProfile() }?.let { profile ->
             processedTbrEbData.getTempBasalIncludingConvertedExtended(dateUtil.now())?.let { temporaryBasal ->
                 "${rh.gs(app.aaps.core.ui.R.string.base_basal_rate_label)}: ${rh.gs(app.aaps.core.ui.R.string.pump_base_basal_rate, profile.getBasal())}" +
                     "\n" + rh.gs(app.aaps.core.ui.R.string.tempbasal_label) + ": " + temporaryBasal.toStringFull(profile, dateUtil, rh)
@@ -152,7 +157,7 @@ class OverviewDataImpl @Inject constructor(
         } ?: rh.gs(app.aaps.core.ui.R.string.value_unavailable_short)
 
     @DrawableRes override fun temporaryBasalIcon(): Int =
-        profileFunction.getProfile()?.let { profile ->
+        runBlocking { profileFunction.getProfile() }?.let { profile ->
             processedTbrEbData.getTempBasalIncludingConvertedExtended(dateUtil.now())?.let { temporaryBasal ->
                 val percentRate = temporaryBasal.convertedToPercent(dateUtil.now(), profile)
                 when {
@@ -173,14 +178,14 @@ class OverviewDataImpl @Inject constructor(
     */
 
     override fun extendedBolusText(): String =
-        persistenceLayer.getExtendedBolusActiveAt(dateUtil.now())?.let { extendedBolus ->
+        runBlocking { persistenceLayer.getExtendedBolusActiveAt(dateUtil.now()) }?.let { extendedBolus ->
             if (!extendedBolus.isInProgress(dateUtil)) ""
             else if (!activePlugin.activePump.isFakingTempsByExtendedBoluses) rh.gs(app.aaps.core.ui.R.string.pump_base_basal_rate, extendedBolus.rate)
             else ""
         } ?: ""
 
     override fun extendedBolusDialogText(): String =
-        persistenceLayer.getExtendedBolusActiveAt(dateUtil.now())?.toStringFull(dateUtil, rh) ?: ""
+        runBlocking { persistenceLayer.getExtendedBolusActiveAt(dateUtil.now()) }?.toStringFull(dateUtil, rh) ?: ""
 
     /*
      * Graphs
@@ -199,7 +204,7 @@ class OverviewDataImpl @Inject constructor(
     override var absoluteBasalGraphSeries: SeriesData = LineGraphSeries<ScaledDataPoint>()
 
     override var temporaryTargetSeries: SeriesData = LineGraphSeries<DataPoint>()
-    override var runningModesSeries: SeriesData = PointsWithLabelGraphSeries< RunningModeDataPoint>()
+    override var runningModesSeries: SeriesData = PointsWithLabelGraphSeries<RunningModeDataPoint>()
 
     override var tsunamiSeries: SeriesData = LineGraphSeries<DataPoint>()
 
@@ -234,7 +239,7 @@ class OverviewDataImpl @Inject constructor(
 
     override var maxDevValueFound = Double.MIN_VALUE
     override val devScale = Scale()
-    override var deviationsSeries: SeriesData = BarGraphSeries<DeviationDataPoint>()
+    override var deviationsSeries: SeriesData = BarGraphSeries<DeviationDataPointLegacy>()
 
     override var maxRatioValueFound = 5.0                    //even if sens data equals 0 for all the period, minimum scale is between 95% and 105%
     override var minRatioValueFound = -maxRatioValueFound

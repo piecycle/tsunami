@@ -40,11 +40,6 @@
     <string name="pref_3_hours">3 timmar</string>
     <string name="pref_4_hours">4 timmar</string>
     <string name="pref_5_hours">5 timmar</string>
-    <string name="pref_input_design">Inmatningsdesign</string>
-    <string name="pref_default">Standardinställning</string>
-    <string name="pref_quick_righty">Snabb höger</string>
-    <string name="pref_quick_lefty">Snabb vänster</string>
-    <string name="pref_modern_sparse">Modern Sparse</string>
     <string name="pref_big_numbers">Stora siffror</string>
     <string name="pref_ring_history">Ringhistorik</string>
     <string name="pref_light_ring_history">Ljus ringhistorik</string>
@@ -124,18 +119,13 @@
     <string name="color_name_black">svart</string>
     <string name="color_name_multicolor">flerfärgad</string>
     <string name="pref_simplify_ui">Förenkla gränssnittet</string>
-    <string name="pref_simplify_ui_sum">Visa bara tid och BG</string>
     <string name="pref_vibrate_hourly">Vibrera varje timme</string>
     <string name="pref_show_weeknumber">Visa veckonummer</string>
     <string name="custom_pref_show_seconds">Visa sekunder</string>
-    <string name="digitalstyle_pref_your_style">Din stil:</string>
     <string name="digitalstyle_style_none">ingen stil</string>
     <string name="digitalstyle_style_minimal">minimal stil</string>
     <string name="digitalstyle_style_shape">formstil</string>
     <string name="digitalstyle_style_full">full stil</string>
-    <string name="digitalstyle_pref_your_color">Färg:</string>
-    <string name="digitalstyle_pref_your_color_saturation">Färgmättnad:</string>
-    <string name="digitalstyle_pref_your_color_opacity">Opacitet:</string>
     <string name="bolus_progress_channel_name">AAPS Bolusförlopp</string>
     <string name="bolus_progress_silent_channel_name">AAPS Bolusförlopp (tyst)</string>
     <string name="bolus_progress_channel_description">Bolusförlopp och avbryt</string>
@@ -171,6 +161,5 @@
     <string name="hour_minute_second">%1$s:%2$s:%3$s</string>
     <string name="old">gammal</string>
     <string name="old_warning">gammal!</string>
-    <string name="error">fel!</string>
     <string name="pref_heartRateSampling">Hjärtfrekvens</string>
 </resources>

@@ -9,6 +9,7 @@
     <string name="pump_status_busy">Zauzet</string>
     <string name="pump_status_suspended">Suspendiran</string>
     <string name="pump_status_executing_command">Izvršavanje naredbe</string>
+    <!-- Commands -->
     <!-- PumpCommon - History Group -->
     <string name="history_group_all">Svi</string>
     <string name="history_group_bolus">Bolusi</string>
@@ -37,9 +38,4 @@
     <string name="ble_config_remove">Ukloniti</string>
     <!-- Pump History -->
     <string name="pump_history_type">Tip:</string>
-    <plurals name="duration_days">
-        <item quantity="one">%1$d dan</item>
-        <item quantity="few">%1$d dana</item>
-        <item quantity="other">%1$d dana</item>
-    </plurals>
 </resources>

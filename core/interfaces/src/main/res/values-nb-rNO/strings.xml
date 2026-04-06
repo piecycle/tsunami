@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Dialogs-->
+    <string name="confirmation">Bekreftelse</string>
     <!--    Events-->
     <string name="bolus_delivering">Leverer %1$.2f E</string>
+    <string name="bolus_delivered_so_far">%1$.2f E / %2$.2f E levert</string>
     <string name="bolus_delivered_successfully">Bolus på %1$.2f E ble levert</string>
     <!-- PumpPluginBase -->
     <string name="pump_driver_changed" comment="26 characters max for translation">Pumpedriver er endret.</string>
@@ -12,6 +15,19 @@
     <string name="hoursago">%1$.1ft siden</string>
     <string name="days_ago">%1$.1f dager siden</string>
     <string name="days_ago_round">%1$.0f dager siden</string>
+    <plurals name="plurals_day_hour_ago">
+        <item quantity="one">%1$s dag %2$s timer siden</item>
+        <item quantity="other">%1$s dager %2$s timer siden</item>
+    </plurals>
+    <plurals name="plurals_hour_ago">
+        <item quantity="one">%1$s time siden</item>
+        <item quantity="other">%1$s timer siden</item>
+    </plurals>
+    <plurals name="plurals_minute_ago">
+        <item quantity="one">et øyeblikk siden</item>
+        <item quantity="other">%1$s minutter siden</item>
+    </plurals>
+    <string name="seconds_ago">sekunder siden</string>
     <string name="in_days">i %1$.0f dager</string>
     <string name="in_days_round">om %1$.0f dager</string>
     <string name="shorthour">t</string>
@@ -37,6 +53,7 @@
     <string name="connecting_for">Tilkobler i %1$d sek</string>
     <string name="handshaking">Tilkobling verifiseres</string>
     <string name="connected">Tilkoblet</string>
+    <string name="authorized">Autorisert</string>
     <string name="disconnecting">Frakobler</string>
     <string name="waiting_for_disconnection">Venter på frakobling</string>
     <!-- Custom Watchface -->
@@ -74,4 +91,27 @@
     <string name="temp_basal_percent_rate">%1$.2f%% @%2$s %3$d/%4$d\'</string>
     <string name="temp_basal_extended_bolus">F %1$.2f E/t @%2$s %3$d/%4$d min</string>
     <string name="forever">Alltid</string>
+    <!-- Permission rationales (used by PumpPluginBase) -->
+    <string name="permission_bluetooth_title">Bluetooth</string>
+    <string name="permission_bluetooth_description">Appen trenger Bluetooth-tillatelse for å kommunisere med pumpen</string>
+    <!-- Insulin -->
+    <string name="insulin_plugin">Insulin</string>
+    <string name="insulin_shortname">INS</string>
+    <string name="unknown">Ukjent</string>
+    <string name="rapid_acting_oref">Novorapid</string>
+    <string name="lyumjev">Lyumjev</string>
+    <string name="free_peak_oref">Egendefinert topp Oref</string>
+    <string name="ultra_rapid_oref">Fiasp</string>
+    <string name="fast_acting_insulin_comment">Novorapid, Novolog, Humalog</string>
+    <string name="ultra_fast_acting_insulin_comment">Fiasp</string>
+    <string name="insulin_peak_time">Topptid [min]</string>
+    <string name="insulin_oref_peak">IOB-kurvens topptid</string>
+    <!-- Concentration -->
+    <string name="u10">U10</string>
+    <string name="u40">U40</string>
+    <string name="u50">U50</string>
+    <string name="u100">U100</string>
+    <string name="u200">U200</string>
+    <string name="u300">U300</string>
+    <string name="u500">U500</string>
 </resources>

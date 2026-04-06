@@ -1,12 +1,13 @@
 package app.aaps.core.objects.extensions
 
+import app.aaps.core.data.configuration.Constants
 import app.aaps.core.data.model.BS
 import app.aaps.core.data.model.EB
 import app.aaps.core.data.model.TB
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.aps.AutosensResult
 import app.aaps.core.interfaces.aps.IobTotal
-import app.aaps.core.interfaces.insulin.Insulin
+import app.aaps.core.interfaces.profile.EffectiveProfile
 import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.utils.DateUtil
@@ -42,13 +43,13 @@ fun EB.toTemporaryBasal(profile: Profile): TB =
         type = TB.Type.FAKE_EXTENDED
     )
 
-fun EB.iobCalc(time: Long, profile: Profile, insulinInterface: Insulin): IobTotal {
+fun EB.iobCalc(time: Long, profile: EffectiveProfile): IobTotal {
     if (!isValid) return IobTotal(time)
     val result = IobTotal(time)
     val realDuration = getPassedDurationToTimeInMinutes(time)
     if (realDuration > 0) {
-        val dia = profile.dia
-        val diaAgo = time - dia * 60 * 60 * 1000
+        val insulinEndTime = profile.iCfg.insulinEndTime
+        val diaAgo = time - insulinEndTime
         val aboutFiveMinIntervals = ceil(realDuration / 5.0).toInt()
         val spacing = realDuration / aboutFiveMinIntervals.toDouble()
         for (j in 0L until aboutFiveMinIntervals) {
@@ -59,9 +60,10 @@ fun EB.iobCalc(time: Long, profile: Profile, insulinInterface: Insulin): IobTota
                 val tempBolusPart = BS(
                     timestamp = calcDate,
                     amount = tempBolusSize,
-                    type = BS.Type.NORMAL
+                    type = BS.Type.NORMAL,
+                    iCfg = profile.iCfg
                 )
-                val aIOB = insulinInterface.iobCalcForTreatment(tempBolusPart, time, dia)
+                val aIOB = tempBolusPart.iobCalc(time)
                 result.iob += aIOB.iobContrib
                 result.activity += aIOB.activityContrib
                 result.extendedBolusInsulin += tempBolusPart.amount
@@ -73,18 +75,17 @@ fun EB.iobCalc(time: Long, profile: Profile, insulinInterface: Insulin): IobTota
 
 fun EB.iobCalc(
     time: Long,
-    profile: Profile,
+    profile: EffectiveProfile,
     lastAutosensResult: AutosensResult,
     exerciseMode: Boolean,
     halfBasalExerciseTarget: Int,
-    isTempTarget: Boolean,
-    insulinInterface: Insulin
+    isTempTarget: Boolean
 ): IobTotal {
     if (!isValid) return IobTotal(time)
     val result = IobTotal(time)
     val realDuration = getPassedDurationToTimeInMinutes(time)
     var sensitivityRatio = lastAutosensResult.ratio
-    val normalTarget = 100.0
+    val normalTarget = Constants.NORMAL_TARGET_MGDL.toDouble()
     if (exerciseMode && isTempTarget && profile.getTargetMgdl() >= normalTarget + 5) {
         // w/ target 100, temp target 110 = .89, 120 = 0.8, 140 = 0.67, 160 = .57, and 200 = .44
         // e.g.: Sensitivity ratio set to 0.8 based on temp target of 120; Adjusting basal from 1.65 to 1.35; ISF from 58.9 to 73.6
@@ -93,8 +94,8 @@ fun EB.iobCalc(
     }
     if (realDuration > 0) {
         var netBasalRate: Double
-        val dia = profile.dia
-        val diaAgo = time - dia * 60 * 60 * 1000
+        val insulinEndTime = profile.iCfg.insulinEndTime
+        val diaAgo = time - insulinEndTime
         val aboutFiveMinIntervals = ceil(realDuration / 5.0).toInt()
         val spacing = realDuration / aboutFiveMinIntervals
         for (j in 0L until aboutFiveMinIntervals) {
@@ -108,9 +109,10 @@ fun EB.iobCalc(
                 val tempBolusPart = BS(
                     timestamp = calcDate,
                     amount = tempBolusSize,
-                    type = BS.Type.NORMAL
+                    type = BS.Type.NORMAL,
+                    iCfg = profile.iCfg
                 )
-                val aIOB = insulinInterface.iobCalcForTreatment(tempBolusPart, time, dia)
+                val aIOB = tempBolusPart.iobCalc(time)
                 result.iob += aIOB.iobContrib
                 result.activity += aIOB.activityContrib
                 result.extendedBolusInsulin += tempBolusPart.amount

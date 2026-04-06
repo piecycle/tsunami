@@ -45,11 +45,6 @@
     <string name="pref_3_hours">3 horas</string>
     <string name="pref_4_hours">4 horas</string>
     <string name="pref_5_hours">5 horas</string>
-    <string name="pref_input_design">Design de Entrada</string>
-    <string name="pref_default">Padrão</string>
-    <string name="pref_quick_righty">Rápido Direito</string>
-    <string name="pref_quick_lefty">Rápido Esquerdo</string>
-    <string name="pref_modern_sparse">Moderno Esparso</string>
     <string name="pref_big_numbers">Números Grandes</string>
     <string name="pref_ring_history">Anel Histórico</string>
     <string name="pref_light_ring_history">Anel Suave Histórico</string>
@@ -129,18 +124,13 @@
     <string name="color_name_black">preto</string>
     <string name="color_name_multicolor">multicolor</string>
     <string name="pref_simplify_ui">Simplificar a Interface</string>
-    <string name="pref_simplify_ui_sum">Mostrar apenas tempo e glicemia</string>
     <string name="pref_vibrate_hourly">Vibrar por hora</string>
     <string name="pref_show_weeknumber">Mostrar número da Semana</string>
     <string name="custom_pref_show_seconds">Mostrar segundos</string>
-    <string name="digitalstyle_pref_your_style">Seu estilo:</string>
     <string name="digitalstyle_style_none">sem estilo</string>
     <string name="digitalstyle_style_minimal">estilo minimalista</string>
     <string name="digitalstyle_style_shape">estilo de forma</string>
     <string name="digitalstyle_style_full">estilo completo</string>
-    <string name="digitalstyle_pref_your_color">Sua cor:</string>
-    <string name="digitalstyle_pref_your_color_saturation">Sua saturação de cor:</string>
-    <string name="digitalstyle_pref_your_color_opacity">Sua opacidade de cor:</string>
     <string name="bolus_progress_channel_name">Progresso Bólus AAPS</string>
     <string name="bolus_progress_silent_channel_name">Progresso Bólus AAPS Silencioso</string>
     <string name="bolus_progress_channel_description">Progresso Bólus e cancelar</string>
@@ -176,6 +166,5 @@
     <string name="hour_minute_second">%1$s:%2$s:%3$s</string>
     <string name="old">antigo</string>
     <string name="old_warning">!antigo!</string>
-    <string name="error">!err!</string>
     <string name="pref_heartRateSampling">Frequência cardíaca</string>
 </resources>

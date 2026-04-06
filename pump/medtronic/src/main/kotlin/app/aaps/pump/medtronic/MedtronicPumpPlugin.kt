@@ -2,10 +2,10 @@ package app.aaps.pump.medtronic
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.SystemClock
+import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
@@ -16,17 +16,19 @@ import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.pump.defs.TimeChangeType
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
-import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.notifications.NotificationId
+import app.aaps.core.interfaces.notifications.NotificationManager
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.profile.Profile
+import app.aaps.core.interfaces.pump.BlePreCheck
+import app.aaps.core.interfaces.pump.BolusProgressData
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.Pump
 import app.aaps.core.interfaces.pump.PumpEnactResult
+import app.aaps.core.interfaces.pump.PumpProfile
+import app.aaps.core.interfaces.pump.PumpRate
 import app.aaps.core.interfaces.pump.PumpSync
 import app.aaps.core.interfaces.pump.PumpSync.TemporaryBasalType
-import app.aaps.core.interfaces.pump.actions.CustomAction
-import app.aaps.core.interfaces.pump.actions.CustomActionType
 import app.aaps.core.interfaces.pump.defs.determineCorrectBasalSize
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
@@ -36,13 +38,16 @@ import app.aaps.core.interfaces.rx.events.EventRefreshButtonState
 import app.aaps.core.interfaces.rx.events.EventRefreshOverview
 import app.aaps.core.interfaces.rx.events.EventSWRLStatus
 import app.aaps.core.interfaces.ui.UiInteraction
+import app.aaps.core.interfaces.utils.DateUtil
+import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.keys.interfaces.Preferences
+import app.aaps.core.ui.compose.icons.IcPluginMedtronic
+import app.aaps.core.ui.compose.preference.PreferenceSubScreenDef
 import app.aaps.core.utils.DateTimeUtil
 import app.aaps.core.validators.DefaultEditTextValidator
 import app.aaps.core.validators.EditTextValidator
 import app.aaps.core.validators.preferences.AdaptiveIntPreference
-import app.aaps.core.validators.preferences.AdaptiveIntentPreference
 import app.aaps.core.validators.preferences.AdaptiveListIntPreference
 import app.aaps.core.validators.preferences.AdaptiveListPreference
 import app.aaps.core.validators.preferences.AdaptiveStringPreference
@@ -50,7 +55,8 @@ import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
 import app.aaps.pump.common.PumpPluginAbstract
 import app.aaps.pump.common.data.PumpStatus
 import app.aaps.pump.common.defs.PumpDriverState
-import app.aaps.pump.common.dialog.RileyLinkBLEConfigActivity
+import app.aaps.pump.common.driver.refresh.PumpDataRefreshAction
+import app.aaps.pump.common.driver.refresh.PumpDataRefreshType
 import app.aaps.pump.common.events.EventRileyLinkDeviceStatusChange
 import app.aaps.pump.common.hw.rileylink.ble.defs.RileyLinkEncodingType
 import app.aaps.pump.common.hw.rileylink.ble.defs.RileyLinkTargetFrequency
@@ -58,7 +64,6 @@ import app.aaps.pump.common.hw.rileylink.defs.RileyLinkPumpDevice
 import app.aaps.pump.common.hw.rileylink.defs.RileyLinkPumpInfo
 import app.aaps.pump.common.hw.rileylink.defs.RileyLinkServiceState
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkDoubleKey
-import app.aaps.pump.common.hw.rileylink.keys.RileyLinkIntentPreferenceKey
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkLongKey
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkStringKey
 import app.aaps.pump.common.hw.rileylink.keys.RileyLinkStringPreferenceKey
@@ -73,6 +78,7 @@ import app.aaps.pump.common.sync.PumpSyncStorage
 import app.aaps.pump.common.utils.ProfileUtil
 import app.aaps.pump.medtronic.comm.history.pump.PumpHistoryEntry
 import app.aaps.pump.medtronic.comm.history.pump.PumpHistoryResult
+import app.aaps.pump.medtronic.compose.MedtronicComposeContent
 import app.aaps.pump.medtronic.data.MedtronicHistoryData
 import app.aaps.pump.medtronic.data.dto.BasalProfile
 import app.aaps.pump.medtronic.data.dto.BasalProfile.Companion.getProfilesByHourToString
@@ -82,10 +88,10 @@ import app.aaps.pump.medtronic.defs.BasalProfileStatus
 import app.aaps.pump.medtronic.defs.BatteryType
 import app.aaps.pump.medtronic.defs.MedtronicCommandType
 import app.aaps.pump.medtronic.defs.MedtronicCommandType.Companion.getSettings
-import app.aaps.pump.medtronic.defs.MedtronicCustomActionType
+import app.aaps.pump.medtronic.defs.MedtronicDeviceType
 import app.aaps.pump.medtronic.defs.MedtronicNotificationType
-import app.aaps.pump.medtronic.defs.MedtronicStatusRefreshType
 import app.aaps.pump.medtronic.defs.MedtronicUIResponseType
+import app.aaps.pump.medtronic.driver.MedtronicPumpDriverConfiguration
 import app.aaps.pump.medtronic.driver.MedtronicPumpStatus
 import app.aaps.pump.medtronic.events.EventMedtronicPumpConfigurationChanged
 import app.aaps.pump.medtronic.events.EventMedtronicPumpValuesChanged
@@ -96,6 +102,14 @@ import app.aaps.pump.medtronic.keys.MedtronicStringPreferenceKey
 import app.aaps.pump.medtronic.service.RileyLinkMedtronicService
 import app.aaps.pump.medtronic.util.MedtronicUtil
 import app.aaps.pump.medtronic.util.MedtronicUtil.Companion.isSame
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.runBlocking
 import org.joda.time.LocalDateTime
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -119,7 +133,6 @@ class MedtronicPumpPlugin @Inject constructor(
     commandQueue: CommandQueue,
     rxBus: RxBus,
     context: Context,
-    activePlugin: ActivePlugin,
     fabricPrivacy: FabricPrivacy,
     private val medtronicUtil: MedtronicUtil,
     private val medtronicPumpStatus: MedtronicPumpStatus,
@@ -127,45 +140,67 @@ class MedtronicPumpPlugin @Inject constructor(
     private val rileyLinkServiceData: RileyLinkServiceData,
     private val serviceTaskExecutor: ServiceTaskExecutor,
     private val uiInteraction: UiInteraction,
+    private val notificationManager: NotificationManager,
+    dateUtil: DateUtil,
     aapsSchedulers: AapsSchedulers,
     pumpSync: PumpSync,
     pumpSyncStorage: PumpSyncStorage,
+    decimalFormatter: DecimalFormatter,
     pumpEnactResultProvider: Provider<PumpEnactResult>,
+    bolusProgressData: BolusProgressData,
     private val wakeAndTuneTaskProvider: Provider<WakeAndTuneTask>,
-    private val resetRileyLinkConfigurationTaskProvider: Provider<ResetRileyLinkConfigurationTask>
+    private val resetRileyLinkConfigurationTaskProvider: Provider<ResetRileyLinkConfigurationTask>,
+    private val blePreCheck: BlePreCheck
 ) : PumpPluginAbstract(
     pluginDescription = PluginDescription()
         .mainType(PluginType.PUMP)
-        .fragmentClass(MedtronicFragment::class.java.name)
-        .pluginIcon(app.aaps.core.ui.R.drawable.ic_veo_128)
+        .composeContent { _ ->
+            MedtronicComposeContent(
+                pluginName = rh.gs(R.string.medtronic_name),
+                blePreCheck = blePreCheck
+            )
+        }
+        .icon(IcPluginMedtronic)
         .pluginName(R.string.medtronic_name)
         .shortName(R.string.medtronic_name_short)
         .preferencesId(PluginDescription.PREFERENCE_SCREEN)
         .description(R.string.description_pump_medtronic),
     ownPreferences = listOf(
-        RileylinkBooleanPreferenceKey::class.java, RileyLinkDoubleKey::class.java, RileyLinkIntentPreferenceKey::class.java,
+        RileylinkBooleanPreferenceKey::class.java, RileyLinkDoubleKey::class.java,
         RileyLinkLongKey::class.java, RileyLinkStringKey::class.java, RileyLinkStringPreferenceKey::class.java,
         MedtronicBooleanPreferenceKey::class.java, MedtronicIntPreferenceKey::class.java,
         MedtronicLongNonKey::class.java, MedtronicStringPreferenceKey::class.java
     ),
     PumpType.MEDTRONIC_522_722,  // we default to most basic model, correct model from config is loaded later
-    rh, aapsLogger, preferences, commandQueue, rxBus, context, fabricPrivacy, aapsSchedulers, pumpSync, pumpSyncStorage, pumpEnactResultProvider
+    rh = rh,
+    aapsLogger = aapsLogger,
+    preferences = preferences,
+    commandQueue = commandQueue,
+    rxBus = rxBus,
+    //activePlugin = activePlugin,
+    context = context,
+    fabricPrivacy = fabricPrivacy,
+    dateUtil = dateUtil,
+    aapsSchedulers = aapsSchedulers,
+    pumpSync = pumpSync,
+    pumpSyncStorage = pumpSyncStorage,
+    decimalFormatter = decimalFormatter,
+    //instantiator = instantiator,
+    pumpEnactResultProvider = pumpEnactResultProvider,
+    bolusProgressData = bolusProgressData,
+    pumpDriverConfigurationInternal = MedtronicPumpDriverConfiguration()
 ), Pump, RileyLinkPumpDevice, PumpSyncEntriesCreator {
 
     private var rileyLinkMedtronicService: RileyLinkMedtronicService? = null
+    private var scope: CoroutineScope? = null
 
-    // variables for handling statuses and history
-    private var firstRun = true
-    private var isRefresh = false
-    private val statusRefreshMap: MutableMap<MedtronicStatusRefreshType, Long> = mutableMapOf()
-    private var isInitialized = false
+    // variables for handling statuses and history (most moved to PumpAbstract now)
     private var lastPumpHistoryEntry: PumpHistoryEntry? = null
     private val busyTimestamps: MutableList<Long> = ArrayList()
-    private var hasTimeDateOrTimeZoneChanged = false
     private var isBusy = false
 
     override fun onStart() {
-        aapsLogger.debug(LTag.PUMP, deviceID() + " started. (V2.0006)")
+        aapsLogger.debug(LTag.PUMP, deviceID() + " started. (V2.0007)")
         serviceConnection = object : ServiceConnection {
             override fun onServiceDisconnected(name: ComponentName) {
                 aapsLogger.debug(LTag.PUMP, "RileyLinkMedtronicService is disconnected")
@@ -196,7 +231,29 @@ class MedtronicPumpPlugin @Inject constructor(
                 .observeOn(aapsSchedulers.io)
                 .subscribe({ event: EventRileyLinkDeviceStatusChange -> rxBus.send(EventSWRLStatus(event.getStatus(context))) }, fabricPrivacy::logException)
         )
+        val newScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+        scope = newScope
+        preferences.observe(MedtronicStringPreferenceKey.Serial).drop(1).onEach {
+            aapsLogger.debug(LTag.PUMP, "Medtronic serial number changed, reporting new pump")
+            medtronicPumpStatus.serialNumber = preferences.getIfExists(MedtronicStringPreferenceKey.Serial) ?: ""
+            pumpSync.connectNewPump()
+            commandQueue.readStatus(rh.gs(app.aaps.core.ui.R.string.device_changed), null)
+        }.launchIn(newScope)
         super.onStart()
+    }
+
+    override fun onStop() {
+        scope?.cancel()
+        scope = null
+        super.onStop()
+    }
+
+    override fun updatePreferenceSummary(pref: Preference) {
+        super.updatePreferenceSummary(pref)
+        if (pref.key == RileyLinkStringPreferenceKey.MacAddress.key) {
+            val value = preferences.getIfExists(RileyLinkStringPreferenceKey.MacAddress)
+            pref.summary = value ?: rh.gs(app.aaps.core.ui.R.string.not_set_short)
+        }
     }
 
     override fun initPumpStatusData() {
@@ -234,22 +291,8 @@ class MedtronicPumpPlugin @Inject constructor(
     }
 
     override fun onStartScheduledPumpActions() {
-
         // check status every minute (if any status needs refresh we send readStatus command)
-        Thread {
-            do {
-                SystemClock.sleep(60000)
-                if (this.isInitialized) {
-                    val statusRefresh = synchronized(statusRefreshMap) { HashMap(statusRefreshMap) }
-                    if (doWeHaveAnyStatusNeededRefreshing(statusRefresh)) {
-                        if (!commandQueue.statusInQueue()) {
-                            commandQueue.readStatus(rh.gs(R.string.scheduled_status_refresh), null)
-                        }
-                    }
-                    clearBusyQueue()
-                }
-            } while (serviceRunning)
-        }.start()
+        startRefreshOfPumpCommands()
     }
 
     override val serviceClass: Class<*> = RileyLinkMedtronicService::class.java
@@ -273,9 +316,12 @@ class MedtronicPumpPlugin @Inject constructor(
         medtronicPumpStatus.setLastCommunicationToNow()
     }
 
+    override fun isConfigured(): Boolean =
+        !rileyLinkServiceData.rileyLinkAddress.isNullOrEmpty() && medtronicPumpStatus.serialNumber.isNotEmpty()
+
     override fun isInitialized(): Boolean {
         if (displayConnectionMessages) aapsLogger.debug(LTag.PUMP, "MedtronicPumpPlugin::isInitialized")
-        return isServiceSet && isInitialized
+        return isConfigured() && isServiceSet && isDriverInitialized
     }
 
     override fun setBusy(busy: Boolean) {
@@ -307,7 +353,6 @@ class MedtronicPumpPlugin @Inject constructor(
         }
         if (deleteFromQueue.size == busyTimestamps.size) {
             busyTimestamps.clear()
-            setEnableCustomAction(MedtronicCustomActionType.ClearBolusBlock, false)
         }
         if (deleteFromQueue.isNotEmpty()) {
             busyTimestamps.removeAll(deleteFromQueue)
@@ -331,7 +376,9 @@ class MedtronicPumpPlugin @Inject constructor(
         } else {
             refreshAnyStatusThatNeedsToBeRefreshed()
         }
-        if (needRefresh) rxBus.send(EventMedtronicPumpValuesChanged())
+        if (needRefresh) {
+            rxBus.send(EventMedtronicPumpValuesChanged())
+        }
     }
 
     fun resetStatusState() {
@@ -353,17 +400,23 @@ class MedtronicPumpPlugin @Inject constructor(
         }
 
     private fun refreshAnyStatusThatNeedsToBeRefreshed() {
-        val statusRefresh = synchronized(statusRefreshMap) { HashMap(statusRefreshMap) }
-        if (!doWeHaveAnyStatusNeededRefreshing(statusRefresh)) {
+        //val statusRefresh = synchronized(statusRefreshMap) { HashMap(statusRefreshMap) }
+
+        val statusRefresh = workWithStatusRefresh(
+            PumpDataRefreshAction.GetData, null,
+            null
+        )
+
+        if (!doWeHaveAnyStatusNeededRefereshing(statusRefresh)) {
             return
         }
         var resetTime = false
         if (isPumpNotReachable) {
             aapsLogger.error("Pump unreachable.")
-            medtronicUtil.sendNotification(MedtronicNotificationType.PumpUnreachable, rh)
+            medtronicUtil.sendNotification(MedtronicNotificationType.PumpUnreachable)
             return
         }
-        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
+        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
         if (hasTimeDateOrTimeZoneChanged) {
             checkTimeAndOptionallySetTime()
 
@@ -372,31 +425,38 @@ class MedtronicPumpPlugin @Inject constructor(
         }
 
         // execute
-        val refreshTypesNeededToReschedule: MutableSet<MedtronicStatusRefreshType> = mutableSetOf()
-        for ((key, value) in statusRefresh) {
-            if (value > 0 && System.currentTimeMillis() > value) {
+        val refreshTypesNeededToReschedule: MutableSet<PumpDataRefreshType> = mutableSetOf()
+        for ((key, value) in statusRefresh!!) {
+            if (value!! > 0 && System.currentTimeMillis() > value) {
                 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
                 when (key) {
-                    MedtronicStatusRefreshType.PumpHistory                                                -> {
+                    PumpDataRefreshType.PumpHistory      -> {
                         readPumpHistory()
                     }
 
-                    MedtronicStatusRefreshType.PumpTime                                                   -> {
+                    PumpDataRefreshType.PumpTime         -> {
                         checkTimeAndOptionallySetTime()
                         refreshTypesNeededToReschedule.add(key)
                         resetTime = true
                     }
 
-                    MedtronicStatusRefreshType.BatteryStatus, MedtronicStatusRefreshType.RemainingInsulin -> {
-                        rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(key.getCommandType(medtronicUtil.medtronicPumpModel)!!)
+                    PumpDataRefreshType.BatteryStatus,
+                    PumpDataRefreshType.RemainingInsulin -> {
+                        rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(
+                            getPumpCommandForRefresh(key, medtronicUtil.medtronicPumpModel)!!
+                        )
                         refreshTypesNeededToReschedule.add(key)
                         resetTime = true
                     }
 
-                    MedtronicStatusRefreshType.Configuration                                              -> {
-                        rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(key.getCommandType(medtronicUtil.medtronicPumpModel)!!)
+                    PumpDataRefreshType.Configuration    -> {
+                        rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(
+                            getPumpCommandForRefresh(key, medtronicUtil.medtronicPumpModel)!!
+                        )
                         resetTime = true
                     }
+
+                    else                                 -> {}
                 }
             }
 
@@ -406,16 +466,8 @@ class MedtronicPumpPlugin @Inject constructor(
             }
         }
 
-        if (resetTime) medtronicPumpStatus.setLastCommunicationToNow()
-    }
-
-    private fun doWeHaveAnyStatusNeededRefreshing(statusRefresh: Map<MedtronicStatusRefreshType, Long>): Boolean {
-        for ((_, value) in statusRefresh) {
-            if (value > 0 && System.currentTimeMillis() > value) {
-                return true
-            }
-        }
-        return hasTimeDateOrTimeZoneChanged
+        if (resetTime)
+            medtronicPumpStatus.setLastCommunicationToNow()
     }
 
     private fun setRefreshButtonEnabled(enabled: Boolean) {
@@ -430,11 +482,11 @@ class MedtronicPumpPlugin @Inject constructor(
         if (isRefresh) {
             if (isPumpNotReachable) {
                 aapsLogger.error("initializePump::Pump unreachable.")
-                medtronicUtil.sendNotification(MedtronicNotificationType.PumpUnreachable, rh)
+                medtronicUtil.sendNotification(MedtronicNotificationType.PumpUnreachable)
                 setRefreshButtonEnabled(true)
                 return true
             }
-            medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
+            medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
         }
 
         // model (once)
@@ -443,7 +495,7 @@ class MedtronicPumpPlugin @Inject constructor(
         } else {
             if (medtronicPumpStatus.medtronicDeviceType !== medtronicUtil.medtronicPumpModel) {
                 aapsLogger.warn(LTag.PUMP, "Configured pump is not the same as one detected.")
-                medtronicUtil.sendNotification(MedtronicNotificationType.PumpTypeNotSame, rh)
+                medtronicUtil.sendNotification(MedtronicNotificationType.PumpTypeNotSame)
             }
         }
         pumpState = PumpDriverState.Connected
@@ -454,11 +506,11 @@ class MedtronicPumpPlugin @Inject constructor(
 
         // remaining insulin (>50 = 4h; 50-20 = 1h; 15m)
         rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(MedtronicCommandType.GetRemainingInsulin)
-        scheduleNextRefresh(MedtronicStatusRefreshType.RemainingInsulin, 10)
+        scheduleNextRefresh(PumpDataRefreshType.RemainingInsulin, 10)
 
         // remaining power (1h)
         rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(MedtronicCommandType.GetBatteryStatus)
-        scheduleNextRefresh(MedtronicStatusRefreshType.BatteryStatus, 20)
+        scheduleNextRefresh(PumpDataRefreshType.BatteryStatus, 20)
 
         // configuration (once and then if history shows config changes)
         rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(getSettings(medtronicUtil.medtronicPumpModel))
@@ -477,7 +529,7 @@ class MedtronicPumpPlugin @Inject constructor(
         if (!isRefresh) {
             pumpState = PumpDriverState.Initialized
         }
-        isInitialized = true
+        isDriverInitialized = true
         // this.pumpState = PumpDriverState.Initialized;
         firstRun = false
         return true
@@ -492,9 +544,9 @@ class MedtronicPumpPlugin @Inject constructor(
         }
 
     @Synchronized
-    override fun isThisProfileSet(profile: Profile): Boolean {
+    override fun isThisProfileSet(profile: PumpProfile): Boolean {
         aapsLogger.debug(LTag.PUMP, "isThisProfileSet: basalInitialized=" + medtronicPumpStatus.basalProfileStatus)
-        if (!isInitialized) return true
+        if (!isDriverInitialized) return true
         if (medtronicPumpStatus.basalProfileStatus === BasalProfileStatus.NotInitialized) {
             // this shouldn't happen, but if there was problem we try again
             basalProfiles
@@ -523,8 +575,6 @@ class MedtronicPumpPlugin @Inject constructor(
             if (!isSame(basalsByHour[hour], basalValueValue)) {
                 invalid = true
             }
-            // stringBuilder.append(String.format(Locale.ENGLISH, "%.3f", basalValueValue))
-            // stringBuilder.append(" ")
         }
         aapsLogger.debug(LTag.PUMP, stringBuilder.toString())
         if (!invalid) {
@@ -535,12 +585,8 @@ class MedtronicPumpPlugin @Inject constructor(
         return !invalid
     }
 
-    override val lastDataTime: Long = medtronicPumpStatus.lastConnection
-    override val lastBolusTime: Long? get() = null
-    override val lastBolusAmount: Double? get() = null
-    override val baseBasalRate: Double get() = medtronicPumpStatus.basalProfileForHour
-    override val reservoirLevel: Double get() = medtronicPumpStatus.reservoirRemainingUnits
-    override val batteryLevel: Int get() = medtronicPumpStatus.batteryRemaining
+    override val baseBasalRate: PumpRate
+        get() = PumpRate(medtronicPumpStatus.basalProfileForHour)
 
     override fun triggerUIChange() {
         rxBus.send(EventMedtronicPumpValuesChanged())
@@ -568,7 +614,7 @@ class MedtronicPumpPlugin @Inject constructor(
             setRefreshButtonEnabled(true)
             return
         }
-        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
+        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
         rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(MedtronicCommandType.GetRealTimeClock)
         var clock = medtronicUtil.pumpTime
         if (clock == null) { // retry
@@ -582,18 +628,18 @@ class MedtronicPumpPlugin @Inject constructor(
                 aapsLogger.info(LTag.PUMP, String.format(Locale.ENGLISH, "MedtronicPumpPlugin::checkTimeAndOptionallySetTime - Time difference is %d s. Set time on pump.", timeDiff))
                 rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(MedtronicCommandType.SetRealTimeClock)
                 if (clock.timeDifference == 0) {
-                    uiInteraction.addNotificationValidFor(Notification.INSIGHT_DATE_TIME_UPDATED, rh.gs(R.string.pump_time_updated), Notification.INFO, 60)
+                    notificationManager.post(NotificationId.INSIGHT_DATE_TIME_UPDATED, app.aaps.core.ui.R.string.pump_time_updated, validMinutes = 60)
                 }
             } else {
                 if (clock.localDeviceTime.year > 2015) {
                     aapsLogger.error(String.format(Locale.ENGLISH, "MedtronicPumpPlugin::checkTimeAndOptionallySetTime - Time difference over 24h requested [diff=%d s]. Doing nothing.", timeDiff))
-                    medtronicUtil.sendNotification(MedtronicNotificationType.TimeChangeOver24h, rh)
+                    medtronicUtil.sendNotification(MedtronicNotificationType.TimeChangeOver24h)
                 }
             }
         } else {
             aapsLogger.info(LTag.PUMP, String.format(Locale.ENGLISH, "MedtronicPumpPlugin::checkTimeAndOptionallySetTime - Time difference is %d s. Do nothing.", timeDiff))
         }
-        scheduleNextRefresh(MedtronicStatusRefreshType.PumpTime, 0)
+        scheduleNextRefresh(PumpDataRefreshType.PumpTime, 0)
     }
 
     @Synchronized
@@ -617,9 +663,9 @@ class MedtronicPumpPlugin @Inject constructor(
             aapsLogger.debug(LTag.PUMP, "MedtronicPumpPlugin::deliverBolus - Pump Unreachable.")
             return setNotReachable(isBolus = true, success = false)
         }
-        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
+        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
         if (bolusDeliveryType == BolusDeliveryType.CancelDelivery) {
-            // LOG.debug("MedtronicPumpPlugin::deliverBolus - Delivery Canceled.");
+            aapsLogger.debug(LTag.PUMP, "MedtronicPumpPlugin::deliverBolus - Delivery Canceled.")
             return setNotReachable(isBolus = true, success = true)
         }
 
@@ -651,7 +697,7 @@ class MedtronicPumpPlugin @Inject constructor(
                     // LOG.debug("MedtronicPumpPlugin::deliverBolus - Delivery Canceled after Bolus started.");
                     Thread {
                         SystemClock.sleep(2000)
-                        uiInteraction.runAlarm(rh.gs(R.string.medtronic_cmd_cancel_bolus_not_supported), rh.gs(R.string.medtronic_warning), app.aaps.core.ui.R.raw.boluserror)
+                        uiInteraction.runAlarm(rh.gs(R.string.medtronic_cmd_cancel_bolus_not_supported), rh.gs(app.aaps.core.ui.R.string.warning), app.aaps.core.ui.R.raw.boluserror)
                     }.start()
                 }
                 val now = System.currentTimeMillis()
@@ -668,7 +714,6 @@ class MedtronicPumpPlugin @Inject constructor(
                 val bolusTime = (detailedBolusInfo.insulin * 42.0).toInt()
                 val time = now + bolusTime * 1000
                 busyTimestamps.add(time)
-                setEnableCustomAction(MedtronicCustomActionType.ClearBolusBlock, true)
                 pumpEnactResultProvider.get().success(true).enacted(true).bolusDelivered(detailedBolusInfo.insulin)
             }
         } finally {
@@ -684,7 +729,7 @@ class MedtronicPumpPlugin @Inject constructor(
         setRefreshButtonEnabled(true)
         if (isBolus) bolusDeliveryType = BolusDeliveryType.Idle
         return if (success) pumpEnactResultProvider.get().success(true).enacted(false)
-        else pumpEnactResultProvider.get().success(false).enacted(false).comment(R.string.medtronic_pump_status_pump_unreachable)
+        else pumpEnactResultProvider.get().success(false).enacted(false).comment(app.aaps.core.ui.R.string.pump_unreachable)
     }
 
     override fun stopBolusDelivering() {
@@ -697,17 +742,17 @@ class MedtronicPumpPlugin @Inject constructor(
     // if enforceNew===true current temp basal is canceled and new TBR set (duration is prolonged),
     // if false and the same rate is requested enacted=false and success=true is returned and TBR is not changed
     @Synchronized
-    override fun setTempBasalAbsolute(absoluteRate: Double, durationInMinutes: Int, profile: Profile, enforceNew: Boolean, tbrType: TemporaryBasalType): PumpEnactResult {
+    override fun setTempBasalAbsolute(absoluteRate: Double, durationInMinutes: Int, enforceNew: Boolean, tbrType: TemporaryBasalType): PumpEnactResult {
         setRefreshButtonEnabled(false)
         if (isPumpNotReachable) {
             setRefreshButtonEnabled(true)
             return pumpEnactResultProvider.get() //
                 .success(false) //
                 .enacted(false) //
-                .comment(R.string.medtronic_pump_status_pump_unreachable)
+                .comment(app.aaps.core.ui.R.string.pump_unreachable)
         }
-        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
-        aapsLogger.info(LTag.PUMP, "setTempBasalAbsolute: rate: " + absoluteRate + ", duration=" + durationInMinutes)
+        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
+        aapsLogger.info(LTag.PUMP, "setTempBasalAbsolute: rate: ${absoluteRate}, duration= $durationInMinutes")
 
         // read current TBR
         val tbrCurrent = readTBR()
@@ -767,7 +812,7 @@ class MedtronicPumpPlugin @Inject constructor(
         } else {
             medtronicPumpStatus.tempBasalStart = System.currentTimeMillis()
             medtronicPumpStatus.tempBasalAmount = absoluteRate
-            medtronicPumpStatus.tempBasalLength = durationInMinutes
+            medtronicPumpStatus.tempBasalDuration = durationInMinutes
 
             val tempData = PumpDbEntryTBR(absoluteRate, true, durationInMinutes * 60, tbrType)
 
@@ -816,17 +861,19 @@ class MedtronicPumpPlugin @Inject constructor(
                         "pumpSerial=${medtronicPumpStatus.serialNumber}]"
                 )
 
-                val result = pumpSync.syncTemporaryBasalWithTempId(
-                    timestamp = item.date,
-                    rate = item.rate,
-                    duration = differenceS * 1000L,
-                    isAbsolute = item.isAbsolute,
-                    temporaryId = item.temporaryId,
-                    type = item.tbrType,
-                    pumpId = null,
-                    pumpType = medtronicPumpStatus.pumpType,
-                    pumpSerial = medtronicPumpStatus.serialNumber
-                )
+                val result = runBlocking {
+                    pumpSync.syncTemporaryBasalWithTempId(
+                        timestamp = item.date,
+                        rate = PumpRate(item.rate),
+                        duration = differenceS * 1000L,
+                        isAbsolute = item.isAbsolute,
+                        temporaryId = item.temporaryId,
+                        type = item.tbrType,
+                        pumpId = null,
+                        pumpType = medtronicPumpStatus.pumpType,
+                        pumpSerial = medtronicPumpStatus.serialNumber
+                    )
+                }
 
                 aapsLogger.debug(LTag.PUMP, "syncTemporaryBasalWithTempId - Result: $result")
             }
@@ -841,19 +888,8 @@ class MedtronicPumpPlugin @Inject constructor(
     }
 
     @Synchronized
-    override fun setTempBasalPercent(percent: Int, durationInMinutes: Int, profile: Profile, enforceNew: Boolean, tbrType: TemporaryBasalType): PumpEnactResult {
-        return if (percent == 0) {
-            setTempBasalAbsolute(0.0, durationInMinutes, profile, enforceNew, tbrType)
-        } else {
-            var absoluteValue = profile.getBasal() * (percent / 100.0)
-            absoluteValue = pumpDescription.pumpType.determineCorrectBasalSize(absoluteValue)
-            aapsLogger.warn(
-                LTag.PUMP,
-                "setTempBasalPercent [MedtronicPumpPlugin] - You are trying to use setTempBasalPercent with percent other then 0% ($percent). This will start setTempBasalAbsolute, with calculated value ($absoluteValue). Result might not be 100% correct."
-            )
-            setTempBasalAbsolute(absoluteValue, durationInMinutes, profile, enforceNew, tbrType)
-        }
-    }
+    override fun setTempBasalPercent(percent: Int, durationInMinutes: Int, enforceNew: Boolean, tbrType: TemporaryBasalType): PumpEnactResult =
+        error("Pump doesn't support percent basal rate")
 
     private fun finishAction(overviewKey: String?) {
         if (overviewKey != null) rxBus.send(EventRefreshOverview(overviewKey, false))
@@ -866,12 +902,12 @@ class MedtronicPumpPlugin @Inject constructor(
 //        if (isLoggingEnabled())
 //            LOG.error(getLogPrefix() + "readPumpHistory WIP.");
         readPumpHistoryLogic()
-        scheduleNextRefresh(MedtronicStatusRefreshType.PumpHistory)
+        scheduleNextRefresh(PumpDataRefreshType.PumpHistory)
         if (medtronicHistoryData.hasRelevantConfigurationChanged()) {
-            scheduleNextRefresh(MedtronicStatusRefreshType.Configuration, -1)
+            scheduleNextRefresh(PumpDataRefreshType.Configuration, -1)
         }
         if (medtronicHistoryData.hasPumpTimeChanged()) {
-            scheduleNextRefresh(MedtronicStatusRefreshType.PumpTime, -1)
+            scheduleNextRefresh(PumpDataRefreshType.PumpTime, -1)
         }
         if (medtronicPumpStatus.basalProfileStatus !== BasalProfileStatus.NotInitialized
             && medtronicHistoryData.hasBasalProfileChanged()
@@ -977,27 +1013,27 @@ class MedtronicPumpPlugin @Inject constructor(
             }
         }
 
-    private fun scheduleNextRefresh(refreshType: MedtronicStatusRefreshType, additionalTimeInMinutes: Int = 0) {
-        when (refreshType) {
-            MedtronicStatusRefreshType.RemainingInsulin                                                                                                                     -> {
-                val remaining = medtronicPumpStatus.reservoirRemainingUnits
-                val min: Int = if (remaining > 50) 4 * 60 else if (remaining > 20) 60 else 15
-                synchronized(statusRefreshMap) { statusRefreshMap[refreshType] = getTimeInFutureFromMinutes(min) }
-            }
+    // private fun scheduleNextRefresh(refreshType: MedtronicStatusRefreshType, additionalTimeInMinutes: Int = 0) {
+    //     when (refreshType) {
+    //         MedtronicStatusRefreshType.RemainingInsulin                                                                                                                     -> {
+    //             val remaining = medtronicPumpStatus.reservoirRemainingUnits
+    //             val min: Int = if (remaining > 50) 4 * 60 else if (remaining > 20) 60 else 15
+    //             synchronized(statusRefreshMap) { statusRefreshMap[refreshType] = getTimeInFutureFromMinutes(min) }
+    //         }
+    //
+    //         MedtronicStatusRefreshType.PumpTime, MedtronicStatusRefreshType.Configuration, MedtronicStatusRefreshType.BatteryStatus, MedtronicStatusRefreshType.PumpHistory -> {
+    //             synchronized(statusRefreshMap) { statusRefreshMap[refreshType] = getTimeInFutureFromMinutes(refreshType.refreshTime + additionalTimeInMinutes) }
+    //         }
+    //     }
+    // }
 
-            MedtronicStatusRefreshType.PumpTime, MedtronicStatusRefreshType.Configuration, MedtronicStatusRefreshType.BatteryStatus, MedtronicStatusRefreshType.PumpHistory -> {
-                synchronized(statusRefreshMap) { statusRefreshMap[refreshType] = getTimeInFutureFromMinutes(refreshType.refreshTime + additionalTimeInMinutes) }
-            }
-        }
-    }
-
-    private fun getTimeInFutureFromMinutes(minutes: Int): Long {
-        return System.currentTimeMillis() + getTimeInMs(minutes)
-    }
-
-    private fun getTimeInMs(minutes: Int): Long {
-        return minutes * 60 * 1000L
-    }
+    // private fun getTimeInFutureFromMinutes(minutes: Int): Long {
+    //     return System.currentTimeMillis() + getTimeInMs(minutes)
+    // }
+    //
+    // private fun getTimeInMs(minutes: Int): Long {
+    //     return minutes * 60 * 1000L
+    // }
 
     private fun readTBR(): TempBasalPair? {
         val responseTask = rileyLinkMedtronicService?.medtronicUIComm?.executeCommand(MedtronicCommandType.ReadTemporaryBasal)
@@ -1025,9 +1061,9 @@ class MedtronicPumpPlugin @Inject constructor(
             return pumpEnactResultProvider.get() //
                 .success(false) //
                 .enacted(false) //
-                .comment(R.string.medtronic_pump_status_pump_unreachable)
+                .comment(app.aaps.core.ui.R.string.pump_unreachable)
         }
-        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
+        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
         setRefreshButtonEnabled(false)
         val tbrCurrent = readTBR()
         if (tbrCurrent != null) {
@@ -1060,16 +1096,18 @@ class MedtronicPumpPlugin @Inject constructor(
                     val differenceTime = System.currentTimeMillis() - runningTBR.date
                     //val tbrData = runningTBR
 
-                    val result = pumpSync.syncTemporaryBasalWithPumpId(
-                        runningTBR.date,
-                        runningTBR.rate,
-                        differenceTime,
-                        runningTBR.isAbsolute,
-                        runningTBR.tbrType,
-                        runningTBR.pumpId!!,
-                        runningTBR.pumpType,
-                        runningTBR.serialNumber
-                    )
+                    val result = runBlocking {
+                        pumpSync.syncTemporaryBasalWithPumpId(
+                            runningTBR.date,
+                            PumpRate(runningTBR.rate),
+                            differenceTime,
+                            runningTBR.isAbsolute,
+                            runningTBR.tbrType,
+                            runningTBR.pumpId!!,
+                            runningTBR.pumpType,
+                            runningTBR.serialNumber
+                        )
+                    }
 
                     val differenceTimeMin = floor(differenceTime / (60.0 * 1000.0))
 
@@ -1101,7 +1139,7 @@ class MedtronicPumpPlugin @Inject constructor(
     }
 
     @Synchronized
-    override fun setNewBasalProfile(profile: Profile): PumpEnactResult {
+    override fun setNewBasalProfile(profile: PumpProfile): PumpEnactResult {
         aapsLogger.info(LTag.PUMP, "setNewBasalProfile")
 
         // this shouldn't be needed, but let's do check if profile setting we are setting is same as current one
@@ -1117,9 +1155,9 @@ class MedtronicPumpPlugin @Inject constructor(
             return pumpEnactResultProvider.get() //
                 .success(false) //
                 .enacted(false) //
-                .comment(R.string.medtronic_pump_status_pump_unreachable)
+                .comment(app.aaps.core.ui.R.string.pump_unreachable)
         }
-        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable, rxBus)
+        medtronicUtil.dismissNotification(MedtronicNotificationType.PumpUnreachable)
         val basalProfile = convertProfileToMedtronicProfile(profile)
         aapsLogger.debug("Basal Profile: $basalProfile")
         val profileInvalid = isProfileValid(basalProfile)
@@ -1168,57 +1206,6 @@ class MedtronicPumpPlugin @Inject constructor(
         return basalProfile
     }
 
-    // OPERATIONS not supported by Pump or Plugin
-    private var customActions: List<CustomAction>? = null
-    private val customActionWakeUpAndTune = CustomAction(
-        R.string.medtronic_custom_action_wake_and_tune,
-        MedtronicCustomActionType.WakeUpAndTune,
-        app.aaps.core.ui.R.drawable.ic_actions_profileswitch
-    )
-    private val customActionClearBolusBlock = CustomAction(
-        R.string.medtronic_custom_action_clear_bolus_block, MedtronicCustomActionType.ClearBolusBlock, app.aaps.core.ui.R.drawable.ic_actions_profileswitch, false
-    )
-    private val customActionResetRLConfig = CustomAction(
-        R.string.medtronic_custom_action_reset_rileylink, MedtronicCustomActionType.ResetRileyLinkConfiguration, app.aaps.core.ui.R.drawable.ic_actions_profileswitch, true
-    )
-
-    override fun getCustomActions(): List<CustomAction>? {
-        if (customActions == null) {
-            customActions = listOf(
-                customActionWakeUpAndTune,  //
-                customActionClearBolusBlock,  //
-                customActionResetRLConfig
-            )
-        }
-        return customActions
-    }
-
-    override fun executeCustomAction(customActionType: CustomActionType) {
-        when (customActionType as? MedtronicCustomActionType) {
-            MedtronicCustomActionType.WakeUpAndTune               -> {
-                if (rileyLinkMedtronicService?.verifyConfiguration() == true) {
-                    serviceTaskExecutor.startTask(wakeAndTuneTaskProvider.get())
-                } else {
-                    uiInteraction.runAlarm(rh.gs(R.string.medtronic_error_operation_not_possible_no_configuration), rh.gs(R.string.medtronic_warning), app.aaps.core.ui.R.raw.boluserror)
-                }
-            }
-
-            MedtronicCustomActionType.ClearBolusBlock             -> {
-                busyTimestamps.clear()
-                customActionClearBolusBlock.isEnabled = false
-                refreshCustomActionsList()
-            }
-
-            MedtronicCustomActionType.ResetRileyLinkConfiguration -> {
-                serviceTaskExecutor.startTask(resetRileyLinkConfigurationTaskProvider.get())
-            }
-
-            null                                                  -> { // do nothing
-
-            }
-        }
-    }
-
     override fun timezoneOrDSTChanged(timeChangeType: TimeChangeType) {
         aapsLogger.warn(LTag.PUMP, "Time or TimeZone changed. ")
         hasTimeDateOrTimeZoneChanged = true
@@ -1228,14 +1215,10 @@ class MedtronicPumpPlugin @Inject constructor(
         return preferences.get(MedtronicBooleanPreferenceKey.SetNeutralTemp)
     }
 
-    @Suppress("SameParameterValue")
-    private fun setEnableCustomAction(customAction: MedtronicCustomActionType, isEnabled: Boolean) {
-        if (customAction === MedtronicCustomActionType.ClearBolusBlock) {
-            customActionClearBolusBlock.isEnabled = isEnabled
-        } else if (customAction === MedtronicCustomActionType.ResetRileyLinkConfiguration) {
-            customActionResetRLConfig.isEnabled = isEnabled
-        }
-        refreshCustomActionsList()
+    fun isBusyBlockingEnabled(): Boolean = busyTimestamps.isNotEmpty()
+
+    fun clearBusyTimestamps() {
+        busyTimestamps.clear()
     }
 
     companion object {
@@ -1247,11 +1230,32 @@ class MedtronicPumpPlugin @Inject constructor(
 
     private val pumpFreqEntries = arrayOf<CharSequence>(rh.gs(RileyLinkTargetFrequency.MedtronicUS.friendlyName!!), rh.gs(RileyLinkTargetFrequency.MedtronicWorldWide.friendlyName!!))
 
+    // TODO: Remove after full migration to new Compose preferences - replace with PreferenceSubScreenDef
+    override fun getPreferenceScreenContent() = PreferenceSubScreenDef(
+        key = "medtronic_settings",
+        titleResId = R.string.medtronic_name,
+        items = listOf(
+            MedtronicStringPreferenceKey.Serial,
+            MedtronicStringPreferenceKey.PumpType,
+            MedtronicStringPreferenceKey.PumpFrequency,
+            MedtronicIntPreferenceKey.MaxBasal,
+            MedtronicIntPreferenceKey.MaxBolus,
+            MedtronicIntPreferenceKey.BolusDelay,
+            RileyLinkStringPreferenceKey.Encoding,
+            MedtronicStringPreferenceKey.BatteryType,
+            RileylinkBooleanPreferenceKey.OrangeUseScanning,
+            RileylinkBooleanPreferenceKey.ShowReportedBatteryLevel,
+            MedtronicBooleanPreferenceKey.SetNeutralTemp
+        ),
+        icon = pluginDescription.icon
+    )
+
+    // TODO: Remove after full migration to Compose preferences (getPreferenceScreenContent)
     override fun addPreferenceScreen(preferenceManager: PreferenceManager, parent: PreferenceScreen, context: Context, requiredKey: String?) {
         if (requiredKey != null) return
 
         val batteryEntries = mutableListOf<CharSequence>().also { list -> BatteryType.entries.forEach { list.add(rh.gs(it.friendlyName)) } }.toTypedArray()
-        val encodingEntries = arrayOf<CharSequence>(rh.gs(RileyLinkEncodingType.FourByteSixByteLocal.friendlyName!!), rh.gs(RileyLinkEncodingType.FourByteSixByteLocal.friendlyName!!))
+        val encodingEntries = arrayOf<CharSequence>(rh.gs(RileyLinkEncodingType.FourByteSixByteLocal.friendlyName!!), rh.gs(RileyLinkEncodingType.FourByteSixByteRileyLink.friendlyName!!))
 
         val pumpTypeEntries = arrayOf<CharSequence>(
             "Other (unsupported)",
@@ -1335,12 +1339,6 @@ class MedtronicPumpPlugin @Inject constructor(
                 )
             )
             addPreference(
-                AdaptiveIntentPreference(
-                    ctx = context, intentKey = RileyLinkIntentPreferenceKey.MacAddressSelector, title = app.aaps.pump.common.hw.rileylink.R.string.rileylink_configuration,
-                    intent = Intent(context, RileyLinkBLEConfigActivity::class.java)
-                )
-            )
-            addPreference(
                 AdaptiveSwitchPreference(
                     ctx = context,
                     booleanKey = RileylinkBooleanPreferenceKey.OrangeUseScanning,
@@ -1359,4 +1357,16 @@ class MedtronicPumpPlugin @Inject constructor(
             addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = MedtronicBooleanPreferenceKey.SetNeutralTemp, title = R.string.set_neutral_temps_title, summary = R.string.set_neutral_temps_summary))
         }
     }
+
+    fun getPumpCommandForRefresh(pumpDataRefreshType: PumpDataRefreshType, medtronicDeviceType: MedtronicDeviceType): MedtronicCommandType? {
+        return when (pumpDataRefreshType) {
+            PumpDataRefreshType.Configuration    -> MedtronicCommandType.getSettings(medtronicDeviceType)
+            PumpDataRefreshType.RemainingInsulin -> MedtronicCommandType.GetRemainingInsulin
+            PumpDataRefreshType.BatteryStatus    -> MedtronicCommandType.GetBatteryStatus
+            PumpDataRefreshType.PumpTime         -> MedtronicCommandType.GetRealTimeClock
+            else
+                                                 -> null
+        }
+    }
+
 }

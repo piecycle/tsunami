@@ -30,10 +30,9 @@
     <string name="bgsource_log_sensor_change_summary">צור באופן אוטומטי אירוע \"החדרת חיישן\" בפורטל הטיפולים עם קבלת אירוע התחלת חיישן משידור מקומי של מקור נתוני הסוכר</string>
     <string name="direction">כיוון</string>
     <string name="bg_generation_interval_minutes">מרווח זמן לקריאת רמת סוכר (דקות)</string>
-    <!-- Patched Ottai App -->
-    <string name="ottai_app">Ottai</string>
-    <string name="description_source_patched_ottai_app">קבלת ערכי סוכר מיישומון Ottai.</string>
     <!-- Patched Syai Tag App -->
-    <string name="syai_tag_app">Syai</string>
-    <string name="description_source_patched_syai_tag_app">קבלת ערכי סוכר מיישומון Syai.</string>
+    <!-- Patched SI App -->
+    <!-- Patched Sino App -->
+    <!-- Notification Reader -->
+    <!-- Permission rationales -->
 </resources>

@@ -15,17 +15,16 @@ import app.aaps.core.utils.extensions.copyLong
 import app.aaps.core.utils.extensions.copyString
 import app.aaps.core.utils.receivers.BundleLogger
 import app.aaps.core.utils.receivers.DataWorkerStorage
-import app.aaps.plugins.main.general.smsCommunicator.SmsCommunicatorPlugin
 import app.aaps.plugins.source.DexcomPlugin
 import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.plugins.source.MM640gPlugin
-import app.aaps.plugins.source.OttaiPlugin
 import app.aaps.plugins.source.PatchedSiAppPlugin
 import app.aaps.plugins.source.PatchedSinoAppPlugin
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.SyaiPlugin
 import app.aaps.plugins.source.TomatoPlugin
 import app.aaps.plugins.source.XdripSourcePlugin
+import app.aaps.plugins.sync.smsCommunicator.SmsCommunicatorPlugin
 import dagger.android.DaggerBroadcastReceiver
 import javax.inject.Inject
 
@@ -77,13 +76,7 @@ open class DataReceiver : DaggerBroadcastReceiver() {
                         it.copyString("data", bundle)
                     }.build()).build()
 
-            Intents.OTTAI_APP, Intents.OTTAI_APP_CN   ->
-                OneTimeWorkRequest.Builder(OttaiPlugin.OttaiWorker::class.java)
-                    .setInputData(Data.Builder().also {
-                        it.copyString("collection", bundle)
-                        it.copyString("data", bundle)
-                    }.build()).build()
-
+            Intents.OTTAI_APP, Intents.OTTAI_APP_CN,
             Intents.SYAI_APP                          ->
                 OneTimeWorkRequest.Builder(SyaiPlugin.SyaiWorker::class.java)
                     .setInputData(Data.Builder().also {

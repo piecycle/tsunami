@@ -10,7 +10,7 @@ import kotlin.math.abs
 class SyncNsTemporaryTargetTransaction(private val temporaryTargets: List<TemporaryTarget>) :
     Transaction<SyncNsTemporaryTargetTransaction.TransactionResult>() {
 
-    override fun run(): TransactionResult {
+    override suspend fun run(): TransactionResult {
         val result = TransactionResult()
 
         for (temporaryTarget in temporaryTargets) {
@@ -28,7 +28,8 @@ class SyncNsTemporaryTargetTransaction(private val temporaryTargets: List<Tempor
                         database.temporaryTargetDao.updateExistingEntry(current)
                         result.invalidated.add(current)
                     }
-                    if (current.duration != temporaryTarget.duration) {
+                    // Allow update duration to shorter only
+                    if (current.duration != temporaryTarget.duration && temporaryTarget.duration < current.duration) {
                         current.duration = temporaryTarget.duration
                         database.temporaryTargetDao.updateExistingEntry(current)
                         result.updatedDuration.add(current)
@@ -37,7 +38,7 @@ class SyncNsTemporaryTargetTransaction(private val temporaryTargets: List<Tempor
                 }
 
                 // not known nsId
-                val running = database.temporaryTargetDao.getTemporaryTargetActiveAt(temporaryTarget.timestamp).blockingGet()
+                val running = database.temporaryTargetDao.getTemporaryTargetActiveAt(temporaryTarget.timestamp)
                 if (running != null && abs(running.timestamp - temporaryTarget.timestamp) < 1000) { // allow missing milliseconds
                     // the same record, update nsId only
                     running.interfaceIDs.nightscoutId = temporaryTarget.interfaceIDs.nightscoutId
@@ -57,7 +58,7 @@ class SyncNsTemporaryTargetTransaction(private val temporaryTargets: List<Tempor
                 continue
             } else {
                 // ending event
-                val running = database.temporaryTargetDao.getTemporaryTargetActiveAt(temporaryTarget.timestamp).blockingGet()
+                val running = database.temporaryTargetDao.getTemporaryTargetActiveAt(temporaryTarget.timestamp)
                 if (running != null) {
                     running.end = temporaryTarget.timestamp
                     database.temporaryTargetDao.updateExistingEntry(running)

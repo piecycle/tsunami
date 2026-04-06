@@ -46,11 +46,6 @@
     <string name="pref_3_hours">3 ώρες</string>
     <string name="pref_4_hours">4 ώρες</string>
     <string name="pref_5_hours">5 ώρες</string>
-    <string name="pref_input_design">Σχεδιασμός Εισαγωγής</string>
-    <string name="pref_default">Προεπιλογή</string>
-    <string name="pref_quick_righty">Γρήγορα δεξιά</string>
-    <string name="pref_quick_lefty">Γρήγορα αριστερά</string>
-    <string name="pref_modern_sparse">Σύγχρονο Sparse</string>
     <string name="pref_big_numbers">Μεγάλοι Αριθμοί</string>
     <string name="pref_ring_history">Ιστορικό Ring</string>
     <string name="pref_light_ring_history">Ιστορικό Ελαφρού Ring</string>
@@ -130,18 +125,13 @@
     <string name="color_name_black">μαύρο</string>
     <string name="color_name_multicolor">πολύχρονο</string>
     <string name="pref_simplify_ui">Απλοποίηση UI</string>
-    <string name="pref_simplify_ui_sum">Εμφάνιση μόνο ώρας και BG</string>
     <string name="pref_vibrate_hourly">Δόνηση ωριαία</string>
     <string name="pref_show_weeknumber">Εμφάνιση Αριθμού εβδομάδας</string>
     <string name="custom_pref_show_seconds">Εμφάνιση δευτερολέπτων</string>
-    <string name="digitalstyle_pref_your_style">Το στυλ σας:</string>
     <string name="digitalstyle_style_none">κανένα στυλ</string>
     <string name="digitalstyle_style_minimal">ελάχιστο στυλ</string>
     <string name="digitalstyle_style_shape">στυλ σχήματος</string>
     <string name="digitalstyle_style_full">πλήρες στυλ</string>
-    <string name="digitalstyle_pref_your_color">Το χρώμα σας:</string>
-    <string name="digitalstyle_pref_your_color_saturation">Ο κορεσμός του χρώματός σας:</string>
-    <string name="digitalstyle_pref_your_color_opacity">Η αδιαφάνεια του χρώματός σας:</string>
     <string name="bolus_progress_channel_name">Πρόοδος Bolus AAPS</string>
     <string name="bolus_progress_silent_channel_name">Αθόρυβη Πρόοδος Bolus AAPS</string>
     <string name="bolus_progress_channel_description">Πρόοδος bolus και ακύρωση</string>
@@ -177,6 +167,5 @@
     <string name="hour_minute_second">%1$s:%2$s:%3$s</string>
     <string name="old">παλιός</string>
     <string name="old_warning">!παλαιός!</string>
-    <string name="error">!σφάλμα!</string>
     <string name="pref_heartRateSampling">Καρδιακός ρυθμός</string>
 </resources>

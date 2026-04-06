@@ -19,10 +19,8 @@ import java.util.TimeZone
         childColumns = ["referenceId"]
     )],
     indices = [
-        Index("id"),
         Index("type"),
         Index("nightscoutId"),
-        Index("isValid"),
         Index("referenceId"),
         Index("timestamp")
     ]
@@ -45,8 +43,8 @@ data class TherapyEvent(
     var glucose: Double? = null,
     var glucoseType: MeterType? = null,
     var glucoseUnit: GlucoseUnit,
-    val location: Location? = null,
-    val arrow: Arrow? = null
+    var location: Location? = null,
+    var arrow: Arrow? = null
 ) : TraceableDBEntry, DBEntryWithTimeAndDuration {
 
     enum class MeterType {

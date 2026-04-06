@@ -9,22 +9,16 @@ import kotlin.math.abs
  */
 class SyncNsTemporaryBasalTransaction(private val temporaryBasals: List<TemporaryBasal>, private val nsClientMode: Boolean) : Transaction<SyncNsTemporaryBasalTransaction.TransactionResult>() {
 
-    override fun run(): TransactionResult {
+    override suspend fun run(): TransactionResult {
         val result = TransactionResult()
 
         for (temporaryBasal in temporaryBasals) {
             if (temporaryBasal.duration != 0L) {
                 // not ending event
-                val current = temporaryBasal.interfaceIDs.nightscoutId?.let {
-                    database.temporaryBasalDao.findByNSId(it) ?: temporaryBasal.interfaceIDs.pumpId?.let {
-                        val pumpId = temporaryBasal.interfaceIDs.pumpId
-                        val pumpType = temporaryBasal.interfaceIDs.pumpType
-                        val pumpSerial = temporaryBasal.interfaceIDs.pumpSerial
-                        if (pumpId != null && pumpType != null && pumpSerial != null)
-                            database.temporaryBasalDao.findByPumpIds(pumpId, pumpType, pumpSerial)
-                        else null
+                val current: TemporaryBasal? =
+                    temporaryBasal.interfaceIDs.nightscoutId?.let {
+                        database.temporaryBasalDao.findByNSId(it)
                     }
-                }
 
                 if (current != null) {
                     // nsId exists, allow only invalidation
@@ -33,7 +27,8 @@ class SyncNsTemporaryBasalTransaction(private val temporaryBasals: List<Temporar
                         database.temporaryBasalDao.updateExistingEntry(current)
                         result.invalidated.add(current)
                     }
-                    if (current.duration != temporaryBasal.duration && nsClientMode) {
+                    // Allow update duration to shorter only
+                    if (current.duration != temporaryBasal.duration && nsClientMode && temporaryBasal.duration < current.duration) {
                         current.duration = temporaryBasal.duration
                         database.temporaryBasalDao.updateExistingEntry(current)
                         result.updatedDuration.add(current)
@@ -42,7 +37,27 @@ class SyncNsTemporaryBasalTransaction(private val temporaryBasals: List<Temporar
                 }
 
                 // not known nsId
-                val running = database.temporaryBasalDao.getTemporaryBasalActiveAt(temporaryBasal.timestamp).blockingGet()
+                // Check by pumpId + pumpType + pumpSerial (primary deduplication - prevents NS duplicate _id records)
+                val existingByPumpId = if (temporaryBasal.interfaceIDs.pumpId != null && temporaryBasal.interfaceIDs.pumpType != null && temporaryBasal.interfaceIDs.pumpSerial != null) {
+                    database.temporaryBasalDao.findByPumpIds(temporaryBasal.interfaceIDs.pumpId!!, temporaryBasal.interfaceIDs.pumpType!!, temporaryBasal.interfaceIDs.pumpSerial!!)
+                } else {
+                    null
+                }
+
+                if (existingByPumpId != null) {
+                    // Same pump TBR exists, just update/add the new nsId
+                    if (existingByPumpId.interfaceIDs.nightscoutId == null) {
+                        existingByPumpId.interfaceIDs.nightscoutId = temporaryBasal.interfaceIDs.nightscoutId
+                        existingByPumpId.isValid = temporaryBasal.isValid
+                        database.temporaryBasalDao.updateExistingEntry(existingByPumpId)
+                        result.updatedNsId.add(existingByPumpId)
+                    }
+                    // If existing already has a different nsId, this is a duplicate NS record - ignore it
+                    continue
+                }
+
+                // Fallback: check by active TBR at timestamp
+                val running = database.temporaryBasalDao.getTemporaryBasalActiveAt(temporaryBasal.timestamp)
                 if (running != null && abs(running.timestamp - temporaryBasal.timestamp) < 1000) { // allow missing milliseconds
                     // the same record, update nsId only
                     running.interfaceIDs.nightscoutId = temporaryBasal.interfaceIDs.nightscoutId
