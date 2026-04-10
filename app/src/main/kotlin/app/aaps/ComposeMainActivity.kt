@@ -148,6 +148,7 @@ import app.aaps.ui.compose.extendedBolusDialog.ExtendedBolusDialogScreen
 import app.aaps.ui.compose.fillDialog.FillDialogScreen
 import app.aaps.ui.compose.fillDialog.FillPreselect
 import app.aaps.ui.compose.insulinDialog.InsulinDialogScreen
+import app.aaps.ui.compose.tsunamiDialog.TsunamiDialogScreen
 import app.aaps.ui.compose.insulinManagement.InsulinManagementScreen
 import app.aaps.ui.compose.insulinManagement.InsulinManagementViewModel
 import app.aaps.ui.compose.main.MainScreen
@@ -847,6 +848,19 @@ class ComposeMainActivity : AppCompatActivity() {
                 )
             }
 
+            composable(route = AppRoute.TsunamiDialog.route) {
+                TsunamiDialogScreen(
+                    tsunamiButtonsDef = builtInSearchables.tsunamiButtons,
+                    bgInfoState = graphViewModel.bgInfoState,
+                    iobUiState = graphViewModel.iobUiState,
+                    cobUiState = graphViewModel.cobUiState,
+                    onNavigateBack = { navController.safePopBackStack() },
+                    onShowDeliveryError = { comment ->
+                        uiInteraction.runAlarm(comment, rh.gs(app.aaps.core.ui.R.string.treatmentdeliveryerror), app.aaps.core.ui.R.raw.boluserror)
+                    }
+                )
+            }
+
             composable(route = AppRoute.TreatmentDialog.route) {
                 TreatmentDialogScreen(
                     bgInfoState = graphViewModel.bgInfoState,
@@ -1489,6 +1503,7 @@ class ComposeMainActivity : AppCompatActivity() {
             // Treatment dialogs
             ElementType.CARBS                   -> navController.navigate(AppRoute.CarbsDialog.route)
             ElementType.INSULIN                 -> navController.navigate(AppRoute.InsulinDialog.route)
+            ElementType.TSUNAMI                 -> navController.navigate(AppRoute.TsunamiDialog.route)
             ElementType.TREATMENT               -> navController.navigate(AppRoute.TreatmentDialog.route)
             ElementType.FILL                    -> navController.navigate(AppRoute.FillDialog.createRoute(FillPreselect.CARTRIDGE_CHANGE.ordinal))
             ElementType.CANNULA_CHANGE          -> navController.navigate(AppRoute.FillDialog.createRoute(FillPreselect.SITE_CHANGE.ordinal))
@@ -1530,7 +1545,7 @@ class ComposeMainActivity : AppCompatActivity() {
             ElementType.SENSITIVITY,
             ElementType.USER_ENTRY,
             ElementType.LOOP,
-            ElementType.AAPS                    -> {
+            ElementType.AAPS                       -> {
             }
         }
     }

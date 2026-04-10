@@ -307,6 +307,7 @@ private fun Action.ColorGroup.toElementColor(): Color = when (this) {
     Action.ColorGroup.Pump             -> ElementType.PUMP.color()
     Action.ColorGroup.Aaps             -> ElementType.AAPS.color()
     Action.ColorGroup.RunningMode      -> ElementType.RUNNING_MODE.color()
+    Action.ColorGroup.Tsunami          -> ElementType.TSUNAMI.color()
 }
 
 /**

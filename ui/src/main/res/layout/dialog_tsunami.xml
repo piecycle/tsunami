@@ -27,6 +27,7 @@
                 app:srcCompat="@drawable/ic_tsunami" />
 
             <TextView
+                android:id="@+id/header_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -47,11 +48,13 @@
             android:padding="5dp" />
 
         <LinearLayout
+            android:id="@+id/time_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -76,7 +79,7 @@
                 android:minWidth="45dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="@string/unit_minute_short"
+                android:text="@string/units_min"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>
@@ -93,14 +96,15 @@
                 android:layout_gravity="center_horizontal"
                 android:width="120dp"
                 android:padding="10dp"
-                android:text="@string/bolus"
+                android:text="@string/tsunami_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textStyle="bold" />
 
             <app.aaps.core.ui.elements.NumberPicker
                 android:id="@+id/amount"
                 android:layout_width="130dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                app:customContentDescription="@string/tsunami_label" />
 
             <TextView
                 android:layout_width="wrap_content"

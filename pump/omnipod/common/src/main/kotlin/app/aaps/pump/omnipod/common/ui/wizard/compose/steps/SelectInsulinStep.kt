@@ -64,7 +64,8 @@ fun SelectInsulinStep(
 private val previewInsulins = listOf(
     ICfg("Fiasp U100", peak = 55, dia = 5.0, concentration = 1.0),
     ICfg("Lyumjev U200", peak = 45, dia = 5.0, concentration = 2.0),
-    ICfg("NovoRapid U100", peak = 75, dia = 5.0, concentration = 1.0)
+    ICfg("NovoRapid U100", peak = 75, dia = 5.0, concentration = 1.0),
+    ICfg("Lyumjev U100 (PD)", peak = 45, dia = 5.0, concentration = 1.0)
 )
 
 @Preview(showBackground = true, name = "Select Insulin")

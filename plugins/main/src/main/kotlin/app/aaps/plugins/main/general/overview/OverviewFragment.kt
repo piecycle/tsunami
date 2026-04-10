@@ -30,6 +30,7 @@ import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.model.RM
 import app.aaps.core.data.model.TB
 import app.aaps.core.data.model.TT
+import app.aaps.core.data.model.TSU
 import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources

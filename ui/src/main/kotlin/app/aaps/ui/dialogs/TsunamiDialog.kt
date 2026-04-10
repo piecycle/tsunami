@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.coroutines.runBlocking
 import app.aaps.core.data.model.TE
 import app.aaps.core.data.model.TSU
 import app.aaps.core.data.ue.Action
@@ -35,7 +38,6 @@ import app.aaps.core.keys.DoubleKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.core.objects.extensions.formatColor
-import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.ui.toast.ToastUtils
 import app.aaps.core.utils.HtmlHelper
 import app.aaps.ui.R
@@ -43,8 +45,6 @@ import app.aaps.ui.databinding.DialogTsunamiBinding
 import app.aaps.ui.extensions.toSignedString
 import com.google.common.base.Joiner
 import dagger.android.HasAndroidInjector
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.kotlin.plusAssign
 import java.text.DecimalFormat
 import java.util.LinkedList
 import java.util.concurrent.TimeUnit
@@ -72,7 +72,6 @@ class TsunamiDialog : DialogFragmentWithDate() {
     @Inject lateinit var loop: Loop
 
     private var queryingProtection = false
-    private val disposable = CompositeDisposable()
     private var _binding: DialogTsunamiBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
@@ -163,11 +162,10 @@ class TsunamiDialog : DialogFragmentWithDate() {
 
         //InsulinDialog.kt has code here handling the 'record only' checkbox - there is no need for it here.
         //Check in the database if Tsunami mode is active, decide if the 'cancel' button should be displayed and define what to do if the user hits the cancel button.
-
-        if (persistenceLayer.getTsunamiActiveAt(dateUtil.now()) != null)
-            binding.tsuCancel.visibility = View.VISIBLE
-        else
-            binding.tsuCancel.visibility = View.GONE
+        viewLifecycleOwner.lifecycleScope.launch {
+            val isTsunamiActive = persistenceLayer.getTsunamiActiveAt(dateUtil.now()) != null
+            binding.tsuCancel.visibility = if (isTsunamiActive) View.VISIBLE else View.GONE
+        }
 
         binding.tsuCancel.setOnClickListener {
             binding.tsuDuration.value = 0.0
@@ -179,7 +177,6 @@ class TsunamiDialog : DialogFragmentWithDate() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposable.clear()
         _binding = null
     }
 
@@ -190,10 +187,13 @@ class TsunamiDialog : DialogFragmentWithDate() {
         val insulinAfterConstraints = constraintChecker.applyBolusConstraints(ConstraintObject(insulin, aapsLogger)).value()
         val actions: LinkedList<String?> = LinkedList()
         val duration = binding.tsuDuration.value.toInt()
-        val isTsunamiActive : Boolean
-        if (persistenceLayer.getTsunamiActiveAt(dateUtil.now()) != null) isTsunamiActive = true else isTsunamiActive = false
         //val units = profileFunction.getUnits()
         //InsulinDialog has code here for the recordOnlyCheckbox - not needed here (this includes unitlabel)
+        
+        var isTsunamiActive = false
+        runBlocking {
+            isTsunamiActive = persistenceLayer.getTsunamiActiveAt(dateUtil.now()) != null
+        }
 
         if (insulinAfterConstraints > 0) {
             actions.add(
@@ -225,13 +225,13 @@ class TsunamiDialog : DialogFragmentWithDate() {
         //Submit
         if (insulinAfterConstraints > 0 || duration > 0) {
             activity?.let { activity ->
-                OKDialog.showConfirmation(
-                    activity,
-                    rh.gs(R.string.tsunami_label),
-                    HtmlHelper.fromHtml(Joiner.on("<br/>").join(actions)),
-                    {//MP: String is header string of confirmation window if there is a bolus
-                        //InsulinDialog.kt has an extra code block here for the eatingSoon TT that's not needed here. Instead, handle Tsunami duration here.
-                        if (insulinAfterConstraints > 0) { //If the user wants to issue a bolus...
+                uiInteraction.showOkCancelDialog(
+                    context = activity,
+                    title = rh.gs(R.string.tsunami_label),
+                    message = HtmlHelper.fromHtml(Joiner.on("<br/>").join(actions)).toString(),
+                    ok = { // OK action
+                        //MP: String is header string of confirmation window if there is a bolus
+        if (insulinAfterConstraints > 0) { //If the user wants to issue a bolus...
                             val detailedBolusInfo = DetailedBolusInfo()
                             detailedBolusInfo.eventType = TE.Type.CORRECTION_BOLUS
                             detailedBolusInfo.insulin = insulinAfterConstraints
@@ -239,16 +239,18 @@ class TsunamiDialog : DialogFragmentWithDate() {
                             detailedBolusInfo.notes = notes
                             detailedBolusInfo.timestamp = time
                             if (duration == 0) { //If duration is 0, handle it like a normal bolus (with slight modifications as there are no offsets) else flag it as a tsunami bolus
-                                if (isTsunamiActive) { //MP If issuing bolus with Tsu duration == 0 while Tsunami currently active --> issue bolus an cancel tsunami
-                                    disposable += persistenceLayer.cancelCurrentTsunamiModeIfAny(
-                                        timestamp = eventTime,
-                                        action = Action.CANCEL_TSUNAMI_BOLUS,
-                                        source = Sources.TsunamiDialog,
-                                        note = notes,
-                                        listValues = listOf(
-                                            ValueWithUnit.Insulin(insulinAfterConstraints),
+                                if (isTsunamiActive) { //MP If issuing bolus with Tsu duration == 0 while Tsunami currently active --> issue bolus and cancel tsunami
+                                    viewLifecycleOwner.lifecycleScope.launch {
+                                        persistenceLayer.cancelCurrentTsunamiModeIfAny(
+                                            timestamp = eventTime,
+                                            action = Action.CANCEL_TSUNAMI_BOLUS,
+                                            source = Sources.TsunamiDialog,
+                                            note = notes,
+                                            listValues = listOf(
+                                                ValueWithUnit.Insulin(insulinAfterConstraints),
                                             )
-                                    ).subscribe()
+                                        )
+                                    }
                                 } else { //MP Issue bolus through Tsunami Dialog while Tsunami currently not active and duration == 0
                                     uel.log(
                                         Action.BOLUS, Sources.TsunamiDialog,
@@ -257,20 +259,22 @@ class TsunamiDialog : DialogFragmentWithDate() {
                                     )
                                 }
                             } else { //If there is a Tsunami duration... //TODO: CHECK if this can be removed
-                                disposable += persistenceLayer.insertOrUpdateTsunami(
-                                    TSU(
-                                        timestamp = System.currentTimeMillis(),
-                                        duration = TimeUnit.MINUTES.toMillis(duration.toLong()),
-                                        tsunamiMode = 2
-                                    ),
-                                    action = Action.TSUNAMI_BOLUS,
-                                    source = Sources.TsunamiDialog,
-                                    note = notes,
-                                    listValues = listOf(
-                                        ValueWithUnit.Insulin(insulinAfterConstraints),
-                                        ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged },
-                                        ValueWithUnit.Minute(duration)).filterNotNull()
-                                ).subscribe()
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    persistenceLayer.insertOrUpdateTsunami(
+                                        TSU(
+                                            timestamp = System.currentTimeMillis(),
+                                            duration = TimeUnit.MINUTES.toMillis(duration.toLong()),
+                                            tsunamiMode = 2
+                                        ),
+                                        action = Action.TSUNAMI_BOLUS,
+                                        source = Sources.TsunamiDialog,
+                                        note = notes,
+                                        listValues = listOf(
+                                            ValueWithUnit.Insulin(insulinAfterConstraints),
+                                            ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged },
+                                            ValueWithUnit.Minute(duration)).filterNotNull()
+                                    )
+                                }
                             }
                             commandQueue.bolus(detailedBolusInfo, object : Callback() {
                                 override fun run() {
@@ -282,41 +286,45 @@ class TsunamiDialog : DialogFragmentWithDate() {
                                 }
                             })
                         } else { //If the user does not issue a bolus and only wants to switch on tsunami mode (condition bolus == 0 is always true)
-                            disposable += persistenceLayer.insertOrUpdateTsunami(
-                                TSU(
-                                    timestamp = System.currentTimeMillis(),
-                                    duration = TimeUnit.MINUTES.toMillis(duration.toLong()),
-                                    tsunamiMode = 2
-                                ),
-                                action = Action.TSUNAMI,
-                                source = Sources.TsunamiDialog,
-                                note = notes,
-                                listValues = listOf(
-                                    ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged },
-                                    ValueWithUnit.Minute(duration)).filterNotNull()
-                            ).subscribe()
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                persistenceLayer.insertOrUpdateTsunami(
+                                    TSU(
+                                        timestamp = System.currentTimeMillis(),
+                                        duration = TimeUnit.MINUTES.toMillis(duration.toLong()),
+                                        tsunamiMode = 2
+                                    ),
+                                    action = Action.TSUNAMI,
+                                    source = Sources.TsunamiDialog,
+                                    note = notes,
+                                    listValues = listOf(
+                                        ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged },
+                                        ValueWithUnit.Minute(duration)).filterNotNull()
+                                )
+                            }
                         }
                     })
             }
         } else if (isTsunamiActive) {//MP: No bolus & no tsu duration, but tsu is current active --> cancel tsunami
             activity?.let { activity ->
-                OKDialog.showConfirmation(
-                    activity,
-                    rh.gs(R.string.tsunami_label),
-                    HtmlHelper.fromHtml(Joiner.on("<br/>").join(actions)),
-                    {//MP: String is header string of confirmation window
-                        disposable += persistenceLayer.cancelCurrentTsunamiModeIfAny(
-                            timestamp = eventTime,
-                            action = Action.CANCEL_TSUNAMI,
-                            source = Sources.TsunamiDialog,
-                            note = notes,
-                            listValues = listOf()
-                        ).subscribe()
+                uiInteraction.showOkCancelDialog(
+                    context = activity,
+                    title = rh.gs(R.string.tsunami_label),
+                    message = HtmlHelper.fromHtml(Joiner.on("<br/>").join(actions)).toString(),
+                    ok = {//MP: String is header string of confirmation window
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            persistenceLayer.cancelCurrentTsunamiModeIfAny(
+                                timestamp = eventTime,
+                                action = Action.CANCEL_TSUNAMI,
+                                source = Sources.TsunamiDialog,
+                                note = notes,
+                                listValues = listOf()
+                            )
+                        }
                     })
             }
         } else //MP: No bolus, no tsu duration and currently no tsunami running --> Do nothing.
             activity?.let { activity ->
-                OKDialog.show(activity, rh.gs(R.string.tsunami_label), rh.gs(app.aaps.core.ui.R.string.no_action_selected))
+                uiInteraction.showOkDialog(activity, rh.gs(R.string.tsunami_label), rh.gs(app.aaps.core.ui.R.string.no_action_selected))
             }
         return true
     }

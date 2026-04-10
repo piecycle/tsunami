@@ -13,7 +13,8 @@ enum class InsulinType(val value: Int, val insulinEndTime: Long, val insulinPeak
     OREF_RAPID_ACTING(2, 8 * 3600 * 1000, 75 * 60000, R.string.rapid_acting_oref, R.string.fast_acting_insulin_comment),
     OREF_ULTRA_RAPID_ACTING(3, 8 * 3600 * 1000, 55 * 60000, R.string.ultra_rapid_oref, R.string.ultra_fast_acting_insulin_comment),
     OREF_FREE_PEAK(4, 8 * 3600 * 1000, 50 * 60000, R.string.free_peak_oref, R.string.insulin_peak_time),
-    OREF_LYUMJEV(5, 8 * 3600 * 1000, 45 * 60000, R.string.lyumjev,  R.string.lyumjev);
+    OREF_LYUMJEV(5, 8 * 3600 * 1000, 45 * 60000, R.string.lyumjev,  R.string.lyumjev),
+    LYUMJEV_PD(105, 8 * 3600 * 1000, 45 * 60000, R.string.lyumjev_U100_PD, R.string.insulin_peak_time_PD);
 
     val iCfg: ICfg
         get() = ICfg(this.name, insulinEndTime, insulinPeakTime, 1.0)

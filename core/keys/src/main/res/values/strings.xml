@@ -476,4 +476,23 @@
     <string name="prefs_range_title">Range for visualization</string>
     <string name="overview_show_notes_field_in_dialogs_title">Show notes field in treatment dialogs</string>
 
+    <!--    Tsunami April 2026-->
+    <string name="tsunami_default_duration_title">Tsunami default duration [min]</string>
+    <string name="tsu_activity_target_title">Activity target (Tsunami) [%]</string>
+    <string name="insulinReqPCT_title">Tsunami insulin delivery percentage [%]</string>
+    <string name="wave_activity_target_title">Activity target (Wave) [%]</string>
+    <string name="wave_insulinReqPCT_title">Wave mode insulin delivery percentage [%]</string>
+
+    <string name="tsunami_smbcap_title">Tsunami SMB cap [U]</string>
+    <string name="tsunami_smbcap_summary">max SMB size deliverable by Tsunami.</string>
+    <string name="tsunami_button_insulin_increment_button_message">Amount of insulin to add when button is pressed</string>
+    <string name="tsunami_button_insulin_increment_1">1st tsunami bolus increment [U]</string>
+    <string name="tsunami_button_insulin_increment_2">2nd tsunami bolus increment [U]</string>
+    <string name="tsunami_button_insulin_increment_3">3rd tsunami bolus increment [U]</string>
+    <string name="wave_start_summary">Hour of the day from when on wave mode will be enabled.</string>
+    <string name="wave_start_title">Wave start time (incl.) [h]</string>
+    <string name="wave_end_summary">Hour of the day until (and including) which wave mode is enabled.</string>
+    <string name="wave_end_title">Wave end time (incl.) [h]</string>
+    <string name="wave_smbcap_message" translatable="false">max SMB size deliverable by wave mode.</string>
+    <string name="wave_smbcap_title" translatable="false">Wave SMB cap [U]</string>
 </resources>

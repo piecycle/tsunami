@@ -88,13 +88,15 @@ sealed class QuickLaunchAction {
         val CannulaChange = StaticAction(ElementType.CANNULA_CHANGE)
         val Fill = StaticAction(ElementType.FILL)
         val SiteRotation = StaticAction(ElementType.SITE_ROTATION)
+
+        val Tsunami = StaticAction(ElementType.TSUNAMI)
         val QuickLaunchConfig = StaticAction(ElementType.QUICK_LAUNCH_CONFIG)
 
         /** All static actions available for the configuration screen (excluding QuickLaunchConfig) */
         val staticActions: List<QuickLaunchAction> = listOf(
             Insulin, InsulinManagement, Carbs, Wizard, Treatment, Cgm, Calibration,
             BgCheck, Note, Exercise, Question, Announcement,
-            SensorInsert, BatteryChange, CannulaChange, Fill, SiteRotation
+            SensorInsert, BatteryChange, CannulaChange, Fill, SiteRotation, Tsunami
         )
 
         /** Default toolbar configuration */

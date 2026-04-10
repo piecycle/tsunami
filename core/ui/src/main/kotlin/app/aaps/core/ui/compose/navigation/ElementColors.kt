@@ -31,6 +31,7 @@ data class ElementColors(
     val cob: Color,
     val sensitivity: Color,
     val automation: Color,
+    val tsunami: Color,
     // New fields for ElementType
     val bolusWizard: Color,
     val note: Color,
@@ -81,6 +82,7 @@ internal val LightElementColors = ElementColors(
     cob = Color(0xFFFF5722),             // deep orange — distinct from COB line (#FB8C00)
     sensitivity = Color(0xFF008585),     // teal — autosens icon color
     automation = Color(0xFF66BB6A),      // green — same as userEntry light
+    tsunami = Color(0xFF2F9C77),         // tsunami mint, darker
     bolusWizard = Color(0xFF66BB6A),     // moved from generalColors.calculator
     note = Color(0xFFFEAF05),            // was careportal
     question = Color(0xFFFF9800),        // distinct from note — amber/orange
@@ -130,6 +132,7 @@ internal val DarkElementColors = ElementColors(
     cob = Color(0xFFFFAB91),             // soft salmon — distinct from COB line (#FFB74D)
     sensitivity = Color(0xFF008585),     // teal — autosens icon color
     automation = Color(0xFF6AE86D),      // green — same as userEntry dark
+    tsunami = Color(0xFF00D38D),         // tsunami mint, bright
     bolusWizard = Color(0xFF67E86A),     // moved from generalColors.calculator (night)
     note = Color(0xFFFEAF05),            // was careportal
     question = Color(0xFFFFB74D),        // distinct from note — warm amber

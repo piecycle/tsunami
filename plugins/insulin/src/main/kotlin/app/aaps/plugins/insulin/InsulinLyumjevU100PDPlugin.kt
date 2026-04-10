@@ -23,7 +23,7 @@ class InsulinLyumjevU100PDPlugin @Inject constructor(
     uiInteraction: UiInteraction
 ) : InsulinOrefBasePlugin(rh, profileFunction, rxBus, aapsLogger, config, hardLimits, uiInteraction) {
 
-    override val id get(): Insulin.InsulinType = Insulin.InsulinType.OREF_LYUMJEV_U100_PD
+    override val id get(): Insulin.InsulinType = Insulin.InsulinType.LYUMJEV_PD
     override val friendlyName get(): String = rh.gs(R.string.lyumjev_U100_PD)
 
     override fun configuration(): JSONObject = JSONObject()

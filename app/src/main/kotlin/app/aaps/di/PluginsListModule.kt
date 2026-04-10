@@ -60,9 +60,6 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntKey
 import dagger.multibindings.IntoMap
 import dagger.multibindings.Multibinds
-import info.nightscout.pump.combov2.ComboV2Plugin
-import app.aaps.plugins.insulin.InsulinLyumjevU100PDPlugin
-import app.aaps.plugins.insulin.InsulinLyumjevU200PDPlugin
 import app.aaps.plugins.smoothing.UnscentedKalmanFilterPlugin
 import javax.inject.Qualifier
 

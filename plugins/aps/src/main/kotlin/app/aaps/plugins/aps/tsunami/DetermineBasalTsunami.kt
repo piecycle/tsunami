@@ -531,6 +531,82 @@ fun determine_basal(
         val recentGlucoseStdDev = calculateStdDev(recentGlucoseValuesForStdDev)
         val finalAggressiveness = calculateAggressivenessFactor(profile, glucose_status, iob_data, recentGlucoseStdDev, recentGlucoseHistory, rawGlucoseHistory)
 
+        /**
+         * Analyzes glucose acceleration patterns to classify metabolic state.
+         *
+         * @param recentGlucoseHistory List of glucose readings (newest first).
+         * @param grossDeltaHistory List of gross delta values (newest first) matching the glucose history timestamps.
+         *                          Gross Delta = Net Delta + (Activity * ISF).
+         * @return GlucoseAccelerationState containing classification and raw acceleration values.
+         */
+        fun calculateAccelerationState(
+            recentGlucoseHistory: List<GlucoseStatus>,
+            grossDeltaHistory: List<Double>
+        ): GlucoseAccelerationState {
+
+            // --- Constants ---
+            val ACCEL_THRESHOLD = 3.0 // mg/dL/reading (approx 5 min)
+            val MIN_DATA_POINTS = 3   // Need at least 3 points to calc acceleration (Current, Prev, Prev-1)
+
+            // --- 1. Data Validation & Collection ---
+            // We need at least 3 points to calculate the acceleration of the most recent delta.
+            // Delta[0] = BG[0] - BG[1]
+            // Delta[1] = BG[1] - BG[2]
+            // Accel[0] = Delta[0] - Delta[1]
+            if (recentGlucoseHistory.size < MIN_DATA_POINTS || grossDeltaHistory.size < MIN_DATA_POINTS) {
+                return GlucoseAccelerationState(
+                    AccelerationClass.UNKNOWN, AccelerationClass.UNKNOWN, 0.0, 0.0, emptyList(), emptyList()
+                )
+            }
+
+            // Limit to last 60 minutes (approx 12 readings)
+            val historySize = min(12, min(recentGlucoseHistory.size, grossDeltaHistory.size))
+
+            // Extract Net Deltas (Raw Sensor Deltas)
+            // Note: glucoseStatus.delta is usually the delta from the previous reading.
+            val netDeltas = recentGlucoseHistory.take(historySize).map { it.delta }
+            val grossDeltas = grossDeltaHistory.take(historySize)
+
+            // --- 2. Acceleration Calculation ---
+            // acceleration[i] = delta[i] - delta[i+1] (since i is newer than i+1)
+            // We only strictly need the most recent acceleration (index 0) for classification,
+            // but we calculate arrays as requested for potential future use/logging.
+
+            val netAccelerations = DoubleArray(historySize - 1)
+            val grossAccelerations = DoubleArray(historySize - 1)
+
+            for (i in 0 until historySize - 1) {
+                netAccelerations[i] = netDeltas[i] - netDeltas[i+1]
+                grossAccelerations[i] = grossDeltas[i] - grossDeltas[i+1]
+            }
+
+            // --- 3. Classification Logic ---
+            // Analyze the most recent acceleration value (Index 0)
+            val currentNetAccel = netAccelerations.firstOrNull() ?: 0.0
+            val currentGrossAccel = grossAccelerations.firstOrNull() ?: 0.0
+
+            fun classify(acceleration: Double): AccelerationClass {
+                return when {
+                    acceleration > ACCEL_THRESHOLD -> AccelerationClass.ACC
+                    acceleration < -ACCEL_THRESHOLD -> AccelerationClass.DEC
+                    else -> AccelerationClass.NEUT
+                }
+            }
+
+            val netClass = classify(currentNetAccel)
+            val grossClass = classify(currentGrossAccel)
+
+            // --- 4. Output Generation ---
+            return GlucoseAccelerationState(
+                grossDeltaClass = grossClass,
+                netDeltaClass = netClass,
+                grossAcceleration = currentGrossAccel,
+                netAcceleration = currentNetAccel,
+                grossDeltas = grossDeltas,
+                netDeltas = netDeltas
+            )
+        }
+
         val tsunamiModeID = profile.tsunamiModeID
         val deltaReductionPCT = profile.deltaReductionPCT //MP Reduction of current delta by X percent; 1 = delta of 0, 0.5 = delta of 50% of current delta;
         var SMBcap = profile.SMBcap
@@ -633,37 +709,14 @@ fun determine_basal(
         }
 
         if (activityController) {
-            /*
-            ** Fluid activity ramp-up system
-            */
-            // 1. Define the parameters for the transition based on your feedback
-            val maxTransitionPoint = 12.0 // The delta at which we are 100% in "ramp-up" mode
-            val variableRange = 7.0      // The width of the transition zone
-
-            // 2. Calculate the dynamic starting point of the transition
-            // At full aggressiveness (1.0), transition starts at 12 - 7 = 5.0 mg/dL/5min.
-            // At low aggressiveness (e.g. 0.2), transition starts at 12 - 1.4 = 10.6 mg/dL/5min
-            val transitionStartPoint = maxTransitionPoint - (variableRange * finalAggressiveness)
-
-            // 3. Calculate the linear blend weight based on the current delta
-            val currentProgressInRange = glucose_status.delta - transitionStartPoint
-            val totalRangeWidth = maxTransitionPoint - transitionStartPoint
-
-            val blendWeight = if (totalRangeWidth > 0) {
-                // Calculate the fraction of the way through the transition zone we are
-                (currentProgressInRange / totalRangeWidth).coerceIn(0.0, 1.0)
-            } else {
-                // Handle edge case where range width is zero or negative
-                if (glucose_status.delta >= maxTransitionPoint) 1.0 else 0.0
+            //MP Switch between activity control and activity build-up modes
+            if (glucose_status.delta <= 4.0) {
+                //MP Adjust activity target to activityTarget % of current activity if glucose is near constant / delta is low (near-constant activity)
+                actMissing = round((actCurr * activityTarget - Math.max(actFuture, 0.0)) / 5, 4) //MP Use activityTarget% of current activity as target activity in the future; Divide by 5 to get per-minute activity
+           } else {
+                //MP Escalate activity at medium to high delta (activity build-up)
+                actMissing = round((actTarget - Math.max(actFuture, 0.0)) / 5, 4) //MP Calculate required activity to end a rise in t minutes; Divide by 5 to get per-minute activity
             }
-
-            //MP Adjust activity target to activityTarget % of current activity if glucose is near constant / delta is low (near-constant activity)
-            val stableActivityMode = round((actCurr * activityTarget - Math.max(actFuture, 0.0)) / 5, 4) //MP Use activityTarget% of current activity as target activity in the future; Divide by 5 to get per-minute activity
-            //MP Escalate activity at medium to high delta (activity build-up)
-            val rampUpActivityMode = round((actTarget - Math.max(actFuture, 0.0)) / 5, 4) //MP Calculate required activity to end a rise in t minutes; Divide by 5 to get per-minute activity
-            //MP Blend the missing activity results of both equations in dependence of the current delta and aggressiveness factor. (typically: low delta = keep activity constant; high delta = ramp up to neutralise delta)
-            actMissing = (stableActivityMode * (1 - blendWeight)) + (rampUpActivityMode * blendWeight)
-
             /*
             ** Insulin requirement calculation by Tsunami START
             */
@@ -699,6 +752,7 @@ fun determine_basal(
                 if (actMissing != 0.0) {
                     while (round(actAtT / actMissing, 2) > 1.02 || round(actAtT / actMissing, 2) < 0.98) {
                         tsuInsReq = tsuInsReq / actRatio
+                        //TODO: Change this to account for new insulin concentration variable
                         tp = if (profile.insulinID == 205) { //MP ID = 205 for Lyumjev U200
                             (A0 + A1 * 2 * tsuInsReq) / (1 + B1 * 2 * tsuInsReq)
                         } else { //MP Lyumjev U100 (ID = 105)
@@ -755,8 +809,12 @@ fun determine_basal(
             } else if (glucose_status.delta <= 4.1 && actCurr > 0) {
                 consoleError.add("Mode: Activity control. Target: " + round((activityTarget * 100), 0) + "%")
             } else {
+                consoleError.add("Mode: Ramping up activity.")
+                /*
                 consoleError.add("Stable mode:  "+ round((1 - blendWeight)*100, 0) +"%")
                 consoleError.add("Ramp-up mode:  "+ round((blendWeight)*100, 0) +"%")
+
+                 */
             }
             consoleError.add("---------------------------------------------------")
         } else {
@@ -1715,3 +1773,25 @@ fun determine_basal(
         }
     }
 }
+
+/**
+ * Represents the metabolic classification based on glucose acceleration.
+ */
+enum class AccelerationClass {
+    ACC,  // Accelerating: Increasing rate of change (> threshold)
+    DEC,  // Decelerating: Decreasing rate of change (< -threshold)
+    NEUT, // Neutral: Steady rate of change
+    UNKNOWN // Insufficient data
+}
+
+/**
+ * Container for the acceleration analysis results.
+ */
+data class GlucoseAccelerationState(
+    val grossDeltaClass: AccelerationClass,
+    val netDeltaClass: AccelerationClass,
+    val grossAcceleration: Double, // mg/dL/reading^2
+    val netAcceleration: Double,   // mg/dL/reading^2
+    val grossDeltas: List<Double>, // History for debugging
+    val netDeltas: List<Double>    // History for debugging
+)

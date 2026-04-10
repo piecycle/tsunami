@@ -114,6 +114,10 @@
     <string name="unknown">Unknown</string>
     <string name="rapid_acting_oref">Novorapid</string>
     <string name="lyumjev">Lyumjev</string>
+    <!-- Tsunami PD models -->
+    <string name="lyumjev_U100_PD">Lyumjev (PD)</string>
+    <string name="insulin_peak_time_PD">Dose-dependent Peak Time [min]</string>
+    <!-- Tsunami PD models end -->
     <string name="free_peak_oref">Free-Peak Oref</string>
     <string name="ultra_rapid_oref">Fiasp</string>
     <string name="fast_acting_insulin_comment">Novorapid, Novolog, Humalog</string>

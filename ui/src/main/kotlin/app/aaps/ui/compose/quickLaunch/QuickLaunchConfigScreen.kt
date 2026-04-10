@@ -289,6 +289,7 @@ private fun SectionHeader(text: String) {
 @Composable
 private fun resolveActionColor(item: ResolvedQuickLaunchItem): Color {
     val action = item.action
+
     if (action is QuickLaunchAction.QuickWizardAction) {
         return when (item.icon) {
             IcBolus -> ElementType.INSULIN.color()

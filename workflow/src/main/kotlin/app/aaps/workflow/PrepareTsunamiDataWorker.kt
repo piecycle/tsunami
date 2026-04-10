@@ -46,7 +46,7 @@ class PrepareTsunamiDataWorker(
         val data = dataWorkerStorage.pickupObject(inputData.getLong(DataWorkerStorage.STORE_KEY, -1)) as PrepareTsunamiData?
             ?: return Result.failure(workDataOf("Error" to "missing input data"))
 
-        rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, 0, null)) //MP For inclusion of tsunami to graph loading bar
+        rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, 0, false)) //MP For inclusion of tsunami to graph loading bar
         val tsunamiArray: MutableList<DataPoint> = ArrayList()
         var lastTsunami = -1.0
         var endTime = data.overviewData.endTime
@@ -57,7 +57,7 @@ class PrepareTsunamiDataWorker(
 
         while (time < endTime) {
             val progress = (time - fromTime).toDouble() / (endTime - fromTime) * 100.0 //MP For inclusion of tsunami to graph loading bar
-            rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, progress.toInt(), null)) //MP For inclusion of tsunami to graph loading bar
+            rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, progress.toInt(), false)) //MP For inclusion of tsunami to graph loading bar
             val tsuEnabled = persistenceLayer.getTsunamiActiveAt(time)
             val currentTsunami: Double = if (tsuEnabled != null) {//MP used to be (tsuEnabled is ValueWrapper.Existing)
                 upperLimit
@@ -87,7 +87,7 @@ class PrepareTsunamiDataWorker(
             //it.backgroundColor = rh.gac(ctx, info.nightscout.core.ui.R.attr.baseBasalColor ) //for testing
             it.thickness = 0
         }
-        rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, 100, null)) //MP For inclusion of tsunami to graph loading bar
+        rxBus.send(EventIobCalculationProgress(CalculationWorkflow.ProgressData.PREPARE_TSUNAMI_DATA, 100, false)) //MP For inclusion of tsunami to graph loading bar
         return Result.success()
     }
 }

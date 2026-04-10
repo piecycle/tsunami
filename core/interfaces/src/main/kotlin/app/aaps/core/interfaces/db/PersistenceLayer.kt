@@ -17,6 +17,7 @@ import app.aaps.core.data.model.SC
 import app.aaps.core.data.model.TB
 import app.aaps.core.data.model.TDD
 import app.aaps.core.data.model.TE
+import app.aaps.core.data.model.TSU
 import app.aaps.core.data.model.TT
 import app.aaps.core.data.model.UE
 import app.aaps.core.data.model.advancedFilteringSupported
@@ -26,6 +27,7 @@ import app.aaps.core.data.ue.Sources
 import app.aaps.core.data.ue.ValueWithUnit
 import app.aaps.core.interfaces.aps.APSResult
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 import kotlin.reflect.KClass
 
@@ -1525,6 +1527,32 @@ interface PersistenceLayer {
      * @return List of inserted records
      */
     suspend fun insertOrUpdateApsResult(apsResult: APSResult): TransactionResult<APSResult>
+
+    //Tsunami
+    /*
+    /**
+     * get value of tsunamiMode from DB at desired time
+     * @param timestamp desired time in ms
+     */
+    fun getTsunamiModeActiveAt(timestamp: Long): Int? //MP Deprecated
+    */
+    /**
+     * get Tsunami DB-entry at desired time
+     * @param timestamp desired time in ms
+     */
+    suspend fun getTsunamiActiveAt(timestamp: Long): TSU?
+
+    /**
+     * insert or update Tsunami record
+     * @param tsu record
+     */
+    suspend fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): TransactionResult<TSU>
+
+    /**
+     * cancel current Tsunami mode if running
+     * @param timestamp current time in ms
+     */
+    suspend fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): TransactionResult<TSU>
 
 }
 

@@ -23,6 +23,7 @@ import app.aaps.core.ui.compose.icons.IcCarbs
 import app.aaps.core.ui.compose.icons.IcPluginMaintenance
 import app.aaps.core.ui.compose.icons.IcPumpCartridge
 import app.aaps.core.ui.compose.icons.Pump
+import app.aaps.core.ui.compose.icons.IcTsunami
 import app.aaps.core.ui.compose.preference.PreferenceSubScreenDef
 import app.aaps.core.ui.search.SearchableItem
 import app.aaps.core.ui.search.SearchableProvider
@@ -222,6 +223,21 @@ class BuiltInSearchables @Inject constructor(
     )
 
     /**
+     * Tsunami button increment settings (accessible from Tsunami dialog)
+     */
+    val tsunamiButtons = PreferenceSubScreenDef(
+        key = "tsunami_button_settings",
+        titleResId = app.aaps.core.ui.R.string.overview_tsunami_label,
+        items = listOf(
+            DoubleKey.TsuButtonIncrement1,
+            DoubleKey.TsuButtonIncrement2,
+            DoubleKey.TsuButtonIncrement3,
+            IntKey.TsuDefaultDuration
+        ),
+        icon = IcTsunami
+    )
+
+    /**
      * Carbs button increment settings (accessible from Carbs dialog)
      */
     val carbsButtons = PreferenceSubScreenDef(
@@ -303,6 +319,7 @@ class BuiltInSearchables @Inject constructor(
         // Dialog settings (only for search, not in AllPreferencesScreen)
         SearchableItem.Category(fillButtons),
         SearchableItem.Category(insulinButtons),
+        SearchableItem.Category(tsunamiButtons),
         SearchableItem.Category(carbsButtons),
         SearchableItem.Category(statusLights),
         SearchableItem.Category(treatmentButtons),

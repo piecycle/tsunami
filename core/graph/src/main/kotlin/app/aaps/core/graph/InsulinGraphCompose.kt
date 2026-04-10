@@ -67,7 +67,7 @@ fun InsulinGraphCompose(
     val activityLabel = stringResource(CoreUiR.string.activity)
     val iobLabel = stringResource(CoreUiR.string.iob)
 
-    LaunchedEffect(iCfg.insulinPeakTime, iCfg.insulinEndTime, iCfg.concentration, diaSample) {
+    LaunchedEffect(iCfg, iCfg.insulinPeakTime, iCfg.insulinEndTime, iCfg.concentration, diaSample) {
         val dia = diaSample ?: iCfg.dia
         val hours = floor(dia + 1).toLong()
         val bolus = BS(

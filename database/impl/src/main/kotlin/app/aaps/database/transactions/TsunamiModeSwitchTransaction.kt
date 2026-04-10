@@ -7,9 +7,9 @@ class TsunamiModeSwitchTransaction(
     val tsunami: Tsunami
 ) : Transaction<TsunamiModeSwitchTransaction.TransactionResult>() {
 
-    override fun run(): TransactionResult {
+    override suspend fun run(): TransactionResult {
         val result = TransactionResult()
-        val current = database.tsunamiDao.getTsunamiActiveAt(tsunami.timestamp).blockingGet()
+        val current = database.tsunamiDao.getTsunamiActiveAt(tsunami.timestamp)
         if (current != null) {
             current.end = tsunami.timestamp
             database.tsunamiDao.updateExistingEntry(current)

@@ -304,9 +304,9 @@ enum class IntKey(
     SiteRotationUserProfile(key = "site_rotation_user_profile", defaultValue = 0, min = 0, max = 2, titleResId = R.string.pref_title_site_rotation_profile),
 
     //Tsunami
-    TsuDefaultDuration("key_tsunami_default_duration", 0, 0, 300, defaultedBySM = true),
-    TsuActivityTarget("key_tsu_activity_target", 75, 50, 100, defaultedBySM = true),
-    TsuInsReqPCT("key_insulinReqPCT", 65, 50, 100, defaultedBySM = true),
-    WaveActivityTarget("key_wave_activity_target", 70, 50, 100, defaultedBySM = true, dependency = BooleanKey.EnableWave),
-    WaveInsReqPCT("key_wave_insulinReqPCT", 65, 30, 100, defaultedBySM = true, dependency = BooleanKey.EnableWave),
+    TsuDefaultDuration("key_tsunami_default_duration", 0, 0, 300, titleResId = R.string.tsunami_default_duration_title, defaultedBySM = true),
+    TsuActivityTarget("key_tsu_activity_target", 75, 50, 100, titleResId = R.string.tsu_activity_target_title, defaultedBySM = true),
+    TsuInsReqPCT("key_insulinReqPCT", 65, 50, 100, titleResId = R.string.insulinReqPCT_title, defaultedBySM = true),
+    WaveActivityTarget("key_wave_activity_target", 70, 50, 100, titleResId = R.string.wave_activity_target_title, defaultedBySM = true, dependency = BooleanKey.EnableWave),
+    WaveInsReqPCT("key_wave_insulinReqPCT", 65, 30, 100, titleResId = R.string.wave_insulinReqPCT_title, defaultedBySM = true, dependency = BooleanKey.EnableWave),
 }

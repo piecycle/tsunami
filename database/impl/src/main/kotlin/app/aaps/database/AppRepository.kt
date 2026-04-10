@@ -812,17 +812,31 @@ class AppRepository @Inject internal constructor(
         tsunami = database.tsunamiDao.getNewEntriesSince(since, until, limit, offset),
     )
     // Tsunami
-    /* MP Deprecated
-    fun getTsunamiModeActiveAt(timestamp: Long): Int? =
-        database.tsunamiDao.getTsunamiModeActiveAt(timestamp)
-    */
-    fun getTsunamiActiveAt(timestamp: Long): Maybe<Tsunami> =
-        database.tsunamiDao.getTsunamiActiveAt(timestamp)
-            .subscribeOn(Schedulers.io())
+    suspend fun getTsunamiMode(): Tsunami? =
+        database.tsunamiDao.getTsunamiMode()
 
-    fun getTsunamiDataFromTime(timestamp: Long): Single<List<Tsunami>> =
-        database.tsunamiDao.getTsunamiDataFromTime(timestamp)
-            .subscribeOn(Schedulers.io())
+    suspend fun getTsunamiActiveAt(timestamp: Long): Tsunami? =
+        database.tsunamiDao.getTsunamiActiveAt(timestamp)
+
+    suspend fun getTsunamiDataFromTime(timestamp: Long, ascending: Boolean = true): List<Tsunami> =
+        database.tsunamiDao.getTsunamiDataFromTime(timestamp).reversedIf(!ascending)
+
+    suspend fun getTsunamiDataIncludingInvalidFromTime(timestamp: Long, ascending: Boolean = true): List<Tsunami> =
+        database.tsunamiDao.getTsunamiDataIncludingInvalidFromTime(timestamp).reversedIf(!ascending)
+
+    suspend fun getLastTsunamiId(): Long? =
+        database.tsunamiDao.getLastId()
+
+    suspend fun getNextSyncElementTsunami(id: Long): Pair<Tsunami, Tsunami>? {
+        val nextIdElement = database.tsunamiDao.getNextModifiedOrNewAfter(id) ?: return null
+        val nextIdElemReferenceId = nextIdElement.referenceId
+        return if (nextIdElemReferenceId == null) {
+            nextIdElement to nextIdElement
+        } else {
+            val historic = database.tsunamiDao.getCurrentFromHistoric(nextIdElemReferenceId)
+            historic?.let { it to nextIdElement }
+        }
+    }
 
     suspend fun getApsResultCloseTo(timestamp: Long): APSResult? =
         database.apsResultDao.getApsResult(timestamp - 5 * 60 * 1000, timestamp)

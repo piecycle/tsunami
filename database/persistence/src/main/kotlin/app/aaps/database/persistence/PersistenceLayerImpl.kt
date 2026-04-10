@@ -46,6 +46,7 @@ import app.aaps.database.entities.StepsCount
 import app.aaps.database.entities.TemporaryBasal
 import app.aaps.database.entities.TemporaryTarget
 import app.aaps.database.entities.TherapyEvent
+import app.aaps.database.entities.Tsunami
 import app.aaps.database.entities.UserEntry
 import app.aaps.database.persistence.converters.fromDb
 import app.aaps.database.persistence.converters.toDb
@@ -213,6 +214,9 @@ class PersistenceLayerImpl @Inject constructor(
             FD::class.java  -> repository.changesOfType<Food>()
                 .map { list -> list.map { it.fromDb() } }
 
+            TSU::class.java -> repository.changesOfType<Tsunami>()
+                .map { list -> list.map { it.fromDb() } }
+
             else            -> throw IllegalArgumentException("Unsupported observation type: ${type.simpleName}")
         } as Flow<List<T>>
     }
@@ -238,6 +242,7 @@ class PersistenceLayerImpl @Inject constructor(
                         is DeviceStatus           -> DS::class
                         is HeartRate              -> HR::class
                         is StepsCount             -> SC::class
+                        is Tsunami                -> TSU::class
                         else                      -> null
                     }
                 }.toSet()
@@ -2408,52 +2413,60 @@ class PersistenceLayerImpl @Inject constructor(
         repository.getTsunamiActiveAt(timestamp)?.fromDb()
 
     override suspend fun insertOrUpdateTsunami(tsu: TSU, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>)
-        : Single<PersistenceLayer.TransactionResult<TSU>> =
-        repository.runTransactionForResult(TsunamiModeSwitchTransaction(tsu.toDb()))
-            .doOnError { aapsLogger.error(LTag.DATABASE, "Error while saving Tsunami mode.", it) }
-            .map { result ->
-                val transactionResult = PersistenceLayer.TransactionResult<TSU>()
-                val ueValues = mutableListOf<UE>()
-                result.inserted.forEach {
-                    ueValues.add(
-                        UE(
-                            timestamp = dateUtil.now(),
-                            action = action,
-                            source = source,
-                            note = note ?: "",
-                            values = listValues
-                        )
+        : PersistenceLayer.TransactionResult<TSU> = withContext(Dispatchers.IO) {
+        try {
+            val result = repository.runTransactionForResultSuspend(TsunamiModeSwitchTransaction(tsu.toDb()))
+            val transactionResult = PersistenceLayer.TransactionResult<TSU>()
+            val ueValues = mutableListOf<UE>()
+            result.inserted.forEach {
+                ueValues.add(
+                    UE(
+                        timestamp = dateUtil.now(),
+                        action = action,
+                        source = source,
+                        note = note ?: "",
+                        values = listValues
                     )
-                    aapsLogger.debug(LTag.DATABASE, "Inserted Tsunami from ${source.name} $it")
-                    transactionResult.inserted.add(it.fromDb())
-                }
-                result.updated.forEach {
-                    aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
-                    transactionResult.updated.add(it.fromDb())
-                }
-                transactionResult
+                )
+                aapsLogger.debug(LTag.DATABASE, "Inserted Tsunami from ${source.name} $it")
+                transactionResult.inserted.add(it.fromDb())
             }
+            result.updated.forEach {
+                aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
+                transactionResult.updated.add(it.fromDb())
+            }
+            log(ueValues)
+            transactionResult
+        } catch (e: Exception) {
+            aapsLogger.error(LTag.DATABASE, "Error while saving Tsunami mode.", e)
+            throw e
+        }
+    }
 
     override suspend fun cancelCurrentTsunamiModeIfAny(timestamp: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>)
-        : Single<PersistenceLayer.TransactionResult<TSU>> =
-        repository.runTransactionForResult(CancelCurrentTsunamiModeIfAnyTransaction(timestamp))
-            .doOnError { aapsLogger.error(LTag.DATABASE, "Error while updating Tsunami mode.", it) }
-            .map { result ->
-                val transactionResult = PersistenceLayer.TransactionResult<TSU>()
-                val ueValues = mutableListOf<UE>()
-                result.updated.forEach {
-                    ueValues.add(
-                        UE(
-                            timestamp = dateUtil.now(),
-                            action = action,
-                            source = source,
-                            note = note ?: "",
-                            values = listValues
-                        )
+        : PersistenceLayer.TransactionResult<TSU> = withContext(Dispatchers.IO) {
+        try {
+            val result = repository.runTransactionForResultSuspend(CancelCurrentTsunamiModeIfAnyTransaction(timestamp))
+            val transactionResult = PersistenceLayer.TransactionResult<TSU>()
+            val ueValues = mutableListOf<UE>()
+            result.updated.forEach {
+                ueValues.add(
+                    UE(
+                        timestamp = dateUtil.now(),
+                        action = action,
+                        source = source,
+                        note = note ?: "",
+                        values = listValues
                     )
-                    aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
-                    transactionResult.updated.add(it.fromDb())
-                }
-                transactionResult
+                )
+                aapsLogger.debug(LTag.DATABASE, "Updated Tsunami from ${source.name} $it")
+                transactionResult.updated.add(it.fromDb())
             }
+            log(ueValues)
+            transactionResult
+        } catch (e: Exception) {
+            aapsLogger.error(LTag.DATABASE, "Error while updating Tsunami mode.", e)
+            throw e
+        }
+    }
 }

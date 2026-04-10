@@ -80,6 +80,7 @@ class InsulinImpl @Inject constructor(
         InsulinType.OREF_RAPID_ACTING,
         InsulinType.OREF_ULTRA_RAPID_ACTING,
         InsulinType.OREF_LYUMJEV,
+        InsulinType.LYUMJEV_PD,
         InsulinType.OREF_FREE_PEAK
     )
 
