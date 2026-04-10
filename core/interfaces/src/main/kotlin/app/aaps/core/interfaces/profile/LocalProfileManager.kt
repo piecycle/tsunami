@@ -6,8 +6,7 @@ import org.json.JSONArray
  * Interface for managing local profiles.
  * Provides methods for profile CRUD operations, persistence, and state management.
  *
- * This interface is used by the new Compose UI for profile management.
- * Legacy UI uses ProfilePlugin directly which implements ProfileSource.
+ * This interface is used by the Compose UI for profile management.
  */
 interface LocalProfileManager {
 
@@ -60,6 +59,17 @@ interface LocalProfileManager {
      * The profile store containing all profiles.
      */
     val profile: ProfileStore?
+
+    /**
+     * Legacy profile name → DIA map extracted from ancient raw SharedPreferences format.
+     * Only populated during first-launch migration from pre-ICfg versions. Empty on all
+     * subsequent launches. Used by MainApp.dataMigrations() to backfill ICfg data on
+     * historical ProfileSwitch / Bolus records.
+     *
+     * TODO: Remove once all users have migrated from pre-ICfg format.
+     */
+    val legacyProfileNameToDia: Map<String, Double>
+        get() = emptyMap()
 
     /**
      * Get the currently selected profile.

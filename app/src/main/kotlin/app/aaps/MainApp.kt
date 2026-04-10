@@ -47,6 +47,7 @@ import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppInitialized
 import app.aaps.core.interfaces.sharedPreferences.SP
+import app.aaps.core.interfaces.tempTargets.toJson
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.HardLimits
@@ -57,8 +58,6 @@ import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.BooleanNonKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.LongComposedKey
-import app.aaps.core.keys.ProfileComposedBooleanKey
-import app.aaps.core.keys.ProfileComposedStringKey
 import app.aaps.core.keys.StringKey
 import app.aaps.core.keys.StringNonKey
 import app.aaps.core.keys.UnitDoubleKey
@@ -79,7 +78,6 @@ import app.aaps.receivers.ChargingStateReceiver
 import app.aaps.receivers.KeepAliveWorker
 import app.aaps.receivers.TimeDateOrTZChangeReceiver
 import app.aaps.ui.activityMonitor.ActivityMonitor
-import app.aaps.ui.compose.tempTarget.toJson
 import app.aaps.ui.widget.Widget
 import app.aaps.utils.configureLeakCanary
 import com.google.firebase.Firebase
@@ -149,7 +147,6 @@ class MainApp : Application(), HasAndroidInjector {
 
     private lateinit var insulinLabel: String
     private var insulinPeakTime: Long = 0L
-    private var profileNameToDia: Map<String, Double> = emptyMap()
 
     private var handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
     private lateinit var refreshWidget: Runnable
@@ -280,7 +277,7 @@ class MainApp : Application(), HasAndroidInjector {
         if (hashes.isNotEmpty()) fabricPrivacy.setUserProperty("Hash", hashes[0])
         activePlugin.activePump.let { fabricPrivacy.setUserProperty("Pump", it::class.java.simpleName) }
         if (!config.AAPSCLIENT && !config.PUMPCONTROL)
-            activePlugin.activeAPS.let { fabricPrivacy.setUserProperty("Aps", it::class.java.simpleName) }
+            activePlugin.activeAPS?.let { fabricPrivacy.setUserProperty("Aps", it::class.java.simpleName) }
         activePlugin.activeBgSource.let { fabricPrivacy.setUserProperty("BgSource", it::class.java.simpleName) }
         activePlugin.activeSensitivity.let { fabricPrivacy.setUserProperty("Sensitivity", it::class.java.simpleName) }
         FirebaseCrashlytics.getInstance().setCustomKey("HEAD", BuildConfig.HEAD)
@@ -384,12 +381,6 @@ class MainApp : Application(), HasAndroidInjector {
     private suspend fun doMigrations() {
         // set values for different builds
         // 3.3
-        if (preferences.get(IntKey.OverviewEatingSoonDuration) == 0) preferences.remove(IntKey.OverviewEatingSoonDuration)
-        if (preferences.get(UnitDoubleKey.OverviewEatingSoonTarget) == 0.0) preferences.remove(UnitDoubleKey.OverviewEatingSoonTarget)
-        if (preferences.get(IntKey.OverviewActivityDuration) == 0) preferences.remove(IntKey.OverviewActivityDuration)
-        if (preferences.get(UnitDoubleKey.OverviewActivityTarget) == 0.0) preferences.remove(UnitDoubleKey.OverviewActivityTarget)
-        if (preferences.get(IntKey.OverviewHypoDuration) == 0) preferences.remove(IntKey.OverviewHypoDuration)
-        if (preferences.get(UnitDoubleKey.OverviewHypoTarget) == 0.0) preferences.remove(UnitDoubleKey.OverviewHypoTarget)
         if (preferences.get(UnitDoubleKey.OverviewLowMark) == 0.0) preferences.remove(UnitDoubleKey.OverviewLowMark)
         if (preferences.get(UnitDoubleKey.OverviewHighMark) == 0.0) preferences.remove(UnitDoubleKey.OverviewHighMark)
         if (preferences.getIfExists(BooleanKey.GeneralSimpleMode) == null)
@@ -471,69 +462,8 @@ class MainApp : Application(), HasAndroidInjector {
                 sp.remove(key)
             }
         }
-        // Migrate Profile
-        val indexToName = mutableMapOf<Int, String>()
-        val indexToDia = mutableMapOf<Int, Double>()
-        for ((key, value) in keys) {
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_mgdl")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedBooleanKey.LocalProfileNumberedMgdl, SafeParse.stringToInt(number), value = value as Boolean)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_isf")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedIsf, SafeParse.stringToInt(number), value = value as String)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_ic")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedIc, SafeParse.stringToInt(number), value = value as String)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_ic")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedIc, SafeParse.stringToInt(number), value = value as String)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_basal")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedBasal, SafeParse.stringToInt(number), value = value as String)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_targetlow")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedTargetLow, SafeParse.stringToInt(number), value = value as String)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_targethigh")) {
-                val number = key.split("_")[1]
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedTargetHigh, SafeParse.stringToInt(number), value = value as String)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_name")) {
-                val number = key.split("_")[1]
-                indexToName[SafeParse.stringToInt(number)] = value as String
-                preferences.put(ProfileComposedStringKey.LocalProfileNumberedName, SafeParse.stringToInt(number), value = value)
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_name_")) {
-                val number = key.split("_")[2]
-                indexToName[SafeParse.stringToInt(number)] = value as String
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_dia")) {
-                val number = SafeParse.stringToInt(key.split("_")[1])
-                indexToDia[number] = SafeParse.stringToDouble(value.toString())
-                sp.remove(key)
-            }
-            if (key.startsWith(Constants.LOCAL_PROFILE + "_dia_")) {
-                val number = SafeParse.stringToInt(key.split("_")[2])
-                indexToDia[number] = SafeParse.stringToDouble(value.toString())
-                sp.remove(key)
-            }
-        }
-        profileNameToDia = indexToDia.mapNotNull { (index, dia) ->
-            indexToName[index]?.let { name -> name to dia }
-        }.toMap()
+        // Profile migration (raw SP → single JSON) is handled by LocalProfileManagerImpl.
+        // We only need the legacy name → dia map here for the ICfg database backfill below.
 
         // Migrate Tidepool from username/password to OAuth2
         if (sp.contains("tidepool_username") || sp.contains("tidepool_password")) {
@@ -614,9 +544,17 @@ class MainApp : Application(), HasAndroidInjector {
      * Migrates temp target presets from old individual preference keys to unified JSON storage.
      * Creates 3 default presets (Eating Soon, Activity, Hypo) for new installations.
      * For existing installations, migrates values from old keys.
-     * Old keys remain functional for legacy TempTargetDialog.
+     * Old keys are kept for backward compatibility during migration period.
      */
     private fun migrateTempTargetPresets() {
+        // Clean up zero-value old preferences (3.3 migration)
+        if (sp.getInt("eatingsoon_duration", 45) == 0) sp.remove("eatingsoon_duration")
+        if (sp.getDouble("eatingsoon_target", 90.0) == 0.0) sp.remove("eatingsoon_target")
+        if (sp.getInt("activity_duration", 90) == 0) sp.remove("activity_duration")
+        if (sp.getDouble("activity_target", 140.0) == 0.0) sp.remove("activity_target")
+        if (sp.getInt("hypo_duration", 60) == 0) sp.remove("hypo_duration")
+        if (sp.getDouble("hypo_target", 160.0) == 0.0) sp.remove("hypo_target")
+
         // Check if migration already completed
         val existing = preferences.get(StringNonKey.TempTargetPresets)
         if (existing != "[]" && existing.isNotEmpty()) {
@@ -624,7 +562,7 @@ class MainApp : Application(), HasAndroidInjector {
         }
 
         // Check if old preferences exist (existing installation vs new installation)
-        val hasOldPreferences = preferences.getIfExists(UnitDoubleKey.OverviewEatingSoonTarget) != null
+        val hasOldPreferences = sp.contains("eatingsoon_target")
 
         val units = profileFunction.getUnits()
 
@@ -634,12 +572,12 @@ class MainApp : Application(), HasAndroidInjector {
                 id = "eatingsoon",
                 reason = TT.Reason.EATING_SOON,
                 targetValue = if (hasOldPreferences) {
-                    profileUtil.convertToMgdl(preferences.get(UnitDoubleKey.OverviewEatingSoonTarget), units)
+                    profileUtil.convertToMgdl(sp.getDouble("eatingsoon_target", 90.0), units)
                 } else {
                     Constants.DEFAULT_TT_EATING_SOON_TARGET
                 },
                 duration = if (hasOldPreferences) {
-                    preferences.get(IntKey.OverviewEatingSoonDuration) * 60L * 1000L
+                    sp.getInt("eatingsoon_duration", 45) * 60L * 1000L
                 } else {
                     Constants.DEFAULT_TT_EATING_SOON_DURATION * 60L * 1000L
                 },
@@ -649,12 +587,12 @@ class MainApp : Application(), HasAndroidInjector {
                 id = "activity",
                 reason = TT.Reason.ACTIVITY,
                 targetValue = if (hasOldPreferences) {
-                    profileUtil.convertToMgdl(preferences.get(UnitDoubleKey.OverviewActivityTarget), units)
+                    profileUtil.convertToMgdl(sp.getDouble("activity_target", 140.0), units)
                 } else {
                     Constants.DEFAULT_TT_ACTIVITY_TARGET
                 },
                 duration = if (hasOldPreferences) {
-                    preferences.get(IntKey.OverviewActivityDuration) * 60L * 1000L
+                    sp.getInt("activity_duration", 90) * 60L * 1000L
                 } else {
                     Constants.DEFAULT_TT_ACTIVITY_DURATION * 60L * 1000L
                 },
@@ -664,12 +602,12 @@ class MainApp : Application(), HasAndroidInjector {
                 id = "hypo",
                 reason = TT.Reason.HYPOGLYCEMIA,
                 targetValue = if (hasOldPreferences) {
-                    profileUtil.convertToMgdl(preferences.get(UnitDoubleKey.OverviewHypoTarget), units)
+                    profileUtil.convertToMgdl(sp.getDouble("hypo_target", 160.0), units)
                 } else {
                     Constants.DEFAULT_TT_HYPO_TARGET
                 },
                 duration = if (hasOldPreferences) {
-                    preferences.get(IntKey.OverviewHypoDuration) * 60L * 1000L
+                    sp.getInt("hypo_duration", 60) * 60L * 1000L
                 } else {
                     Constants.DEFAULT_TT_HYPO_DURATION * 60L * 1000L
                 },
@@ -681,27 +619,25 @@ class MainApp : Application(), HasAndroidInjector {
         preferences.put(StringNonKey.TempTargetPresets, presets.toJson())
 
         aapsLogger.debug(LTag.CORE, "Migrated temp target presets to JSON storage")
-
-        // NOTE: Old preferences are NOT removed to keep legacy TempTargetDialog functional
-        // They are marked as @Deprecated in preference key definitions
-        // Removal will be done when legacy UI is completely removed in the future
     }
 
     private suspend fun dataMigrations() {
         // Migrate to database 33 (ICfg)
-        // Grab default value first
-        var runningICfg = if (profileNameToDia.size == 0) // no migration, get running iCfg from running Profile
-                profileFunction.getProfile()?.iCfg ?: localInsulinManager.iCfg
-            else {  // migration, create running iCfg from previous runningProfile dia and slected InsulinPlugin for peak
-                val dia = (profileFunction.getProfile() as ProfileSealed.EPS?)?.profileName?.let { profileName ->
-                    profileNameToDia[profileName]
-                }
-                val insulinEndTime = ((dia ?: hardLimits.maxDia()) * 3600 * 1000).toLong()
-                ICfg("", insulinEndTime, insulinPeakTime, 1.0).also {
-                    it.insulinNickname = insulinLabel
-                    it.insulinLabel = "$insulinLabel ${localInsulinManager.buildSuffix(it.peak, it.dia, it.concentration)}"
-                }
+        // Grab default value first — if LocalProfileManager did an ancient raw-SP migration,
+        // it populated legacyProfileNameToDia for backfilling historical records.
+        val legacyProfileNameToDia = localProfileManager.legacyProfileNameToDia
+        var runningICfg = if (legacyProfileNameToDia.isEmpty()) // no migration, get running iCfg from running Profile
+            profileFunction.getProfile()?.iCfg ?: localInsulinManager.iCfg
+        else {  // migration, create running iCfg from previous runningProfile dia and selected InsulinPlugin for peak
+            val dia = (profileFunction.getProfile() as? ProfileSealed.EPS)?.profileName?.let { profileName ->
+                legacyProfileNameToDia[profileName]
             }
+            val insulinEndTime = ((dia ?: hardLimits.maxDia()) * 3600 * 1000).toLong()
+            ICfg("", insulinEndTime, insulinPeakTime, 1.0).also {
+                it.insulinNickname = insulinLabel
+                it.insulinLabel = "$insulinLabel ${localInsulinManager.buildSuffix(it.peak, it.dia, it.concentration)}"
+            }
+        }
 
         if (!localInsulinManager.insulinAlreadyExists(runningICfg)) { // Add running insulin in InsulinManager if missing
             localInsulinManager.addNewInsulin(runningICfg, keepName = true)

@@ -45,6 +45,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.aaps.core.graph.profile.ProfileCompareContent
+import app.aaps.core.graph.profile.ProfileSingleContent
 import app.aaps.core.ui.compose.AapsFab
 import app.aaps.core.ui.compose.AapsTheme
 import app.aaps.core.ui.compose.AapsTopAppBar
@@ -77,7 +79,8 @@ fun ProfileManagementScreen(
     onNavigateBack: () -> Unit = {},
     onRequestEditMode: () -> Unit = {},
     onEditProfile: (Int) -> Unit = {},
-    onActivateProfile: (Int) -> Unit = {}
+    onActivateProfile: (Int) -> Unit = {},
+    onInsulinManager: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isPlayMode = uiState.screenMode == ScreenMode.PLAY
@@ -276,7 +279,6 @@ fun ProfileManagementScreen(
                                         ProfileCompareContent(
                                             profile1 = compareData.baseProfile,
                                             profile2 = compareData.effectiveProfile,
-                                            shortHourUnit = compareData.shortHourUnit,
                                             icsRows = compareData.icRows,
                                             icUnits = compareData.icUnits,
                                             isfsRows = compareData.isfRows,
@@ -295,7 +297,8 @@ fun ProfileManagementScreen(
                                             getIsfList = viewModel::getIsfList,
                                             getBasalList = viewModel::getBasalList,
                                             getTargetList = viewModel::getTargetList,
-                                            formatBasalSum = viewModel::formatBasalSum
+                                            formatBasalSum = viewModel::formatBasalSum,
+                                            onInsulinManager = onInsulinManager
                                         )
                                     }
                                     // Extra space for floating toolbar

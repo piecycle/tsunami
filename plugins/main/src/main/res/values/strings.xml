@@ -2,30 +2,7 @@
 <resources>
 
     <string name="disabled_loop">Loop Disabled</string>
-    <string name="smscommunicator_pump_disconnected">Pump disconnected</string>
-
-    <!-- Food-->
-    <string name="food_short">Food</string>
-    <string name="description_food">Displays the food presets defined in Nightscout</string>
-    <string name="filter">Filter</string>
-    <string name="food">Food</string>
-    <string name="short_kilo_joul">kJ</string>
-    <string name="short_energy">En</string>
-    <string name="short_protein">Pr</string>
-    <string name="short_fat">Fat</string>
-    <string name="category">Category</string>
-    <string name="subcategory">Subcategory</string>
     <string name="calculator_label">Calculator</string>
-
-    <!-- Profile -->
-    <!-- localprofile moved to core:ui module -->
-    <string name="localprofile_shortname">LP</string>
-    <string name="description_profile_local">Define a profile describing your insulin needs.</string>
-    <string name="a11y_add_new_to_list">add new to list</string>
-    <string name="do_you_want_switch_profile">Do you want to switch profile and discard changes made to current profile?</string>
-    <string name="save_or_reset_changes_first">Save or reset current changes first</string>
-    <string name="delete_current_profile">Delete current profile?</string>
-    <string name="units_colon">Units:</string>
 
     <!-- Actions -->
     <string name="actions">Actions</string>
@@ -38,7 +15,6 @@
     <string name="extended_bolus_button">Extended Bolus</string>
     <string name="extended_bolus_cancel_button">Cancel Extended Bolus</string>
     <string name="tools">Tools</string>
-    <string name="site_rotation">Site Rotation</string>
     <string name="nav_history_browser">History browser</string>
     <string name="sensor_label">Sensor</string>
     <string name="age_label">age:</string>
@@ -72,17 +48,13 @@
     <string name="a11y_blood_glucose">blood glucose</string>
     <string name="a11y_bg_outdated">outdated</string>
     <string name="set_basal_question">Accept new temp basal:</string>
-    <string name="overview_cgm">CGM</string>
+
     <!-- overview moved to core:ui module -->
     <string name="overview_shortname">HOME</string>
     <string name="description_overview">Displays the current state of your loop and buttons for most common actions</string>
     <string name="overview_buttons_selection">Buttons</string>
-    <string name="not_available_full">Not available</string>
-    <string name="constraints_violation">Constraints violation</string>
-    <string name="change_your_input">Change your input!</string>
+
     <string name="data_status">BG data status</string>
-    <string name="quickwizard_settings">QuickWizard settings</string>
-    <string name="default_temptargets">Default Temp-Targets</string>
     <string name="fill_bolus_title">Fill/Prime standard insulin amounts</string>
     <string name="run_question">Run %s?</string>
 

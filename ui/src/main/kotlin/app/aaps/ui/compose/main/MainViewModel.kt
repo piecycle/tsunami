@@ -27,9 +27,9 @@ import app.aaps.core.interfaces.profile.Profile
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.Pump
+import app.aaps.core.interfaces.pump.defs.determineCorrectBolusStepSize
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.CommandQueue
-import app.aaps.core.interfaces.pump.defs.determineCorrectBolusStepSize
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.ui.IconsProvider
 import app.aaps.core.interfaces.ui.UiInteraction
@@ -46,7 +46,7 @@ import app.aaps.ui.compose.alertDialogs.AboutDialogData
 import app.aaps.ui.compose.quickLaunch.QuickLaunchResolver
 import app.aaps.ui.compose.quickLaunch.QuickLaunchSerializer
 import app.aaps.ui.compose.quickLaunch.ResolvedQuickLaunchItem
-import app.aaps.ui.compose.tempTarget.toTTPresets
+import app.aaps.ui.compose.tempTarget.toTTPresetsWithNameRes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -356,7 +356,6 @@ class MainViewModel @Inject constructor(
                 val detailedBolusInfo = DetailedBolusInfo().apply {
                     eventType = app.aaps.core.data.model.TE.Type.CORRECTION_BOLUS
                     this.insulin = insulinAfterConstraints
-                    this.context = context
                 }
                 commandQueue.bolus(detailedBolusInfo, object : Callback() {
                     override fun run() {
@@ -391,7 +390,6 @@ class MainViewModel @Inject constructor(
                 val detailedBolusInfo = DetailedBolusInfo().apply {
                     eventType = app.aaps.core.data.model.TE.Type.CARBS_CORRECTION
                     this.carbs = carbs.toDouble()
-                    this.context = context
                     carbsTimestamp = dateUtil.now()
                 }
                 commandQueue.bolus(detailedBolusInfo, object : Callback() {
@@ -508,7 +506,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun requestTempTargetPresetConfirmation(presetId: String) {
-        val presets = preferences.get(StringNonKey.TempTargetPresets).toTTPresets()
+        val presets = preferences.get(StringNonKey.TempTargetPresets).toTTPresetsWithNameRes()
         val preset = presets.find { it.id == presetId } ?: return
         val name = preset.name ?: preset.nameRes?.let { rh.gs(it) } ?: "?"
         val durationMin = (preset.duration / 60000L).toInt()
@@ -551,7 +549,7 @@ class MainViewModel @Inject constructor(
             }
 
             is ConfirmableAction.ActivateTempTargetPreset -> {
-                val presets = preferences.get(StringNonKey.TempTargetPresets).toTTPresets()
+                val presets = preferences.get(StringNonKey.TempTargetPresets).toTTPresetsWithNameRes()
                 val preset = presets.find { it.id == action.presetId } ?: return@launch
                 viewModelScope.launch {
                     val tempTarget = TT(

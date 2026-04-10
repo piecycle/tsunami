@@ -34,6 +34,7 @@ import app.aaps.core.ui.compose.icons.IcProfile
 import app.aaps.core.ui.compose.icons.IcPumpBattery
 import app.aaps.core.ui.compose.icons.IcPumpCartridge
 import app.aaps.core.ui.compose.icons.IcQuestion
+import app.aaps.core.ui.compose.icons.IcPluginFood
 import app.aaps.core.ui.compose.icons.IcQuickwizard
 import app.aaps.core.ui.compose.icons.IcSetupWizard
 import app.aaps.core.ui.compose.icons.IcSiteRotation
@@ -45,7 +46,6 @@ import app.aaps.core.ui.compose.icons.IcTtHigh
 import app.aaps.core.ui.compose.icons.IcUserOptions
 import app.aaps.core.ui.compose.icons.IcXDrip
 import app.aaps.core.ui.compose.icons.Pump
-import app.aaps.core.ui.compose.navigation.ElementType
 
 /**
  * Extension functions providing the visual identity for each [ElementType].
@@ -63,6 +63,7 @@ fun ElementType.color(): Color = when (this) {
     ElementType.BOLUS_WIZARD            -> AapsTheme.elementColors.bolusWizard
     ElementType.QUICK_WIZARD,
     ElementType.QUICK_WIZARD_MANAGEMENT -> AapsTheme.elementColors.quickWizard
+    ElementType.FOOD_MANAGEMENT         -> AapsTheme.elementColors.carbs
 
     ElementType.CGM_XDRIP               -> AapsTheme.elementColors.cgmXdrip
     ElementType.CGM_DEX                 -> AapsTheme.elementColors.cgmDex
@@ -118,6 +119,7 @@ fun ElementType.icon(): ImageVector = when (this) {
     ElementType.BOLUS_WIZARD            -> IcCalculator
     ElementType.QUICK_WIZARD,
     ElementType.QUICK_WIZARD_MANAGEMENT -> IcQuickwizard
+    ElementType.FOOD_MANAGEMENT         -> IcPluginFood
     ElementType.TSUNAMI                 -> IcTsunami
 
     ElementType.TREATMENT               -> Icons.Default.Add
@@ -171,6 +173,7 @@ fun ElementType.labelResId(): Int = when (this) {
     ElementType.BOLUS_WIZARD            -> R.string.boluswizard
     ElementType.QUICK_WIZARD            -> 0 // dynamic label
     ElementType.QUICK_WIZARD_MANAGEMENT -> R.string.quickwizard_managemnt
+    ElementType.FOOD_MANAGEMENT         -> R.string.food_management
     ElementType.TREATMENT               -> R.string.overview_treatment_label
     ElementType.CGM_XDRIP               -> R.string.cgm
     ElementType.CGM_DEX                 -> R.string.cgm
@@ -222,6 +225,7 @@ fun ElementType.descriptionResId(): Int = when (this) {
     ElementType.PROFILE_MANAGEMENT      -> R.string.manage_profile_desc
     ElementType.TEMP_TARGET_MANAGEMENT  -> R.string.manage_temp_target_desc
     ElementType.QUICK_WIZARD_MANAGEMENT -> R.string.manage_quickwizard_desc
+    ElementType.FOOD_MANAGEMENT         -> R.string.manage_food_desc
 
     ElementType.TEMP_BASAL              -> R.string.manage_temp_basal_desc
     ElementType.EXTENDED_BOLUS          -> R.string.manage_extended_bolus_desc

@@ -72,6 +72,8 @@ import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.StringKey
 import app.aaps.core.keys.StringNonKey
 import app.aaps.core.keys.UnitDoubleKey
+import app.aaps.core.interfaces.tempTargets.ttDurationMinutes
+import app.aaps.core.interfaces.tempTargets.ttTargetMgdl
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.constraints.ConstraintObject
 import app.aaps.core.objects.extensions.convertedToAbsolute
@@ -606,7 +608,7 @@ class DataHandlerMobile @Inject constructor(
             timestamp = System.currentTimeMillis(),
             loopMode = loopMode,
             apsName = if (loop.runningMode.isLoopRunning())
-                (usedAPS as PluginBase).name else null,
+                (usedAPS as? PluginBase)?.name else null,
             lastRun = lastRunTimestamp,
             lastEnact = lastEnactTimestamp,
             tempTarget = tempTargetInfo,
@@ -1042,8 +1044,8 @@ class DataHandlerMobile @Inject constructor(
         val presetIsMGDL = profileFunction.getUnits() == GlucoseUnit.MGDL
         when (action.command) {
             EventData.ActionTempTargetPreCheck.TempTargetCommand.PRESET_ACTIVITY -> {
-                val activityTTDuration = preferences.get(IntKey.OverviewActivityDuration)
-                val activityTT = preferences.get(UnitDoubleKey.OverviewActivityTarget)
+                val activityTTDuration = preferences.ttDurationMinutes(TT.Reason.ACTIVITY)
+                val activityTT = profileUtil.fromMgdlToUnits(preferences.ttTargetMgdl(TT.Reason.ACTIVITY), profileFunction.getUnits())
                 val formattedGlucoseValue = formatGlucose(activityTT, presetIsMGDL)
                 val reason = rh.gs(app.aaps.core.ui.R.string.activity)
                 message += rh.gs(R.string.wear_action_tempt_preset_message, reason, formattedGlucoseValue, activityTTDuration)
@@ -1061,8 +1063,8 @@ class DataHandlerMobile @Inject constructor(
             }
 
             EventData.ActionTempTargetPreCheck.TempTargetCommand.PRESET_HYPO     -> {
-                val hypoTTDuration = preferences.get(IntKey.OverviewHypoDuration)
-                val hypoTT = preferences.get(UnitDoubleKey.OverviewHypoTarget)
+                val hypoTTDuration = preferences.ttDurationMinutes(TT.Reason.HYPOGLYCEMIA)
+                val hypoTT = profileUtil.fromMgdlToUnits(preferences.ttTargetMgdl(TT.Reason.HYPOGLYCEMIA), profileFunction.getUnits())
                 val formattedGlucoseValue = formatGlucose(hypoTT, presetIsMGDL)
                 val reason = rh.gs(app.aaps.core.ui.R.string.hypo)
                 message += rh.gs(R.string.wear_action_tempt_preset_message, reason, formattedGlucoseValue, hypoTTDuration)
@@ -1080,8 +1082,8 @@ class DataHandlerMobile @Inject constructor(
             }
 
             EventData.ActionTempTargetPreCheck.TempTargetCommand.PRESET_EATING   -> {
-                val eatingSoonTTDuration = preferences.get(IntKey.OverviewEatingSoonDuration)
-                val eatingSoonTT = preferences.get(UnitDoubleKey.OverviewEatingSoonTarget)
+                val eatingSoonTTDuration = preferences.ttDurationMinutes(TT.Reason.EATING_SOON)
+                val eatingSoonTT = profileUtil.fromMgdlToUnits(preferences.ttTargetMgdl(TT.Reason.EATING_SOON), profileFunction.getUnits())
                 val formattedGlucoseValue = formatGlucose(eatingSoonTT, presetIsMGDL)
                 val reason = rh.gs(app.aaps.core.ui.R.string.eatingsoon)
                 message += rh.gs(R.string.wear_action_tempt_preset_message, reason, formattedGlucoseValue, eatingSoonTTDuration)
@@ -1702,7 +1704,7 @@ class DataHandlerMobile @Inject constructor(
             var ret = rh.gs(app.aaps.core.ui.R.string.loopstatus_OAPS_result) + "\n"
             if (!config.APS)
                 return rh.gs(R.string.aps_only)
-            val usedAPS = activePlugin.activeAPS
+            val usedAPS = activePlugin.activeAPS ?: return rh.gs(R.string.last_aps_result_na)
             val result = usedAPS.lastAPSResult ?: return rh.gs(R.string.last_aps_result_na)
             ret += if (!result.isChangeRequested) {
                 rh.gs(app.aaps.core.ui.R.string.nochangerequested) + "\n"
@@ -1732,7 +1734,7 @@ class DataHandlerMobile @Inject constructor(
             }
             if (loop.runningMode.isLoopRunning()) {
                 val aps = activePlugin.activeAPS
-                ret += rh.gs(R.string.aps) + ": " + (aps as PluginBase).name
+                ret += rh.gs(R.string.aps) + ": " + ((aps as? PluginBase)?.name ?: "")
                 val lastRun = loop.lastRun
                 if (lastRun != null) {
                     ret += "\n" + rh.gs(R.string.last_run) + ": " + dateUtil.timeString(lastRun.lastAPSRun)
