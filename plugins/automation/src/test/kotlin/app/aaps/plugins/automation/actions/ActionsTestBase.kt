@@ -4,11 +4,10 @@ import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.db.PersistenceLayer
 
+import app.aaps.core.interfaces.scenes.SceneAutomationApi
 import app.aaps.core.interfaces.smsCommunicator.SmsCommunicator
 import app.aaps.plugins.automation.triggers.Trigger
 import app.aaps.shared.tests.TestBaseWithProfile
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.ArgumentMatchers.anyInt
@@ -22,8 +21,7 @@ ActionsTestBase : TestBaseWithProfile() {
     @Mock lateinit var smsCommunicator: SmsCommunicator
     @Mock lateinit var loop: Loop
     @Mock lateinit var persistenceLayer: PersistenceLayer
-
-    private val testScope = CoroutineScope(Dispatchers.Unconfined)
+    @Mock lateinit var sceneApi: SceneAutomationApi
 
     init {
         addInjector {
@@ -35,7 +33,6 @@ ActionsTestBase : TestBaseWithProfile() {
             if (it is ActionStopTempTarget) {
                 it.dateUtil = dateUtil
                 it.persistenceLayer = persistenceLayer
-                it.appScope = testScope
             }
             if (it is ActionStartTempTarget) {
                 it.activePlugin = activePlugin
@@ -43,7 +40,6 @@ ActionsTestBase : TestBaseWithProfile() {
                 it.profileFunction = profileFunction
                 it.dateUtil = dateUtil
                 it.profileUtil = profileUtil
-                it.appScope = testScope
             }
             if (it is ActionSendSMS) {
                 it.smsCommunicator = smsCommunicator
@@ -68,10 +64,15 @@ ActionsTestBase : TestBaseWithProfile() {
                 it.persistenceLayer = persistenceLayer
                 it.dateUtil = dateUtil
                 it.profileFunction = profileFunction
-                it.appScope = testScope
             }
-            if (it is ActionSettingsExport) {
-                it.appScope = testScope
+            if (it is ActionRunScene) {
+                it.sceneApi = sceneApi
+            }
+            if (it is ActionEnableScene) {
+                it.sceneApi = sceneApi
+            }
+            if (it is ActionDisableScene) {
+                it.sceneApi = sceneApi
             }
             if (it is Trigger) {
                 it.rh = rh
@@ -83,8 +84,10 @@ ActionsTestBase : TestBaseWithProfile() {
     @BeforeEach
     fun mock() {
         whenever(profileFunction.getUnits()).thenReturn(GlucoseUnit.MGDL)
-        runBlocking { whenever(profileFunction.getProfile()).thenReturn(effectiveProfile) }
-        whenever(loop.handleRunningModeChange(anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyInt(), anyOrNull())).thenReturn(true)
+        runBlocking {
+            whenever(profileFunction.getProfile()).thenReturn(effectiveProfile)
+            whenever(loop.handleRunningModeChange(anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyInt(), anyOrNull())).thenReturn(true)
+        }
 
         whenever(rh.gs(app.aaps.core.ui.R.string.ok)).thenReturn("OK")
         whenever(rh.gs(app.aaps.core.ui.R.string.error)).thenReturn("Error")

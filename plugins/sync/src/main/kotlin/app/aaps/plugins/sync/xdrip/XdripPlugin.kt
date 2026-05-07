@@ -5,9 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceManager
-import androidx.preference.PreferenceScreen
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
@@ -34,6 +31,7 @@ import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppExit
 import app.aaps.core.interfaces.rx.events.EventAppInitialized
 import app.aaps.core.interfaces.rx.events.EventAutosensCalculationFinished
+import app.aaps.core.interfaces.rx.events.EventShowSnackbar
 import app.aaps.core.interfaces.sync.DataSyncSelector
 import app.aaps.core.interfaces.sync.DataSyncSelectorXdrip
 import app.aaps.core.interfaces.sync.Sync
@@ -46,11 +44,9 @@ import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.extensions.generateCOBString
 import app.aaps.core.objects.extensions.round
 import app.aaps.core.objects.extensions.toStringShort
+import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.ui.compose.icons.IcXDrip
 import app.aaps.core.ui.compose.preference.PreferenceSubScreenDef
-import app.aaps.core.ui.toast.ToastUtils
-import app.aaps.core.validators.preferences.AdaptiveIntentPreference
-import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
 import app.aaps.plugins.sync.R
 import app.aaps.plugins.sync.nsclient.extensions.toJson
 import app.aaps.plugins.sync.xdrip.compose.XdripComposeContent
@@ -109,11 +105,9 @@ class XdripPlugin @Inject constructor(
                 onFullSync = { dataSyncSelector.resetToNextFullSync() }
             )
         }
-        .pluginIcon((app.aaps.core.objects.R.drawable.ic_blooddrop_48))
         .icon(IcXDrip)
         .pluginName(R.string.xdrip)
         .shortName(R.string.xdrip_shortname)
-        .preferencesId(PluginDescription.PREFERENCE_SCREEN)
         .description(R.string.description_xdrip),
     ownPreferences = listOf(XdripLongKey::class.java, XdripIntentKey::class.java),
     aapsLogger, rh, preferences
@@ -219,7 +213,7 @@ class XdripPlugin @Inject constructor(
 
     private fun buildStatusLine(profile: Profile): String {
         val status = StringBuilder()
-        if (!loop.runningMode.isLoopRunning() && config.APS)
+        if (!runBlocking { loop.runningMode() }.isLoopRunning() && config.APS)
             status.append(rh.gs(R.string.disabled_loop)).append("\n")
 
         //Temp basal
@@ -236,7 +230,7 @@ class XdripPlugin @Inject constructor(
                 .append("|")
                 .append(decimalFormatter.to2Decimal(basalIob.basaliob))
                 .append(")")
-        if (preferences.get(BooleanKey.XdripSendBgi) && glucoseStatusProvider.glucoseStatusData != null) {
+        if (preferences.get(BooleanKey.XdripSendBgi) && glucoseStatusProvider.glucoseStatusData != null && loop.lastRun != null && (profile as? ProfileSealed)?.aps != null) {
             val bgi = -(bolusIob.activity + basalIob.activity) * 5 * profileUtil.fromMgdlToUnits(profile.getIsfMgdl("XdripPlugin"))
             status.append(" ")
                 .append(if (bgi >= 0) "+" else "")
@@ -258,11 +252,11 @@ class XdripPlugin @Inject constructor(
         context.sendBroadcast(intent)
         val q = context.packageManager.safeQueryBroadcastReceivers(intent, 0)
         return if (q.isEmpty()) {
-            ToastUtils.errorToast(context, R.string.xdrip_not_installed)
+            rxBus.send(EventShowSnackbar(rh.gs(R.string.xdrip_not_installed), EventShowSnackbar.Type.Error))
             aapsLogger.debug(rh.gs(R.string.xdrip_not_installed))
             false
         } else {
-            ToastUtils.infoToast(context, R.string.calibration_sent)
+            rxBus.send(EventShowSnackbar(rh.gs(R.string.calibration_sent), EventShowSnackbar.Type.Info))
             aapsLogger.debug(rh.gs(R.string.calibration_sent))
             true
         }
@@ -401,23 +395,4 @@ class XdripPlugin @Inject constructor(
         icon = pluginDescription.icon
     )
 
-    // TODO: Remove after full migration to Compose preferences (getPreferenceScreenContent)
-    override fun addPreferenceScreen(preferenceManager: PreferenceManager, parent: PreferenceScreen, context: Context, requiredKey: String?) {
-        if (requiredKey != null && requiredKey != "xdrip_advanced") return
-        val category = PreferenceCategory(context)
-        parent.addPreference(category)
-        category.apply {
-            key = "xdrip_settings"
-            title = rh.gs(R.string.xdrip)
-            initialExpandedChildrenCount = 0
-            addPreference(AdaptiveIntentPreference(ctx = context, intentKey = XdripIntentKey.Info, summary = R.string.xdrip_local_broadcasts_summary, title = R.string.xdrip_local_broadcasts_title))
-            addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.XdripSendStatus, title = R.string.xdrip_send_status_title))
-            addPreference(preferenceManager.createPreferenceScreen(context).apply {
-                key = "xdrip_advanced"
-                title = rh.gs(R.string.xdrip_status_settings)
-                addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.XdripSendDetailedIob, summary = R.string.xdrip_status_detailed_iob_summary, title = R.string.xdrip_status_detailed_iob_title))
-                addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.XdripSendBgi, summary = R.string.xdrip_status_show_bgi_summary, title = R.string.xdrip_status_show_bgi_title))
-            })
-        }
-    }
 }

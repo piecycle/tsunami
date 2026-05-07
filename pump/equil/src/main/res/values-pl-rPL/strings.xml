@@ -21,7 +21,6 @@
     <string name="equil_tone_mode_shake">Tylko wibracje</string>
     <string name="equil_tone_mode_tone">Tylko dźwięk</string>
     <string name="equil_tone_mode_tone_and_shake">Wibracje i dźwięk</string>
-    <string name="equil_unit_u">%1$s U</string>
     <string name="equil_ble_config_confirmation_title">Paruj pompę Equil</string>
     <string name="equil_error">Błąd połączenia</string>
     <string name="equil_change">Zmień pompę</string>
@@ -106,7 +105,6 @@
     <string name="equil_history_item18">Nieprawidłowa infuzja zatrzymana</string>
     <string name="equil_common_overview_button_suspend_delivery">Zawieś</string>
     <string name="equil_common_overview_button_resume_delivery">Wznów podawanie</string>
-    <string name="equil_common_overview_temp_basal_value">%1$.2fU/h @%2$s (%3$d/%4$d min)</string>
     <string name="equil_common_moments_ago">Chwilę temu</string>
     <string name="equil_common_less_than_a_minute_ago">Mniej niż minutę temu</string>
     <string name="equil_common_time_ago">%1$s temu</string>

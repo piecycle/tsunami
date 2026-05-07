@@ -21,7 +21,6 @@
     <string name="equil_tone_mode_shake">Sadece titreşim</string>
     <string name="equil_tone_mode_tone">Sadece ses</string>
     <string name="equil_tone_mode_tone_and_shake">Titreşim ve ses</string>
-    <string name="equil_unit_u">%1$s Ü</string>
     <string name="equil_ble_config_confirmation_title">Equil Patch pompasını eşleştirin</string>
     <string name="equil_error">Bağlantı Hatası</string>
     <string name="equil_change">Pompayı değiştir</string>
@@ -106,7 +105,6 @@
     <string name="equil_history_item18">Anormal İnfüzyon Durduruldu</string>
     <string name="equil_common_overview_button_suspend_delivery">Askıya al</string>
     <string name="equil_common_overview_button_resume_delivery">İletime devam et</string>
-    <string name="equil_common_overview_temp_basal_value">%1$.2fÜ/s @%2$s (%3$d/%4$d dakika)</string>
     <string name="equil_common_moments_ago">Dakika önce</string>
     <string name="equil_common_less_than_a_minute_ago">Bir dakikadan az önce</string>
     <string name="equil_common_time_ago">%1$s dak önce</string>

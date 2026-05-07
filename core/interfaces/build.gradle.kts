@@ -26,8 +26,8 @@ dependencies {
     api(libs.com.google.dagger.hilt.android)
 
     api(libs.androidx.appcompat)
-    api(libs.androidx.preference)
     api(libs.androidx.compose.ui)
+    api(libs.androidx.documentfile)
 
     api(platform(libs.kotlinx.serialization.bom))
     api(libs.kotlinx.serialization.json)
@@ -36,7 +36,7 @@ dependencies {
     api(libs.org.apache.commons.lang3)
     api(libs.net.danlew.android.joda)
 
-    //RxBus
+    //RxBus / RxJava base
     api(libs.io.reactivex.rxjava3.rxkotlin)
 
     testImplementation(libs.io.reactivex.rxjava3.rxandroid)

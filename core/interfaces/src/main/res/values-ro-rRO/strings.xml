@@ -7,7 +7,7 @@
     <string name="bolus_delivered_so_far">Administrat %1$.2fU / %2$.2fU</string>
     <string name="bolus_delivered_successfully">Bolusul de %1$.2fU a fost administrat cu succes</string>
     <!-- PumpPluginBase -->
-    <string name="pump_driver_changed" comment="26 characters max for translation">Driver-ul pompei a fost schimbat.</string>
+    <string name="pump_driver_changed" comment="26 characters max for translation">Driverul pompei a fost schimbat.</string>
     <!--    DateUtil-->
     <string name="minago">%1$d minute în urmă</string>
     <string name="secago">%1$d zile în urmă</string>
@@ -48,13 +48,15 @@
     <string name="unit_weeks">săptămâni</string>
     <string name="shortminute">m</string>
     <string name="shortday">z</string>
+    <string name="time_remaining_h_m">%1$dh %2$dm rămase</string>
+    <string name="time_remaining_m">%1$d rămase</string>
     <string name="later_today">Mai târziu astăzi</string>
     <string name="tomorrow">Mâine</string>
     <string name="today">Astăzi</string>
     <string name="yesterday">Ieri</string>
     <!-- Rx -->
     <string name="connecting_for">Conectat de %1$d s</string>
-    <string name="handshaking">Împerechere</string>
+    <string name="handshaking">Asociere</string>
     <string name="connected">Conectat</string>
     <string name="authorized">Autorizat</string>
     <string name="disconnecting">Se deconectează</string>
@@ -67,25 +69,25 @@
     <string name="metadata_label_plugin_version">Versiune modul: %1$s</string>
     <string name="metadata_label_watchface_name_version">Nume: %1$s (%2$s)</string>
     <string name="metadata_label_watchface_infos">Info: %1$s</string>
-    <string name="pref_show_iob">Arătați IOB</string>
-    <string name="pref_show_detailed_iob">Arătați IOB detaliat</string>
-    <string name="pref_show_cob">Arătați COB</string>
-    <string name="pref_show_delta">Arătați diferența</string>
-    <string name="pref_show_detailed_delta">Arătați variație detaliată</string>
-    <string name="pref_show_avgdelta">Arătați diferența medie</string>
-    <string name="pref_show_tempTarget">Afișare țintă temporară</string>
-    <string name="pref_show_reservoir_level">Afișare nivel rezervor</string>
-    <string name="pref_show_phone_battery">Arătați baterie telefon</string>
-    <string name="pref_show_rig_battery">Arătați Baterie Dispozitiv</string>
-    <string name="pref_show_basal_rate">Arătați rata bazală</string>
-    <string name="pref_show_loop_status">Arătați stare buclă</string>
-    <string name="pref_show_bg">Arătați glicemia</string>
-    <string name="pref_show_bgi">Arătați BGI</string>
-    <string name="pref_show_direction_arrow">Arătați săgeată tendință</string>
-    <string name="pref_show_ago">Arătați în urmă</string>
-    <string name="pref_show_week_number">Arătați numărul săptămânii</string>
-    <string name="pref_show_date">Arătați data</string>
-    <string name="pref_show_seconds">Arătați secunde</string>
+    <string name="pref_show_iob">Afișați IOB</string>
+    <string name="pref_show_detailed_iob">Afișați IOB detaliat</string>
+    <string name="pref_show_cob">Afișați COB</string>
+    <string name="pref_show_delta">Afișați diferența</string>
+    <string name="pref_show_detailed_delta">Afișați variație detaliată</string>
+    <string name="pref_show_avgdelta">Afișați diferența medie</string>
+    <string name="pref_show_tempTarget">Afișați țintă temporară</string>
+    <string name="pref_show_reservoir_level">Afișați nivel rezervor</string>
+    <string name="pref_show_phone_battery">Afișați baterie telefon</string>
+    <string name="pref_show_rig_battery">Afișați Baterie Dispozitiv</string>
+    <string name="pref_show_basal_rate">Afișați rata bazală</string>
+    <string name="pref_show_loop_status">Afișați stare buclă</string>
+    <string name="pref_show_bg">Afișați glicemia</string>
+    <string name="pref_show_bgi">Afișați BGI</string>
+    <string name="pref_show_direction_arrow">Afișați săgeată tendință</string>
+    <string name="pref_show_ago">Afișați în urmă</string>
+    <string name="pref_show_week_number">Afișați numărul săptămânii</string>
+    <string name="pref_show_date">Afișați data</string>
+    <string name="pref_show_seconds">Afișați secunde</string>
     <string name="default_custom_watchface_comment">Fațetă implicită. Poți apăsa pe butonul EXPORT pentru a genera un șablon</string>
     <string name="default_custom_watchface_external_comment">Cadran de ceas implicit, inclusiv vizualizări externe pentru urmăritori, puteți apăsa pe butonul EXPORTARE CADRAN pentru a genera un șablon</string>
     <string name="wear_default_watchface">Fațetă implicită</string>
@@ -98,8 +100,6 @@
     <string name="permission_bluetooth_title">Bluetooth</string>
     <string name="permission_bluetooth_description">Aplicația necesită permisiunea Bluetooth pentru a comunica cu pompa</string>
     <!-- Insulin -->
-    <string name="insulin_plugin">Insulină</string>
-    <string name="insulin_shortname">INS</string>
     <string name="unknown">Necunoscut</string>
     <string name="rapid_acting_oref">Novorapid</string>
     <string name="lyumjev">Lyumjev</string>
@@ -108,7 +108,6 @@
     <string name="fast_acting_insulin_comment">Novorapid, Novolog, Humalog</string>
     <string name="ultra_fast_acting_insulin_comment">Fiasp</string>
     <string name="insulin_peak_time">Timp de vârf [min]</string>
-    <string name="insulin_oref_peak">Timpul de vârf al curbei IOB</string>
     <!-- Concentration -->
     <string name="u10">U10</string>
     <string name="u40">U40</string>

@@ -108,6 +108,8 @@ fun UserEntry.Action.fromDb(): Action =
         UserEntry.Action.INSULIN_REMOVED                 -> Action.INSULIN_REMOVED
         UserEntry.Action.CHANGE_PUMP_INSULIN             -> Action.CHANGE_PUMP_INSULIN
         UserEntry.Action.CHANGE_INSULIN_CONCENTRATION    -> Action.CHANGE_INSULIN_CONCENTRATION
+        UserEntry.Action.SCENE_ACTIVATED                 -> Action.SCENE_ACTIVATED
+        UserEntry.Action.SCENE_DEACTIVATED               -> Action.SCENE_DEACTIVATED
     }
 
 fun Action.toDb(): UserEntry.Action =
@@ -215,5 +217,7 @@ fun Action.toDb(): UserEntry.Action =
         Action.INSULIN_REMOVED                 -> UserEntry.Action.INSULIN_REMOVED
         Action.CHANGE_PUMP_INSULIN             -> UserEntry.Action.CHANGE_PUMP_INSULIN
         Action.CHANGE_INSULIN_CONCENTRATION    -> UserEntry.Action.CHANGE_INSULIN_CONCENTRATION
+        Action.SCENE_ACTIVATED                 -> UserEntry.Action.SCENE_ACTIVATED
+        Action.SCENE_DEACTIVATED               -> UserEntry.Action.SCENE_DEACTIVATED
     }
 

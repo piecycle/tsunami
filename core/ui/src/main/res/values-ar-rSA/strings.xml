@@ -7,13 +7,13 @@
     <!--    ProfileFunction-->
     <!--    APSResult-->
     <!--    Insulin / Concentration-->
+    <!--       Stats -->
     <!--    ProfileSwitch-->
     <!--    Temptarget-->
     <!--    Translator-->
     <!--    Command-->
     <!--    PumpEnactResult-->
     <!--    CarbsReq-->
-    <!--    TDDStatsActivity-->
     <!--    Ntp-->
     <!-- User Entry -->
     <!-- HardLimits -->
@@ -35,7 +35,6 @@
     <!-- Export destination chip labels -->
     <!-- Maintenance bottom sheet descriptions -->
     <!-- Cloud directory dialog (Compose) -->
-    <!-- NumberPicker -->
     <!-- datetime layout -->
     <!-- BluetoothDevicePreference -->
     <!--    Combo-->
@@ -48,13 +47,15 @@
     <!-- About -->
     <!--    Maintenance-->
     <!--    Weekday-->
-    <!-- WeekdayPicker -->
     <!--    DecimalFormatterImpl -->
     <!--    Playback-->
     <!-- ProfileEditor -->
     <!--    Search-->
+    <!--    Food Management -->
     <!--    Log Settings-->
     <!--    Maintenance-->
     <!-- Import settings screen -->
     <!--    BLE Scan Step (shared pump pairing) -->
+    <!-- Graph configuration -->
+    <!-- Graph series short names (used as graph labels, keep very short) -->
 </resources>

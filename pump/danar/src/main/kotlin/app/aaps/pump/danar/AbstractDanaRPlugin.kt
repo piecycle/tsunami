@@ -36,7 +36,7 @@ import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.Round.roundTo
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.constraints.ConstraintObject
-import app.aaps.core.ui.compose.icons.IcPluginDana
+import app.aaps.core.ui.compose.icons.IcPluginDanaI
 import app.aaps.pump.dana.DanaPump
 import app.aaps.pump.dana.comm.RecordTypes
 import app.aaps.pump.dana.database.DanaHistoryDatabase
@@ -91,10 +91,9 @@ abstract class AbstractDanaRPlugin protected constructor(
                 danaPump = danaPump
             )
         }
-        .icon(IcPluginDana)
+        .icon(IcPluginDanaI)
         .pluginName(app.aaps.pump.dana.R.string.danarpump)
         .shortName(app.aaps.pump.dana.R.string.danarpump_shortname)
-        .preferencesId(PluginDescription.PREFERENCE_SCREEN)
         .description(app.aaps.pump.dana.R.string.description_pump_dana_r),
     ownPreferences = listOf(DanaStringNonKey::class.java, DanaIntKey::class.java, DanaIntNonKey::class.java, DanaBooleanKey::class.java, DanaIntentKey::class.java),
     aapsLogger, rh, preferences, commandQueue

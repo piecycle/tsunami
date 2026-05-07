@@ -13,8 +13,8 @@
     <!-- Commands -->
     <string name="pump_cmd_desc_get_settings">Lấy cài đặt</string>
     <string name="pump_cmd_desc_get_firmware">Lấy firmware của bơm</string>
-    <string name="pump_cmd_desc_get_basal_profile">Lấy Hồ sơ liều nền</string>
-    <string name="pump_cmd_desc_set_basal_profile">Thiết lập Hồ sơ liều nền</string>
+    <string name="pump_cmd_desc_get_basal_profile">Lấy cấu hình liều nền</string>
+    <string name="pump_cmd_desc_set_basal_profile">Thiết lập cấu hình liều nền</string>
     <string name="pump_cmd_desc_get_tbr">Lấy liều nền tạm thời</string>
     <string name="pump_cmd_desc_cancel_tbr">Hủy bỏ liều nền tạm thời</string>
     <string name="pump_cmd_desc_set_tbr">Đặt liều nền tạm thời</string>
@@ -55,14 +55,5 @@
     <string name="time_last_4_days">4 ngày trước</string>
     <string name="time_last_week">Tuần trước</string>
     <string name="time_last_month">Tháng trước</string>
-    <!-- BLE Config -->
-    <string name="ble_config_button_scan_start">Quét</string>
-    <string name="ble_config_scan_stop">Dừng lại</string>
-    <string name="ble_config_scan_selected">Đã chọn</string>
-    <string name="ble_config_scan_scanning">Đang quét</string>
-    <string name="ble_config_scan_finished">Quét hoàn tất</string>
-    <string name="ble_config_scan_error">Lỗi quét: %1$d</string>
-    <string name="ble_config_remove">Xóa</string>
     <!-- Pump History -->
-    <string name="pump_history_type">Loại:</string>
 </resources>

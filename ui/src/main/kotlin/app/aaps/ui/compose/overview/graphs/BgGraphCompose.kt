@@ -1,7 +1,6 @@
 package app.aaps.ui.compose.overview.graphs
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,6 +16,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.aaps.core.data.configuration.Constants
 import app.aaps.core.graph.vico.Square
 import app.aaps.core.interfaces.overview.graph.ActivityGraphData
 import app.aaps.core.interfaces.overview.graph.BasalGraphData
@@ -36,6 +36,7 @@ import com.patrykandpatrick.vico.compose.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.compose.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.compose.cartesian.data.CartesianLayerRangeProvider
 import com.patrykandpatrick.vico.compose.cartesian.data.lineSeries
+import com.patrykandpatrick.vico.compose.cartesian.decoration.HorizontalBox
 import com.patrykandpatrick.vico.compose.cartesian.layer.LineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
@@ -86,7 +87,9 @@ fun BgGraphCompose(
     // Collect flows independently - each triggers recomposition only when it changes
     val bgReadings by viewModel.bgReadingsFlow.collectAsStateWithLifecycle()
     val bucketedData by viewModel.bucketedDataFlow.collectAsStateWithLifecycle()
-    val predictions by viewModel.predictionsFlow.collectAsStateWithLifecycle()
+    val showPredictions = SeriesType.PREDICTIONS in bgOverlays
+    val rawPredictions by viewModel.predictionsFlow.collectAsStateWithLifecycle()
+    val predictions = if (showPredictions) rawPredictions else emptyList()
     val rawBasalData by viewModel.basalGraphFlow.collectAsStateWithLifecycle()
     val targetData by viewModel.targetLineFlow.collectAsStateWithLifecycle()
 
@@ -99,10 +102,10 @@ fun BgGraphCompose(
     val activityData by viewModel.activityGraphFlow.collectAsStateWithLifecycle()
     val chartConfig by viewModel.chartConfigFlow.collectAsStateWithLifecycle()
 
-    // Use derived time range or fall back to default (last 24 hours)
+    // Use derived time range or fall back to default (last GRAPH_TIME_RANGE_HOURS hours)
     val (minTimestamp, maxTimestamp) = derivedTimeRange ?: run {
         val now = System.currentTimeMillis()
-        val dayAgo = now - 24 * 60 * 60 * 1000L
+        val dayAgo = now - Constants.GRAPH_TIME_RANGE_HOURS * 60 * 60 * 1000L
         dayAgo to now
     }
 
@@ -379,7 +382,7 @@ fun BgGraphCompose(
                 gapLength = 2.dp
             ),
             areaFill = null,
-            pointConnector = Square
+            interpolator = Square
         )
     }
 
@@ -389,7 +392,7 @@ fun BgGraphCompose(
             fill = LineCartesianLayer.LineFill.single(Fill(basalColor)),
             stroke = LineCartesianLayer.LineStroke.Continuous(thickness = 1.dp),
             areaFill = LineCartesianLayer.AreaFill.single(Fill(basalColor.copy(alpha = 0.3f))),
-            pointConnector = Square
+            interpolator = Square
         )
     }
 
@@ -406,7 +409,7 @@ fun BgGraphCompose(
             fill = LineCartesianLayer.LineFill.single(Fill(targetLineColor)),
             stroke = LineCartesianLayer.LineStroke.Continuous(thickness = 1.dp),
             areaFill = null,
-            pointConnector = Square
+            interpolator = Square
         )
     }
 
@@ -475,7 +478,19 @@ fun BgGraphCompose(
 
     val nowLineColor = MaterialTheme.colorScheme.onSurface
     val nowLine = rememberNowLine(minTimestamp, nowTimestamp, nowLineColor)
-    val decorations = remember(nowLine) { listOf(nowLine) }
+
+    // In-range belt — translucent band between lowMark and highMark on the BG axis
+    val lowMark = chartConfig.lowMark
+    val highMark = chartConfig.highMark
+    val inRangeBox = remember(lowMark, highMark, inRangeColor) {
+        HorizontalBox(
+            y = { lowMark..highMark },
+            box = ShapeComponent(fill = Fill(inRangeColor.copy(alpha = 0.2f))),
+            verticalAxisPosition = Axis.Position.Vertical.Start
+        )
+    }
+
+    val decorations = remember(inRangeBox, nowLine) { listOf(inRangeBox, nowLine) }
 
     // =========================================================================
     // Range providers — hoisted out of rememberCartesianChart so keys are re-evaluated on recomposition
@@ -544,9 +559,7 @@ fun BgGraphCompose(
             getXStep = { 1.0 }
         ),
         modelProducer = modelProducer,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(100.dp),
+        modifier = modifier.fillMaxWidth(),
         scrollState = scrollState,
         zoomState = zoomState
     )

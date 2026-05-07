@@ -398,7 +398,7 @@ class MedtrumService : DaggerService(), BLECommCallback {
             aapsLogger.error(LTag.PUMPCOMM, "Failed to set bolus")
             commandQueue.readStatus(rh.gs(R.string.bolus_error), null) // make sure if anything is delivered (which is highly unlikely at this point) we get it
             medtrumPump.bolusDone = true
-            bolusProgressData.updateProgress(0, "", 0.0)
+            bolusProgressData.updateProgress(percent = 0, status= "")
             return false
         }
 
@@ -431,7 +431,7 @@ class MedtrumService : DaggerService(), BLECommCallback {
 
         waitForBolusProgress()
 
-        if (medtrumPump.bolusStopped && (bolusProgressData.state.value?.delivered ?: 0.0) == 0.0) {
+        if (medtrumPump.bolusStopped && (bolusProgressData.state.value?.delivered?.cU ?: 0.0) == 0.0) {
             // In this case we don't get a bolus end event, so need to remove all the stuff added previously
             val syncOk = runBlocking {
                 pumpSync.syncBolusWithTempId(
@@ -505,13 +505,10 @@ class MedtrumService : DaggerService(), BLECommCallback {
                     disconnect("Communication stopped")
                 }
             } else {
-                val currentBolusAmount = bolusProgressData.state.value?.delivered ?: 0.0
-                if (currentBolusAmount != lastSentBolusAmount) {
-                    val insulin = bolusProgressData.state.value?.insulin ?: 0.0
-                    val percent = if (insulin > 0) ((currentBolusAmount / insulin) * 100).toInt().coerceAtMost(100) else 0
-                    val status = ch.bolusProgressString(PumpInsulin(currentBolusAmount))
-                    bolusProgressData.updateProgress(percent, status, currentBolusAmount)
-                    lastSentBolusAmount = currentBolusAmount
+                val currentBolusAmount = bolusProgressData.state.value?.delivered ?: PumpInsulin(0.0)
+                if (currentBolusAmount.cU != lastSentBolusAmount) {
+                    bolusProgressData.updateProgress(currentBolusAmount)
+                    lastSentBolusAmount = currentBolusAmount.cU
                 }
             }
         }
@@ -534,7 +531,7 @@ class MedtrumService : DaggerService(), BLECommCallback {
     }
 
     fun stopBolus() {
-        aapsLogger.debug(LTag.PUMPCOMM, "bolusStop >>>>> @ ${bolusProgressData.state.value?.delivered ?: 0.0}")
+        aapsLogger.debug(LTag.PUMPCOMM, "bolusStop >>>>> @ ${bolusProgressData.state.value?.delivered?.cU ?: 0.0}")
         medtrumPump.bolusErrorReason = rh.gs(R.string.bolus_error_reason_user)
         if (isConnected) {
             var success = sendPacketAndGetResponse(CancelBolusPacket(injector))
@@ -685,7 +682,32 @@ class MedtrumService : DaggerService(), BLECommCallback {
             }
 
             MedtrumPumpState.IDLE,
-            MedtrumPumpState.FILLED,
+            MedtrumPumpState.FILLED               -> {
+                notificationManager.dismiss(NotificationId.PUMP_ERROR)
+                notificationManager.dismiss(NotificationId.PUMP_SUSPENDED)
+                medtrumPump.setFakeTBRIfNotSet()
+                medtrumPump.clearAlarmState()
+
+                if (medtrumPump.patchPrimed) {
+                    aapsLogger.error(LTag.PUMP, "handlePumpStateUpdate: Unexpected patch state drop while primed! state: $state")
+                    runBlocking {
+                        pumpSync.insertAnnouncement(
+                            rh.gs(R.string.patch_reset_after_primed_error),
+                            null,
+                            medtrumPump.pumpType(),
+                            medtrumPump.pumpSN.toString(radix = 16)
+                        )
+                    }
+
+                    notificationManager.post(
+                        NotificationId.PUMP_ERROR,
+                        R.string.patch_reset_after_primed_error,
+                        level = NotificationLevel.URGENT,
+                        soundRes = app.aaps.core.ui.R.raw.alarm
+                    )
+                }
+            }
+
             MedtrumPumpState.PRIMING,
             MedtrumPumpState.PRIMED,
             MedtrumPumpState.EJECTING,

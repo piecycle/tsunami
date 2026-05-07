@@ -9,10 +9,10 @@
     <string name="omnipod_common_pod_management_button_pod_history">Lịch sử Pod</string>
     <!-- Omnipod - Error -->
     <string name="omnipod_common_error_pod_not_attached">Không có Pod hoạt động</string>
-    <string name="omnipod_common_error_set_basal_failed">Cài đặt cấu hình Hồ sơ không thành công.</string>
+    <string name="omnipod_common_error_set_basal_failed">Thiết lập cấu hình liều nền không thành công.</string>
     <string name="omnipod_common_error_bolus_did_not_succeed">Bolus không thành công.</string>
-    <string name="omnipod_common_error_failed_to_set_profile_empty_profile">Thiết lập Hồ sơ liều nền thất bại: nhận được Hồ sơ trống. Hãy đảm bảo rằng bạn đã kích hoạt Hồ sơ liều nền của mình.</string>
-    <string name="omnipod_common_error_set_initial_basal_schedule_no_profile">Không có Hồ sơ liều nền nào đang hoạt động. Hãy đảm bảo bạn đã kích hoạt Hồ sơ liều nền của mình.</string>
+    <string name="omnipod_common_error_failed_to_set_profile_empty_profile">Thiết lập cấu hình liều nền thất bại: nhận được cấu hình trống. Hãy đảm bảo rằng bạn đã kích hoạt cấu hình liều nền của mình.</string>
+    <string name="omnipod_common_error_set_initial_basal_schedule_no_profile">Không có cấu hình liều nền nào đang hoạt động. Hãy đảm bảo bạn đã kích hoạt cấu hình liều nền của mình.</string>
     <string name="omnipod_common_error_unsupported_custom_command">Lệnh tùy chỉnh không được hỗ trợ: %1$s</string>
     <string name="omnipod_common_error_failed_to_refresh_status">Không thể cập nhật trạng thái</string>
     <string name="omnipod_common_error_failed_to_refresh_status_on_startup">Không thể cập nhật trạng thái khi khởi động</string>
@@ -38,7 +38,6 @@
     <string name="omnipod_common_overview_button_silence_alerts">Tắt cảnh báo</string>
     <string name="omnipod_common_overview_pod_status">Trạng thái Pod</string>
     <string name="omnipod_common_overview_total_delivered">Tổng lượng đã tiêm</string>
-    <string name="omnipod_common_overview_total_delivered_value">%1$.2f U</string>
     <string name="omnipod_common_overview_pod_unique_id">Mã số duy nhất</string>
     <string name="omnipod_common_overview_lot_number">Số Lô</string>
     <string name="omnipod_common_overview_pod_sequence_number">Số thứ tự</string>
@@ -50,8 +49,6 @@
     <string name="omnipod_common_overview_pod_active_alerts">Cảnh báo Pod đang bật</string>
     <string name="omnipod_common_overview_firmware_version">Phiên bản phần mềm</string>
     <string name="omnipod_common_overview_time_on_pod">Thời gian trên Pod</string>
-    <string name="omnipod_common_overview_temp_basal_concentration_value">%1$s @%2$s (%3$d/%4$d phút)</string>
-    <string name="omnipod_common_overview_reservoir_concentration_value_over50">Còn hơn %1$s</string>
     <string name="omnipod_common_uncertain">không chắc chắn</string>
     <!-- Omnipod - Wizard Base -->
     <string name="omnipod_common_wizard_button_deactivate_pod">Hủy kích hoạt Pod</string>
@@ -151,7 +148,7 @@
     <string name="omnipod_common_moments_ago">Vừa nãy</string>
     <string name="omnipod_common_less_than_a_minute_ago">Chưa đầy một phút trước</string>
     <string name="omnipod_common_composite_time">%1$s và %2$s</string>
-    <string name="omnipod_common_time_ago">%1$d giây trước</string>
+    <string name="omnipod_common_time_ago">%1$s trước</string>
     <plurals name="omnipod_common_minutes">
         <item quantity="other">%1$d phút</item>
     </plurals>

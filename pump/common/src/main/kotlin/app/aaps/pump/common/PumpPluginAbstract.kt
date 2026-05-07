@@ -40,7 +40,6 @@ import app.aaps.pump.common.data.PumpStatus
 import app.aaps.pump.common.defs.PumpDriverAction
 import app.aaps.pump.common.defs.PumpDriverState
 import app.aaps.pump.common.driver.PumpDriverConfiguration
-import app.aaps.pump.common.driver.PumpDriverConfigurationCapable
 import app.aaps.pump.common.driver.refresh.PumpDataRefreshAction
 import app.aaps.pump.common.driver.refresh.PumpDataRefreshType
 import app.aaps.pump.common.sync.PumpDbEntryCarbs
@@ -82,7 +81,7 @@ abstract class PumpPluginAbstract protected constructor(
     commandQueue = commandQueue
 ),
     Pump, PluginConstraints,
-    PumpDriverConfigurationCapable, /*Constraints,*/ PumpSyncEntriesCreator {
+    /*Constraints,*/ PumpSyncEntriesCreator {
 
     protected val disposable = CompositeDisposable()
 
@@ -301,8 +300,7 @@ abstract class PumpPluginAbstract protected constructor(
                 // no bolus required, carb only treatment
                 pumpSyncStorage.addCarbs(PumpDbEntryCarbs(detailedBolusInfo, this))
 
-                val totalInsulin = bolusProgressData.state.value?.insulin ?: 0.0
-                bolusProgressData.updateProgress(100, rh.gs(app.aaps.core.interfaces.R.string.bolus_delivered_successfully, totalInsulin), totalInsulin)
+                bolusProgressData.updateProgress(percent = 100)
                 aapsLogger.debug(LTag.PUMP, "deliverTreatment: Carb only treatment.")
                 pumpEnactResultProvider.get().success(true).enacted(true)
                     .bolusDelivered(0.0)
@@ -343,10 +341,6 @@ abstract class PumpPluginAbstract protected constructor(
         aapsLogger.warn(LTag.PUMP, logPrefix + "Time or TimeZone changed (type=$timeChangeType). ")
         this.timeChangeType = timeChangeType
         this.hasTimeDateOrTimeZoneChanged = true
-    }
-
-    override fun getPumpDriverConfiguration(): PumpDriverConfiguration {
-        return this.pumpDriverConfigurationInternal
     }
 
     protected fun getTimeInFutureFromMinutes(minutes: Int): Long {

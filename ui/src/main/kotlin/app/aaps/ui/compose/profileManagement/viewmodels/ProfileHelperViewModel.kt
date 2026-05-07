@@ -1,6 +1,5 @@
 package app.aaps.ui.compose.profileManagement.viewmodels
 
-import android.content.Context
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
@@ -14,8 +13,9 @@ import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.profile.PureProfile
 import app.aaps.core.interfaces.resources.ResourceHelper
+import app.aaps.core.interfaces.rx.bus.RxBus
+import app.aaps.core.interfaces.rx.events.EventShowDialog
 import app.aaps.core.interfaces.stats.TddCalculator
-import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.objects.profile.ProfileSealed
@@ -28,6 +28,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -49,12 +50,12 @@ class ProfileHelperViewModel @Inject constructor(
     private val tddCalculator: TddCalculator,
     private val defaultProfile: DefaultProfile,
     private val defaultProfileDPV: DefaultProfileDPV,
-    private val uiInteraction: UiInteraction,
+    private val rxBus: RxBus,
     private val fabricPrivacy: FabricPrivacy
 ) : ViewModel() {
 
-    val uiState: StateFlow<ProfileHelperUiState>
-        field = MutableStateFlow(ProfileHelperUiState())
+    private val _uiState = MutableStateFlow(ProfileHelperUiState())
+    val uiState: StateFlow<ProfileHelperUiState> = _uiState.asStateFlow()
 
     private var cachedCurrentProfile: PureProfile? = null
 
@@ -75,7 +76,7 @@ class ProfileHelperViewModel @Inject constructor(
                 )
             }
 
-            uiState.update {
+            _uiState.update {
                 it.copy(
                     currentProfileName = currentProfileName,
                     availableProfiles = availableProfiles,
@@ -89,7 +90,7 @@ class ProfileHelperViewModel @Inject constructor(
 
     private fun loadTddStats() {
         viewModelScope.launch {
-            uiState.update { it.copy(isLoadingStats = true) }
+            _uiState.update { it.copy(isLoadingStats = true) }
             try {
                 val data = withContext(Dispatchers.IO) {
                     val tdds = tddCalculator.calculate(7, allowMissingDays = true)
@@ -97,10 +98,10 @@ class ProfileHelperViewModel @Inject constructor(
                     val todayTdd = tddCalculator.calculateToday()
                     TddStatsData(tdds = tdds, averageTdd = averageTdd, todayTdd = todayTdd)
                 }
-                uiState.update { it.copy(tddStatsData = data, isLoadingStats = false) }
+                _uiState.update { it.copy(tddStatsData = data, isLoadingStats = false) }
             } catch (e: Exception) {
                 fabricPrivacy.logException(e)
-                uiState.update { it.copy(isLoadingStats = false) }
+                _uiState.update { it.copy(isLoadingStats = false) }
             }
         }
     }
@@ -186,7 +187,6 @@ class ProfileHelperViewModel @Inject constructor(
      * Copy generated profile to local profiles
      */
     fun copyToLocal(
-        context: Context,
         age: Int,
         tdd: Double,
         weight: Double,
@@ -199,18 +199,19 @@ class ProfileHelperViewModel @Inject constructor(
             defaultProfileDPV.profile(age, tdd, pct / 100.0, profileFunction.getUnits())
 
         profile?.let {
-            uiInteraction.showOkCancelDialog(
-                context = context,
-                title = rh.gs(app.aaps.core.ui.R.string.careportal_profileswitch),
-                message = rh.gs(app.aaps.core.ui.R.string.copytolocalprofile),
-                ok = {
-                    localProfileManager.addProfile(
-                        localProfileManager.copyFrom(
-                            it,
-                            "DefaultProfile " + dateUtil.dateAndTimeAndSecondsString(dateUtil.now()).replace(".", "/")
+            rxBus.send(
+                EventShowDialog.OkCancel(
+                    title = rh.gs(app.aaps.core.ui.R.string.careportal_profileswitch),
+                    message = rh.gs(app.aaps.core.ui.R.string.copytolocalprofile),
+                    onOk = {
+                        localProfileManager.addProfile(
+                            localProfileManager.copyFrom(
+                                it,
+                                "DefaultProfile " + dateUtil.dateAndTimeAndSecondsString(dateUtil.now()).replace(".", "/")
+                            )
                         )
-                    )
-                }
+                    }
+                )
             )
         }
     }

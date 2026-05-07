@@ -4,13 +4,13 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.view.View
 import androidx.compose.runtime.Immutable
-import app.aaps.core.graph.profile.ProfileViewerData
 import app.aaps.core.data.configuration.Constants
 import app.aaps.core.data.model.GlucoseUnit
 import app.aaps.core.data.model.RM
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.data.ue.ValueWithUnit
+import app.aaps.core.graph.profile.ProfileViewerData
 import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.insulin.Insulin
 import app.aaps.core.interfaces.logging.UserEntryLogger
@@ -28,12 +28,13 @@ import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.profile.ProfileSealed
+import app.aaps.core.ui.compose.icons.IcCompareProfiles
+import app.aaps.core.ui.compose.icons.IcProfile
 import app.aaps.core.ui.elements.WeekDay
 import app.aaps.plugins.aps.R
 import app.aaps.plugins.aps.autotune.AutotuneFS
 import app.aaps.plugins.aps.autotune.AutotunePlugin
 import app.aaps.plugins.aps.autotune.data.ATProfile
-import app.aaps.plugins.aps.autotune.data.LocalInsulin
 import app.aaps.plugins.aps.autotune.events.EventAutotuneUpdateGui
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -290,13 +291,15 @@ class AutotuneViewModel(
     fun onProfileSwitchClick() {
         val tunedProfile = autotunePlugin.tunedProfile ?: return
         autotunePlugin.updateProfile(tunedProfile)
-        if (loop.runningMode == RM.Mode.DISCONNECTED_PUMP) {
-            _uiState.value = _uiState.value.copy(
-                dialogState = DialogState.PumpDisconnected(rh.gs(app.aaps.core.ui.R.string.not_available_full))
-            )
-            return
+        scope.launch {
+            if (loop.runningMode() == RM.Mode.DISCONNECTED_PUMP) {
+                _uiState.value = _uiState.value.copy(
+                    dialogState = DialogState.PumpDisconnected(rh.gs(app.aaps.core.ui.R.string.not_available_full))
+                )
+                return@launch
+            }
+            _uiState.value = _uiState.value.copy(dialogState = DialogState.ProfileSwitch(tunedProfile.profileName))
         }
-        _uiState.value = _uiState.value.copy(dialogState = DialogState.ProfileSwitch(tunedProfile.profileName))
     }
 
     fun onProfileSwitchConfirm() {
@@ -333,10 +336,10 @@ class AutotuneViewModel(
             val profileStore = localProfileManager.profile ?: profileStoreProvider.get().with(JSONObject())
             val pumpProfile = profileFunction.getProfile()?.let { currentProfile ->
                 profileStore.getSpecificProfile(profileName)?.let { specificProfile ->
-                    atProfileProvider.get().with(ProfileSealed.Pure(specificProfile, null), LocalInsulin("")).also {
+                    atProfileProvider.get().with(ProfileSealed.Pure(specificProfile, null), currentProfile.iCfg).also {
                         it.profileName = profileName
                     }
-                } ?: atProfileProvider.get().with(currentProfile, LocalInsulin("")).also {
+                } ?: atProfileProvider.get().with(currentProfile, currentProfile.iCfg).also {
                     it.profileName = profileFunction.getProfileName()
                 }
             } ?: return@launch
@@ -345,7 +348,7 @@ class AutotuneViewModel(
                     ProfileViewerData(
                         profile = pumpProfile.profile,
                         profileName = pumpProfile.profileName,
-                        headerIcon = app.aaps.core.ui.R.drawable.ic_home_profile
+                        headerIcon = IcProfile
                     )
                 )
             )
@@ -363,7 +366,7 @@ class AutotuneViewModel(
                     profile2 = tunedProfile,
                     profileName = pumpProfile.profileName,
                     profileName2 = rh.gs(R.string.autotune_tunedprofile_name),
-                    headerIcon = app.aaps.core.objects.R.drawable.ic_compare_profiles,
+                    headerIcon = IcCompareProfiles,
                     isCompare = true
                 )
             )
@@ -383,10 +386,11 @@ class AutotuneViewModel(
 
     private suspend fun resolveProfile() {
         val profileStore = localProfileManager.profile ?: profileStoreProvider.get().with(JSONObject())
+        val iCfg = profileFunction.getProfile()?.iCfg ?: insulin.iCfg
         profileFunction.getProfile()?.let { currentProfile ->
             profile = atProfileProvider.get().with(
                 profileStore.getSpecificProfile(profileName)?.let { ProfileSealed.Pure(value = it, activePlugin = null) } ?: currentProfile,
-                LocalInsulin("")
+                iCfg
             )
         }
     }
@@ -411,9 +415,10 @@ class AutotuneViewModel(
     private suspend fun addWarnings(): String {
         val currentProfile = profileFunction.getProfile() ?: return rh.gs(app.aaps.core.ui.R.string.profileswitch_ismissing)
         val profileStore = localProfileManager.profile ?: profileStoreProvider.get().with(JSONObject())
+        val iCfg = currentProfile.iCfg
         val atProfile = atProfileProvider.get().with(
             profileStore.getSpecificProfile(profileName)?.let { ProfileSealed.Pure(value = it, activePlugin = null) } ?: currentProfile,
-            LocalInsulin("")
+            iCfg
         )
         profile = atProfile
         if (!atProfile.isValid) return rh.gs(R.string.autotune_profile_invalid)
@@ -436,8 +441,8 @@ class AutotuneViewModel(
         val params = mutableListOf<ResultRow>()
         val tuneInsulin = preferences.get(BooleanKey.AutotuneTuneInsulinCurve)
         if (tuneInsulin) {
-            params += formatRow(rh.gs(R.string.insulin_peak), pumpProfile.localInsulin.peak.toDouble(), tunedProfile.localInsulin.peak.toDouble(), "%.0f")
-            params += formatRow(rh.gs(app.aaps.core.ui.R.string.dia), Round.roundTo(pumpProfile.localInsulin.dia, 0.1), Round.roundTo(tunedProfile.localInsulin.dia, 0.1), "%.1f")
+            params += formatRow(rh.gs(R.string.insulin_peak), pumpProfile.iCfg.peak.toDouble(), tunedProfile.iCfg.peak.toDouble(), "%.0f")
+            params += formatRow(rh.gs(app.aaps.core.ui.R.string.dia), Round.roundTo(pumpProfile.iCfg.dia, 0.1), Round.roundTo(tunedProfile.iCfg.dia, 0.1), "%.1f")
         }
         params += formatRow(rh.gs(app.aaps.core.ui.R.string.isf_short), Round.roundTo(pumpProfile.isf / toMgDl, 0.001), Round.roundTo(tunedProfile.isf / toMgDl, 0.001), isfFormat)
         params += formatRow(rh.gs(app.aaps.core.ui.R.string.ic_short), Round.roundTo(pumpProfile.ic, 0.001), Round.roundTo(tunedProfile.ic, 0.001), "%.2f")

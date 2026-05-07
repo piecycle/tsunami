@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
 import app.aaps.core.data.configuration.Constants
 import app.aaps.core.data.model.GlucoseUnit
@@ -46,6 +47,7 @@ import app.aaps.core.interfaces.protection.ExportPasswordDataStore
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppInitialized
+import app.aaps.core.interfaces.rx.events.EventShowSnackbar
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.tempTargets.toJson
 import app.aaps.core.interfaces.ui.UiInteraction
@@ -54,10 +56,14 @@ import app.aaps.core.interfaces.utils.HardLimits
 import app.aaps.core.interfaces.utils.SafeParse
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.interfaces.versionChecker.VersionCheckerUtils
+import app.aaps.core.interfaces.widget.WidgetUpdater
+import app.aaps.core.keys.BooleanComposedKey
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.BooleanNonKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.LongComposedKey
+import app.aaps.core.keys.ProfileComposedBooleanKey
+import app.aaps.core.keys.ProfileComposedStringKey
 import app.aaps.core.keys.StringKey
 import app.aaps.core.keys.StringNonKey
 import app.aaps.core.keys.UnitDoubleKey
@@ -70,7 +76,8 @@ import app.aaps.database.AppRepository
 import app.aaps.implementation.lifecycle.ProcessLifecycleListener
 import app.aaps.implementation.plugin.PluginStore
 import app.aaps.implementation.receivers.NetworkChangeReceiver
-import app.aaps.plugins.configuration.keys.ConfigurationBooleanComposedKey
+import app.aaps.plugins.aps.loop.runningMode.RunningModeExpiryScheduler
+import app.aaps.plugins.aps.loop.runningMode.RunningModeReconciler
 import app.aaps.plugins.constraints.objectives.keys.ObjectivesLongComposedKey
 import app.aaps.plugins.constraints.signatureVerifier.SignatureVerifierPlugin
 import app.aaps.receivers.BTReceiver
@@ -78,7 +85,6 @@ import app.aaps.receivers.ChargingStateReceiver
 import app.aaps.receivers.KeepAliveWorker
 import app.aaps.receivers.TimeDateOrTZChangeReceiver
 import app.aaps.ui.activityMonitor.ActivityMonitor
-import app.aaps.ui.widget.Widget
 import app.aaps.utils.configureLeakCanary
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -143,10 +149,14 @@ class MainApp : Application(), HasAndroidInjector {
     @Inject lateinit var fileListProvider: FileListProvider
     @Inject lateinit var cryptoUtil: CryptoUtil
     @Inject lateinit var exportPasswordDataStore: ExportPasswordDataStore
+    @Inject lateinit var widgetUpdater: WidgetUpdater
+    @Inject lateinit var runningModeReconciler: RunningModeReconciler
+    @Inject lateinit var runningModeExpiryScheduler: RunningModeExpiryScheduler
     @Inject @ApplicationScope lateinit var appScope: CoroutineScope
 
     private lateinit var insulinLabel: String
     private var insulinPeakTime: Long = 0L
+    private var profileNameToDia: Map<String, Double> = emptyMap()
 
     private var handler = Handler(HandlerThread(this::class.simpleName + "Handler").also { it.start() }.looper)
     private lateinit var refreshWidget: Runnable
@@ -164,6 +174,34 @@ class MainApp : Application(), HasAndroidInjector {
         // Here should be everything injected
         aapsLogger.debug("onCreate")
         ProcessLifecycleOwner.get().lifecycle.addObserver(processLifecycleListener.get())
+
+        // Background fallback for EventShowSnackbar: when no activity is STARTED
+        // (app in background / process alive but UI offscreen), promote the
+        // snackbar to a system Notification so the message is not lost.
+        // Visible activities host their own GlobalSnackbarHost that also
+        // subscribes; those win while UI is present.
+        appScope.launch {
+            rxBus.toFlow(EventShowSnackbar::class.java).collect { event ->
+                val uiVisible = ProcessLifecycleOwner.get().lifecycle.currentState
+                    .isAtLeast(Lifecycle.State.STARTED)
+                if (!uiVisible) {
+                    notificationManager.post(
+                        id = NotificationId.SNACKBAR_FALLBACK,
+                        text = event.message,
+                        // URGENT is reserved for pump/loop alarms that play alarm-stream
+                        // sounds and wake users. Generic snackbar errors — "failed to save
+                        // preference", etc. — route through NORMAL instead.
+                        level = when (event.type) {
+                            EventShowSnackbar.Type.Error   -> NotificationLevel.NORMAL
+                            EventShowSnackbar.Type.Warning -> NotificationLevel.NORMAL
+                            EventShowSnackbar.Type.Success -> NotificationLevel.INFO
+                            EventShowSnackbar.Type.Info    -> NotificationLevel.INFO
+                        },
+                        validMinutes = 30
+                    )
+                }
+            }
+        }
         // Configure LeakCanary with Firebase reporting
         // Memory leaks will be uploaded to Firebase Crashlytics via FabricPrivacy.logException
         configureLeakCanary(
@@ -182,6 +220,12 @@ class MainApp : Application(), HasAndroidInjector {
                 config.updateInitProgress(getString(R.string.initializing_plugins))
                 pluginStore.plugins = plugins
                 configBuilder.initialize()
+
+                // Running-mode reconciler + expiry scheduler. Start after plugins are registered:
+                // the reconciler's startup-drift check reads the active pump, which requires
+                // pluginStore.plugins to be populated. Both internally gated by config.APS.
+                runningModeReconciler.start()
+                runningModeExpiryScheduler.start()
 
                 // Data migrations (DB I/O)
                 dataMigrations()
@@ -222,7 +266,9 @@ class MainApp : Application(), HasAndroidInjector {
         handler.postDelayed(
             {
                 // log version
-                appScope.launch { persistenceLayer.insertVersionChangeIfChanged(config.VERSION_NAME, BuildConfig.VERSION_CODE, gitRemote, commitHash) }
+                appScope.launch {
+                    persistenceLayer.insertVersionChangeIfChanged(config.VERSION_NAME, BuildConfig.VERSION_CODE, gitRemote, commitHash)
+                }
                 // log app start
                 if (preferences.get(BooleanKey.NsClientLogAppStart))
                     appScope.launch {
@@ -247,7 +293,7 @@ class MainApp : Application(), HasAndroidInjector {
         //  schedule widget update
         refreshWidget = Runnable {
             handler.postDelayed(refreshWidget, 60000)
-            Widget.updateWidget(this@MainApp, "ScheduleEveryMin")
+            widgetUpdater.update("ScheduleEveryMin")
         }
         handler.postDelayed(refreshWidget, 5000)
         setUserStats()
@@ -258,7 +304,7 @@ class MainApp : Application(), HasAndroidInjector {
         aapsLogger.debug("doInit end")
     }
 
-    private fun setUserStats() {
+    private suspend fun setUserStats() {
         if (!fabricPrivacy.fabricEnabled()) return
         val closedLoopEnabled = if (constraintChecker.isClosedLoopAllowed().value()) "CLOSED_LOOP_ENABLED" else "CLOSED_LOOP_DISABLED"
         val remote = config.REMOTE.lowercase(Locale.getDefault())
@@ -453,17 +499,77 @@ class MainApp : Application(), HasAndroidInjector {
         for ((key, value) in keys) {
             if (key.startsWith("ConfigBuilder_") && key.endsWith("_Enabled")) {
                 val plugin = key.split("_")[1] + "_" + key.split("_")[2]
-                preferences.put(ConfigurationBooleanComposedKey.ConfigBuilderEnabled, plugin, value = value as Boolean)
+                preferences.put(BooleanComposedKey.ConfigBuilderEnabled, plugin, value = value as Boolean)
                 sp.remove(key)
             }
             if (key.startsWith("ConfigBuilder_") && key.endsWith("_Visible")) {
-                val plugin = key.split("_")[1] + "_" + key.split("_")[2]
-                preferences.put(ConfigurationBooleanComposedKey.ConfigBuilderVisible, plugin, value = value as Boolean)
+                // Legacy fragment-visibility pref — no longer tracked; drop during migration.
                 sp.remove(key)
             }
         }
-        // Profile migration (raw SP → single JSON) is handled by LocalProfileManagerImpl.
-        // We only need the legacy name → dia map here for the ICfg database backfill below.
+        // Migrate Profile
+        val indexToName = mutableMapOf<Int, String>()
+        val indexToDia = mutableMapOf<Int, Double>()
+        for ((key, value) in keys) {
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_mgdl")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedBooleanKey.LocalProfileNumberedMgdl, SafeParse.stringToInt(number), value = value as Boolean)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_isf")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedIsf, SafeParse.stringToInt(number), value = value as String)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_ic")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedIc, SafeParse.stringToInt(number), value = value as String)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_ic")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedIc, SafeParse.stringToInt(number), value = value as String)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_basal")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedBasal, SafeParse.stringToInt(number), value = value as String)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_targetlow")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedTargetLow, SafeParse.stringToInt(number), value = value as String)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_targethigh")) {
+                val number = key.split("_")[1]
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedTargetHigh, SafeParse.stringToInt(number), value = value as String)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_name")) {
+                val number = key.split("_")[1]
+                indexToName[SafeParse.stringToInt(number)] = value as String
+                preferences.put(ProfileComposedStringKey.LocalProfileNumberedName, SafeParse.stringToInt(number), value = value)
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_name_")) {
+                val number = key.split("_")[2]
+                indexToName[SafeParse.stringToInt(number)] = value as String
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_") && key.endsWith("_dia")) {
+                val number = SafeParse.stringToInt(key.split("_")[1])
+                indexToDia[number] = SafeParse.stringToDouble(value.toString())
+                sp.remove(key)
+            }
+            if (key.startsWith(Constants.LOCAL_PROFILE + "_dia_")) {
+                val number = SafeParse.stringToInt(key.split("_")[2])
+                indexToDia[number] = SafeParse.stringToDouble(value.toString())
+                sp.remove(key)
+            }
+        }
+        profileNameToDia = indexToDia.mapNotNull { (index, dia) ->
+            indexToName[index]?.let { name -> name to dia }
+        }.toMap()
 
         // Migrate Tidepool from username/password to OAuth2
         if (sp.contains("tidepool_username") || sp.contains("tidepool_password")) {
@@ -564,15 +670,13 @@ class MainApp : Application(), HasAndroidInjector {
         // Check if old preferences exist (existing installation vs new installation)
         val hasOldPreferences = sp.contains("eatingsoon_target")
 
-        val units = profileFunction.getUnits()
-
         // Create 3 default presets - values always stored in mg/dL
         val presets = listOf(
             TTPreset(
                 id = "eatingsoon",
                 reason = TT.Reason.EATING_SOON,
                 targetValue = if (hasOldPreferences) {
-                    profileUtil.convertToMgdl(sp.getDouble("eatingsoon_target", 90.0), units)
+                    profileUtil.convertToMgdlDetect(sp.getDouble("eatingsoon_target", 90.0))
                 } else {
                     Constants.DEFAULT_TT_EATING_SOON_TARGET
                 },
@@ -587,7 +691,7 @@ class MainApp : Application(), HasAndroidInjector {
                 id = "activity",
                 reason = TT.Reason.ACTIVITY,
                 targetValue = if (hasOldPreferences) {
-                    profileUtil.convertToMgdl(sp.getDouble("activity_target", 140.0), units)
+                    profileUtil.convertToMgdlDetect(sp.getDouble("activity_target", 140.0))
                 } else {
                     Constants.DEFAULT_TT_ACTIVITY_TARGET
                 },
@@ -602,7 +706,7 @@ class MainApp : Application(), HasAndroidInjector {
                 id = "hypo",
                 reason = TT.Reason.HYPOGLYCEMIA,
                 targetValue = if (hasOldPreferences) {
-                    profileUtil.convertToMgdl(sp.getDouble("hypo_target", 160.0), units)
+                    profileUtil.convertToMgdlDetect(sp.getDouble("hypo_target", 160.0))
                 } else {
                     Constants.DEFAULT_TT_HYPO_TARGET
                 },
@@ -623,14 +727,12 @@ class MainApp : Application(), HasAndroidInjector {
 
     private suspend fun dataMigrations() {
         // Migrate to database 33 (ICfg)
-        // Grab default value first — if LocalProfileManager did an ancient raw-SP migration,
-        // it populated legacyProfileNameToDia for backfilling historical records.
-        val legacyProfileNameToDia = localProfileManager.legacyProfileNameToDia
-        var runningICfg = if (legacyProfileNameToDia.isEmpty()) // no migration, get running iCfg from running Profile
+        // Grab default value first
+        val runningICfg = if (profileNameToDia.isEmpty()) // no migration, get running iCfg from running Profile
             profileFunction.getProfile()?.iCfg ?: localInsulinManager.iCfg
         else {  // migration, create running iCfg from previous runningProfile dia and selected InsulinPlugin for peak
-            val dia = (profileFunction.getProfile() as? ProfileSealed.EPS)?.profileName?.let { profileName ->
-                legacyProfileNameToDia[profileName]
+            val dia = (profileFunction.getProfile() as ProfileSealed.EPS?)?.profileName?.let { profileName ->
+                profileNameToDia[profileName]
             }
             val insulinEndTime = ((dia ?: hardLimits.maxDia()) * 3600 * 1000).toLong()
             ICfg("", insulinEndTime, insulinPeakTime, 1.0).also {

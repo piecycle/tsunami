@@ -13,13 +13,13 @@
     <string name="patch_not_active">Patch nie je aktivovaný</string>
     <string name="pump_setting_failed">Načítanie uživateľského nastavenia do pumpy zlyhalo!</string>
     <string name="pump_sync_error">Chyba pri synchronizácii histórie z pumpy, záznam bol preskočený. Skontrolujte zoznam ošetrení, či je bolus správne synchronizovaný. Potvrďte a pokiaľ sa znovu ukáže chyba, vymeňte patch, alebo základňu pumpy.</string>
+    <string name="patch_reset_after_primed_error">Po naplnení Patch bol zistený jeho reset! Odstráňte Patch a aktivujte nový.</string>
     <!-- overview fragment -->
     <string name="last_connection_label">Naposledy pripojené</string>
     <string name="active_bolus_label">Aktívny bolus</string>
     <string name="pump_state_label">Stav pumpy</string>
     <string name="active_alarms_label">Aktívne alarmy</string>
     <string name="basal_type_label">Typ bazálu</string>
-    <string name="basal_rate_label">Bazálna dávka</string>
     <string name="pump_type_label">Typ pumpy</string>
     <string name="fw_version_label">Verzia FW</string>
     <string name="patch_no_label">Č. Patch</string>
@@ -54,6 +54,7 @@
     <string name="retry">Opakovať</string>
     <string name="step_prepare_patch">Aktivovať Patch</string>
     <string name="step_prepare_patch_connect">Pripojiť a naplniť</string>
+    <string name="step_select_insulin">Zvoľte inzulín</string>
     <string name="step_prime">Naplniť</string>
     <string name="step_priming">Plnenie</string>
     <string name="step_priming_complete">Plnenie dokončené</string>
@@ -74,12 +75,10 @@
     <string name="do_not_attach_to_body">Zatiaľ nepripájajte Patch k telu.</string>
     <string name="half_press_needle">Stlačte tlačítko ihly do polovice. Potom stlačte tlačítko <b>Ďalšia</b> pre spustenie plnenia.</string>
     <string name="wait_for_priming">Počkajte prosím na dokončenie plnenia.</string>
-    <string name="priming_error">Nepodarilo sa dokončiť plnenie, skúste to znovu stlačením tlačítka <b>Opakovať</b>.</string>
     <string name="press_next">Stlačte <b>Ďalšia</b> pre pokračovanie.</string>
     <string name="press_next_to_start_activation">Stlačte <b>Ďalšia</b> pre spustenie aktivácie.</string>
     <string name="remove_safety_lock">Odstráňte bezpečnostný zámok. Pripojte pumpu k telu. Stlačte tlačítko ihly.</string>
     <string name="activating_pump">Aktivácia Patch a nastavenie počiatočného bazálu. Počkajte prosím.</string>
-    <string name="activating_error">Chyba pri aktivácii, stlačte <b>Opakovať</b> pre nový pokus.</string>
     <string name="activating_complete">Nový Patch aktivovaný. Zostáva %.2f jednotiek inzulínu.</string>
     <string name="can_export_settings">Môžete exportovať nastavenia, aby ste mohli neskôr obnoviť túto reláciu pumpy.</string>
     <string name="press_OK_to_return">Stlačte <b>OK</b> pre návrat na hlavnú obrazovku.</string>
@@ -96,12 +95,19 @@
     <string name="press_retry_or_discard">Stlačte <b>Ďalšia</b> pre obnovenie aktivácie alebo <b>Zahodiť</b> pre resetovanie stavu aktivácie.</string>
     <string name="reading_activation_status">Počkajte prosím, načítanie stavu aktivácie z Patch.</string>
     <!-- settings-->
-    <string name="enable_pump_unreachable_alert_summary">Výstraha pri nedostupnej pumpe bola vynutená, pretože patch pumpa Medtrum môže zlyhať a byť nedostupná.</string>
-    <string name="pump_unreachable_threshold_minutes_summary">Doporučujeme nastaviť na 30 minút, protože patch pumpa Medtrum môže zlyhať a byť nedostupná.</string>
     <string name="sn_input_title">Sériové číslo</string>
     <string name="sn_input_invalid">Neplatné sériové číslo!</string>
+    <string name="change_sn">Zmeniť</string>
     <string name="alarm_setting_title">Nastavenie výstrah</string>
     <string name="alarm_setting_summary">Vyberte preferované nastavenie výstrah.</string>
+    <string name="alarm_setting_light_vibrate_beep">Svetlo, vibrácie a pípnutie</string>
+    <string name="alarm_setting_light_vibrate">Svetlo a vibrácie</string>
+    <string name="alarm_setting_light_beep">Svetlo a pípnutie</string>
+    <string name="alarm_setting_light">Svetlo</string>
+    <string name="alarm_setting_vibrate_beep">Vibrácie a pípnutie</string>
+    <string name="alarm_setting_vibrate">Vibrácie</string>
+    <string name="alarm_setting_beep">Pípnutie</string>
+    <string name="alarm_setting_silent">Tichý</string>
     <string name="pump_warning_notification_title">Oznámenie o výstrahe pumpy</string>
     <string name="pump_warning_notification_summary">Zobraziť upozornenie na nie kritické varovanie pumpy: vybitá batéria, takmer prázdny zásobník (20 jednotiek) a čoskoro dojde inzulín. Doporučené ponechať zapnuté, keď sú výstrahy pumpy nastavené na ticho.</string>
     <string name="pump_warning_expiry_hour_title">Výstraha expirácie pumpy (hodiny)</string>

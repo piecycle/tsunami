@@ -18,6 +18,7 @@ import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.aps.Loop
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.db.compensateForClockSkew
 import app.aaps.core.interfaces.iob.GlucoseStatusProvider
 import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.logging.AAPSLogger
@@ -53,6 +54,8 @@ import app.aaps.core.interfaces.overview.graph.RunningModeGraphData
 import app.aaps.core.interfaces.overview.graph.RunningModeSegment
 import app.aaps.core.interfaces.overview.graph.StepsGraphData
 import app.aaps.core.interfaces.overview.graph.TargetLineData
+import app.aaps.core.interfaces.overview.graph.TbrDisplayData
+import app.aaps.core.interfaces.overview.graph.TbrState
 import app.aaps.core.interfaces.overview.graph.TempTargetDisplayData
 import app.aaps.core.interfaces.overview.graph.TempTargetState
 import app.aaps.core.interfaces.overview.graph.TherapyEventGraphPoint
@@ -66,7 +69,6 @@ import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventBucketedDataCreated
-import app.aaps.core.interfaces.rx.events.EventIobCalculationProgress
 import app.aaps.core.interfaces.rx.events.EventLoopUpdateGui
 import app.aaps.core.interfaces.rx.events.EventNewOpenLoopNotification
 import app.aaps.core.interfaces.rx.events.EventNsClientStatusUpdated
@@ -75,6 +77,7 @@ import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.Round
 import app.aaps.core.interfaces.utils.Translator
 import app.aaps.core.interfaces.utils.TrendCalculator
+import app.aaps.core.interfaces.workflow.CalculationSignals
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.StringKey
 import app.aaps.core.keys.UnitDoubleKey
@@ -83,6 +86,8 @@ import app.aaps.core.objects.extensions.fromGv
 import app.aaps.core.objects.extensions.target
 import app.aaps.core.objects.profile.ProfileSealed
 import app.aaps.core.ui.R
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -91,12 +96,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -115,8 +122,7 @@ import kotlin.math.min
  * Workers populate graph data. After migration complete, OverviewDataImpl will be deleted.
  */
 @OptIn(FlowPreview::class)
-@Singleton
-class OverviewDataCacheImpl @Inject constructor(
+class OverviewDataCacheImpl @AssistedInject constructor(
     private val aapsLogger: AAPSLogger,
     private val persistenceLayer: PersistenceLayer,
     private val profileUtil: ProfileUtil,
@@ -124,7 +130,7 @@ class OverviewDataCacheImpl @Inject constructor(
     private val preferences: Preferences,
     private val dateUtil: DateUtil,
     private val trendCalculator: TrendCalculator,
-    private val iobCobCalculator: IobCobCalculator,
+    @Assisted private val iobCobCalculatorProvider: () -> IobCobCalculator,
     private val glucoseStatusProvider: GlucoseStatusProvider,
     private val loop: Loop,
     private val config: Config,
@@ -134,8 +140,14 @@ class OverviewDataCacheImpl @Inject constructor(
     private val activePlugin: ActivePlugin,
     private val decimalFormatter: DecimalFormatter,
     private val translator: Translator,
-    private val rh: ResourceHelper
+    private val rh: ResourceHelper,
+    @Assisted private val signals: CalculationSignals,
+    @Assisted private val observeDatabase: Boolean
 ) : OverviewDataCache {
+
+    // Lazy lookup breaks the cache ↔ iobCobCalculator construction cycle.
+    // Only used on DB-observation paths (observeDatabase == true).
+    private val iobCobCalculator: IobCobCalculator get() = iobCobCalculatorProvider()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -167,9 +179,23 @@ class OverviewDataCacheImpl @Inject constructor(
     override val profileFlow: StateFlow<ProfileDisplayData?> = _profileFlow.asStateFlow()
     private val _runningModeFlow = MutableStateFlow<RunningModeDisplayData?>(null)
     override val runningModeFlow: StateFlow<RunningModeDisplayData?> = _runningModeFlow.asStateFlow()
+    private val _tbrFlow = MutableStateFlow<TbrDisplayData?>(null)
+    override val tbrFlow: StateFlow<TbrDisplayData?> = _tbrFlow.asStateFlow()
 
     override fun refreshTempTarget() {
         scope.launch { updateTempTargetFromDatabase() }
+    }
+
+    override fun refreshProfile() {
+        scope.launch { updateProfileFromDatabase() }
+    }
+
+    override fun refreshRunningMode() {
+        scope.launch { updateRunningModeFromDatabase() }
+    }
+
+    override fun refreshTbr() {
+        scope.launch { updateTbrFromDatabase() }
     }
 
     // Secondary graph flows
@@ -211,97 +237,14 @@ class OverviewDataCacheImpl @Inject constructor(
     override val nsClientStatusFlow: StateFlow<AapsClientStatusData> = _nsClientStatusFlow.asStateFlow()
 
     init {
-        // Load initial data from database
+        // Scope-agnostic: always bridge calculation progress into the flow.
         scope.launch {
-            aapsLogger.debug(LTag.UI, "OverviewDataCache: Loading initial data")
-            updateBgInfoFromDatabase()
-            updateProfileFromDatabase()
-            updateTempTargetFromDatabase()
-            updateRunningModeFromDatabase()
+            signals.progress.collect { _calcProgressFlow.value = it }
         }
 
-        // Observe GlucoseValue changes
-        scope.launch {
-            persistenceLayer.observeChanges(GV::class.java).collect { glucoseValues ->
-                aapsLogger.debug(LTag.UI, "GV change detected, updating BgInfo (${glucoseValues.size} values)")
-                updateBgInfoFromDatabase()
-            }
-        }
-
-        // TT and EPS chip observers are handled below in Category B reactive graph observers
-        // RM chip observer is also handled below in Category B
-
-        // Refresh trend arrow after bucketed data is created (bucketed data is ready after this event)
-        scope.launch {
-            rxBus.toFlow(EventBucketedDataCreated::class.java).collect {
-                aapsLogger.debug(LTag.UI, "Bucketed data created, refreshing BgInfo for trend arrow")
-                updateBgInfoFromDatabase()
-            }
-        }
-
-        // Observe calculation progress from workers
-        scope.launch {
-            rxBus.toFlow(EventIobCalculationProgress::class.java).collect {
-                _calcProgressFlow.value = it.finalPercent
-            }
-        }
-
-        // Observe unit changes — affects BG value formatting and TT target range text
-        scope.launch {
-            preferences.observe(StringKey.GeneralUnits).collect {
-                aapsLogger.debug(LTag.UI, "Units changed, refreshing BgInfo and TempTarget")
-                updateBgInfoFromDatabase()
-                updateTempTargetFromDatabase()
-            }
-        }
-
-        // Observe high/low mark changes — affects BG range classification (circle color)
-        scope.launch {
-            preferences.observe(UnitDoubleKey.OverviewHighMark).collect {
-                aapsLogger.debug(LTag.UI, "High mark changed, refreshing BgInfo")
-                updateBgInfoFromDatabase()
-            }
-        }
-        scope.launch {
-            preferences.observe(UnitDoubleKey.OverviewLowMark).collect {
-                aapsLogger.debug(LTag.UI, "Low mark changed, refreshing BgInfo")
-                updateBgInfoFromDatabase()
-            }
-        }
-
-        // =========================================================================
-        // Category B reactive graph observers (treatments, RM, TT, basal)
-        // =========================================================================
-
-        // Observe treatment-related DB changes
-        for (type in listOf(
-            BS::class.java, CA::class.java, EB::class.java, TE::class.java
-        )) {
-            scope.launch {
-                persistenceLayer.observeChanges(type)
-                    .debounce(300)
-                    .collect { rebuildTreatmentGraph() }
-            }
-        }
-        // Observe HR changes for treatment graph + heart rate graph
-        scope.launch {
-            persistenceLayer.observeChanges(HR::class.java)
-                .debounce(300)
-                .collect {
-                    rebuildTreatmentGraph()
-                    rebuildHeartRateGraph()
-                }
-        }
-        // Observe SC changes for treatment graph + steps graph
-        scope.launch {
-            persistenceLayer.observeChanges(SC::class.java)
-                .debounce(300)
-                .collect {
-                    rebuildTreatmentGraph()
-                    rebuildStepsGraph()
-                }
-        }
-        // Rebuild all Category B graphs when time range changes
+        // Scope-agnostic: rebuild graphs whenever the window shifts. For history this is
+        // the only trigger (navigation); for live it complements the DB-change listeners
+        // below. The rebuilders themselves read from the DB using the current range.
         scope.launch {
             timeRangeFlow
                 .filterNotNull()
@@ -317,71 +260,190 @@ class OverviewDataCacheImpl @Inject constructor(
                 }
         }
 
-        // Observe running mode changes for graph + chip
-        scope.launch {
-            persistenceLayer.observeChanges(RM::class.java)
-                .debounce(300)
-                .collect {
-                    updateRunningModeFromDatabase()
-                    rebuildRunningModeGraph()
-                }
-        }
-
-        // Observe TT changes for target line graph + chip
-        scope.launch {
-            persistenceLayer.observeChanges(TT::class.java)
-                .debounce(300)
-                .collect {
-                    updateTempTargetFromDatabase()
-                    rebuildTargetLine()
-                }
-        }
-        // Refresh TT chip after APS loop runs so the APS-adjusted target (read from
-        // loop.lastRun.constraintsProcessed.targetBG) is reflected in the ADJUSTED state.
-        scope.launch {
-            merge(
-                rxBus.toFlow(EventLoopUpdateGui::class.java),
-                rxBus.toFlow(EventNewOpenLoopNotification::class.java)
-            ).collect { updateTempTargetFromDatabase() }
-        }
-        // EPS changes affect EPS graph, profile chip, TT chip, target line, and basal
-        scope.launch {
-            persistenceLayer.observeChanges(EPS::class.java)
-                .debounce(300)
-                .collect {
-                    rebuildEpsGraph()
-                    delay(500) // Allow ProfileFunctionImpl cache invalidation
-                    updateProfileFromDatabase()
-                    updateTempTargetFromDatabase()
-                    rebuildTargetLine()
-                    rebuildBasalGraph()
-                }
-        }
-
-        // Observe basal-related DB changes
-        scope.launch {
-            persistenceLayer.observeChanges(TB::class.java)
-                .debounce(300)
-                .collect { rebuildBasalGraph() }
-        }
-        scope.launch {
-            persistenceLayer.observeChanges(EB::class.java)
-                .debounce(300)
-                .collect { rebuildBasalGraph() }
-        }
-
-        // NSClient status: initial load + subscribe to updates + 60s ticker for time-ago refresh
-        if (config.AAPSCLIENT) {
-            scope.launch { rebuildNsClientStatus() }
+        if (observeDatabase) {
+            // Load initial data from database.
+            // Gated on app init: updateTbrFromDatabase -> iobCobCalculator.getBasalData ->
+            // PluginStore.activePumpInternal throws "No pump selected" when the cache is
+            // constructed before ConfigBuilder.initialize() has populated the active pump.
+            // initProgressFlow is a StateFlow, so if init is already done this returns
+            // immediately; otherwise it suspends until it completes.
             scope.launch {
-                rxBus.toFlow(EventNsClientStatusUpdated::class.java).collect {
-                    rebuildNsClientStatus()
+                config.initProgressFlow.first { it.done }
+                aapsLogger.debug(LTag.UI, "OverviewDataCache: Loading initial data")
+                updateBgInfoFromDatabase()
+                updateProfileFromDatabase()
+                updateTempTargetFromDatabase()
+                updateRunningModeFromDatabase()
+                updateTbrFromDatabase()
+            }
+
+            // Observe GlucoseValue changes
+            scope.launch {
+                persistenceLayer.observeChanges(GV::class.java).collect { glucoseValues ->
+                    aapsLogger.debug(LTag.UI, "GV change detected, updating BgInfo (${glucoseValues.size} values)")
+                    updateBgInfoFromDatabase()
+                }
+            }
+
+            // TT and EPS chip observers are handled below in Category B reactive graph observers
+            // RM chip observer is also handled below in Category B
+
+            // Refresh trend arrow after bucketed data is created (bucketed data is ready after this event)
+            scope.launch {
+                rxBus.toFlow(EventBucketedDataCreated::class.java).collect {
+                    aapsLogger.debug(LTag.UI, "Bucketed data created, refreshing BgInfo for trend arrow")
+                    updateBgInfoFromDatabase()
+                }
+            }
+
+            // Observe unit changes — affects BG value formatting and TT target range text
+            scope.launch {
+                preferences.observe(StringKey.GeneralUnits).collect {
+                    aapsLogger.debug(LTag.UI, "Units changed, refreshing BgInfo and TempTarget")
+                    updateBgInfoFromDatabase()
+                    updateTempTargetFromDatabase()
+                }
+            }
+
+            // Observe high/low mark changes — affects BG range classification (circle color)
+            scope.launch {
+                preferences.observe(UnitDoubleKey.OverviewHighMark).collect {
+                    aapsLogger.debug(LTag.UI, "High mark changed, refreshing BgInfo")
+                    updateBgInfoFromDatabase()
                 }
             }
             scope.launch {
-                while (true) {
-                    delay(60_000)
-                    rebuildNsClientStatus()
+                preferences.observe(UnitDoubleKey.OverviewLowMark).collect {
+                    aapsLogger.debug(LTag.UI, "Low mark changed, refreshing BgInfo")
+                    updateBgInfoFromDatabase()
+                }
+            }
+
+            // =========================================================================
+            // Category B reactive graph observers (treatments, RM, TT, basal)
+            // =========================================================================
+
+            // Observe treatment-related DB changes
+            for (type in listOf(
+                BS::class.java, CA::class.java, EB::class.java, TE::class.java
+            )) {
+                scope.launch {
+                    persistenceLayer.observeChanges(type)
+                        .debounce(300)
+                        .collect { rebuildTreatmentGraph() }
+                }
+            }
+            // Observe HR changes for treatment graph + heart rate graph
+            scope.launch {
+                persistenceLayer.observeChanges(HR::class.java)
+                    .debounce(300)
+                    .collect {
+                        rebuildTreatmentGraph()
+                        rebuildHeartRateGraph()
+                    }
+            }
+            // Observe SC changes for treatment graph + steps graph
+            scope.launch {
+                persistenceLayer.observeChanges(SC::class.java)
+                    .debounce(300)
+                    .collect {
+                        rebuildTreatmentGraph()
+                        rebuildStepsGraph()
+                    }
+            }
+            // Observe running mode changes for graph + chip
+            scope.launch {
+                persistenceLayer.observeChanges(RM::class.java)
+                    .compensateForClockSkew(config, dateUtil)
+                    .debounce(300)
+                    .collect {
+                        updateRunningModeFromDatabase()
+                        rebuildRunningModeGraph()
+                    }
+            }
+
+            // Observe TT changes for target line graph + chip
+            scope.launch {
+                persistenceLayer.observeChanges(TT::class.java)
+                    .compensateForClockSkew(config, dateUtil)
+                    .debounce(300)
+                    .collect {
+                        updateTempTargetFromDatabase()
+                        rebuildTargetLine()
+                    }
+            }
+            // Refresh TT chip after APS loop runs so the APS-adjusted target (read from
+            // loop.lastRun.constraintsProcessed.targetBG) is reflected in the ADJUSTED state.
+            scope.launch {
+                merge(
+                    rxBus.toFlow(EventLoopUpdateGui::class.java),
+                    rxBus.toFlow(EventNewOpenLoopNotification::class.java)
+                ).collect { updateTempTargetFromDatabase() }
+            }
+            // AAPSCLIENT counterpart: the ADJUSTED text comes from
+            // processedDeviceStatusData.getAPSResult()?.targetBG, which NSDeviceStatusHandler
+            // mutates in place when a new NS devicestatus arrives — no DB change, no flow.
+            // EventNsClientStatusUpdated fires after every devicestatus batch on AAPSCLIENT,
+            // so re-read the cache then. Also covers the post-expiry case where the master's
+            // APS result no longer matches the just-expired TT.
+            if (config.AAPSCLIENT) {
+                scope.launch {
+                    rxBus.toFlow(EventNsClientStatusUpdated::class.java)
+                        .debounce(300)
+                        .collect { updateTempTargetFromDatabase() }
+                }
+            }
+            // EPS changes affect EPS graph, profile chip, TT chip, target line, and basal
+            scope.launch {
+                persistenceLayer.observeChanges(EPS::class.java)
+                    .debounce(300)
+                    .collect {
+                        rebuildEpsGraph()
+                        delay(500) // Allow ProfileFunctionImpl cache invalidation
+                        updateProfileFromDatabase()
+                        updateTempTargetFromDatabase()
+                        rebuildTargetLine()
+                        rebuildBasalGraph()
+                    }
+            }
+
+            // Observe basal-related DB changes
+            scope.launch {
+                persistenceLayer.observeChanges(TB::class.java)
+                    .debounce(300)
+                    .collect {
+                        rebuildBasalGraph()
+                        updateTbrFromDatabase()
+                    }
+            }
+            scope.launch {
+                persistenceLayer.observeChanges(EB::class.java)
+                    .debounce(300)
+                    .collect { rebuildBasalGraph() }
+            }
+
+            // NSClient status: initial load + rxBus subscription + 60s ticker — but only while
+            // the nsClientStatusFlow has observers. The cache is a singleton, so without this
+            // gate the 60s rebuild would fire 24/7 even though the flow is only consumed by the
+            // overview (AAPSCLIENT-only).
+            if (config.AAPSCLIENT) {
+                scope.launch {
+                    _nsClientStatusFlow.subscriptionCount
+                        .map { it > 0 }
+                        .distinctUntilChanged()
+                        .collectLatest { hasSubscribers ->
+                            if (!hasSubscribers) return@collectLatest
+                            rebuildNsClientStatus()
+                            launch {
+                                rxBus.toFlow(EventNsClientStatusUpdated::class.java).collect {
+                                    rebuildNsClientStatus()
+                                }
+                            }
+                            while (true) {
+                                delay(60_000)
+                                rebuildNsClientStatus()
+                            }
+                        }
                 }
             }
         }
@@ -450,7 +512,8 @@ class OverviewDataCacheImpl @Inject constructor(
                 state = TempTargetState.ACTIVE,
                 timestamp = tempTarget.timestamp,
                 duration = tempTarget.duration,
-                reason = tempTarget.reason
+                reason = tempTarget.reason,
+                recordId = tempTarget.id
             )
         } else {
             // No active TT - check profile
@@ -488,12 +551,14 @@ class OverviewDataCacheImpl @Inject constructor(
     private suspend fun updateProfileFromDatabase() {
         val profile = profileFunction.getProfile()
         var isModified = false
+        var percentage = 100
         var timestamp = 0L
         var duration = 0L
 
         if (profile is ProfileSealed.EPS) {
             val eps = profile.value
             isModified = eps.originalPercentage != 100 || eps.originalTimeshift != 0L || eps.originalDuration != 0L
+            percentage = eps.originalPercentage
             timestamp = eps.timestamp
             duration = eps.originalDuration
         }
@@ -502,8 +567,10 @@ class OverviewDataCacheImpl @Inject constructor(
             profileName = profileFunction.getProfileName(),  // Raw name, ViewModel adds remaining time
             isLoaded = profile != null,
             isModified = isModified,
+            percentage = percentage,
             timestamp = timestamp,
-            duration = duration
+            duration = duration,
+            originalPsId = (profile as? ProfileSealed.EPS)?.value?.originalPsId
         )
     }
 
@@ -511,15 +578,48 @@ class OverviewDataCacheImpl @Inject constructor(
     // Running mode computation
     // =========================================================================
 
-    private fun updateRunningModeFromDatabase() {
-        val mode = loop.runningMode
-        val rmRecord = loop.runningModeRecord
+    private suspend fun updateRunningModeFromDatabase() {
+        // Read directly from DB — loop.runningModeRecord routes through runningModePreCheck()
+        // which touches activePump and crashes at startup before the pump plugin is selected.
+        // Loop will correct mode itself when it next runs; the RM observer will pick it up.
+        val now = dateUtil.now()
+        val rmRecord = persistenceLayer.getRunningModeActiveAt(now)
 
         // Store raw data only - ViewModel computes display text
         _runningModeFlow.value = RunningModeDisplayData(
-            mode = mode,
+            mode = rmRecord.mode,
             timestamp = rmRecord.timestamp,
-            duration = rmRecord.duration
+            duration = rmRecord.duration,
+            recordId = rmRecord.id
+        )
+    }
+
+    // =========================================================================
+    // Running TBR chip computation
+    // =========================================================================
+
+    private suspend fun updateTbrFromDatabase() {
+        val profile = profileFunction.getProfile()
+        if (profile == null) {
+            _tbrFlow.value = TbrDisplayData(TbrState.NONE, 0L, 0L)
+            return
+        }
+        val now = dateUtil.now()
+        val basalData = iobCobCalculator.getBasalData(profile, now)
+        val state = when {
+            !basalData.isTempBasalRunning                             -> TbrState.NONE
+            abs(basalData.tempBasalAbsolute - basalData.basal) < 0.01 -> TbrState.NONE
+            basalData.tempBasalAbsolute > basalData.basal             -> TbrState.HIGH
+            else                                                      -> TbrState.LOW
+        }
+        // Pull timing from the active TB row for expiry detection on ticks. Extended boluses
+        // converted to TBR (EB-as-TB) won't have a TB row; state is still correct but the
+        // ViewModel won't auto-refresh on expiry — the next TB/EB DB event catches it.
+        val activeTb = if (state != TbrState.NONE) persistenceLayer.getTemporaryBasalActiveAt(now) else null
+        _tbrFlow.value = TbrDisplayData(
+            state = state,
+            timestamp = activeTb?.timestamp ?: 0L,
+            duration = activeTb?.duration ?: 0L
         )
     }
 
@@ -921,6 +1021,7 @@ class OverviewDataCacheImpl @Inject constructor(
         _tempTargetFlow.value = null
         _profileFlow.value = null
         _runningModeFlow.value = null
+        _tbrFlow.value = null
         // Secondary graph flows
         _iobGraphFlow.value = IobGraphData(emptyList(), emptyList())
         _absIobGraphFlow.value = AbsIobGraphData(emptyList())

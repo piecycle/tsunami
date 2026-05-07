@@ -1,10 +1,6 @@
 package app.aaps.pump.virtual
 
-import android.content.Context
 import android.os.SystemClock
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceManager
-import androidx.preference.PreferenceScreen
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.data.pump.defs.ManufacturerType
 import app.aaps.core.data.pump.defs.PumpDescription
@@ -46,8 +42,6 @@ import app.aaps.core.keys.interfaces.withEntries
 import app.aaps.core.ui.compose.icons.IcPluginVirtualPump
 import app.aaps.core.ui.compose.preference.PreferenceSubScreenDef
 import app.aaps.core.utils.fabric.InstanceId
-import app.aaps.core.validators.preferences.AdaptiveListPreference
-import app.aaps.core.validators.preferences.AdaptiveSwitchPreference
 import app.aaps.pump.virtual.extensions.toText
 import app.aaps.pump.virtual.keys.VirtualBooleanNonPreferenceKey
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +50,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -99,28 +94,26 @@ open class VirtualPumpPlugin @Inject constructor(
                 commandQueue = commandQueue
             )
         }
-        .pluginIcon(app.aaps.core.objects.R.drawable.ic_virtual_pump)
         .icon(IcPluginVirtualPump)
         .pluginName(app.aaps.core.ui.R.string.virtual_pump)
         .shortName(R.string.virtual_pump_shortname)
-        .preferencesId(PluginDescription.PREFERENCE_SCREEN)
         .description(R.string.description_pump_virtual)
         .setDefault()
-        .neverVisible(config.AAPSCLIENT),
+        .showInList { !config.AAPSCLIENT },
     ownPreferences = listOf(VirtualBooleanNonPreferenceKey::class.java),
     aapsLogger, rh, preferences, commandQueue
 ), Pump, VirtualPump {
 
     private var scope: CoroutineScope? = null
 
-    val batteryPercentFlow: StateFlow<Int>
-        field = MutableStateFlow(50)
+    private val _batteryPercentFlow = MutableStateFlow(50)
+    val batteryPercentFlow: StateFlow<Int> = _batteryPercentFlow.asStateFlow()
 
-    val reservoirInUnitsFlow: StateFlow<Int>
-        field = MutableStateFlow(50)
+    private val _reservoirInUnitsFlow = MutableStateFlow(50)
+    val reservoirInUnitsFlow: StateFlow<Int> = _reservoirInUnitsFlow.asStateFlow()
 
-    val pumpTypeFlow: StateFlow<PumpType?>
-        field = MutableStateFlow(null)
+    private val _pumpTypeFlow = MutableStateFlow<PumpType?>(null)
+    val pumpTypeFlow: StateFlow<PumpType?> = _pumpTypeFlow.asStateFlow()
 
     private val _lastDataTime = MutableStateFlow(0L)
     override val lastDataTime: StateFlow<Long> = _lastDataTime
@@ -226,14 +219,11 @@ open class VirtualPumpPlugin @Inject constructor(
             .bolusDelivered(detailedBolusInfo.insulin)
             .enacted(detailedBolusInfo.insulin > 0 || detailedBolusInfo.carbs > 0)
             .comment(rh.gs(app.aaps.core.ui.R.string.virtualpump_resultok))
-        val isPriming = bolusProgressData.state.value?.isPriming ?: false
-        val totalInsulin = bolusProgressData.state.value?.insulin ?: detailedBolusInfo.insulin
         var delivering = 0.0
         while (delivering < detailedBolusInfo.insulin) {
             SystemClock.sleep(200)
             val pumpInsulin = PumpInsulin(delivering)
-            val percent = min((ch.fromPump(pumpInsulin, isPriming) / totalInsulin * 100).toInt(), 100)
-            bolusProgressData.updateProgress(percent, ch.bolusProgressString(pumpInsulin, isPriming), delivering)
+            bolusProgressData.updateProgress(delivered = pumpInsulin)
             delivering += 0.1
             if (bolusProgressData.isStopPressed)
                 return pumpEnactResultProvider.get()
@@ -242,7 +232,7 @@ open class VirtualPumpPlugin @Inject constructor(
                     .comment(rh.gs(app.aaps.core.ui.R.string.stop))
         }
         SystemClock.sleep(200)
-        bolusProgressData.updateProgress(100, rh.gs(app.aaps.core.interfaces.R.string.bolus_delivered_successfully, totalInsulin), detailedBolusInfo.insulin)
+        bolusProgressData.updateProgress(100)
         SystemClock.sleep(1000)
         aapsLogger.debug(LTag.PUMP, "Delivering treatment insulin: " + detailedBolusInfo.insulin + "U carbs: " + detailedBolusInfo.carbs + "g " + result)
         _lastDataTime.value = System.currentTimeMillis()
@@ -405,7 +395,7 @@ open class VirtualPumpPlugin @Inject constructor(
         if (pumpTypeFlow.value == pumpTypeNew) return
         aapsLogger.debug(LTag.PUMP, "New pump configuration found ($pumpTypeNew), changing from previous (${pumpTypeFlow.value})")
         pumpDescription.fillFor(pumpTypeNew)
-        pumpTypeFlow.value = pumpTypeNew
+        _pumpTypeFlow.value = pumpTypeNew
     }
 
     override fun timezoneOrDSTChanged(timeChangeType: TimeChangeType) {}
@@ -425,25 +415,4 @@ open class VirtualPumpPlugin @Inject constructor(
         icon = pluginDescription.icon
     )
 
-    // TODO: Remove after full migration to Compose preferences (getPreferenceScreenContent)
-    override fun addPreferenceScreen(preferenceManager: PreferenceManager, parent: PreferenceScreen, context: Context, requiredKey: String?) {
-        if (requiredKey != null) return
-        val entries = mutableListOf<CharSequence>()
-            .also { entries ->
-                PumpType.entries.forEach {
-                    if (it.description != "USER") entries.add(it.description)
-                }
-            }
-            .sortedWith(compareBy { it.toString() })
-            .toTypedArray()
-        val category = PreferenceCategory(context)
-        parent.addPreference(category)
-        category.apply {
-            key = "virtual_pump_settings"
-            title = rh.gs(R.string.virtualpump_settings)
-            initialExpandedChildrenCount = 0
-            addPreference(AdaptiveListPreference(ctx = context, stringKey = StringKey.VirtualPumpType, title = R.string.virtual_pump_type, entries = entries, entryValues = entries))
-            addPreference(AdaptiveSwitchPreference(ctx = context, booleanKey = BooleanKey.VirtualPumpStatusUpload, title = app.aaps.core.ui.R.string.virtualpump_uploadstatus_title))
-        }
-    }
 }

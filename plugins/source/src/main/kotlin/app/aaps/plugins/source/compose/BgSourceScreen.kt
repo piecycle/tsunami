@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -47,7 +46,6 @@ import app.aaps.core.ui.compose.AapsSpacing
 import app.aaps.core.ui.compose.AapsTheme
 import app.aaps.core.ui.compose.SelectableListToolbar
 import app.aaps.core.ui.compose.ToolbarConfig
-import app.aaps.core.ui.compose.dialogs.AapsSnackbarHost
 import app.aaps.core.ui.compose.dialogs.OkCancelDialog
 import app.aaps.core.ui.compose.icons.Ns
 import app.aaps.ui.compose.components.ContentContainer
@@ -141,13 +139,6 @@ internal fun BgSourceScreen(
                     }
                 )
             }
-
-            // Error display
-            AapsSnackbarHost(
-                message = uiState.snackbarMessage,
-                onDismiss = { viewModel.clearSnackbar() },
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
     }
 }
@@ -281,7 +272,7 @@ private fun GlucoseValueItem(
 
             // Trend arrow
             Icon(
-                painter = painterResource(id = glucoseValue.trendArrow.directionToIcon()),
+                imageVector = glucoseValue.trendArrow.directionToIcon(),
                 contentDescription = glucoseValue.trendArrow.name,
                 modifier = Modifier
                     .padding(start = AapsSpacing.small)
