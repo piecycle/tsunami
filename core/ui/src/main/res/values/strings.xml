@@ -1085,6 +1085,7 @@
 
 
     <!-- Tsunami -->
+    <string name="tsunami">Tsunami</string>
     <string name="overview_tsunami_label">Tsunami</string>
     <string name="tsunami_desc">Start Tsunami mode.</string>
     <string name="tsunami_shortname">TSU</string>

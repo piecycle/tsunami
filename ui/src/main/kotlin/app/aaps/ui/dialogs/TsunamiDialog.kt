@@ -1,4 +1,4 @@
-package app.aaps.ui.dialogs
+/*package app.aaps.ui.dialogs
 
 import android.content.Context
 import android.os.Bundle
@@ -344,4 +344,4 @@ class TsunamiDialog : DialogFragmentWithDate() {
             }
         }
     }
-}
+}*/

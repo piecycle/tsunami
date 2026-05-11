@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -47,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.aaps.core.ui.compose.AapsTopAppBar
 import app.aaps.core.ui.compose.DateTimeSection
+import app.aaps.core.ui.compose.bottomBarSafeArea
 import app.aaps.core.ui.compose.NumberInputRow
 import app.aaps.core.ui.compose.clearFocusOnTap
 import app.aaps.core.ui.compose.dialogs.OkCancelDialog
@@ -70,13 +72,12 @@ import app.aaps.ui.R
 
 @Composable
 fun TsunamiDialogScreen(
-    tsunamiButtonsDef: PreferenceSubScreenDef,
     viewModel: TsunamiDialogViewModel = hiltViewModel(),
+    tsunamiButtonsDef: PreferenceSubScreenDef,
     bgInfoState: StateFlow<BgInfoUiState>,
     iobUiState: StateFlow<IobUiState>,
     cobUiState: StateFlow<CobUiState>,
     onNavigateBack: () -> Unit,
-    //onNavigate: (NavigationRequest) -> Unit,
     onShowDeliveryError: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -99,17 +100,12 @@ fun TsunamiDialogScreen(
                 is TsunamiDialogViewModel.SideEffect.ShowNoActionDialog -> {
                     showNoAction = true
                 }
-/*
-                is TsunamiDialogViewModel.SideEffect.NavigateToSettings -> {
-                    onNavigate(NavigationRequest.PreferenceSubScreen(effect.screenDef))
-                }
-
- */
             }
         }
     }
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
+    var showButtonSettings by rememberSaveable { mutableStateOf(false) }
 
     // Confirmation dialog
     if (showConfirmation) {
@@ -119,12 +115,13 @@ fun TsunamiDialogScreen(
         } else {
             val summaryLines = viewModel.buildConfirmationSummary()
             OkCancelDialog(
-                title = stringResource(ElementType.TSUNAMI.labelResId()),
+                //title = stringResource(ElementType.TSUNAMI.labelResId()),
+                title = stringResource(CoreUiR.string.tsunami),
                 message = summaryLines.joinToString("<br/>"),
                 icon = ElementType.TSUNAMI.icon(),
                 iconTint = ElementType.TSUNAMI.color(),
                 onConfirm = {
-                    viewModel.confirmAndSave(/*uiState*/)
+                    viewModel.confirmAndSave()
                     onNavigateBack()
                 },
                 onDismiss = { showConfirmation = false }
@@ -135,7 +132,7 @@ fun TsunamiDialogScreen(
     // No action dialog
     if (showNoAction) {
         OkCancelDialog(
-            title = stringResource(ElementType.TSUNAMI.labelResId()),
+            title = stringResource(CoreUiR.string.tsunami),
             message = stringResource(CoreUiR.string.no_action_selected),
             icon = ElementType.TSUNAMI.icon(),
             iconTint = ElementType.TSUNAMI.color(),
@@ -162,12 +159,23 @@ fun TsunamiDialogScreen(
         )
     }
 
+    /*
+    if (showButtonSettings) {
+        TsunamiButtonSettingsSheet(
+            settingsDef = tsunamiButtonsDef,
+            onDismiss = {
+                showButtonSettings = false
+                viewModel.refreshTsunamiButtons()
+            }
+        )
+    }
+     */
+
     TsunamiDialogContent(
         uiState = uiState,
         bgInfo = bgInfo,
         iob = iob,
         cob = cob,
-        //tsunamiButtonsDef = tsunamiButtonsDef,
         dateString = viewModel.dateUtil.dateString(uiState.eventTime),
         timeString = viewModel.dateUtil.timeString(uiState.eventTime),
         bolusFormat = viewModel.decimalFormatter.pumpSupportedBolusFormat(uiState.bolusStep),
@@ -191,7 +199,6 @@ private fun TsunamiDialogContent(
     bgInfo: BgInfoUiState,
     iob: IobUiState,
     cob: CobUiState,
-    //tsunamiButtonsDef: PreferenceSubScreenDef,
     dateString: String,
     timeString: String,
     bolusFormat: DecimalFormat,
@@ -212,43 +219,58 @@ private fun TsunamiDialogContent(
     Scaffold(
         topBar = {
             AapsTopAppBar(
-                title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = ElementType.TSUNAMI.icon(),
-                            contentDescription = null,
-                            tint = ElementType.TSUNAMI.color(),
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Spacer(modifier = Modifier.padding(start = 8.dp))
-                        Text(stringResource(ElementType.TSUNAMI.labelResId()))
-                    }
-                },
+                title = { Text(stringResource(ElementType.TSUNAMI.labelResId())) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(CoreUiR.string.back)
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = stringResource(CoreUiR.string.close)
                         )
                     }
-                }/*,
-                actions = {
-                    IconButton(onClick = onSettingsClick) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(CoreUiR.string.settings)
-                        )
-                    }
-                }*/
+                },
             )
         },
+        /*
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = ElementType.TSUNAMI.icon(),
+                    contentDescription = null,
+                    tint = ElementType.TSUNAMI.color(),
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.padding(start = 8.dp))
+                Text(stringResource(ElementType.TSUNAMI.labelResId()))
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = onNavigateBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(CoreUiR.string.back)
+                )
+            }
+        }/*,
+        actions = {
+            IconButton(onClick = onSettingsClick) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = stringResource(CoreUiR.string.settings)
+                )
+            }
+        }*/
+    )
+},
+         */
         bottomBar = {
             Button(
-                onClick = onConfirmClick,
+                onClick = {
+                    focusManager.clearFocus()
+                    onConfirmClick()
+                },
                 enabled = uiState.confirmEnabled,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .imePadding()
+                    .bottomBarSafeArea()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 Icon(
@@ -265,6 +287,12 @@ private fun TsunamiDialogContent(
             }
         }
     ) { paddingValues ->
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(4.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainer)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -9,12 +9,15 @@ import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.data.ue.ValueWithUnit
 import app.aaps.core.interfaces.automation.Automation
+import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.constraints.ConstraintsChecker
 import app.aaps.core.interfaces.db.PersistenceLayer
+import app.aaps.core.interfaces.insulin.Insulin
+import app.aaps.core.interfaces.insulin.InsulinManager
 import app.aaps.core.interfaces.logging.AAPSLogger
-import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
 import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.pump.DetailedBolusInfo
 import app.aaps.core.interfaces.pump.defs.determineCorrectBolusStepSize
 import app.aaps.core.interfaces.queue.Callback
@@ -28,7 +31,7 @@ import app.aaps.core.keys.DoubleKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.objects.constraints.ConstraintObject
-import app.aaps.core.ui.compose.preference.PreferenceSubScreenDef
+import app.aaps.core.objects.runningMode.RunningModeGuard
 import app.aaps.ui.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
@@ -36,6 +39,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -47,8 +52,12 @@ import kotlin.math.max
 @Stable
 class TsunamiDialogViewModel @Inject constructor(
     private val constraintChecker: ConstraintsChecker,
+    private val profileFunction: ProfileFunction,
     private val commandQueue: CommandQueue,
     private val activePlugin: ActivePlugin,
+    val activeInsulin: Insulin,
+    val insulinManager: InsulinManager,
+    val config: Config,
     private val automation: Automation,
     private val uel: UserEntryLogger,
     private val persistenceLayer: PersistenceLayer,
@@ -57,24 +66,24 @@ class TsunamiDialogViewModel @Inject constructor(
     val rh: ResourceHelper,
     val dateUtil: DateUtil,
     private val aapsLogger: AAPSLogger,
-    private val hardLimits: HardLimits
+    hardLimits: HardLimits,
+    private val runningModeGuard: RunningModeGuard
 ) : ViewModel() {
 
-    val uiState: StateFlow<TsunamiDialogUiState>
-        field = MutableStateFlow(TsunamiDialogUiState())
+    private val _uiState = MutableStateFlow(TsunamiDialogUiState())
+    val uiState: StateFlow<TsunamiDialogUiState> = _uiState.asStateFlow()
 
     sealed class SideEffect {
         data class ShowDeliveryError(val comment: String) : SideEffect()
         data object ShowNoActionDialog : SideEffect()
-        //data class NavigateToSettings(val screenDef: PreferenceSubScreenDef) : SideEffect()
     }
 
-    val sideEffect: SharedFlow<SideEffect>
-        field = MutableSharedFlow(
-            replay = 0,
-            extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST
-        )
+    private val _sideEffect = MutableSharedFlow<SideEffect>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val sideEffect: SharedFlow<SideEffect> = _sideEffect.asSharedFlow()
 
     init {
         val now = dateUtil.now()
@@ -82,8 +91,9 @@ class TsunamiDialogViewModel @Inject constructor(
         val constrainedMax = constraintChecker.getMaxBolusAllowed().value()
         val maxInsulin = if (constrainedMax > 0.0) constrainedMax else hardLimits.maxBolus()
         val bolusStep = pump.pumpDescription.bolusStep
+        val units = profileFunction.getUnits()
 
-        uiState.update {
+        _uiState.update {
             TsunamiDialogUiState(
                 insulin = 0.0,
                 duration = preferences.get(IntKey.TsuDefaultDuration),
@@ -101,37 +111,41 @@ class TsunamiDialogViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val isTsunamiActive = persistenceLayer.getTsunamiActiveAt(dateUtil.now()) != null
-            uiState.update { it.copy(isTsunamiActive = isTsunamiActive) }
+            val state = uiState.value
+            _uiState.update {
+                it.copy(
+                    isTsunamiActive = state.isTsunamiActive
+                )
+            }
         }
     }
 
     fun updateInsulin(value: Double) {
         val clamped = value.coerceIn(0.0, uiState.value.maxInsulin)
-        uiState.update { it.copy(insulin = clamped) }
+        _uiState.update { it.copy(insulin = clamped) }
     }
 
     fun addInsulin(increment: Double) {
         val state = uiState.value
         val newValue = max(0.0, state.insulin + increment).coerceAtMost(state.maxInsulin)
-        uiState.update { it.copy(insulin = newValue) }
+        _uiState.update { it.copy(insulin = newValue) }
     }
 
     fun updateDuration(minutes: Int) {
         val clamped = minutes.coerceIn(0, 300)
-        uiState.update { it.copy(duration = clamped) }
+        _uiState.update { it.copy(duration = clamped) }
     }
 
     fun updateNotes(value: String) {
-        uiState.update { it.copy(notes = value) }
+        _uiState.update { it.copy(notes = value) }
     }
 
     fun updateEventTime(timeMillis: Long) {
-        uiState.update { it.copy(eventTime = timeMillis) }
+        _uiState.update { it.copy(eventTime = timeMillis) }
     }
 
     fun cancelTsunami() {
-        uiState.update { it.copy(duration = 0, insulin = 0.0) }
+        _uiState.update { it.copy(duration = 0, insulin = 0.0) }
     }
 
     private var confirmedState: TsunamiDialogUiState? = null
@@ -185,19 +199,11 @@ class TsunamiDialogViewModel @Inject constructor(
 
     fun hasAction(): Boolean {
         val state = uiState.value
-        val insulinAfterConstraints = constraintChecker.applyBolusConstraints(
+        val insulin = constraintChecker.applyBolusConstraints(
             ConstraintObject(state.insulin, aapsLogger)
         ).value()
-        return insulinAfterConstraints > 0 || state.duration > 0 || state.isTsunamiActive
+        return insulin > 0 || state.duration > 0 || state.isTsunamiActive
     }
-
-/*    fun showTsunamiSettings(tsunamiButtonsDef: PreferenceSubScreenDef) {
-        viewModelScope.launch {
-            sideEffect.emit(SideEffect.NavigateToSettings(tsunamiButtonsDef))
-        }
-    }
-
- */
 
     fun confirmAndSave(/*state: TsunamiDialogUiState*/) {
         //confirmedState = state
@@ -221,7 +227,6 @@ class TsunamiDialogViewModel @Inject constructor(
                 val detailedBolusInfo = DetailedBolusInfo().also {
                     it.eventType = TE.Type.CORRECTION_BOLUS
                     it.insulin = insulinAfterConstraints
-                    it.context = null
                     it.notes = notes
                     it.timestamp = time
                 }
@@ -264,7 +269,7 @@ class TsunamiDialogViewModel @Inject constructor(
                 commandQueue.bolus(detailedBolusInfo, object : Callback() {
                     override fun run() {
                         if (!result.success) {
-                            sideEffect.tryEmit(SideEffect.ShowDeliveryError(result.comment))
+                            _sideEffect.tryEmit(SideEffect.ShowDeliveryError(result.comment))
                         } else {
                             automation.removeAutomationEventBolusReminder()
                         }
