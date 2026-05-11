@@ -6,7 +6,7 @@
     <string name="treatments">Điều trị</string>
     <string name="treatments_history">Lịch sử điều trị</string>
     <string name="treatments_desc">Xem và quản lý lịch sử điều trị</string>
-    <string name="nav_configuration">Cấu hình</string>
+    <string name="nav_configuration">Thiết lập hệ thống</string>
     <string name="nav_configuration_desc">Thiết lập cấu hình (CGM, bơm insulin, ...) và bật các tính năng</string>
     <string name="count_selected">Đã chọn %1$d</string>
     <string name="delete">Xóa</string>
@@ -176,6 +176,9 @@
     <string name="remove_label">Loại bỏ</string>
     <string name="activate_profile">Kích hoạt cấu hình</string>
     <string name="activate_insulin">Kích hoạt insulin</string>
+    <string name="pump_wizard_profile_gate_title">Yêu cầu cấu hình</string>
+    <string name="pump_wizard_profile_gate_pick">Chọn cấu hình để áp dụng khi kích hoạt.</string>
+    <string name="pump_wizard_profile_gate_no_store">Chưa có cấu hình nào được thiết lập. Mở Quản lý cấu hình để tạo cấu hình rồi kích hoạt lại.</string>
     <string name="reset">Đặt lại</string>
     <string name="profileswitch_ismissing">Thiếu Chuyển đổi Cấu hình. Vui lòng thực hiện chuyển đổi cấu hình hoặc nhấn “Kích hoạt cấu hình” trong cấu hình cục bộ.</string>
     <string name="profile">Cấu hình</string>
@@ -192,7 +195,7 @@
     <string name="site_rotation">Chuyển vị trí</string>
     <string name="edit_site">Sửa</string>
     <string name="select_arrow">Chọn Mũi tên</string>
-    <string name="site_filter_info">Chọn loại sự kiện điều trị bạn muốn xem: Thay cannula và/hoặc thay cảm biến</string>
+    <string name="site_filter_info">Chọn loại sự kiện điều trị bạn muốn xem: Thay Kim luồn và/hoặc thay Cảm biến</string>
     <string name="selected_location">Chọn: %1$s</string>
     <string name="last_site_location">Vị trí gần nhất: %1$s</string>
     <string name="pick_site">Chọn vị trí</string>
@@ -295,7 +298,7 @@
     <string name="careportal_note_message">Ghi chú: %1$s</string>
     <string name="careportal_question_message">Câu hỏi: %1$s</string>
     <string name="careportal_exercise_message">Bài tập luyện : %1$s</string>
-    <string name="careportal_pump_site_change">Thay vị trí kim truyền</string>
+    <string name="careportal_pump_site_change">Thay vị trí truyền của bơm</string>
     <string name="cgm_sensor_insert">Gắn cảm biến</string>
     <string name="careportal_pump_site_management">Vị trí tiêm</string>
     <string name="careportal_cgm_site_management">Vị trí CGM</string>
@@ -392,7 +395,7 @@
     <string name="manage_temp_target_desc">Quản lý và đặt mục tiêu tạm thời</string>
     <string name="manage_temp_basal_desc">Bắt đầu liều nền tạm thời</string>
     <string name="manage_extended_bolus_desc">Bắt đầu liều bolus kéo dài</string>
-    <string name="manage_site_rotation_desc">Theo dõi và luân chuyển vị trí kim truyền</string>
+    <string name="manage_site_rotation_desc">Theo dõi và luân chuyển vị trí truyền</string>
     <string name="manage_quickwizard_desc">Quản lý preset Trình hướng dẫn nhanh</string>
     <string name="treatment_note_desc">Thêm ghi chú vào hồ sơ</string>
     <string name="treatment_question_desc">Ghi lại câu hỏi cho nhóm chăm sóc của bạn</string>
@@ -403,7 +406,7 @@
     <string name="treatment_announcement_desc">Đăng thông báo</string>
     <string name="treatment_sensor_insert_desc">Ghi nhận việc gắn cảm biến CGM</string>
     <string name="treatment_battery_change_desc">Ghi nhận việc thay pin bơm</string>
-    <string name="treatment_cannula_change_desc">Ghi nhận việc thay kim luồn/bộ truyền</string>
+    <string name="treatment_cannula_change_desc">Ghi lại việc thay kim luồn/bộ truyền</string>
     <string name="treatment_fill_desc">Mồi và làm đầy kim luồn</string>
     <string name="temp_basal">Liều nền tạm thời</string>
     <string name="user_entry">Nhập liệu của người dùng</string>
@@ -416,7 +419,7 @@
     <string name="hypo">Hypo</string>
     <string name="activity">Hoạt động</string>
     <string name="wear">Wear</string>
-    <string name="automation">Automation</string>
+    <string name="automation">Tự động hóa</string>
     <string name="settingsexport">Xuất cài đặt</string>
     <string name="custom">Tuỳ chỉnh</string>
     <string name="preset_settings">Thiết lập cài đặt sẵn</string>
@@ -522,7 +525,7 @@
     <string name="uel_profile_switch_ns_refresh">LÀM MỚI CHUYỂN CẤU HÌNH TỪ NS</string>
     <string name="uel_treatments_ns_refresh">CẬP NHẬT ĐIỀU TRỊ TỪ NS</string>
     <string name="uel_tt_ns_refresh">CẬP NHẬT TEMP TARGET TỪ NS</string>
-    <string name="uel_automation_removed">ĐÃ XÓA AUTOMATION</string>
+    <string name="uel_automation_removed">ĐÃ XÓA TỰ ĐỘNG HOÁ</string>
     <string name="uel_bg_removed">BG REMOVED</string>
     <string name="uel_careportal_removed">ĐÃ XÓA CAREPORTAL</string>
     <string name="uel_bolus_removed">ĐÃ XÓA BOLUS</string>
@@ -663,7 +666,7 @@
     <string name="carbs_type_pizza">Lasagna, pizza, hamburger, khoai tây chiên, khoai tây nướng, snack như khoai tây lát chiên và các món tương tự</string>
     <string name="wizard_ecarbs">eCarbs %1$dg / %2$dh (+%3$dmin)</string>
     <string name="wizard_total">Tổng cộng</string>
-    <string name="wizard_carb_time">Thời gian ăn tinh bột</string>
+    <string name="wizard_carb_time">Thời gian ăn</string>
     <string name="carb_time_now">Bây giờ</string>
     <string name="change">Thay đổi</string>
     <string name="grant">Cấp quyền</string>
@@ -697,7 +700,7 @@
     <string name="wizard_explain_tt">TempT: %1$s</string>
     <string name="wizard_explain_tt_to">%1$s to %2$s</string>
     <string name="wizard_pump_not_available">Không có bơm khả dụng!</string>
-    <string name="quickwizard_managemnt">QuickWizard</string>
+    <string name="quickwizard_managemnt">Hướng dẫn nhanh</string>
     <!--    Preferences-->
     <string name="child">Trẻ em</string>
     <string name="teenage">Thanh thiếu niên</string>
@@ -777,7 +780,7 @@
     <string name="export_result_message_failed">Xuất cài đặt THẤT BẠI!</string>
     <string name="export_result_message_about_to_expire">Đã xuất cài đặt: mật khẩu sắp hết hạn. Vui lòng xuất thủ công và nhập lại mật khẩu.</string>
     <string name="export_result_message_expired">Xuất cài đặt bị hủy: mật khẩu đã hết hạn. Vui lòng xuất thủ công và nhập lại!</string>
-    <string name="export_result_message_disabled">Cảnh báo (automation): Xuất cài đặt chưa được bật!</string>
+    <string name="export_result_message_disabled">Cảnh báo (tự động hoá): Xuất cài đặt chưa được bật!</string>
     <!-- Cloud export -->
     <string name="export_cloud_success">Xuất dữ liệu lên đám mây thành công</string>
     <string name="export_cloud_failed">Xuất dữ liệu lên đám mây THẤT BẠI!</string>

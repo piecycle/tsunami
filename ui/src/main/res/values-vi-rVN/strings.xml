@@ -3,9 +3,9 @@
     <string name="carbs_constraint_applied">Giới hạn Carbs đã bật</string>
     <string name="no_temp_basal_running">Không có liều nền tạm thời nào đang chạy</string>
     <string name="temp_target_short">TT</string>
-    <string name="start_activity_tt">Bắt đầu hoạt động thể lực (TT)</string>
-    <string name="start_eating_soon_tt">Sắp ăn (TT)</string>
-    <string name="start_hypo_tt">Bắt đầu hạ đường huyết (TT)</string>
+    <string name="start_activity_tt">Bắt đầu TT Hoạt động thể lực</string>
+    <string name="start_eating_soon_tt">TT Chuản bị ăn</string>
+    <string name="start_hypo_tt">Bắt đầu TT Hạ đường huyết</string>
     <string name="time_offset">Lệch thời gian</string>
     <!--    Widget-->
     <string name="configure">Cấu hình độ trong suốt</string>
@@ -213,11 +213,11 @@
     <string name="dpv_default_profile">Cấu hình mặc định DPV</string>
     <!-- Other dialogs -->
     <!--QuickWizard-->
-    <string name="overview_edit_quickwizard_button_text">Button text</string>
+    <string name="overview_edit_quickwizard_button_text">Nhãn nút</string>
     <string name="quick_wizard_mode_wizard">Wizard</string>
     <string name="quick_wizard_mode_insulin">Insulin</string>
     <string name="quick_wizard_mode_carbs">Carbs</string>
-    <string name="overview_edit_quickwizard_use_positive_iob_only">Chỉ tính IOB > 0</string>
+    <string name="overview_edit_quickwizard_use_positive_iob_only">Chỉ tính IOB &gt; 0</string>
     <string name="overview_edit_quickwizard_superbolus">Superbolus</string>
     <!--    History browser-->
     <string name="history_now">Hiện tại</string>
@@ -248,7 +248,7 @@
     <string name="recalculate">Tính toán lại</string>
     <!--    Widget-->
     <string name="use_black_color">Sử dụng màu đen</string>
-    <string name="widget_configuration">Cấu hình tiện ích</string>
+    <string name="widget_configuration">Thiết lập tiện ích</string>
     <string name="until_changed">Cho đến khi thay đổi</string>
     <!--    Permissions-->
     <string name="permission_sheet_title">Yêu cầu quyền truy cập</string>

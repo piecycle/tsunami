@@ -9,6 +9,7 @@ import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.smoothing.Smoothing
+import app.aaps.core.interfaces.smoothing.SmoothingContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,5 +28,8 @@ class NoSmoothingPlugin @Inject constructor(
     aapsLogger, rh
 ), Smoothing {
 
-    override fun smooth(data: MutableList<InMemoryGlucoseValue>): MutableList<InMemoryGlucoseValue> = data
+    override suspend fun smooth(
+        data: MutableList<InMemoryGlucoseValue>,
+        @Suppress("UNUSED_PARAMETER") context: SmoothingContext
+    ): MutableList<InMemoryGlucoseValue> = data
 }

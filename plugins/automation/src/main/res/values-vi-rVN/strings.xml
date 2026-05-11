@@ -15,7 +15,7 @@
     <string name="automation_category_device">Tình trạng thiết bị</string>
     <string name="automation_category_sensors">Cảm biến &amp; kết nối</string>
     <string name="automation_category_other">Khác</string>
-    <string name="automation_choose_trigger">Thêm kích hoạt</string>
+    <string name="automation_choose_trigger">Thêm điều kiện kích hoạt</string>
     <string name="automation_add_group">Nhóm</string>
     <string name="automation_choose_action">Thêm thao tác</string>
     <string name="automation_category_targets">Mục tiêu</string>
@@ -106,8 +106,8 @@
     <string name="triggerHeartRateDesc">HR %1$s %2$.0f</string>
     <string name="triggerSensorAgeLabel">Sensor age</string>
     <string name="triggerSensorAgeDesc">Sensor age %1$s %2$.1f hour</string>
-    <string name="triggerCannulaAgeLabel">Cannula age</string>
-    <string name="triggerCannulaAgeDesc">Cannula age %1$s %2$.1f hour</string>
+    <string name="triggerCannulaAgeLabel">Kim luồn đã dùng</string>
+    <string name="triggerCannulaAgeDesc">Kim luồn đã dùng %1$s %2$.1f giờ</string>
     <string name="triggerPodChangeLabel">Kích hoạt Pod</string>
     <string name="triggerPodChangeDesc">Pod đã kích hoạt</string>
     <string name="triggerInsulinAgeLabel">Thời gian insulin</string>

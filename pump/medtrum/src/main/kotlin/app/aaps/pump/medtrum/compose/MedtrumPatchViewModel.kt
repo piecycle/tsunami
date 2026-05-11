@@ -7,17 +7,21 @@ import androidx.lifecycle.viewModelScope
 import app.aaps.core.data.model.ICfg
 import app.aaps.core.data.model.TE
 import app.aaps.core.data.time.T
+import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
+import app.aaps.core.data.ue.ValueWithUnit
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.insulin.InsulinManager
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
+import app.aaps.core.interfaces.profile.LocalProfileManager
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.interfaces.Preferences
+import app.aaps.core.ui.compose.pump.ProfileGateStepHost
 import app.aaps.core.ui.compose.siteRotation.BodyType
 import app.aaps.core.ui.compose.siteRotation.SiteLocationStepHost
 import app.aaps.pump.medtrum.MedtrumPlugin
@@ -51,7 +55,7 @@ sealed class PatchEvent {
 }
 
 enum class WizardPage {
-    PREPARE, SELECT_INSULIN, PRIME, ATTACH, ACTIVATE, SITE_LOCATION, COMPLETE,
+    PROFILE_GATE, PREPARE, SELECT_INSULIN, PRIME, ATTACH, ACTIVATE, SITE_LOCATION, COMPLETE,
     CONFIRM_DEACTIVATE, DEACTIVATING, DEACTIVATE_COMPLETE,
     RETRY_ACTIVATION
 }
@@ -65,9 +69,10 @@ class MedtrumPatchViewModel @Inject constructor(
     val medtrumPump: MedtrumPump,
     private val insulinManager: InsulinManager,
     private val profileFunction: ProfileFunction,
+    private val localProfileManager: LocalProfileManager,
     private val preferences: Preferences,
     private val persistenceLayer: PersistenceLayer
-) : ViewModel(), SiteLocationStepHost {
+) : ViewModel(), SiteLocationStepHost, ProfileGateStepHost {
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     val concentrationEnabled: Boolean
@@ -114,6 +119,13 @@ class MedtrumPatchViewModel @Inject constructor(
 
     private val _activeInsulinLabel = MutableStateFlow<String?>(null)
     val activeInsulinLabel: StateFlow<String?> = _activeInsulinLabel.asStateFlow()
+
+    // Profile gate state (for PROFILE_GATE step)
+    private val _availableProfiles = MutableStateFlow<List<String>>(emptyList())
+    override val availableProfiles: StateFlow<List<String>> = _availableProfiles.asStateFlow()
+
+    private val _selectedProfile = MutableStateFlow<String?>(null)
+    override val selectedProfile: StateFlow<String?> = _selectedProfile.asStateFlow()
 
     // Serial number editing state
     private val _snText = MutableStateFlow("")
@@ -247,6 +259,7 @@ class MedtrumPatchViewModel @Inject constructor(
 
         if (oldPatchStep != newPatchStep) {
             when (newPatchStep) {
+                PatchStep.PROFILE_GATE,
                 PatchStep.CANCEL,
                 PatchStep.COMPLETE,
                 PatchStep.ACTIVATE_COMPLETE,
@@ -304,6 +317,7 @@ class MedtrumPatchViewModel @Inject constructor(
 
     fun handleCancel() {
         if (oldPatchStep !in listOf(
+                PatchStep.PROFILE_GATE,
                 PatchStep.PREPARE_PATCH,
                 PatchStep.START_DEACTIVATION,
                 PatchStep.DEACTIVATE,
@@ -361,8 +375,21 @@ class MedtrumPatchViewModel @Inject constructor(
     fun initializePatchStep(step: PatchStep) {
         aapsLogger.info(LTag.PUMP, "initializePatchStep: $step")
         loadInsulins()
-        wizardPages = buildWizardPages(step)
-        mInitPatchStep = prepareStep(step)
+        if (step == PatchStep.PREPARE_PATCH) {
+            // PS lookup is a Room read (suspend) — resolve on a background coroutine
+            // so we don't block the main thread when the wizard is opened.
+            scope.launch {
+                val effectiveStep = if (profileFunction.getRequestedProfile() == null) {
+                    loadAvailableProfiles()
+                    PatchStep.PROFILE_GATE
+                } else PatchStep.PREPARE_PATCH
+                wizardPages = buildWizardPages(effectiveStep)
+                mInitPatchStep = prepareStep(effectiveStep)
+            }
+        } else {
+            wizardPages = buildWizardPages(step)
+            mInitPatchStep = prepareStep(step)
+        }
     }
 
     fun preparePatch() {
@@ -459,6 +486,56 @@ class MedtrumPatchViewModel @Inject constructor(
     fun selectInsulin(iCfg: ICfg) {
         _selectedInsulin.value = iCfg
     }
+
+    // region ProfileGateStepHost
+
+    /** Load profile names from LocalProfile store and pre-select the current one (if any). */
+    private fun loadAvailableProfiles() {
+        val names = localProfileManager.profiles.map { it.name }
+        _availableProfiles.value = names
+        if (_selectedProfile.value !in names) {
+            val currentIndex = localProfileManager.currentProfileIndex
+            _selectedProfile.value = names.getOrNull(currentIndex) ?: names.firstOrNull()
+        }
+    }
+
+    override fun selectProfile(name: String) {
+        _selectedProfile.value = name
+    }
+
+    override fun activateSelectedProfile() {
+        val name = _selectedProfile.value ?: return
+        val store = localProfileManager.profile ?: return
+        val iCfg = insulinManager.insulins.firstOrNull() ?: return
+        scope.launch {
+            val result = profileFunction.createProfileSwitch(
+                profileStore = store,
+                profileName = name,
+                durationInMinutes = 0,
+                percentage = 100,
+                timeShiftInHours = 0,
+                timestamp = System.currentTimeMillis(),
+                action = Action.PROFILE_SWITCH,
+                source = Sources.Medtrum,
+                note = null,
+                listValues = listOf(ValueWithUnit.SimpleString(name)),
+                iCfg = iCfg
+            )
+            if (result == null) {
+                aapsLogger.error(LTag.PUMP, "ProfileGate: createProfileSwitch failed for $name")
+                _events.tryEmit(PatchEvent.ShowError(name))
+            } else {
+                aapsLogger.info(LTag.PUMP, "ProfileGate: profile activated, advancing to PREPARE_PATCH")
+                moveStep(PatchStep.PREPARE_PATCH)
+            }
+        }
+    }
+
+    override fun cancelGate() {
+        _events.tryEmit(PatchEvent.Finish)
+    }
+
+    // endregion
 
     fun initSnText() {
         val currentSn = medtrumPump.pumpSN
@@ -567,10 +644,11 @@ class MedtrumPatchViewModel @Inject constructor(
 
     private fun prepareStep(newStep: PatchStep): PatchStep {
         // Rebuild page list when re-entering a wizard entry point (e.g. New Patch after deactivation)
-        if (newStep in listOf(PatchStep.PREPARE_PATCH, PatchStep.START_DEACTIVATION, PatchStep.RETRY_ACTIVATION)) {
+        if (newStep in listOf(PatchStep.PROFILE_GATE, PatchStep.PREPARE_PATCH, PatchStep.START_DEACTIVATION, PatchStep.RETRY_ACTIVATION)) {
             wizardPages = buildWizardPages(newStep)
         }
         val stringResId = when (newStep) {
+            PatchStep.PROFILE_GATE             -> app.aaps.core.ui.R.string.pump_wizard_profile_gate_title
             PatchStep.PREPARE_PATCH            -> R.string.step_prepare_patch
             PatchStep.PREPARE_PATCH_CONNECT    -> R.string.step_prepare_patch_connect
             PatchStep.SELECT_INSULIN           -> R.string.step_select_insulin
@@ -599,6 +677,7 @@ class MedtrumPatchViewModel @Inject constructor(
 
         _patchStep.value = newStep
         _canGoBack.value = newStep in listOf(
+            PatchStep.PROFILE_GATE,
             PatchStep.PREPARE_PATCH,
             PatchStep.SELECT_INSULIN,
             PatchStep.SITE_LOCATION,
@@ -633,7 +712,9 @@ class MedtrumPatchViewModel @Inject constructor(
 
     /** Build the dynamic wizard page list for the given start step. */
     private fun buildWizardPages(startStep: PatchStep): List<WizardPage> = when (startStep) {
+        PatchStep.PROFILE_GATE,
         PatchStep.PREPARE_PATCH      -> buildList {
+            if (startStep == PatchStep.PROFILE_GATE) add(WizardPage.PROFILE_GATE)
             add(WizardPage.PREPARE)
             if (showInsulinStep) add(WizardPage.SELECT_INSULIN)
             add(WizardPage.PRIME)
@@ -656,6 +737,8 @@ class MedtrumPatchViewModel @Inject constructor(
 
     /** Map a PatchStep (which may have sub-states) to its WizardPage. */
     private fun PatchStep.toWizardPage(): WizardPage? = when (this) {
+        PatchStep.PROFILE_GATE             -> WizardPage.PROFILE_GATE
+
         PatchStep.PREPARE_PATCH,
         PatchStep.PREPARE_PATCH_CONNECT    -> WizardPage.PREPARE
 

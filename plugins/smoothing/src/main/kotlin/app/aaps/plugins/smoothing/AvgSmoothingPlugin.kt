@@ -12,6 +12,7 @@ import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.plugin.PluginDescription
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.smoothing.Smoothing
+import app.aaps.core.interfaces.smoothing.SmoothingContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.abs
@@ -30,7 +31,10 @@ class AvgSmoothingPlugin @Inject constructor(
     aapsLogger, rh
 ), Smoothing {
 
-    override fun smooth(data: MutableList<InMemoryGlucoseValue>): MutableList<InMemoryGlucoseValue> {
+    override suspend fun smooth(
+        data: MutableList<InMemoryGlucoseValue>,
+        @Suppress("UNUSED_PARAMETER") context: SmoothingContext
+    ): MutableList<InMemoryGlucoseValue> {
         if (data.lastIndex < 4) {
             aapsLogger.debug(LTag.GLUCOSE, "Not enough value's to smooth!")
             return data

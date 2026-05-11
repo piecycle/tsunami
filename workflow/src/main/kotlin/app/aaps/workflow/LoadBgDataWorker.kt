@@ -3,10 +3,12 @@ package app.aaps.workflow
 import android.content.Context
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import app.aaps.core.data.iob.InMemoryGlucoseValue
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.aps.AutosensDataStore
 import app.aaps.core.interfaces.db.PersistenceLayer
 import app.aaps.core.interfaces.iob.IobCobCalculator
+import app.aaps.core.interfaces.smoothing.SmoothingContext
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
@@ -46,12 +48,16 @@ class LoadBgDataWorker(
         }
     }
 
-    private fun AutosensDataStore.smoothData(activePlugin: ActivePlugin) {
+    private suspend fun AutosensDataStore.smoothData(activePlugin: ActivePlugin, iobCobCalculator: IobCobCalculator) {
+        val bolusIob = iobCobCalculator.calculateIobFromBolus().iob
+        val basalIob = iobCobCalculator.calculateIobFromTempBasalsIncludingConvertedExtended().iob
+        val smoothingContext = SmoothingContext(cachedTotalIobUnits = bolusIob + basalIob)
+        val workingCopy: MutableList<InMemoryGlucoseValue> = synchronized(dataLock) {
+            bucketedData?.map { it.copy(smoothed = null) }?.toMutableList()
+        } ?: return
+        val smoothed = activePlugin.activeSmoothing.smooth(workingCopy, smoothingContext)
         synchronized(dataLock) {
-            bucketedData?.let {
-                val smoothedData = activePlugin.activeSmoothing.smooth(it)
-                bucketedData = smoothedData
-            }
+            bucketedData = smoothed
         }
     }
 
@@ -61,7 +67,7 @@ class LoadBgDataWorker(
             ?: return Result.failure(workDataOf("Error" to "missing input data"))
 
         data.iobCobCalculator.ads.loadBgData(data.end, persistenceLayer, aapsLogger, dateUtil)
-        data.iobCobCalculator.ads.smoothData(activePlugin)
+        data.iobCobCalculator.ads.smoothData(activePlugin, data.iobCobCalculator)
         rxBus.send(EventBucketedDataCreated())
         data.iobCobCalculator.clearCache()
         return Result.success()

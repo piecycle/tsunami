@@ -199,8 +199,7 @@ class WizardDialogViewModel @Inject constructor(
     }
 
     fun updatePercentage(value: Int) {
-        val clamped = value.coerceIn(10, 200)
-        _uiState.update { it.copy(percentage = clamped) }
+        _uiState.update { it.copy(percentage = value) }
         recalculate()
     }
 

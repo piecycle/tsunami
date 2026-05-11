@@ -73,10 +73,18 @@ class AppRepository @Inject internal constructor(
         onBufferOverflow = kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
     )
 
+    private val _databaseClearedFlow = MutableSharedFlow<Unit>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
+    )
+
     /**
      * Observe ALL database changes as Flow
      */
     fun changeFlow(): Flow<List<DBEntry>> = _changeFlow.asSharedFlow()
+
+    fun databaseClearedFlow(): Flow<Unit> = _databaseClearedFlow.asSharedFlow()
 
     /**
      * Observe database changes filtered by entity type
@@ -128,7 +136,10 @@ class AppRepository @Inject internal constructor(
         return result
     }
 
-    fun clearDatabases() = database.clearAllTables()
+    fun clearDatabases() {
+        database.clearAllTables()
+        repositoryScope.launch { _databaseClearedFlow.emit(Unit) }
+    }
 
     fun clearApsResults() = database.apsResultDao.deleteAllEntries()
 
@@ -145,17 +156,21 @@ class AppRepository @Inject internal constructor(
         removed.add(Pair("Carbs", database.carbsDao.deleteOlderThan(than)))
         removed.add(Pair("TemporaryTarget", database.temporaryTargetDao.deleteOlderThan(than)))
         removed.add(Pair("BolusCalculatorResult", database.bolusCalculatorResultDao.deleteOlderThan(than)))
-        // keep at least one EPS
-        if (database.effectiveProfileSwitchDao.getEffectiveProfileSwitchDataFromTime(than + 1).isNotEmpty())
+        // keep at least one permanent EPS (don't delete if only expired temporaries exist within window)
+        if (database.effectiveProfileSwitchDao.getEffectiveProfileSwitchDataFromTime(than + 1).any { it.originalDuration == 0L })
             removed.add(Pair("EffectiveProfileSwitch", database.effectiveProfileSwitchDao.deleteOlderThan(than)))
-        removed.add(Pair("ProfileSwitch", database.profileSwitchDao.deleteOlderThan(than)))
+        // keep at least one permanent PS
+        if (database.profileSwitchDao.getProfileSwitchDataFromTime(than + 1).any { it.duration == 0L })
+            removed.add(Pair("ProfileSwitch", database.profileSwitchDao.deleteOlderThan(than)))
         removed.add(Pair("ApsResult", database.apsResultDao.deleteOlderThan(than)))
         // keep version history database.versionChangeDao.deleteOlderThan(than)
         removed.add(Pair("UserEntry", database.userEntryDao.deleteOlderThan(than)))
         removed.add(Pair("PreferenceChange", database.preferenceChangeDao.deleteOlderThan(than)))
         // keep foods database.foodDao.deleteOlderThan(than)
         removed.add(Pair("DeviceStatus", database.deviceStatusDao.deleteOlderThan(than)))
-        removed.add(Pair("RunningMode", database.runningModeDao.deleteOlderThan(than)))
+        // keep at least one permanent RM (don't delete if only expired temporaries exist within window)
+        if (database.runningModeDao.getRunningModeDataFromTime(than + 1).any { it.duration == 0L })
+            removed.add(Pair("RunningMode", database.runningModeDao.deleteOlderThan(than)))
         removed.add(Pair("HeartRate", database.heartRateDao.deleteOlderThan(than)))
         removed.add(Pair("StepsCount", database.stepsCountDao.deleteOlderThan(than)))
         removed.add(Pair("Tsunami", database.tsunamiDao.deleteOlderThan(than)))
@@ -180,10 +195,11 @@ class AppRepository @Inject internal constructor(
             removed.add(Pair("CHANGES StepsCount", database.stepsCountDao.deleteTrackedChanges()))
             removed.add(Pair("Tsunami", database.tsunamiDao.deleteTrackedChanges()))
         }
+        repositoryScope.launch { _databaseClearedFlow.emit(Unit) }
         val ret = StringBuilder()
         removed
             .filter { it.second > 0 }
-            .map { ret.append(it.first + " " + it.second + "<br>") }
+            .forEach { ret.append(it.first + " " + it.second + "<br>") }
         return ret.toString()
     }
 
@@ -301,6 +317,9 @@ class AppRepository @Inject internal constructor(
     suspend fun getAllProfileSwitches(): List<ProfileSwitch> =
         database.profileSwitchDao.getAllProfileSwitches()
 
+    suspend fun bulkMigrateProfileSwitchInsulinConfig(label: String, end: Long, peak: Long, conc: Double): Int =
+        database.profileSwitchDao.bulkMigrateInsulinConfig(label, end, peak, conc)
+
     suspend fun getProfileSwitchesFromTime(timestamp: Long, ascending: Boolean): List<ProfileSwitch> =
         database.profileSwitchDao.getProfileSwitchDataFromTime(timestamp).reversedIf(!ascending)
 
@@ -395,6 +414,9 @@ class AppRepository @Inject internal constructor(
 
     suspend fun getAllEffectiveProfileSwitches(): List<EffectiveProfileSwitch> =
         database.effectiveProfileSwitchDao.getAllEffectiveProfileSwitches()
+
+    suspend fun bulkMigrateEffectiveProfileSwitchInsulinConfig(label: String, end: Long, peak: Long, conc: Double): Int =
+        database.effectiveProfileSwitchDao.bulkMigrateInsulinConfig(label, end, peak, conc)
 
     // THERAPY EVENT
     /*
@@ -495,6 +517,9 @@ class AppRepository @Inject internal constructor(
 
     suspend fun getBoluses(): List<Bolus> =
         database.bolusDao.getAllBoluses()
+
+    suspend fun bulkMigrateBolusInsulinConfig(label: String, end: Long, peak: Long, conc: Double): Int =
+        database.bolusDao.bulkMigrateInsulinConfig(label, end, peak, conc)
 
     suspend fun getBolusesDataFromTime(timestamp: Long, ascending: Boolean): List<Bolus> =
         database.bolusDao.getBolusesFromTime(timestamp).reversedIf(!ascending)
@@ -611,7 +636,9 @@ class AppRepository @Inject internal constructor(
     // DEVICE STATUS
     fun insert(deviceStatus: DeviceStatus) {
         database.deviceStatusDao.insert(deviceStatus)
-        changeSubject.onNext(mutableListOf(deviceStatus)) // Not TraceableDao
+        val changes = mutableListOf<DBEntry>(deviceStatus) // Not TraceableDao
+        changeSubject.onNext(changes)
+        _changeFlow.tryEmit(changes)
     }
 
     /*

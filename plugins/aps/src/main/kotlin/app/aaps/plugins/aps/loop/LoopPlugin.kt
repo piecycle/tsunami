@@ -446,9 +446,8 @@ class LoopPlugin @Inject constructor(
     override suspend fun invoke(initiator: String, allowNotification: Boolean, tempBasalFallback: Boolean) {
         try {
             aapsLogger.debug(LTag.APS, "invoke from $initiator")
-            val currentMode = runningModeRecord()
             if (runningMode() == RM.Mode.DISABLED_LOOP) {
-                val message = rh.gs(app.aaps.core.ui.R.string.loop_disabled) + "\n" + currentMode.reasons
+                val message = rh.gs(app.aaps.core.ui.R.string.loop_disabled_by_user)
                 aapsLogger.debug(LTag.APS, message)
                 rxBus.send(EventLoopSetLastRunGui(message))
                 return

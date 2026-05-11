@@ -90,13 +90,11 @@ class ExtendedBolusDialogViewModel @Inject constructor(
     }
 
     fun updateInsulin(value: Double) {
-        val clamped = value.coerceIn(uiState.value.extendedStep, uiState.value.maxInsulin)
-        _uiState.update { it.copy(insulin = clamped) }
+        _uiState.update { it.copy(insulin = value) }
     }
 
     fun updateDuration(value: Double) {
-        val clamped = value.coerceIn(uiState.value.extendedDurationStep, uiState.value.extendedMaxDuration)
-        _uiState.update { it.copy(durationMinutes = clamped) }
+        _uiState.update { it.copy(durationMinutes = value) }
     }
 
     fun hasAction(): Boolean {

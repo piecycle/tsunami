@@ -263,9 +263,15 @@ class MedtrumService : DaggerService(), BLECommCallback {
     }
 
     fun startActivate(): Boolean {
-        val profile = runBlocking { pumpSync.expectedPumpState() }.profile?.let { medtrumPump.buildMedtrumProfileArray(it) }
-        val packet = profile?.let { ActivatePacket(injector, it) }
-        return packet?.let { sendPacketAndGetResponse(it) } == true
+        val pumpProfile = runBlocking { pumpSync.expectedPumpState() }.profile ?: run {
+            aapsLogger.error(LTag.PUMP, "startActivate: no requested profile, cannot activate patch")
+            return false
+        }
+        val bytes = medtrumPump.buildMedtrumProfileArray(pumpProfile) ?: run {
+            aapsLogger.error(LTag.PUMP, "startActivate: failed to build basal byte array")
+            return false
+        }
+        return sendPacketAndGetResponse(ActivatePacket(injector, bytes))
     }
 
     fun deactivatePatch(): Boolean {
@@ -398,7 +404,7 @@ class MedtrumService : DaggerService(), BLECommCallback {
             aapsLogger.error(LTag.PUMPCOMM, "Failed to set bolus")
             commandQueue.readStatus(rh.gs(R.string.bolus_error), null) // make sure if anything is delivered (which is highly unlikely at this point) we get it
             medtrumPump.bolusDone = true
-            bolusProgressData.updateProgress(percent = 0, status= "")
+            bolusProgressData.updateProgress(percent = 0, status = "")
             return false
         }
 

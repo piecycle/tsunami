@@ -182,6 +182,7 @@ class MainViewModel @Inject constructor(
             runningModeProgress = chip.runningModeProgress,
             runningModeRecordId = chip.runningModeRecordId,
             tbrState = chip.tbrState,
+            smbEnabled = ev.smbEnabled,
             quickWizardItems = chip.quickWizardItems
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MainUiState())
@@ -189,6 +190,9 @@ class MainViewModel @Inject constructor(
     init {
         preferences.observe(BooleanKey.GeneralSimpleMode)
             .onEach { simple -> _eventState.update { it.copy(isSimpleMode = simple) } }
+            .launchIn(viewModelScope)
+        preferences.observe(BooleanKey.ApsUseSmb)
+            .onEach { smb -> _eventState.update { it.copy(smbEnabled = smb) } }
             .launchIn(viewModelScope)
         observeQuickLaunch()
     }
@@ -847,6 +851,7 @@ class MainViewModel @Inject constructor(
 private data class EventState(
     val isDrawerOpen: Boolean = false,
     val isSimpleMode: Boolean = true,
+    val smbEnabled: Boolean = false,
     val showAboutDialog: Boolean = false,
     val showMaintenanceSheet: Boolean = false,
     val showAuthFailedDialog: Boolean = false

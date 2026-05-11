@@ -99,6 +99,23 @@ fun RunningModeScreen(
                 }
             }
 
+            // No valid profile — show explanation instead of empty screen
+            if (!state.isLoading && state.allowedNextModes.isEmpty()) {
+                ElevatedCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 1.dp),
+                    colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+                ) {
+                    Text(
+                        text = stringResource(app.aaps.core.ui.R.string.no_profile_set),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onErrorContainer,
+                        modifier = Modifier.padding(12.dp)
+                    )
+                }
+            }
+
             // Loop Control Section
             val showLoopSection = state.allowedNextModes.any {
                 it in listOf(RM.Mode.DISABLED_LOOP, RM.Mode.OPEN_LOOP, RM.Mode.CLOSED_LOOP, RM.Mode.CLOSED_LOOP_LGS)

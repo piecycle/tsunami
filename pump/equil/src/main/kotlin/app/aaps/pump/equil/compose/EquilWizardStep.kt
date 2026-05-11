@@ -7,6 +7,9 @@ import app.aaps.pump.equil.R
  */
 enum class EquilWizardStep(val titleResId: Int) {
 
+    // Pre-activation gate (shown only when no profile switch exists yet)
+    PROFILE_GATE(app.aaps.core.ui.R.string.pump_wizard_profile_gate_title),
+
     // PAIR flow: Assemble → BleScan → Password → [SelectInsulin] → Fill → Attach → Air → [SiteLocation] → Confirm
     ASSEMBLE(R.string.equil_title_assemble),
     BLE_SCAN(R.string.equil_title_serial),
@@ -35,8 +38,9 @@ enum class EquilWorkflow {
     CHANGE_INSULIN,
     UNPAIR;
 
-    fun steps(siteRotationEnabled: Boolean, insulinSelectionEnabled: Boolean): List<EquilWizardStep> = when (this) {
+    fun steps(siteRotationEnabled: Boolean, insulinSelectionEnabled: Boolean, needsProfileGate: Boolean = false): List<EquilWizardStep> = when (this) {
         PAIR           -> buildList {
+            if (needsProfileGate) add(EquilWizardStep.PROFILE_GATE)
             add(EquilWizardStep.ASSEMBLE)
             add(EquilWizardStep.BLE_SCAN)
             add(EquilWizardStep.PASSWORD)

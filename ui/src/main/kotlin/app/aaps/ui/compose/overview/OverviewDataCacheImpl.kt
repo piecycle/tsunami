@@ -422,6 +422,22 @@ class OverviewDataCacheImpl @AssistedInject constructor(
                     .collect { rebuildBasalGraph() }
             }
 
+            // observeChanges() does not fire when the DB is wiped via clearAllTables().
+            // databaseClearedFlow is the dedicated signal for that case. Re-fetching after
+            // reset() restores chips (RM, TT, profile) to their empty-DB defaults so they
+            // remain visible and interactive instead of disappearing entirely.
+            scope.launch {
+                persistenceLayer.databaseClearedFlow.collect {
+                    aapsLogger.debug(LTag.UI, "OverviewDataCache: DB cleared, reloading chip data")
+                    reset()
+                    updateBgInfoFromDatabase()
+                    updateProfileFromDatabase()
+                    updateTempTargetFromDatabase()
+                    updateRunningModeFromDatabase()
+                    updateTbrFromDatabase()
+                }
+            }
+
             // NSClient status: initial load + rxBus subscription + 60s ticker — but only while
             // the nsClientStatusFlow has observers. The cache is a singleton, so without this
             // gate the 60s rebuild would fire 24/7 even though the flow is only consumed by the
@@ -940,17 +956,18 @@ class OverviewDataCacheImpl @AssistedInject constructor(
             }
             // Match original format: "2 min ago"
             val value = dateUtil.minOrSecAgo(rh, clockSuggested)
+            val clockEnacted = processedDeviceStatusData.openAPSData.clockEnacted
+            val enacted = processedDeviceStatusData.openAPSData.enacted
+            val sameCycle = enacted != null && clockSuggested - clockEnacted <= 60_000L
             val dialogText = buildString {
-                processedDeviceStatusData.openAPSData.enacted?.let {
-                    if (processedDeviceStatusData.openAPSData.clockEnacted != clockSuggested) {
-                        append("Enacted: ${dateUtil.minAgo(rh, processedDeviceStatusData.openAPSData.clockEnacted)}")
+                if (sameCycle) {
+                    append("Enacted: ${dateUtil.minAgo(rh, clockEnacted)}")
+                    append(" ${enacted.reason}")
+                } else {
+                    processedDeviceStatusData.openAPSData.suggested?.let {
+                        append("Suggested: ${dateUtil.minAgo(rh, clockSuggested)}")
                         append(" ${it.reason}")
-                        append("\n")
                     }
-                }
-                processedDeviceStatusData.openAPSData.suggested?.let {
-                    append("Suggested: ${dateUtil.minAgo(rh, clockSuggested)}")
-                    append(" ${it.reason}")
                 }
             }
             AapsClientStatusItem(
@@ -973,7 +990,7 @@ class OverviewDataCacheImpl @AssistedInject constructor(
             }
             // Match original format: "ᴪ 93%" or "93%"
             val value = buildString {
-                if (isCharging) append("\u26A1 ")
+                if (isCharging) append("\u26A1")
                 append("$minBattery%")
             }
             val dialogText = buildString {
@@ -1020,7 +1037,9 @@ class OverviewDataCacheImpl @AssistedInject constructor(
         _bgInfoFlow.value = null
         _tempTargetFlow.value = null
         _profileFlow.value = null
-        _runningModeFlow.value = null
+        // _runningModeFlow intentionally not nulled: getRunningModeActiveAt() always returns
+        // a non-null value (DEFAULT_MODE fallback for empty table), so callers should use
+        // updateRunningModeFromDatabase() to refresh it rather than forcing a null state.
         _tbrFlow.value = null
         // Secondary graph flows
         _iobGraphFlow.value = IobGraphData(emptyList(), emptyList())

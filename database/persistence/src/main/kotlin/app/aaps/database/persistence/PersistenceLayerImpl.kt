@@ -161,6 +161,7 @@ class PersistenceLayerImpl @Inject constructor(
     }
 
     override fun clearDatabases() = repository.clearDatabases()
+    override val databaseClearedFlow: Flow<Unit> get() = repository.databaseClearedFlow()
     override fun clearApsResults() = repository.clearApsResults()
     override suspend fun cleanupDatabase(keepDays: Long, deleteTrackedChanges: Boolean): String = withContext(Dispatchers.IO) {
         repository.cleanupDatabase(keepDays, deleteTrackedChanges)
@@ -335,11 +336,6 @@ class PersistenceLayerImpl @Inject constructor(
             aapsLogger.error(LTag.DATABASE, "Error while saving Bolus", e)
             throw e
         }
-    }
-
-    override suspend fun updateBolusNoLogging(bolus: BS): Unit = withContext(Dispatchers.IO) {
-        repository.runTransactionForResultSuspend(InsertOrUpdateBolusTransaction(bolus.toDb()))
-        Unit
     }
 
     override suspend fun insertBolusWithTempId(bolus: BS): PersistenceLayer.TransactionResult<BS> = withContext(Dispatchers.IO) {
@@ -993,11 +989,6 @@ class PersistenceLayerImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateEffectiveProfileSwitchNoLogging(effectiveProfileSwitch: EPS): Unit = withContext(Dispatchers.IO) {
-        repository.runTransactionForResultSuspend(InsertOrUpdateEffectiveProfileSwitchTransaction(effectiveProfileSwitch.toDb()))
-        Unit
-    }
-
     override suspend fun invalidateEffectiveProfileSwitch(id: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): PersistenceLayer.TransactionResult<EPS> = withContext(Dispatchers.IO) {
         try {
             val result = repository.runTransactionForResultSuspend(InvalidateEffectiveProfileSwitchTransaction(id))
@@ -1324,11 +1315,6 @@ class PersistenceLayerImpl @Inject constructor(
             aapsLogger.error(LTag.DATABASE, "Error while inserting ProfileSwitch", e)
             throw e
         }
-    }
-
-    override suspend fun updateProfileSwitchNoLogging(profileSwitch: PS): Unit = withContext(Dispatchers.IO) {
-        repository.runTransactionForResultSuspend(InsertOrUpdateProfileSwitchTransaction(profileSwitch.toDb()))
-        Unit
     }
 
     override suspend fun invalidateProfileSwitch(id: Long, action: Action, source: Sources, note: String?, listValues: List<ValueWithUnit>): PersistenceLayer.TransactionResult<PS> = withContext(Dispatchers.IO) {

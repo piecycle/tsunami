@@ -89,18 +89,15 @@ class TempBasalDialogViewModel @Inject constructor(
     }
 
     fun updateBasalPercent(value: Double) {
-        val clamped = value.coerceIn(0.0, uiState.value.maxTempPercent)
-        _uiState.update { it.copy(basalPercent = clamped) }
+        _uiState.update { it.copy(basalPercent = value) }
     }
 
     fun updateBasalAbsolute(value: Double) {
-        val clamped = value.coerceIn(0.0, uiState.value.maxTempAbsolute)
-        _uiState.update { it.copy(basalAbsolute = clamped) }
+        _uiState.update { it.copy(basalAbsolute = value) }
     }
 
     fun updateDuration(value: Double) {
-        val clamped = value.coerceIn(uiState.value.tempDurationStep, uiState.value.tempMaxDuration)
-        _uiState.update { it.copy(durationMinutes = clamped) }
+        _uiState.update { it.copy(durationMinutes = value) }
     }
 
     fun hasAction(): Boolean {

@@ -106,13 +106,11 @@ class TreatmentDialogViewModel @Inject constructor(
     }
 
     fun updateInsulin(value: Double) {
-        val clamped = value.coerceIn(0.0, uiState.value.maxInsulin)
-        _uiState.update { it.copy(insulin = clamped) }
+        _uiState.update { it.copy(insulin = value) }
     }
 
     fun updateCarbs(value: Int) {
-        val clamped = value.coerceIn(0, uiState.value.maxCarbs)
-        _uiState.update { it.copy(carbs = clamped) }
+        _uiState.update { it.copy(carbs = value) }
     }
 
     fun hasAction(): Boolean {
